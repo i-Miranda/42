@@ -1,35 +1,36 @@
 #include <unistd.h>
 
-void	checkformatch(char *previous, char *next, char prevmaxvalue, char nextminvalue);
+void	checkforten(char *previous, char *next, int start, char *tick)
+{
+	if (*previous > '9')
+	{
+		*previous = *tick + start;
+		(*next)++;
+		(*tick)++;
+			
+	}
+}
 
 void	ft_print_comb(void)
 {
-	char	comb[3];
+	char	comb[7];
 
 	comb[0] = '0';
 	comb[1] = '1';
 	comb[2] = '2';
-	while(comb[0]+comb[1]+comb[2] != '7' + '8' + '9')
+	comb[3] = ',';
+	comb[4] = ' ';
+	comb[5] = '1';	 
+	comb[6] = '1';	 
+	while(comb[0] < '7')
 	{
-		write(1,&comb,3);
-		write(1, ", ", 3);
+		if(comb[2] != comb[1] && comb[1] != comb[0] && comb[0] != comb[2])
+			write(1,&comb,5);
 		(comb[2])++;
-		checkformatch(&comb[2], &comb[1], '9', '1');
-		checkformatch(&comb[1], &comb[0], '8', '0');
-  }
-	write(1,&comb,3);
-}
-
-void	checkformatch(char *previous, char *next, char prevmaxvalue, char nextminvalue)
-{
-	if(*previous >= prevmaxvalue)
-	{
-		if(*next > prevmaxvalue - 1)
-			(*next) = nextminvalue;
-		else
-			(*next)++;
-		*previous = (*next) + 1;
+		checkforten(&comb[2], &comb[1], 2, &comb[6]);
+		checkforten(&comb[1], &comb[0], 1, &comb[5]);
 	}
+		write(1,&comb,3);
 }
 
 int	main(void)
