@@ -35,7 +35,7 @@ int		getsingledigit(int nnbr, int *nbr, int n)
 			write(1, &itoc, 1);
 			return(mod);
 		}
-		else if (nnbr < (n / 10))
+		else
 			write(1, &itoc, 1);
 		return (nnbr);
 }
