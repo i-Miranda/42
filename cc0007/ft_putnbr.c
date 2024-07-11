@@ -12,7 +12,7 @@ int checkfornegative(int *nbr)
 	char neg;
 
 	neg = '-';
-	if (nbr > 0)
+	if (*nbr < 0)
 	{
 		write(1, &neg, 1);
 		*nbr *= -1;
@@ -35,7 +35,7 @@ int		getsingledigit(int nnbr, int *nbr, int n)
 			write(1, &itoc, 1);
 			return(mod);
 		}
-		else
+		else if (nnbr < *nbr)
 			write(1, &itoc, 1);
 		return (nnbr);
 }
@@ -46,7 +46,8 @@ void	ft_putnbr(int *nbr)
 		int nnbr;
 
 		newline = '\n';
-		if(!isinrange(nbr, -2147483647, 2147483647))
+		nnbr = *nbr;
+		if(!isinrange(nbr, -2147483648, 2147483647))
 			return;
 		nnbr = checkfornegative(nbr);
 		nnbr = getsingledigit(nnbr, nbr, 1000000000);
@@ -67,11 +68,17 @@ int main (void)
 	int *nbr;
 	int num;
 
-	num = -5742;
+	num = 5742;
 	nbr = &num;
 	ft_putnbr(nbr);
 	num = -50000;
 	ft_putnbr(nbr);
+	num = 50000;
+	ft_putnbr(nbr);
 	num = -500009911;
+	ft_putnbr(nbr);
+	num = 500009911;
+	ft_putnbr(nbr);
+	num = 'b';
 	ft_putnbr(nbr);
 }
