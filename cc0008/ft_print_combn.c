@@ -1,50 +1,84 @@
 #include <unistd.h>
-
-//int buildarray(int *arr, int n, int value)
-//{
-//	int bldint[n][value];
-//	int counter;
-//
-//	while (n < 10)
-//	{
-//		counter = 0; 
-//		while (counter < n * 10)
-//		{
-//			bldint[n][counter] = counter;
-//		}
-//		n--;
-//	}
-//}
-
-void printpattern(int itoc, int n)
+int	exponent(int value, int n)
 {
-	char	prntchr;
-	int		counter;	
+	int output;
+
+	output = value;
+	while (n > 0)
+	{
+		output *= value;
+		n--;
+	}
+	return (output);
+}
+
+void	printpattern(int n, int inputvalue)
+{
+	char prntchr[9];
+	int		counter;
+	int		divisor;
 
 	counter = 0;
-	while (counter < 10)
+	while (counter < n) 
 	{
-		prntchr = itoc + '0';
+		divisor = exponent(inputvalue , n);	
+		prntchr[counter] = (inputvalue / divisor) - '0';
 		counter++;
 	}
-	write(1, &prntchr, n);
+	write(1, prntchr, n);
+	write(1, ", ", 2);
+}
+
+int	totalpossible(int n)
+{
+	int	possible;
+	int	counter;
+	
+	possible = n;
+	counter = 0;
+	while (counter > 1)
+	{
+		possible *= n - counter;
+		counter++;
+	}
+	return (possible);
+}
+
+void	doesitrepeat(int n, int possible)
+{
+	int counter;
+	int i;
+	int j;
+
+	counter = 0;
+	while (counter < possible)
+	{
+		printpattern(n,possible);
+		counter++;
+	}
 }
 
 void ft_print_combn(int n)
 {
-	int	prntint;
+	int	possiblen;
 
-	prntint = n;
-	while ((0 < n) && (n < 10))
+	if ((0 < n) && (n < 10))
 	{
-		printpattern(prntint, n); 
-		n--;
+		possiblen = totalpossible(n);
+		doesitrepeat(n, possiblen);
 	}
 }
 
 int main(int argc, char **argv) 
 {
 	int n;
-	n = (**argv) - '0';
-	ft_print_combn(n);
+	
+	if (argc == 2)
+	{
+		n = (*argv[1]) - '0';
+		ft_print_combn(n);
+		return (0);
+	} 
+	write(1, "-ERROR 404-: Insert an argument of value 0 - 9\n\0", 48);
+	return (1);
 }
