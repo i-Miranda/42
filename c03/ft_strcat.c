@@ -4,45 +4,42 @@ char	*ft_strcat(char *dest, char *src)
 {
 	int	i;
 	int	j;
-	int count;
+	int	count;
 	char	*newstr;
 
 	i = 0;
 	j = 0;
 	count = 0;
-	while(dest[i] != '\0' || src[i] != '\0')
+	while (dest[i] != '\0')
+		i++;
+	while (src[j] != '\0')
+		j++;
+	count = i + j;
+	i = 0;
+	j = 0;
+	while (count > 0)
 	{
 		if (dest[i] != '\0')
 		{
-			write(1, &dest[i], 1);
-			write(1, " ", 1);
+			newstr[count] = dest[i];
 			i++;
 		}
-		if (src[i] != '\0')
+		else if (src[j] != '\0')
 		{
-			write(1, &src[i], 1);
-			write(1, "\n", 1);
+			newstr[count] = src[j];
 			j++;
 		}
+		count--;
 	}
-	while (count < i)
-	{
-		newstr[count] = dest[i + count];
-		count++;
-	}
-	while (count < j)
-	{
-		newstr[count] = src[j + count];
-		count++;
-	}
-	newstr[count + 1] = '\0';
+	newstr[i + j + 1] = '\0';
+	write (1, newstr, 1);
 	return (newstr);
 }
 
 int	main(int argc, char **argv)
 {
-	char *newstr;
-	int		i;
+	char	*newstr;
+	int	i;
 
 	i = 0;
 	if (argc == 3)
@@ -50,7 +47,7 @@ int	main(int argc, char **argv)
 		newstr = ft_strcat(argv[1], argv[2]);
 		while (newstr[i] != '\0')
 		{
-			write(1, newstr, 1);
+			write(1, &newstr[i], 1);
 			i++;
 		}
 		write(1, "\n", 1);
