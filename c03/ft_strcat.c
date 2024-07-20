@@ -17,7 +17,7 @@ char	*ft_strcat(char *dest, char *src)
 	count = i + j;
 	i = 0;
 	j = 0;
-	while (count > 0)
+	while (count > )
 	{
 		if (dest[i] != '\0')
 		{
