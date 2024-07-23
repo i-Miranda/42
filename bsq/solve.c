@@ -9,7 +9,7 @@ struct map_struct
 	char *map_codes;
 };
 
-void	ft_store_map(char *file, char **map, int i)
+char	**ft_store_map(char *file, char **map, int i)
 {
 	int col_count;
 	int	row_count;
@@ -31,6 +31,7 @@ void	ft_store_map(char *file, char **map, int i)
 		map[i] = malloc(sizeof(char) * col_count);
 		i++;
 	}
+	return (map);
 }
 
 int		ft_store_key(char *file, char *map_codes)	
@@ -54,7 +55,7 @@ void	free_map(char **map)
 		i++;
 	while (i >= 0)
 	{
-		free(&map[i]);
+		free(map[i]);
 		i--;
 	}
 }
@@ -65,7 +66,7 @@ char	*ft_solve_bsq(char *file)
 	int i;
 
 	i = ft_store_key(file, puzzle.map_codes);	
-	ft_store_map(file, puzzle.map, i);
+	puzzle.map = ft_store_map(file, puzzle.map, i);
 	free_map(puzzle.map);
 	return (puzzle.solution);
 }

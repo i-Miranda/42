@@ -24,10 +24,10 @@ int	main(int argc, char **argv)
 	{
 		read(open(argv[1], 0), file, 1000);
 		solution = malloc(ft_strlen(file));
-		write(1, file, 1000);
+		write(1, file, sizeof(solution));
 		write(1, "\n", 1);
 		solution = ft_solve_bsq(file);
-		write(1, solution, 1000);
+		write(1, solution, sizeof(solution));
 		write(1, "\n", 1);
 		free(solution);
 	}
