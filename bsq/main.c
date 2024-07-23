@@ -1,43 +1,17 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include "solve.c"
 
-char *ft_solve_bsq(char *file)
+int	ft_strlen(char *str)
 {
-	char *solution;
-	char **map;
-	char *map_codes;
-	int col_count;
-	int	row_count;
-	int i;
-
+	int	i;
+	
 	i = 0;
-	col_count = 0;
-	row_count  = 0;
-	while (file[i] != '\n')
-	{
-		map_codes[i] = file[i];
+	while (str[i] != '\0')
 		i++;
-	}
-	while (file[i] != '\0')
-	{
-		if (file[i] == '\n')
-			row_count++;
-		else
-			col_count++;
-		i++;
-	}
-	map = malloc(sizeof(char) * row_count);
-	i = 0;
-	while (i < row_count)
-	{
-		map[i] = malloc(sizeof(char) * col_count);
-		i++;
-	}
-	free(map);
-	return (solution);
+	return (i);
 }
-
 int	main(int argc, char **argv)
 {
 	int	n;
@@ -49,7 +23,7 @@ int	main(int argc, char **argv)
 	while (n < argc)
 	{
 		read(open(argv[1], 0), file, 1000);
-		solution = malloc(sizeof(file));
+		solution = malloc(ft_strlen(file));
 		write(1, file, 1000);
 		write(1, "\n", 1);
 		solution = ft_solve_bsq(file);
