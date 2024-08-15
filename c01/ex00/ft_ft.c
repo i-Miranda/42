@@ -24,18 +24,16 @@ void	ft_putnbr(int nb)
 	}
 }
 
+void	ft_ft(int *nbr)
+{
+	*nbr = 42;
+}
+
 int	main(void)
 {
-	ft_putnbr(-2);
-	write(1, "\n", 1);
-	ft_putnbr(-2147);
-	write(1, "\n", 1);
-	ft_putnbr(-2147483648);
-	write(1, "\n", 1);
-	ft_putnbr(0);
-	write(1, "\n", 1);
-	ft_putnbr(2147483647);
-	write(1, "\n", 1);
-	ft_putnbr(10001);
-	write(1, "\n", 1);
+	int *ptrnbr;
+
+	ft_ft(ptrnbr);
+	ft_putnbr(*ptrnbr);
+	return (0);
 }
