@@ -24,7 +24,7 @@ void	ft_print_comb2(void)
 			ft_counter_to_comb(counter1);
 			write(1, " ", 1);
 			ft_counter_to_comb(counter2);
-			if (!(counter1 == 98 && counter2 == 99))
+			if (counter1 != 98 && counter2 != 99)
 				write(1, ", ", 2);
 			counter2++;
 		}

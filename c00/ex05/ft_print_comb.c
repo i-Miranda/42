@@ -22,9 +22,16 @@ void	ft_print_comb(void)
 				write(1, &third, 1);
 				if (first + second + third != '7' + '8' + '9')
 					write(1, ", ", 1);
+				third++;
 			}
 			second++;
 		}
 		first++;	
 	}
+}
+
+int	main(void)
+{
+	ft_print_comb();
+	return (0);
 }
