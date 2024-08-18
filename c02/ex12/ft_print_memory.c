@@ -63,10 +63,13 @@ void	ft_print_substr_hexval(char *str, unsigned int length,
 void	ft_print_memaddr(void *addr)         
 {
 	unsigned int	j;
+	int				*int_addr;
 
 	j = 0;
-	while (j < 16)
+	int_addr = (int *)addr;
+	while (j < sizeof(int_addr))
 	{
+		ft_print_hexvalue(int_addr[j], 0);
 		j++;
 	}
 	printf("%p", &addr);
