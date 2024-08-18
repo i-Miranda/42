@@ -1,31 +1,18 @@
 #include <unistd.h>
+#include <stdio.h>
 
-int	ft_strlen(char *str)
+void	ft_print_hexvalue(int decval, int i)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-void	ft_print_hexvalue(int decval)
-{
-	int		div;
-	int		i;
 	int		mod[2];
 	char	hexval;
 	
-	i = 0;
-	div = decval;
-	if (div == 0)
+	if (decval == 0)
 		write(1, "0", 1);
-	while (div != 0)	
+	while (decval != 0)	
 	{
-		mod[i] = div % 16;
-		div = div / 16;
-		if (div == 0 && i == 0)
+		mod[i] = decval % 16;
+		decval = decval / 16;
+		if (decval == 0 && i == 0)
 			mod[i + 1] = 0;
 		i++;
 	}
@@ -63,7 +50,7 @@ void	ft_print_substr_hexval(char *str, unsigned int length,
 	while (j < 16)
 	{
 		if (index + j < length)
-			ft_print_hexvalue(str[index + j]); 
+			ft_print_hexvalue(str[index + j], 0); 
 		else
 			write(1, "  ", 2);
 		if ((index + j) % 2 != 0)
@@ -71,6 +58,19 @@ void	ft_print_substr_hexval(char *str, unsigned int length,
 		j++;
 	}
 }
+
+//This isn't working yet
+void	ft_print_memaddr(void *addr)         
+{
+	unsigned int	j;
+
+	j = 0;
+	while (j < 16)
+	{
+		j++;
+	}
+	printf("%p", &addr);
+} 
 
 void	*ft_print_memory(void *addr, unsigned int size)
 {
@@ -81,15 +81,10 @@ void	*ft_print_memory(void *addr, unsigned int size)
 		char			*chr_addr;
 
 		i = 0;
-		chr_addr = addr;
+		chr_addr = (char *)addr;
 		while(i < size)
 		{
-			j = 0;
-			while (j < 16)
-			{
-				ft_print_hexvalue(chr_addr[j]); 
-				j++;
-			}
+			ft_print_memaddr(addr);
 			write(1, ": ", 2);
 			ft_print_substr_hexval(chr_addr, size, i);
 			ft_print_substr(chr_addr, size, i);
@@ -103,8 +98,8 @@ void	*ft_print_memory(void *addr, unsigned int size)
 int	main(void)
 {
 	char test[] = "Bonjour les aminches\t\n\tc\a est fou\ttout\tce qu on peut"
-		" faire avec\t\n\tprint_memory\n\n\n\tlol.lol\n \0";
+		" faire avec\t\n\tprint_memory\n\n\n\tlol.lol\n ";
 
-	ft_print_memory(test, ft_strlen(test) + 1);
+	ft_print_memory(test,sizeof(test));
 	return (0);
 }
