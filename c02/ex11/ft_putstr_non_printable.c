@@ -1,21 +1,17 @@
 #include <unistd.h>
 
-void	ft_print_hexvalue(int decval)
+void	ft_print_hexvalue(int decval, int i)
 {
-	int		div;
-	int		i;
 	int		mod[2];
 	char	hexval;
 	
-	i = 0;
-	div = decval;
-	if (div == 0)
+	if (decval == 0)
 		write(1, "0", 1);
-	while (div != 0)	
+	while (decval != 0)	
 	{
-		mod[i] = div % 16;
-		div = div / 16;
-		if (div == 0 && i == 0)
+		mod[i] = decval % 16;
+		decval = decval / 16;
+		if (decval == 0 && i == 0)
 			mod[i + 1] = 0;
 		i++;
 	}
@@ -39,7 +35,7 @@ void	ft_putstr_non_printable(char *str)
 		if (str[i] >= 0 && str[i] <= 31) 
 		{
 			write(1, "\\", 1);
-			ft_print_hexvalue(str[i]);
+			ft_print_hexvalue(str[i], 0);
 		}
 		else
 			write(1, &str[i], 1);
