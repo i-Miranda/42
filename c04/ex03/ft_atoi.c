@@ -36,16 +36,25 @@ void	ft_putnbr(int nb)
 
 int	ft_atoi(char *str)
 {
+	int i;
 	int atoi[2];
 
+	i = 0;
 	atoi[0] = 0;
 	atoi[1] = 1;
-	while ((*str != '\0') && (*str++ == ' '));
-	while ((*str != '\0') && (*str == '-' || *str == '+'))
-		if (*str++ == '-')
+	while ((str[i] != '\0') && (str[i] == ' '))
+		i++;
+	while ((str[i] != '\0') && (str[i] == '-' || str[i] == '+'))
+	{
+		if (str[i] == '-')
 			atoi[1] *= -1;	
-	while ((*str != '\0') && (*str >= '0' && *str <= '9'))
-		atoi[0] = atoi[0] * 10 + *str++ - '0';
+		i++;
+	}
+	while ((str[i] != '\0') && (str[i] >= '0' && str[i] <= '9'))
+	{
+		atoi[0] = atoi[0] * 10 + str[i] - '0';
+		i++;
+	}
 	return (atoi[0] * atoi[1]);	
 }
 
