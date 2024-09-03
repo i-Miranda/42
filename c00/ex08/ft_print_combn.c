@@ -1,30 +1,16 @@
 #include <unistd.h>
 
-void	ft_putnbr(int nb)
+void	ft_itoa(int nb, char *array, int i, int n)
 {
-	if (nb > 9)
+	if (nb > n)
 	{
-		ft_putnbr(nb / 10);
-		ft_putnbr(nb % 10);
+		ft_itoa(nb / 10, array, i + 1, n);
+		ft_itoa(nb % 10, array, i + 1, n);
 	}
 	else
 	{
-		nb = nb + '0';
-		write(1, &nb, 1);
+		array[i] = nb + '0';
 	}
-}
-
-int	ft_print_digit(int i, int j)
-{
-	char	digit;
-	int		remainder;
-
-	if (i == j)
-		j++;
-	digit = (j / 10) + '0';
-	remainder = (i % 10);
-	write(1, &digit, 1);
-	return(remainder);
 }
 
 int	ft_ten_pow_n(int n)
@@ -43,13 +29,28 @@ int	ft_ten_pow_n(int n)
 void	ft_print_combn(int n)
 {
 	int	i;
+	int	j;
+	char	array[9];
 
-	i = ft_ten_pow_n(n - 2);
+	j = 0;
+	while (j < 9)
+	{
+		array[j] = '\0';
+		j++;
+	}
+	i = 0;
 	if (0 < n && n < 10)
 	{
 		while (i < ft_ten_pow_n(n))
 		{
-			ft_putnbr(i);
+			j = n;
+			ft_itoa(i, array, 0, 9);
+			while (j >= 0)
+			{ 
+				if (array[j] != '\0')
+					write(1, &array[j], 1);
+				j--;
+			}
 			if (i != ft_ten_pow_n(n) - 1)
 				write(1, ", ", 2);
 			i++;

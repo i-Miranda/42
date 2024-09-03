@@ -1,5 +1,4 @@
 #include <unistd.h>
-#include <stdio.h>
 
 void	ft_print_hexvalue(int decval, int i)
 {
@@ -59,7 +58,6 @@ void	ft_print_substr_hexval(char *str, unsigned int length,
 	}
 }
 
-//This isn't working yet
 void	ft_print_memaddr(void *addr)         
 {
 	int	j;
@@ -67,7 +65,7 @@ void	ft_print_memaddr(void *addr)
 
 	j = 7;
 	uchar_addr = (unsigned char *)&addr;
-	while (j > 0)
+	while (j >= 0)
 	{
 		if (uchar_addr[j] != '\0')
 			ft_print_hexvalue(uchar_addr[j], 0);
@@ -96,7 +94,6 @@ void	*ft_print_memory(void *addr, unsigned int size)
 			write(1, "\n", 1);
 			i += 16;	
 		}
-		printf("%p", &addr);
 	}
 	return (addr);
 }
