@@ -1,31 +1,37 @@
 #include <unistd.h>
 
+void	ft_sort_helper(char **argv, int i)
+{
+	int	j;
+	char	*temp;
+
+	j = 0;
+	while (argv[i][j] != '\0')
+	{
+		if (argv[i][j] > argv[i + 1][j])
+		{
+			temp = argv[i];
+			argv[i] = argv[i + 1];
+			argv[i + 1] = temp;
+			break;
+		}
+		else if (argv[i][j] < argv[i + 1][j])
+			break;
+		else
+			j++;
+	}
+}
+
 void    ft_sort_params(int argc, char **argv)
 {
     int     i;
-    int     j;
-    char    *temp;
 
     while (argc > 1)
     {
         i = 1;
         while (i < argc && argv[i + 1] != NULL)
         {
-            j = 0;
-            while (argv[i][j] != '\0')
-            {
-                if (argv[i][j] > argv[i + 1][j])
-                {
-                    temp = argv[i];
-                    argv[i] = argv[i + 1];
-                    argv[i + 1] = temp;
-                    break;
-                }
-                else if (argv[i][j] < argv[i + 1][j])
-                    break;
-                else
-                    j++;
-            }
+			ft_sort_helper(argv, i);
             i++;
         }
         argc--;
