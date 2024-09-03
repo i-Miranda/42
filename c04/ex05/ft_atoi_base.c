@@ -51,17 +51,25 @@ int	ft_check_base(char *base)
 int ft_atoi_base(char *str, char *base)
 {
 	int atoi[2];
+	int	i;
 
 	atoi[0] = 0;
 	atoi[1] = 1;
-	while ((*str != '\0') && (*str++ == ' '));
-	while ((*str != '\0') && (*str == '-' || *str == '+'))
-		if (*str++ == '-')
+	i = 0;
+	while ((str[i] != '\0') && (str[i] == ' '))
+		i++;
+	while ((str[i] != '\0') && (str[i] == '-' || str[i] == '+'))
+	{
+		if (str[i] == '-')
 			atoi[1] *= -1;	
-	while ((*str != '\0') && (*str >= '0' && *str <= '9'))
-		atoi[0] = atoi[0] * ft_strlen(base) + *str++ - '0';
+		i++;
+	}
+	while ((str[i] != '\0') && (str[i] >= '0' && str[i] <= '9'))
+	{
+		atoi[0] = atoi[0] * ft_strlen(base) + str[i] - '0';
+		i++;
+	}
 	return (atoi[0] * atoi[1]);	
-
 }
 
 int main (void)
