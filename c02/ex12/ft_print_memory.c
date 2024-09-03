@@ -62,16 +62,18 @@ void	ft_print_substr_hexval(char *str, unsigned int length,
 //This isn't working yet
 void	ft_print_memaddr(void *addr)         
 {
-	unsigned int	j;
-	int				*int_addr;
+	int	j;
+	unsigned char	*uchar_addr;
 
-	j = 0;
-	int_addr = (int *)addr;
-	while (j < sizeof(int_addr))
+	j = 7;
+	uchar_addr = (unsigned char *)&addr;
+	while (j > 0)
 	{
-		//ft_print_hexvalue(int_addr[j], 0);
-		write(1, &int_addr, 0);	
-		j++;
+		if (uchar_addr[j] != '\0')
+			ft_print_hexvalue(uchar_addr[j], 0);
+		else
+			write(1, "00", 2);
+		j--;
 	}
 } 
 
@@ -87,7 +89,6 @@ void	*ft_print_memory(void *addr, unsigned int size)
 		chr_addr = (char *)addr;
 		while(i < size)
 		{
-			printf("%p", &addr);
 			ft_print_memaddr(addr);
 			write(1, ": ", 2);
 			ft_print_substr_hexval(chr_addr, size, i);
@@ -95,6 +96,7 @@ void	*ft_print_memory(void *addr, unsigned int size)
 			write(1, "\n", 1);
 			i += 16;	
 		}
+		printf("%p", &addr);
 	}
 	return (addr);
 }

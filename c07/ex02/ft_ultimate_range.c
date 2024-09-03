@@ -61,10 +61,12 @@ int	ft_ultimate_range(int **range, int min, int max)
 	}
 	else
 	{
-		*range = malloc((max - min) * sizeof(int));
+		range = malloc((max - min) * sizeof(int));
 		while (i < (max - min))
 		{
-			*range[i] = min + i;
+			*range = malloc(2 * sizeof(int));
+			range[i][1] = min + i;
+			range[i][0] = &range[i][1];
 			i++;
 		}
 	}
@@ -88,10 +90,10 @@ int	main(int argc, char *argv[])
 	i = 0;
 	while (i < max - min)
 	{
-		ft_putnbr(*range[i]);
-		if (*range[i] != max - 1)
-			write (1, ", ", 2);
+		ft_putnbr(range[i][0]);
+		write (1, ", ", 2);
+		ft_putnbr(range[i][1]);
+		write(1, "\n", 1);
 		i++;
 	}
-	write(1, "\n", 1);
 }
