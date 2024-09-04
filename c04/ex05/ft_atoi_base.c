@@ -64,7 +64,8 @@ int ft_atoi_base(char *str, char *base)
 			atoi[1] *= -1;	
 		i++;
 	}
-	while ((str[i] != '\0') && (str[i] >= '0' && str[i] <= '9'))
+	while ((str[i] != '\0') 
+			&& (str[i] >= base[0] && str[i] <= base[ft_strlen(base) - 1]))
 	{
 		atoi[0] = atoi[0] * ft_strlen(base) + str[i] - '0';
 		i++;
@@ -72,7 +73,7 @@ int ft_atoi_base(char *str, char *base)
 	return (atoi[0] * atoi[1]);	
 }
 
-int main (void)
+int main (int argc, char *argv[])
 {
-    
+   	return (0);
 }
