@@ -8,3 +8,7 @@ a.out
 */*.a
 *.o
 */*.o
+test
+*/test
+tags
+*/tags
