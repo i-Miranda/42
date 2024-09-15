@@ -1,5 +1,4 @@
-
-#include "libft.h"
+#include "../libft/libft.h"
 
 static int lenstr(char *str)
 {
@@ -41,12 +40,27 @@ static void catfunc(char *name)
 static void	funcresult(char *result, char *expected)
 {
 	int i;
+	int j;
 	i = 0;
 	while (result[i] != '\0')
 	{
 		if (result[i] != expected[i])
 		{
 			write(1, "FAIL\n", 5);
+			j = 0;
+			while (j < lenstr(result))
+			{
+				write(1, "\n", 1);
+				write(1, &result[j], 1);
+				j++;
+			}
+			j = 0;
+			while (j < lenstr(expected))
+			{
+				write(1, &result[j], 1);
+				write(1, "\n", 1);
+				j++;
+			}
 			return;
 		}
 		i++;
@@ -56,41 +70,35 @@ static void	funcresult(char *result, char *expected)
 
 //!---TESTS---!//
 
-void	test_ft_issomething(int(*f)(int))
+void	test_ft_issomething(int(*f)(int), char *expected)
 {
 	int		i;
 	int		fresult;
-	char	results[127];
-	char	expected[127];
-	char	printchar;
+	char	*results;
 
+	results = malloc(lenstr(expected) * sizeof(char));
 	i = 0;
 	while (i < 128)
 	{
-		printchar = i;	
 		fresult = f(i);
 		if (fresult != 0)
-		{
-			printchar = i;	
-			write(1, &printchar, 1);
-			write(1, "[TRUE]", 6);
-			write(1, "\n", 1);
-		}
-		results[i] = fresult + '0';
+			results[i] = i;	
 		i++;
 	}
 	funcresult(results, expected);
+	free(results);
 }
 
 int	main(void)
 {
 	system("cat libft.h");
-	test_ft_issomething(ft_isalpha);
-	test_ft_issomething(ft_isdigit);
-	test_ft_issomething(ft_isalnum);
-	test_ft_issomething(ft_isascii);
-	test_ft_issomething(ft_isprint);
-	test_ft_issomething(ft_tolower);
-	test_ft_issomething(ft_toupper);
+	test_ft_issomething(ft_isalpha, 
+			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+	test_ft_issomething(ft_isdigit,
+			"0123456789");
+	test_ft_issomething(ft_isalnum,
+			"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+	//test_ft_issomething(ft_isascii);
+	//test_ft_issomething(ft_isprint);
 	return (0);
 }

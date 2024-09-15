@@ -16,6 +16,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	str = malloc((end - start) * sizeof(char));
 	if (str == NULL)
 		return (NULL);
+	i = 0;
 	while (i < (end - start))
 	{
 		str[i] = s1[start + i]; 

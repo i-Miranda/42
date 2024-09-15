@@ -6,10 +6,10 @@ void	*ft_memmove(void *dst, const void *src, size_t n)
 	unsigned char	*temp_src;
 
 	i = 0;
-	temp_src = src;	
+	temp_src = (unsigned char*)src;	
 	while (i < n)
 	{
-		dst[i] = temp_src[i];
+		((unsigned char*)dst)[i] = temp_src[i];
 		i++;
 	}
 	return (dst);		
