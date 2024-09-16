@@ -34,7 +34,19 @@ SOURCES := ft_isalpha.c \
 	ft_putendl_fd.c \
 	ft_putnbr_fd.c \
 
-OBJS := $(SOURCES:.c=.o)
+BONUS := ft_lstnew_bonus.c \
+	ft_lstadd_front_bonus.c \
+	ft_lstsize_bonus.c \
+	ft_lstlast_bonus.c \
+	ft_lstadd_back_bonus.c \
+	ft_lstdelone_bonus.c \
+	ft_lstclear_bonus.c \
+	ft_lstiter_bonus.c \
+	ft_lstmap_bonus.c \
+
+OBJ_O := $(SOURCES:.c=.o)
+
+BONUS_O := $(BONUS:.c=.o)
 
 CCFLAGS := -Wall -Wextra -Werror
 
@@ -48,20 +60,21 @@ CCFLAGS := -Wall -Wextra -Werror
 # -s writes object-files 
 ARFLAGS := -r -s
 
-$(NAME): $(OBJS) 
-	ar $(ARFLAGS) $(NAME) $(OBJS)
+$(NAME): $(OBJ_O) 
+	ar $(ARFLAGS) $(NAME) $(OBJ_O)
 
 .PHONY: all, clean, fclean, re
 
 all: $(NAME)
 
 clean:
-	rm -rf $(OBJS)
+	rm -rf $(OBJ_O)
 
 fclean: clean
 	rm $(NAME)
+	rm -rf $(BONUS_O)
 
 re: fclean all
 
-bonus:
-
+bonus: $(BONUS_O) 
+	ar $(ARFLAGS) $(NAME) $(BONUS_O)

@@ -10,6 +10,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		free(newlist);
 		return (NULL);
 	}
-	f(lst->content);
+	f();
 	del(lst->content);
 }
