@@ -53,9 +53,6 @@ CCFLAGS := -Wall -Wextra -Werror
 %.o: %.c libft.h
 	cc $(CCFLAGS) -c $< -o $@
 
-%_bonus.o: %_bonus.c libft.h
-	cc $(CCFLAGS) -c $< -o $@
-
 # -r replaces or adds a file if doesn't already exist in archive
 # -s writes object-files 
 ARFLAGS := -r -s

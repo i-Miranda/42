@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/17 12:05:26 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/09/17 12:32:12 by ivmirand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 static int	ft_intdigits(int n)
@@ -18,8 +30,8 @@ static int	ft_intdigits(int n)
 char	*ft_itoa(int n)
 {
 	char	*array;
-	int	i;
-	
+	int		i;
+
 	array = malloc(ft_intdigits(n) * sizeof(char));
 	if (array == NULL)
 		return (NULL);
@@ -33,7 +45,7 @@ char	*ft_itoa(int n)
 	i = 0;
 	while (n >= 0)
 	{
-		array[i] = (n / 10) + '0';			
+		array[i] = (n / 10) + '0';
 		n %= 10;
 		i++;
 	}

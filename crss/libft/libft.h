@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/17 12:36:55 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/09/17 12:39:10 by ivmirand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -15,7 +27,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 int		ft_toupper(int c);
-int		ft_tolower(int	c);
+int		ft_tolower(int c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -39,8 +51,8 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 
-// Bonus 
-typedef struct		s_list
+// Bonus
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
