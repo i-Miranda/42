@@ -1,5 +1,7 @@
 NAME := libft.a
 
+COMPILER := cc
+
 SOURCES := ft_isalpha.c \
 	ft_isdigit.c \
 	ft_isalnum.c \
@@ -31,6 +33,7 @@ SOURCES := ft_isalpha.c \
 	ft_strmapi.c \
 	ft_striteri.c \
 	ft_putchar_fd.c \
+	ft_putstr_fd.c \
 	ft_putendl_fd.c \
 	ft_putnbr_fd.c \
 
@@ -51,7 +54,7 @@ BONUS_O := $(BONUS:.c=.o)
 CCFLAGS := -Wall -Wextra -Werror
 
 %.o: %.c libft.h
-	cc $(CCFLAGS) -c $< -o $@
+	$(COMPILER) $(CCFLAGS) -c $< -o $@
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -s writes object-files 

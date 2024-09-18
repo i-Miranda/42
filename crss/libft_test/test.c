@@ -150,14 +150,16 @@ void	test_ft_bzero(void *testptr, size_t len)
 	funcresult(testptr, xpctptr);
 }
 
-void	test_ft_strlsomething(size_t (*f)(char *, const char *, size_t)
+void	test_ft_strlsomething(size_t (*f)(char *, const char *, size_t),
 		size_t expected)
 {
 	size_t		result;
 	size_t		sizetest;
-	char		*chrptr;
-	const char	*cnstptr;
+	char		chrptr[] = {0,1,2,3,4,5,6,7,8,9}; 
+	const char	*cnstptr = "ABCDEFGHIJ"; 
 
+	cnstptr = "ABCDEFGHIJ"; 
+	sizetest = 4 * sizeof(char);
 	result = f(chrptr, cnstptr, sizetest); 
 	if (result == expected)
 		write(1, "PASS", 4);
@@ -170,6 +172,7 @@ int	main(void)
 	char numstr[10] = "0123456789";
 
 	system("cat libft.h");
+	catfunc("ft_isalpha");
 	test_ft_issomething(ft_isalpha, 
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 	test_ft_issomething(ft_isdigit,
@@ -185,5 +188,6 @@ int	main(void)
 	test_ft_bzero(&numstr,4);
 	//test_ft_memsomething(ft_memchr, &numstr, 'B', 4);
 	write(1, "\n", 1);
+	test_ft_strlsomething(ft_strlcpy, 4);
 	return (0);
 }
