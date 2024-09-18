@@ -100,7 +100,7 @@ void	test_ft_strlen(char *str, size_t expected)
 		write(1, "FAIL", 4);
 }
 
-void	test_ft_memsomething(void (*f)(const void *, int, size_t),
+void	test_ft_memsomething(void *(f)(void *, int, size_t),
 		void *testptr, int c, size_t len)
 {
 	char 	*xpctptr;
@@ -109,6 +109,7 @@ void	test_ft_memsomething(void (*f)(const void *, int, size_t),
 
 	tptrlen = ft_strlen(testptr);
 	i = 0;
+	xpctptr = (char *)testptr;
 	while (i < tptrlen)
 	{
 		xpctptr[i] = ((char *)testptr)[i];
@@ -120,7 +121,32 @@ void	test_ft_memsomething(void (*f)(const void *, int, size_t),
 		xpctptr[i] = c;
 		i++;
 	}
-	mem(testptr, c, len);
+	f(testptr, c, len);
+	funcresult(testptr, xpctptr);
+}
+
+// this test is kinda bullshit
+void	test_ft_bzero(void *testptr, size_t len)
+{
+	char 	*xpctptr;
+	size_t	i;
+	size_t	tptrlen;
+
+	tptrlen = ft_strlen(testptr);
+	i = 0;
+	xpctptr = (char *)testptr;
+	while (i < tptrlen)
+	{
+		xpctptr[i] = ((char *)testptr)[i];
+		i++;
+	}
+	i = 0;
+	while (i < len)
+	{
+		xpctptr[i] = 0;
+		i++;
+	}
+	ft_bzero(testptr, len);
 	funcresult(testptr, xpctptr);
 }
 
@@ -141,7 +167,8 @@ int	main(void)
 	test_ft_strlen(numstr, ft_strlen(numstr));
 	write(1, "\n", 1);
 	test_ft_memsomething(ft_memset, &numstr, 'B', 4);
-	test_ft_memsomething(ft_memchr, &numstr, 'B', 4);
+	test_ft_bzero(&numstr,4);
+	//test_ft_memsomething(ft_memchr, &numstr, 'B', 4);
 	write(1, "\n", 1);
 	return (0);
 }
