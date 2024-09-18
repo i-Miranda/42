@@ -100,7 +100,8 @@ void	test_ft_strlen(char *str, size_t expected)
 		write(1, "FAIL", 4);
 }
 
-void	test_ft_memset(void *testptr, int c, size_t len)
+void	test_ft_memsomething(void (*f)(const void *, int, size_t),
+		void *testptr, int c, size_t len)
 {
 	char 	*xpctptr;
 	size_t	i;
@@ -119,7 +120,7 @@ void	test_ft_memset(void *testptr, int c, size_t len)
 		xpctptr[i] = c;
 		i++;
 	}
-	ft_memset(testptr, c, len);
+	mem(testptr, c, len);
 	funcresult(testptr, xpctptr);
 }
 
@@ -128,7 +129,6 @@ int	main(void)
 	char numstr[10] = "0123456789";
 
 	system("cat libft.h");
-	write(1, "\n", 1);
 	test_ft_issomething(ft_isalpha, 
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 	test_ft_issomething(ft_isdigit,
@@ -140,6 +140,8 @@ int	main(void)
 	write(1, "\n", 1);
 	test_ft_strlen(numstr, ft_strlen(numstr));
 	write(1, "\n", 1);
-	test_ft_memset(&numstr, 'B', 4);
+	test_ft_memsomething(ft_memset, &numstr, 'B', 4);
+	test_ft_memsomething(ft_memchr, &numstr, 'B', 4);
+	write(1, "\n", 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:08:28 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/17 12:51:54 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:20:53 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	*ft_memset(void *b, int c, size_t n)
 {
-	size_t	i;
-	unsigned char *ptr;
+	size_t			i;
+	unsigned char	*ptr;
 
 	i = 0;
 	ptr = (unsigned char *)b;
