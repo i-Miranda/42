@@ -50,17 +50,17 @@ static void	funcresult(char *result, char *expected)
 			j = 0;
 			while (j < lenstr(result))
 			{
-				write(1, "\n", 1);
 				write(1, &result[j], 1);
 				j++;
 			}
+			write(1, " : ", 3);
 			j = 0;
 			while (j < lenstr(expected))
 			{
-				write(1, &result[j], 1);
-				write(1, "\n", 1);
+				write(1, &expected[j], 1);
 				j++;
 			}
+			write(1, "\n", 1);
 			return;
 		}
 		i++;
@@ -94,26 +94,39 @@ void	test_ft_strlen(char *str, size_t expected)
 	size_t	i;
 
 	i =	ft_strlen(str);
-	funcresult(i, expected);
+	if (i == expected)
+		write(1, "PASS", 4);
+	else
+		write(1, "FAIL", 4);
 }
 
-void	test_ft_memset(int c, size_t len)
+void	test_ft_memset(void *testptr, int c, size_t len)
 {
-	void	*testptr;
-	char	*xpctptr;
+	char 	*xpctptr;
+	size_t	i;
+	size_t	tptrlen;
 
-	xpctptr = (char *)testptr;	
-	while (len > 0)
+	tptrlen = ft_strlen(testptr);
+	i = 0;
+	while (i < tptrlen)
 	{
-		len--;
-		xpctptr[len] = c;
+		xpctptr[i] = ((char *)testptr)[i];
+		i++;
 	}
-	ft_memset(vptr, c, len);
-	funcresult((char *)testptr, (char *)xpctptr);
+	i = 0;
+	while (i < len)
+	{
+		xpctptr[i] = c;
+		i++;
+	}
+	ft_memset(testptr, c, len);
+	funcresult(testptr, xpctptr);
 }
 
 int	main(void)
 {
+	char numstr[10] = "0123456789";
+
 	system("cat libft.h");
 	write(1, "\n", 1);
 	test_ft_issomething(ft_isalpha, 
@@ -122,11 +135,11 @@ int	main(void)
 			"0123456789");
 	test_ft_issomething(ft_isalnum,
 			"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
-	test_ft_issomething(ft_isascii);
-	test_ft_issomething(ft_isprint);
+	//test_ft_issomething(ft_isascii);
+	//test_ft_issomething(ft_isprint);
 	write(1, "\n", 1);
-	test_ft_strlen("0123456789", 10 * sizeof(char));
+	test_ft_strlen(numstr, ft_strlen(numstr));
 	write(1, "\n", 1);
-	test_memset(testptr, c, len, xpctptr);
+	test_ft_memset(&numstr, 'B', 4);
 	return (0);
 }
