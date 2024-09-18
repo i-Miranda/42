@@ -1,4 +1,4 @@
-#include "../libft/libft.h"
+#include "libft.h"
 
 static int lenstr(char *str)
 {

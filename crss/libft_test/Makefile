@@ -1,17 +1,17 @@
-NAME := test
+NAME := libfttest
 
 COMPILER := cc
 
 SOURCES := test.c
 
-LIBRARY := libft.a
+LIBRARY := libft.h
 
 OUTPUT := $(SOURCES:.c=.o)
 
 CCFLAGS := -Wall -Wextra -Werror
 
 %.o : %.c $(LIBRARY)
-	$(COMPILER) $(CCFLAGS) $(LIBRARY) -c $< -o $@ 
+	$(COMPILER) $(CCFLAGS) -c $< -o $@ 
 
 $(NAME) : $(OUTPUT)
 
@@ -20,8 +20,8 @@ $(NAME) : $(OUTPUT)
 all : $(NAME)
 
 clean :
-	rm $(OUTPUT)
+	rm -rf $(OUTPUT)
 
 fclean : clean
-
+	rm $(NAME)
 re : fclean all
