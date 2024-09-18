@@ -150,6 +150,21 @@ void	test_ft_bzero(void *testptr, size_t len)
 	funcresult(testptr, xpctptr);
 }
 
+void	test_ft_strlsomething(size_t (*f)(char *, const char *, size_t)
+		size_t expected)
+{
+	size_t		result;
+	size_t		sizetest;
+	char		*chrptr;
+	const char	*cnstptr;
+
+	result = f(chrptr, cnstptr, sizetest); 
+	if (result == expected)
+		write(1, "PASS", 4);
+	else
+		write(1, "FAIL", 4);
+}
+
 int	main(void)
 {
 	char numstr[10] = "0123456789";
