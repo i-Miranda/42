@@ -6,12 +6,15 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:36:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/17 12:39:10 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:52:44 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
+#ifndef LIBFT_H
+# define LIBFT_H
+
+# include <unistd.h>
+# include <stdlib.h>
 
 // Parte 1
 int		ft_isalpha(int c);
@@ -67,3 +70,5 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+#endif

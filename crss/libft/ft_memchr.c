@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:06:53 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/18 14:25:12 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:51:27 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	unsigned char	*ptr;
 
 	i = 0;
-	ptr	= (unsigned char *)s; 
+	ptr = (unsigned char *)s;
 	while (i < n)
 	{
 		if (ptr[i] == (unsigned char)c)
