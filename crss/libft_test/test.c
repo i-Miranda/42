@@ -95,9 +95,9 @@ void	test_ft_strlen(char *str, size_t expected)
 
 	i =	ft_strlen(str);
 	if (i == expected)
-		write(1, "PASS", 4);
+		write(1, "PASS\n", 5);
 	else
-		write(1, "FAIL", 4);
+		write(1, "FAIL\n", 5);
 }
 
 void	test_ft_memsomething(void *(f)(void *, int, size_t),
@@ -151,10 +151,9 @@ void	test_ft_bzero(void *testptr, size_t len)
 }
 
 void	test_ft_strlsomething(size_t (*f)(char *, const char *, size_t),
-		size_t expected)
+		size_t sizetest, size_t expected)
 {
 	size_t		result;
-	size_t		sizetest;
 	char		chrptr[] = {0,1,2,3,4,5,6,7,8,9}; 
 	const char	*cnstptr = "ABCDEFGHIJ"; 
 
@@ -162,9 +161,9 @@ void	test_ft_strlsomething(size_t (*f)(char *, const char *, size_t),
 	sizetest = 4 * sizeof(char);
 	result = f(chrptr, cnstptr, sizetest); 
 	if (result == expected)
-		write(1, "PASS", 4);
+		write(1, "PASS\n", 5);
 	else
-		write(1, "FAIL", 4);
+		write(1, "FAIL\n", 5);
 }
 
 int	main(void)
@@ -188,6 +187,7 @@ int	main(void)
 	test_ft_bzero(&numstr,4);
 	//test_ft_memsomething(ft_memchr, &numstr, 'B', 4);
 	write(1, "\n", 1);
-	test_ft_strlsomething(ft_strlcpy, 4);
+	test_ft_strlsomething(ft_strlcpy, 4, 4);
+	test_ft_strlsomething(ft_strlcat, 10, 20);
 	return (0);
 }

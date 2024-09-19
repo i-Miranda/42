@@ -4,16 +4,17 @@ COMPILER := cc
 
 SOURCES := test.c
 
-LIBRARY := libft.h
+LIBRARY := libft.a
 
 OUTPUT := $(SOURCES:.c=.o)
 
 CCFLAGS := -Wall -Wextra -Werror
 
-%.o : %.c $(LIBRARY)
-	$(COMPILER) $(CCFLAGS) -c $< -o $@ 
+%.o : %.c libft.h
+	$(COMPILER) $< $(LIBRARY) -o $@ 
 
 $(NAME) : $(OUTPUT)
+	./test.o
 
 .PHONY := all, clean, fclean, re
 
