@@ -210,6 +210,24 @@ void	test_ft_strlsomething(size_t (*f)(char *, const char *, size_t),
 		write(1, "FAIL\n", 5);
 }
 
+void	test_ft_calloc(size_t count, size_t size, char *expected)
+{
+	char *testptr;
+	
+	teststr("calloc");
+	testptr = calloc(count, size);	
+	funcresult(testptr, expected);
+}
+
+void	test_ft_strdup(const char *str, char *expected)
+{
+	char *result;
+
+	teststr("ft_strdup");
+	result = ft_strdup(str);
+	funcresult(result, expected);
+}
+
 int	main(void)
 {
 	char numstr[10] = "0123456789";
@@ -243,7 +261,9 @@ int	main(void)
 	test_ft_strlsomething(ft_strlcat, 10, 20);
 	write(1, "\n", 1);
 	//test_ft_memcpymove(ft_memcpy, dst, src[8], 5, "Source Source"); 
-	
+	test_ft_atoi("0123456789", 123456789);	
+	test_ft_calloc(8, 1, "00000000");	
+	test_ft_strdup((const char *)numstr, "0123456789");
 	free(src);	
 	return (0);
 }

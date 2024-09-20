@@ -24,5 +24,5 @@ clean :
 	rm -rf $(OUTPUT)
 
 fclean : clean
-	rm $(NAME)
+	clear
 re : fclean all
