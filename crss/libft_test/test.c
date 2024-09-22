@@ -188,10 +188,11 @@ void	test_ft_bzero(void *testptr, size_t len)
 }
 
 void	test_ft_memcpymove(void *(*mem)(void *, const void *, size_t),
-		void *dst, const void *src, size_t n, char *expected)
+		char * func, void *dst, const void *src, size_t n, char *expected)
 {
 		char *result;
 
+		teststr(func);
 		result = (char *)mem(dst, src, n);
 		funcresult(result, expected);
 }
@@ -252,28 +253,30 @@ int	main(void)
 	asciitest = buildstr(30, 127);
 	test_ft_issomething(ft_isprint, "ft_isprint", asciitest);
 	free(asciitest);
-	write(1, "\n", 1); numstr = buildstr('0', '9');
+	write(1, "\n", 1); 
+	numstr = buildstr('0', '9');
 	test_ft_strlen(numstr, lenstr(numstr));
 	free(numstr);
 	write(1, "\n", 1);
-	//numstr = buildstr('0', '9');
-	//test_ft_memsomething(ft_memset, "ft_memset", &numstr, 'B', 4);
-	//free(numstr);
-	//numstr = buildstr('0', '9');
-	//test_ft_bzero(&numstr, 4);
-	//free(numstr);
-	//numstr = buildstr('0', '9');
-	//test_ft_memsomething(ft_memchr, "ft_memchr", &numstr, 'B', 4);
-	//free(numstr);
+	numstr = buildstr('0', '9');
+	test_ft_memsomething(ft_memset, "ft_memset", numstr, 'B', 4);
+	free(numstr);
+	numstr = buildstr('0', '9');
+	test_ft_bzero(numstr, 4);
+	free(numstr);
+	numstr = buildstr('0', '9');
+	test_ft_memsomething(ft_memchr, "ft_memchr", numstr, 'B', 4);
+	free(numstr);
 	write(1, "\n", 1);
 	test_ft_strlsomething(ft_strlcpy, "ft_strlcpy", 4, 4);
 	test_ft_strlsomething(ft_strlcat, "ft_strlcat", 10, 20);
 	write(1, "\n", 1);
-	test_ft_memcpymove(ft_memcpy, dst, &((const void *)src)[8], 5, "Source Source"); 
+	test_ft_memcpymove(ft_memcpy, "ft_memcpy", 
+			dst, &((const void *)src)[8], 5, "Source Source"); 
+	free(src);	
 	test_ft_calloc(8, 1, "00000000");	
 	//numstr = buildstr('0', '9');
 	//test_ft_strdup((const char *)numstr, "0123456789");
 	//free(numstr);
-	free(src);	
 	return (0);
 }
