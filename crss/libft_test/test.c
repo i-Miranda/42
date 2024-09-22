@@ -264,6 +264,29 @@ void	test_ft_strchr(char *(*f)(const char *, int), char *func,
 	funcresult(result, position);
 }
 
+void	test_ft_memcmp(const void *s1, const void *s2, size_t n)
+{
+	int	ft_result;
+	int result;
+
+	teststr("ft_memcmp");
+	ft_result = ft_memcmp(s1, s2, n);
+	result = memcmp(s1, s2, n);
+
+	if (ft_result == result)
+	{
+		write(1, "\x1b[32m", 5); 
+		write(1, "PASS\n", 5);
+		write(1, "\x1b[37m", 5); 
+	}
+	else
+	{
+		write(1, "\x1b[31m", 5); 
+		write(1, "FAIL\n", 5);
+		write(1, "\x1b[37m", 5); 
+	}
+}
+
 void	test_ft_atoi(char *ascii, int expected)
 {
 	int result;
@@ -330,17 +353,22 @@ int	main(void)
 			dst, &((const void *)src)[8], 5, "Source Source"); 
 	write(1, "\n", 1);
 	test_ft_strlsomething(ft_strlcpy, "ft_strlcpy", 4, 4);
+	// FAILS
 	test_ft_strlsomething(ft_strlcat, "ft_strlcat", 10, 20);
 	write(1, "\n", 1);
 	test_ft_tosomething(ft_toupper, "ft_toupper", "abcdefghijklmnopqrstuvwxyz",
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	// FAILS
 	test_ft_tosomething(ft_tolower, "ft_tolower", "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 			"abcdefghijklmnopqrstuvwxyz");
 	write(1, "\n", 1);
 	test_ft_strchr(ft_strchr, "ft_strchr", teststrchr, 'A', &teststrchr[0]);
+	// FAILS
 	test_ft_strchr(ft_strrchr, "ft_strrchr", teststrchr, 'A', &src[8]);
 	test_ft_memsomething(ft_memchr, "ft_memchr", numstr, 'B', 4);
 	write(1, "\n", 1);
+	test_ft_memcmp("test 1", "test 2", 4);
+	// FAILS
 	test_ft_atoi("123456789", 123456789);
 	test_ft_calloc(8, 1, "00000000");	
 	//test_ft_strdup((const char *)numstr, "0123456789");
