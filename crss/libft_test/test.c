@@ -55,6 +55,7 @@ static void	funcresult(char *result, char *expected)
 		{
 			write(1, "\x1b[31m", 5); 
 			write(1, "FAIL\n", 5);
+			write(1, "\x1b[37m", 5); 
 			j = 0;
 			while (j < lenstr(result))
 			{
@@ -73,7 +74,9 @@ static void	funcresult(char *result, char *expected)
 		}
 		i++;
 	}
+	write(1, "\x1b[32m", 5); 
 	write(1, "PASS\n", 5);
+	write(1, "\x1b[37m", 5); 
 }
 
 static char *buildstr(int start, int end)
@@ -81,18 +84,19 @@ static char *buildstr(int start, int end)
 	char	*str;
 	int		i;
 
-	str = malloc((end - start + 1) * sizeof(char));
+	i = 0;
+	str = malloc(end - start - 1);
 	if (str == NULL)
 	{
 		free(str);
 		return (NULL);
 	}
-	i = 0;
-	while (i < end - start + 1)
+	while (i < (end - start))
 	{
 		str[i] = start + i;	
 		i++;
 	}
+	str[i] = '\0';
 	return (str);
 }
 
@@ -214,9 +218,27 @@ void	test_ft_strlsomething(size_t (*f)(char *, const char *, size_t),
 		write(1, "FAIL\n", 5);
 }
 
+void	test_ft_tosomething(int (*to)(int), char *func, 
+		char *test, char *expected)
+{
+	char	*result;
+	int		i;
+
+	teststr(func);
+	result = malloc((lenstr(test)) * sizeof(char));
+	i = 0;
+	while (i < lenstr(test))
+	{
+		result[i] = to(test[i]);
+		i++;
+	}
+	result[i] = '\0';
+	funcresult(result, expected);	
+}
+
 void	test_ft_calloc(size_t count, size_t size, char *expected)
 {
-	char *testptr;
+	char	*testptr;
 	
 	teststr("calloc");
 	testptr = calloc(count, size);	
@@ -225,7 +247,7 @@ void	test_ft_calloc(size_t count, size_t size, char *expected)
 
 void	test_ft_strdup(const char *str, char *expected)
 {
-	char *result;
+	char	*result;
 
 	teststr("ft_strdup");
 	result = ft_strdup(str);
@@ -234,49 +256,44 @@ void	test_ft_strdup(const char *str, char *expected)
 
 int	main(void)
 {
-	char *numstr;
-	char *asciitest;
-	void *src = malloc(ft_strlen("Test 1 Source"));
-	char dst[6] = "Test 1";
+	char	*numstr;
+	char	*printtest;
+	void	*src; 
+	char	dst[6] = "Test 1";
 
 	system("cd ../libft; norminette");
 	system("cat libft.h");
 	test_ft_issomething(ft_isalpha, "ft_isalpha", 
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
-	test_ft_issomething(ft_isdigit, "ft_isdigit",
-			numstr);
+	numstr = buildstr('0', '9');
+	test_ft_issomething(ft_isdigit, "ft_isdigit", numstr);
 	test_ft_issomething(ft_isalnum, "ft_isalnum",
 			"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
-	asciitest = buildstr(0, 127);
-	test_ft_issomething(ft_isascii, "ft_isascii", asciitest);
-	free(asciitest);
-	asciitest = buildstr(30, 127);
-	test_ft_issomething(ft_isprint, "ft_isprint", asciitest);
-	free(asciitest);
+	printtest = buildstr(' ', '~');
+	test_ft_issomething(ft_isprint, "ft_isprint", printtest);
 	write(1, "\n", 1); 
-	numstr = buildstr('0', '9');
 	test_ft_strlen(numstr, lenstr(numstr));
-	free(numstr);
 	write(1, "\n", 1);
-	numstr = buildstr('0', '9');
 	test_ft_memsomething(ft_memset, "ft_memset", numstr, 'B', 4);
-	free(numstr);
-	numstr = buildstr('0', '9');
 	test_ft_bzero(numstr, 4);
-	free(numstr);
-	numstr = buildstr('0', '9');
-	test_ft_memsomething(ft_memchr, "ft_memchr", numstr, 'B', 4);
-	free(numstr);
+	write(1, "\n", 1);
+	src = malloc(ft_strlen("Test 1 Source"));
+	test_ft_memcpymove(ft_memcpy, "ft_memcpy", 
+			dst, &((const void *)src)[8], 5, "Source Source"); 
 	write(1, "\n", 1);
 	test_ft_strlsomething(ft_strlcpy, "ft_strlcpy", 4, 4);
 	test_ft_strlsomething(ft_strlcat, "ft_strlcat", 10, 20);
 	write(1, "\n", 1);
-	test_ft_memcpymove(ft_memcpy, "ft_memcpy", 
-			dst, &((const void *)src)[8], 5, "Source Source"); 
-	free(src);	
+	test_ft_tosomething(ft_toupper, "ft_toupper", "abcdefghijklmnopqrstuvwxyz",
+			"ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	test_ft_tosomething(ft_tolower, "ft_tolower", "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+			"abcdefghijklmnopqrstuvwxyz");
+	write(1, "\n", 1);
+	test_ft_memsomething(ft_memchr, "ft_memchr", numstr, 'B', 4);
+	write(1, "\n", 1);
 	test_ft_calloc(8, 1, "00000000");	
-	//numstr = buildstr('0', '9');
-	//test_ft_strdup((const char *)numstr, "0123456789");
-	//free(numstr);
+	test_ft_strdup((const char *)numstr, "0123456789");
+	free(numstr);	
+	free(src);	
 	return (0);
 }
