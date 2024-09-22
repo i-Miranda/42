@@ -236,12 +236,23 @@ void	test_ft_tosomething(int (*to)(int), char *func,
 	funcresult(result, expected);	
 }
 
+void	test_ft_atoi(char *ascii, int expected)
+{
+	int result;
+	teststr("ft_atoi");
+	result = ft_atoi(ascii);	
+		if (result == expected)
+		write(1, "PASS\n", 5);
+	else
+		write(1, "FAIL\n", 5);
+}
+
 void	test_ft_calloc(size_t count, size_t size, char *expected)
 {
 	char	*testptr;
 	
-	teststr("calloc");
-	testptr = calloc(count, size);	
+	teststr("ft_calloc");
+	testptr = ft_calloc(count, size);	
 	funcresult(testptr, expected);
 }
 
@@ -291,6 +302,7 @@ int	main(void)
 	write(1, "\n", 1);
 	test_ft_memsomething(ft_memchr, "ft_memchr", numstr, 'B', 4);
 	write(1, "\n", 1);
+	test_ft_atoi("123456789", 123456789);
 	test_ft_calloc(8, 1, "00000000");	
 	test_ft_strdup((const char *)numstr, "0123456789");
 	free(numstr);	
