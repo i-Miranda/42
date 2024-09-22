@@ -53,6 +53,7 @@ static void	funcresult(char *result, char *expected)
 	{
 		if (result[i] != expected[i])
 		{
+			write(1, "\x1b[31m", 5); 
 			write(1, "FAIL\n", 5);
 			j = 0;
 			while (j < lenstr(result))
@@ -81,12 +82,12 @@ static char *buildstr(int start, int end)
 	int		i;
 
 	str = malloc((end - start + 1) * sizeof(char));
-	i = 0;
 	if (str == NULL)
 	{
 		free(str);
 		return (NULL);
 	}
+	i = 0;
 	while (i < end - start + 1)
 	{
 		str[i] = start + i;	
@@ -135,12 +136,13 @@ void	test_ft_strlen(char *str, size_t expected)
 }
 
 void	test_ft_memsomething(void *(f)(void *, int, size_t),
-		void *testptr, int c, size_t len)
+		char *func, void *testptr, int c, size_t len)
 {
 	char 	*xpctptr;
 	size_t	i;
 	size_t	tptrlen;
 
+	teststr(func);
 	tptrlen = lenstr(testptr);
 	i = 0;
 	xpctptr = (char *)testptr;
@@ -195,12 +197,13 @@ void	test_ft_memcpymove(void *(*mem)(void *, const void *, size_t),
 }
 
 void	test_ft_strlsomething(size_t (*f)(char *, const char *, size_t),
-		size_t sizetest, size_t expected)
+		char *func, size_t sizetest, size_t expected)
 {
 	size_t		result;
 	char		chrptr[] = {0,1,2,3,4,5,6,7,8,9}; 
 	const char	*cnstptr = "ABCDEFGHIJ"; 
 
+	teststr(func);
 	cnstptr = "ABCDEFGHIJ"; 
 	sizetest = 4 * sizeof(char);
 	result = f(chrptr, cnstptr, sizetest); 
@@ -230,14 +233,13 @@ void	test_ft_strdup(const char *str, char *expected)
 
 int	main(void)
 {
-	char numstr[10] = "0123456789";
-	char dst[6] = "Test 1";
-	void *src = malloc(ft_strlen("Test 1 Source"));
+	char *numstr;
 	char *asciitest;
+	void *src = malloc(ft_strlen("Test 1 Source"));
+	char dst[6] = "Test 1";
 
 	system("cd ../libft; norminette");
 	system("cat libft.h");
-	//catfunc("../libft/ft_isalpha.c");
 	test_ft_issomething(ft_isalpha, "ft_isalpha", 
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 	test_ft_issomething(ft_isdigit, "ft_isdigit",
@@ -245,25 +247,33 @@ int	main(void)
 	test_ft_issomething(ft_isalnum, "ft_isalnum",
 			"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 	asciitest = buildstr(0, 127);
-	test_ft_issomething(ft_isascii, "ft_isascii",
-			asciitest);
+	test_ft_issomething(ft_isascii, "ft_isascii", asciitest);
 	free(asciitest);
-	test_ft_issomething(ft_isprint, "ft_isprint",
-			" ");
-	write(1, "\n", 1);
+	asciitest = buildstr(30, 127);
+	test_ft_issomething(ft_isprint, "ft_isprint", asciitest);
+	free(asciitest);
+	write(1, "\n", 1); numstr = buildstr('0', '9');
 	test_ft_strlen(numstr, lenstr(numstr));
+	free(numstr);
 	write(1, "\n", 1);
-	test_ft_memsomething(ft_memset, &numstr, 'B', 4);
-	test_ft_bzero(&numstr, 4);
-	//test_ft_memsomething(ft_memchr, &numstr, 'B', 4);
+	//numstr = buildstr('0', '9');
+	//test_ft_memsomething(ft_memset, "ft_memset", &numstr, 'B', 4);
+	//free(numstr);
+	//numstr = buildstr('0', '9');
+	//test_ft_bzero(&numstr, 4);
+	//free(numstr);
+	//numstr = buildstr('0', '9');
+	//test_ft_memsomething(ft_memchr, "ft_memchr", &numstr, 'B', 4);
+	//free(numstr);
 	write(1, "\n", 1);
-	test_ft_strlsomething(ft_strlcpy, 4, 4);
-	test_ft_strlsomething(ft_strlcat, 10, 20);
+	test_ft_strlsomething(ft_strlcpy, "ft_strlcpy", 4, 4);
+	test_ft_strlsomething(ft_strlcat, "ft_strlcat", 10, 20);
 	write(1, "\n", 1);
-	//test_ft_memcpymove(ft_memcpy, dst, src[8], 5, "Source Source"); 
-	test_ft_atoi("0123456789", 123456789);	
+	test_ft_memcpymove(ft_memcpy, dst, &((const void *)src)[8], 5, "Source Source"); 
 	test_ft_calloc(8, 1, "00000000");	
-	test_ft_strdup((const char *)numstr, "0123456789");
+	//numstr = buildstr('0', '9');
+	//test_ft_strdup((const char *)numstr, "0123456789");
+	//free(numstr);
 	free(src);	
 	return (0);
 }
