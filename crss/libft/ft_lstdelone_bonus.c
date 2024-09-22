@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:05:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/17 12:05:42 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/09/22 15:51:08 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
 	if (lst == NULL || del == NULL)
-		return;
+		return ;
 	del(lst->content);
 	free(lst);
 }
