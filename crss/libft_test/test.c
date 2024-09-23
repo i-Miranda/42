@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include <string.h>
 #include "libft.h"
 
 static int lenstr(char *str)
@@ -207,16 +208,14 @@ void	test_ft_memcpymove(void *(*mem)(void *, const void *, size_t),
 }
 
 void	test_ft_strlsomething(size_t (*f)(char *, const char *, size_t),
-		char *func, size_t sizetest, size_t expected)
+		char *func, char *str, const char *cstr, 
+		size_t sizetest, size_t expected)
 {
 	size_t		result;
-	char		chrptr[] = {0,1,2,3,4,5,6,7,8,9}; 
-	const char	*cnstptr = "ABCDEFGHIJ"; 
 
 	teststr(func);
-	cnstptr = "ABCDEFGHIJ"; 
-	sizetest = 4 * sizeof(char);
-	result = f(chrptr, cnstptr, sizetest); 
+	sizetest = sizetest * sizeof(char);
+	result = f(str, cstr, sizetest); 
 	if (result == expected)
 	{
 		write(1, "\x1b[32m", 5); 
@@ -330,11 +329,15 @@ int	main(void)
 	void	*src; 
 	char	dst[6] = "Test 1";
 	char	teststrchr[8] = "AAAAAAAA";
+	char	str[10] = "0123456789";
+	const char cstr[10] = "ABCDEFGHIJ";
 
 	src = malloc(ft_strlen("Test 1 Source"));
 	numstr = buildstr('0', '9');
 
 	system("cd ../libft; norminette");
+	write(1, "\n", 1); 
+	write(1, "Testing Part 1", 14);
 	write(1, "\n", 1); 
 	test_ft_issomething(ft_isalpha, isalpha, "ft_isalpha");
 	test_ft_issomething(ft_isdigit, isdigit, "ft_isdigit");
@@ -352,19 +355,17 @@ int	main(void)
 	test_ft_memcpymove(ft_memmove, "ft_memmove", 
 			dst, &((const void *)src)[8], 5, "Source Source"); 
 	write(1, "\n", 1);
-	test_ft_strlsomething(ft_strlcpy, "ft_strlcpy", 4, 4);
+	test_ft_strlsomething(ft_strlcpy, "ft_strlcpy", str, cstr, 4, 4);
 	// FAILS
-	test_ft_strlsomething(ft_strlcat, "ft_strlcat", 10, 20);
+	test_ft_strlsomething(ft_strlcat, "ft_strlcat", str, cstr, 14, 20);
 	write(1, "\n", 1);
 	test_ft_tosomething(ft_toupper, "ft_toupper", "abcdefghijklmnopqrstuvwxyz",
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-	// FAILS
 	test_ft_tosomething(ft_tolower, "ft_tolower", "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 			"abcdefghijklmnopqrstuvwxyz");
 	write(1, "\n", 1);
 	test_ft_strchr(ft_strchr, "ft_strchr", teststrchr, 'A', &teststrchr[0]);
-	// FAILS
-	test_ft_strchr(ft_strrchr, "ft_strrchr", teststrchr, 'A', &src[8]);
+	test_ft_strchr(ft_strrchr, "ft_strrchr", teststrchr, 'A', &teststrchr[7]);
 	test_ft_memsomething(ft_memchr, "ft_memchr", numstr, 'B', 4);
 	write(1, "\n", 1);
 	test_ft_memcmp("test 1", "test 2", 4);
