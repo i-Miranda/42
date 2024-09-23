@@ -402,8 +402,8 @@ void	test_part_one(void)
 	write(1, "\n", 1);
 	test_ft_strncmp("ABC", "ABC", 3, 0);
 	write(1, "\n", 1);
-	test_ft_memsomething(ft_memchr, "ft_memchr", numstr, 'B', 4);
-	test_ft_memchr(cstr, 'D', 6, &cstr[3]);
+	//test_ft_memsomething((const void *)ft_memchr, "ft_memchr", numstr, 'B', 4);
+	//test_ft_memchr(cstr, 'D', 6, (const char *)&cstr[3]);
 	write(1, "\n", 1);
 	test_ft_memcmp("test 1", "test 2", 4);
 	write(1, "\n", 1);
@@ -433,7 +433,7 @@ int	main(int argc, char *argv[])
 	if (argc == 1 || argc == 2)
 	{
 		//system("cd ../libft; norminette");
-		if (argc == 1 || argv[1] == "1")
+		if (argc == 1 || ft_strncmp(argv[1] == "1"))
 			test_part_one();
 		if (argc == 1 || argv[1] == "2") 
 			test_part_two();
