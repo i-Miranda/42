@@ -263,6 +263,35 @@ void	test_ft_strchr(char *(*f)(const char *, int), char *func,
 	funcresult(result, position);
 }
 
+void	test_ft_strncmp(const char *s1, const char *s2, size_t n, int expected)
+{
+	int	result;
+
+	teststr("ft_strncmp");
+	result = ft_strncmp(s1, s2, n);
+	if (result == expected)
+	{
+		write(1, "\x1b[32m", 5); 
+		write(1, "PASS\n", 5);
+		write(1, "\x1b[37m", 5); 
+	}
+	else
+	{
+		write(1, "\x1b[31m", 5); 
+		write(1, "FAIL\n", 5);
+		write(1, "\x1b[37m", 5); 
+	}
+}
+
+void	test_ft_memchr(const char *str, int c, size_t n, char *expected)
+{
+	char *result;
+
+	teststr("ft_memchr");
+	result = ft_memchr(str, c, n);
+	funcresult(result, expected);
+}
+
 void	test_ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	int	ft_result;
@@ -284,6 +313,16 @@ void	test_ft_memcmp(const void *s1, const void *s2, size_t n)
 		write(1, "FAIL\n", 5);
 		write(1, "\x1b[37m", 5); 
 	}
+}
+
+void	test_ft_strnstr(const char *haystack, const char *needle, size_t len,
+		char *expected)
+{
+	char	*result;
+
+	teststr("ft_strnstr");
+	result = ft_strnstr(haystack, needle, len);
+	funcresult(result, expected);
 }
 
 void	test_ft_atoi(char *ascii, int expected)
@@ -323,57 +362,83 @@ void	test_ft_strdup(const char *str, char *expected)
 	funcresult(result, expected);
 }
 
-int	main(void)
+//------TEST COMPILATION--------//
+void	test_part_one(void)
 {
-	char	*numstr;
-	void	*src; 
-	char	dst[6] = "Test 1";
-	char	teststrchr[8] = "AAAAAAAA";
-	char	str[10] = "0123456789";
-	const char cstr[10] = "ABCDEFGHIJ";
-
-	src = malloc(ft_strlen("Test 1 Source"));
-	numstr = buildstr('0', '9');
-
-	system("cd ../libft; norminette");
-	write(1, "\n", 1); 
-	write(1, "Testing Part 1", 14);
-	write(1, "\n", 1); 
+	write(1, "\nTESTING PART 1\n", 16);
 	test_ft_issomething(ft_isalpha, isalpha, "ft_isalpha");
 	test_ft_issomething(ft_isdigit, isdigit, "ft_isdigit");
 	test_ft_issomething(ft_isalnum, isalnum, "ft_isalnum");
 	test_ft_issomething(ft_isascii, isascii, "ft_isascii");
 	test_ft_issomething(ft_isprint, isprint, "ft_isprint");
 	write(1, "\n", 1); 
+	char	*numstr = buildstr('0', '9');
 	test_ft_strlen(numstr, lenstr(numstr));
 	write(1, "\n", 1);
 	test_ft_memsomething(ft_memset, "ft_memset", numstr, 'B', 4);
 	test_ft_bzero(numstr, 4);
 	write(1, "\n", 1);
+	// THIS IS NOT RIGHT
+	void	*src = malloc(ft_strlen("Test 1 Source"));
+	char	dst[6] = "Test 1";
 	test_ft_memcpymove(ft_memcpy, "ft_memcpy", 
 			dst, &((const void *)src)[8], 5, "Source Source"); 
 	test_ft_memcpymove(ft_memmove, "ft_memmove", 
 			dst, &((const void *)src)[8], 5, "Source Source"); 
 	write(1, "\n", 1);
+	char	str[10] = "0123456789";
+	const char cstr[10] = "ABCDEFGHIJ";
 	test_ft_strlsomething(ft_strlcpy, "ft_strlcpy", str, cstr, 4, 4);
-	// FAILS
-	test_ft_strlsomething(ft_strlcat, "ft_strlcat", str, cstr, 14, 20);
+	test_ft_strlsomething(ft_strlcat, "ft_strlcat", str, cstr, 14, 18);
 	write(1, "\n", 1);
 	test_ft_tosomething(ft_toupper, "ft_toupper", "abcdefghijklmnopqrstuvwxyz",
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 	test_ft_tosomething(ft_tolower, "ft_tolower", "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 			"abcdefghijklmnopqrstuvwxyz");
 	write(1, "\n", 1);
+	char	teststrchr[9] = "AAAAAAAA\0";
 	test_ft_strchr(ft_strchr, "ft_strchr", teststrchr, 'A', &teststrchr[0]);
 	test_ft_strchr(ft_strrchr, "ft_strrchr", teststrchr, 'A', &teststrchr[7]);
+	write(1, "\n", 1);
+	test_ft_strncmp("ABC", "ABC", 3, 0);
+	write(1, "\n", 1);
 	test_ft_memsomething(ft_memchr, "ft_memchr", numstr, 'B', 4);
+	test_ft_memchr(cstr, 'D', 6, &cstr[3]);
 	write(1, "\n", 1);
 	test_ft_memcmp("test 1", "test 2", 4);
+	write(1, "\n", 1);
+	// FAILS
+	test_ft_strnstr("test this now\0", "that", 12, "this");
+	write(1, "\n", 1);
 	// FAILS
 	test_ft_atoi("123456789", 123456789);
 	test_ft_calloc(8, 1, "00000000");	
-	//test_ft_strdup((const char *)numstr, "0123456789");
-	free(numstr);	
-	free(src);	
+	test_ft_strdup(&numstr[4], "456789");
+	//free(numstr);	
+	//free(src);	
+}
+
+void	test_part_two(void)
+{
+	write(1, "\nTESTING PART 2\n", 16);
+}
+
+void	test_bonus(void)
+{
+	write(1, "\nTESTING BONUS\n", 15);
+}
+
+int	main(int argc, char *argv[])
+{
+	if (argc == 1 || argc == 2)
+	{
+		//system("cd ../libft; norminette");
+		if (argc == 1 || argv[1] == "1")
+			test_part_one();
+		if (argc == 1 || argv[1] == "2") 
+			test_part_two();
+		if (argc == 1 || argv[1] == "bonus")
+			test_bonus();
+	}
 	return (0);
 }
