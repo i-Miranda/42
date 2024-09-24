@@ -388,30 +388,35 @@ void	test_part_one(void)
 	test_ft_issomething(ft_isascii, isascii, "ft_isascii");
 	test_ft_issomething(ft_isprint, isprint, "ft_isprint");
 	write(1, "\n", 1); 
+
 	test_ft_strlen(10);
 	write(1, "\n", 1);
+
 	numstr = buildstr('0', '9');
 	voidnum = (void *)numstr;
 	test_ft_memset(voidnum, 'B', 4);
 	test_ft_bzero(voidnum, 4);
 	free(numstr);
 	write(1, "\n", 1);
+
 	numstr = buildstr('0', '9');
 	cnstvdnum = (const void *)numstr;
 	alphastr = buildstr('A', 'J');
 	test_ft_memcpymove(ft_memcpy, "ft_memcpy", alphastr, &cnstvdnum[8],
 			5, "89"); 
-	test_ft_memcpymove(ft_memmove, "ft_memmove", cnstvdnum, &cnstvdnum[3], 
-			5, cnstvdnum); 
+	test_ft_memcpymove(ft_memmove, "ft_memmove", (void *)cnstvdnum, &cnstvdnum[3], 
+			5, (char *)cnstvdnum); 
 	free(numstr);
 	free(alphastr);
 	write(1, "\n", 1);
+
 	numstr = buildstr('0', '9');
 	alphastr = buildstr('A', 'J');
 	test_ft_strlsomething(ft_strlcpy, "ft_strlcpy", numstr,
 			(const char *)alphastr, 4, 4);
 	free(numstr);
 	free(alphastr);
+
 	numstr = buildstr('0', '9');
 	alphastr = buildstr('A', 'J');
 	test_ft_strlsomething(ft_strlcat, "ft_strlcat", numstr, 
@@ -419,37 +424,53 @@ void	test_part_one(void)
 	free(numstr);
 	free(alphastr);
 	write(1, "\n", 1);
+
 	alphastr = buildstr('a', 'z');
 	capstr = buildstr('A', 'Z');
 	test_ft_tosomething(ft_toupper, "ft_toupper", alphastr, capstr);
 	free(alphastr);
 	free(capstr);
+
 	alphastr = buildstr('a', 'z');
 	capstr = buildstr('A', 'Z');
 	test_ft_tosomething(ft_tolower, "ft_tolower", capstr, alphastr);
 	free(alphastr);
 	free(capstr);
 	write(1, "\n", 1);
-	char	teststrchr[9] = "AAAAAAAA\0";
-	test_ft_strchr(ft_strchr, "ft_strchr", teststrchr, 'A', &teststrchr[0]);
-	test_ft_strchr(ft_strrchr, "ft_strrchr", teststrchr, 'A', &teststrchr[7]);
+
+	alphastr = buildstr('A', 'I');
+	test_ft_strchr(ft_strchr, "ft_strchr", alphastr, 'A', &alphastr[0]);
+	test_ft_strchr(ft_strrchr, "ft_strrchr", alphastr, 'H', &alphastr[7]);
+	free(alphastr);
 	write(1, "\n", 1);
+
 	test_ft_strncmp("ABC", "ABC", 3, strncmp("ABC", "ABC", 3));
+	// FAILS
 	test_ft_strncmp("AB", "ABC", 3, strncmp("AB", "ABC", 3));
 	write(1, "\n", 1);
+
 	capstr = buildstr('A', 'Z');
-	test_ft_memchr(capstr, 'D', 6, (const char *)&capstr[3]);
+	test_ft_memchr(capstr, 'D', 6, 
+			&capstr[3]);
+	free(capstr);
 	write(1, "\n", 1);
+
 	test_ft_memcmp("test 1", "test 2", 4);
 	write(1, "\n", 1);
+
 	// FAILS
-	test_ft_strnstr("test this now\0", "that", 12, 
-			strnstr("test this now\0", "that", 12));
+	capstr = buildstr('A', 'J');
+	alphastr = buildstr('C', 'F');
+	test_ft_strnstr(capstr, alphastr, 12, 
+			strnstr(capstr, alphastr, 12));
+	free(capstr);
+	free(alphastr);
 	write(1, "\n", 1);
+
 	test_ft_atoi("  -1b23456789", atoi("  -1b23456789"));
 	test_ft_calloc(8, 1, "00000000");	
 	test_ft_strdup("456789");
-	free(numstr);
+	//free(numstr);
 }
 
 void	test_part_two(void)
@@ -466,10 +487,11 @@ int	main(int argc, char *argv[])
 {
 	if (argc == 1 || argc == 2)
 	{
-		//system("cd ../libft; norminette");
-		if (argc == 1 || ft_strncmp(argv[1], "1", 1))
+		if (argc == 2 && argv[2] == "norminette")
+			system("cd ../libft; norminette");
+		if (argc == 1 || ft_strncmp(argv[1], "1", 5))
 			test_part_one();
-		if (argc == 1 || ft_strncmp(argv[1], "2", 1)) 
+		if (argc == 1 || ft_strncmp(argv[1], "2", 5)) 
 			test_part_two();
 		if (argc == 1 || ft_strncmp(argv[1], "bonus", 5))
 			test_bonus();
