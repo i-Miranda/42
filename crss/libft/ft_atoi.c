@@ -15,11 +15,15 @@
 int	ft_atoi(const char *str)
 {
 	int	i;
+	int	result;
 	int	neg;
 
 	i = 0;
+	result = 0;
 	neg = 1;
-	while (str[i] != '\0' && (str[i] == '-' || str[i] == '+'))
+	while (str[i] != '\0' && str[i] == ' ')
+		i++;
+	if (str[i] != '\0' && (str[i] == '-' || str[i] == '+'))
 	{
 		if (str[i] == '-')
 			neg *= -1;
@@ -27,8 +31,8 @@ int	ft_atoi(const char *str)
 	}
 	while (str[i] != '\0' && ft_isdigit(str[i]))
 	{
-		i = i * 10 + str[i] - '0';
+		result = (result * 10) + (str[i] - '0');
 		i++;
 	}
-	return (i * neg);
+	return (result * neg);
 }

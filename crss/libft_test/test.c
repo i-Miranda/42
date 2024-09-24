@@ -87,13 +87,13 @@ static char *buildstr(int start, int end)
 	int		i;
 
 	i = 0;
-	str = malloc((end - start - 1) * sizeof(char));
+	str = malloc((end - start) * sizeof(char));
 	if (str == NULL)
 	{
 		free(str);
 		return (NULL);
 	}
-	while (i < (end - start))
+	while (i <= (end - start))
 	{
 		str[i] = start + i;	
 		i++;
@@ -145,6 +145,7 @@ void	test_ft_strlen(size_t expected)
 		write(1, "FAIL\n", 5);
 		write(1, "\x1b[37m", 5); 
 	}
+	free (numstr);
 }
 
 void	test_ft_memset(void *testptr, int c, size_t len)
@@ -340,6 +341,10 @@ void	test_ft_atoi(char *ascii, int expected)
 	{
 		write(1, "\x1b[31m", 5); 
 		write(1, "FAIL\n", 5);
+		ft_putnbr_fd(ft_atoi(ascii), 1);
+		write(1, " : ", 3);
+		ft_putnbr_fd(atoi(ascii), 1);
+		write(1, "\n", 1);
 		write(1, "\x1b[37m", 5); 
 	}
 }
@@ -366,6 +371,12 @@ void	test_ft_strdup(char *expected)
 //------TEST COMPILATION--------//
 void	test_part_one(void)
 {
+	char		*numstr;
+	char		*alphastr;
+	char		*capstr;
+	void		*voidnum;
+	const void	*cnstvdnum;
+
 	write(1, "\nTESTING PART 1\n", 16);
 	test_ft_issomething(ft_isalpha, isalpha, "ft_isalpha");
 	test_ft_issomething(ft_isdigit, isdigit, "ft_isdigit");
@@ -375,34 +386,55 @@ void	test_part_one(void)
 	write(1, "\n", 1); 
 	test_ft_strlen(10);
 	write(1, "\n", 1);
-	test_ft_memset("0123456789", 'B', 4);
-	test_ft_bzero("0123456789" , 4);
+	numstr = buildstr('0', '9');
+	voidnum = (void *)numstr;
+	test_ft_memset(voidnum, 'B', 4);
+	test_ft_bzero(voidnum, 4);
+	free(numstr);
 	write(1, "\n", 1);
-	// THIS IS NOT RIGHT
-	void	*src = malloc(ft_strlen("Test 1 Source"));
-	char	dst[6] = "Test 1";
-	test_ft_memcpymove(ft_memcpy, "ft_memcpy", 
-			dst, &((const void *)src)[8], 5, "Source Source"); 
-	test_ft_memcpymove(ft_memmove, "ft_memmove", 
-			dst, &((const void *)src)[8], 5, "Source Source"); 
+	numstr = buildstr('0', '9');
+	cnstvdnum = (const void *)numstr;
+	alphastr = buildstr('A', 'J');
+	test_ft_memcpymove(ft_memcpy, "ft_memcpy", alphastr, &cnstvdnum[8],
+			5, "89"); 
+	test_ft_memcpymove(ft_memmove, "ft_memmove", cnstvdnum, &cnstvdnum[3], 
+			5, cnstvdnum); 
+	free(numstr);
+	free(alphastr);
 	write(1, "\n", 1);
-	char	str[10] = "0123456789";
-	const char cstr[10] = "ABCDEFGHIJ";
-	test_ft_strlsomething(ft_strlcpy, "ft_strlcpy", str, cstr, 4, 4);
-	test_ft_strlsomething(ft_strlcat, "ft_strlcat", str, cstr, 14, 18);
+	numstr = buildstr('0', '9');
+	alphastr = buildstr('A', 'J');
+	test_ft_strlsomething(ft_strlcpy, "ft_strlcpy", numstr,
+			(const char *)alphastr, 4, 4);
+	free(numstr);
+	free(alphastr);
+	numstr = buildstr('0', '9');
+	alphastr = buildstr('A', 'J');
+	test_ft_strlsomething(ft_strlcat, "ft_strlcat", numstr, 
+			(const char *)alphastr, 14, 20);
+	free(numstr);
+	free(alphastr);
 	write(1, "\n", 1);
-	test_ft_tosomething(ft_toupper, "ft_toupper", "abcdefghijklmnopqrstuvwxyz",
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-	test_ft_tosomething(ft_tolower, "ft_tolower", "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-			"abcdefghijklmnopqrstuvwxyz");
+	alphastr = buildstr('a', 'z');
+	capstr = buildstr('A', 'Z');
+	test_ft_tosomething(ft_toupper, "ft_toupper", alphastr, capstr);
+	free(alphastr);
+	free(capstr);
+	alphastr = buildstr('a', 'z');
+	capstr = buildstr('A', 'Z');
+	test_ft_tosomething(ft_tolower, "ft_tolower", capstr, alphastr);
+	free(alphastr);
+	free(capstr);
 	write(1, "\n", 1);
 	char	teststrchr[9] = "AAAAAAAA\0";
 	test_ft_strchr(ft_strchr, "ft_strchr", teststrchr, 'A', &teststrchr[0]);
 	test_ft_strchr(ft_strrchr, "ft_strrchr", teststrchr, 'A', &teststrchr[7]);
 	write(1, "\n", 1);
-	test_ft_strncmp("ABC", "ABC", 3, 0);
+	test_ft_strncmp("ABC", "ABC", 3, strncmp("ABC", "ABC", 3));
+	test_ft_strncmp("AB", "ABC", 3, strncmp("AB", "ABC", 3));
 	write(1, "\n", 1);
-	//test_ft_memchr(cstr, 'D', 6, (const char *)&cstr[3]);
+	capstr = buildstr('A', 'Z');
+	test_ft_memchr(capstr, 'D', 6, (const char *)&capstr[3]);
 	write(1, "\n", 1);
 	test_ft_memcmp("test 1", "test 2", 4);
 	write(1, "\n", 1);
@@ -410,9 +442,10 @@ void	test_part_one(void)
 	test_ft_strnstr("test this now\0", "that", 12, "this");
 	write(1, "\n", 1);
 	// FAILS
-	test_ft_atoi("123456789", 123456789);
+	test_ft_atoi("  -1b23456789", atoi("  -1b23456789"));
 	test_ft_calloc(8, 1, "00000000");	
 	test_ft_strdup("456789");
+	free(numstr);
 	//free(src);	
 }
 
