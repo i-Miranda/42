@@ -280,7 +280,11 @@ void	test_ft_strncmp(const char *s1, const char *s2, size_t n, int expected)
 	{
 		write(1, "\x1b[31m", 5); 
 		write(1, "FAIL\n", 5);
+		ft_putnbr_fd(ft_strncmp(s1, s2, n), 1);
+		write(1, " : ", 3);
+		ft_putnbr_fd(strncmp(s1, s2, n), 1);
 		write(1, "\x1b[37m", 5); 
+		write(1, "\n", 1);
 	}
 }
 
@@ -439,14 +443,13 @@ void	test_part_one(void)
 	test_ft_memcmp("test 1", "test 2", 4);
 	write(1, "\n", 1);
 	// FAILS
-	test_ft_strnstr("test this now\0", "that", 12, "this");
+	test_ft_strnstr("test this now\0", "that", 12, 
+			strnstr("test this now\0", "that", 12));
 	write(1, "\n", 1);
-	// FAILS
 	test_ft_atoi("  -1b23456789", atoi("  -1b23456789"));
 	test_ft_calloc(8, 1, "00000000");	
 	test_ft_strdup("456789");
 	free(numstr);
-	//free(src);	
 }
 
 void	test_part_two(void)
