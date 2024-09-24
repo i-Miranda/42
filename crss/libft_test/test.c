@@ -126,7 +126,7 @@ void	test_ft_issomething(int(*ft)(int), int(*f)(int), char *func)
 	write(1, "\x1b[37m", 5); 
 }
 
-void	test_ft_strlen(str, size_t expected)
+void	test_ft_strlen(size_t expected)
 {
 	size_t	i;
 	char	*numstr = buildstr('0', '9');
@@ -147,17 +147,16 @@ void	test_ft_strlen(str, size_t expected)
 	}
 }
 
-void	test_ft_memsomething(void *(f)(void *, int, size_t),
-		char *func, void *testptr, int c, size_t len)
+void	test_ft_memset(void *testptr, int c, size_t len)
 {
 	char 	*xpctptr;
 	size_t	i;
 	size_t	tptrlen;
 
-	teststr(func);
-	tptrlen = lenstr(testptr);
+	teststr("ft_memset");
 	i = 0;
 	xpctptr = (char *)testptr;
+	tptrlen = lenstr(xpctptr);
 	while (i < tptrlen)
 	{
 		xpctptr[i] = ((char *)testptr)[i];
@@ -169,7 +168,7 @@ void	test_ft_memsomething(void *(f)(void *, int, size_t),
 		xpctptr[i] = c;
 		i++;
 	}
-	f(testptr, c, len);
+	ft_memset(testptr, c, len);
 	funcresult(testptr, xpctptr);
 }
 
@@ -357,7 +356,7 @@ void	test_ft_calloc(size_t count, size_t size, char *expected)
 void	test_ft_strdup(char *expected)
 {
 	char	*result;
-	const char *str = "0123456789"
+	const char *str = "0123456789";
 
 	teststr("ft_strdup");
 	result = ft_strdup(str);
@@ -376,7 +375,7 @@ void	test_part_one(void)
 	write(1, "\n", 1); 
 	test_ft_strlen(10);
 	write(1, "\n", 1);
-	test_ft_memsomething(ft_memset, "ft_memset", "0123456789", 'B', 4);
+	test_ft_memset("0123456789", 'B', 4);
 	test_ft_bzero("0123456789" , 4);
 	write(1, "\n", 1);
 	// THIS IS NOT RIGHT
@@ -403,7 +402,6 @@ void	test_part_one(void)
 	write(1, "\n", 1);
 	test_ft_strncmp("ABC", "ABC", 3, 0);
 	write(1, "\n", 1);
-	//test_ft_memsomething((const void *)ft_memchr, "ft_memchr", numstr, 'B', 4);
 	//test_ft_memchr(cstr, 'D', 6, (const char *)&cstr[3]);
 	write(1, "\n", 1);
 	test_ft_memcmp("test 1", "test 2", 4);
