@@ -607,8 +607,8 @@ void	test_part_two(void)
 	free(splittest);
 	// SEGFAULT	
 	alphastr = buildstr('1', '9');
-	//test_ft_itoa(123456789, "123456789");
-	//ft_putstr_fd(ft_itoa(1), 1);
+	test_ft_itoa(123456789, alphastr);
+	free(alphastr);
 	test_ft_strmapi("AAAA", charplusint, "ABCD");
 	write(1, "\n", 1);
 	alphastr = buildstr('A', 'F');	

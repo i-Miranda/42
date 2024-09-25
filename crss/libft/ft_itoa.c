@@ -6,25 +6,27 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:05:26 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/26 00:43:06 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/09/26 01:42:16 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_intdigits(int n)
+static int	ft_longdigits(long nbr)
 {
 	int	i;
 
 	i = 0;
-	if (n < 0)
+	if (nbr < 0)
 	{
 		i++;
-		n *= -1;
+		nbr *= -1;
 	}
-	while (n != 0)
+	if (nbr == 0)
+		i++;
+	while (nbr != 0)
 	{
-		n /= 10;
+		nbr /= 10;
 		i++;
 	}
 	return (i);
@@ -34,24 +36,25 @@ char	*ft_itoa(int n)
 {
 	char	*array;
 	int		i;
+	long	nbr;
 
-	if (n == 0)
-		return ("0");
-	if (n == -2147483648)
-		return ("-2147483648");
-	array = malloc(ft_intdigits(n) * sizeof(char));
+	nbr = n;
+	array = malloc(ft_longdigits(nbr) + 1 * sizeof(char));
 	if (array == NULL)
 		return (NULL);
+	ft_bzero(array, ft_strlen(array));
+	ft_putstr_fd(array, 1);
 	i = 0;
-	if (n < 0)
+	if (nbr < 0)
 	{
-		n *= -1;
+		nbr *= -1;
 		array[i++] = '-';
 	}
-	while (n >= 0)
+	i = ft_longdigits(nbr);
+	while (nbr > 0)
 	{
-		array[i++] = (n % 10) + '0';
-		n /= 10;
+		array[i--] = (nbr % 10) + '0';
+		nbr /= 10;
 	}
 	return (array);
 }
