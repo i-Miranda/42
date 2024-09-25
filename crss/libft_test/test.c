@@ -113,11 +113,7 @@ static char charplusint(unsigned int index, char c)
 
 static void	strplusint(unsigned int index, char *str)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-		str[i++] += index;
+		*str += index;
 }
 
 //!---TESTS---!//
@@ -456,7 +452,7 @@ void	test_ft_strmapi(char const *s, char (*f)(unsigned int, char),
 	funcresult(result, expected);	
 }
 
-void	test_ft_striteri(char const *s, char (*f)(unsigned int, char *),
+void	test_ft_striteri(char *s, void (*f)(unsigned int, char *),
 		char *expected)
 {
 	teststr("ft_striteri");
@@ -607,8 +603,9 @@ void	test_part_two(void)
 	//ft_putstr_fd(ft_itoa(1), 1);
 	test_ft_strmapi("AAAA", charplusint, "ABCD");
 	write(1, "\n", 1);
-	// SEGFAULT
-	//test_ft_striteri("AAAA", strplusint, "ABCD");
+	alphastr = buildstr('A', 'F');	
+	test_ft_striteri(alphastr, strplusint, "ACEGIK");
+	free(alphastr);
 	write(1, "\n", 1);
 	test_ft_putsomething_fd(ft_putchar_fd, "ft_putchar_fd", 'c', 1);
 	write(1, "\n", 1);

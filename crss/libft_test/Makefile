@@ -14,11 +14,11 @@ CCFLAGS := -Wall -Wextra -Werror
 	$(COMPILER) $< $(LIBRARY) -lbsd -o $@ 
 
 $(NAME) : $(OUTPUT)
-	./test.o
 
 .PHONY := all, clean, fclean, re
 
 all : $(NAME)
+	./test.o
 
 clean :
 	rm -rf $(OUTPUT)
