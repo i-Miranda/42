@@ -485,9 +485,9 @@ void	test_bonus(void)
 
 int	main(int argc, char *argv[])
 {
-	if (argc == 1 || argc == 2)
+	if (argc == 1 || argc == 2 || argc == 3)
 	{
-		if (argc == 2 && argv[2] == "norminette")
+		if (argc == 3 && ft_strncmp(argv[2], "norminette", 5))
 			system("cd ../libft; norminette");
 		if (argc == 1 || ft_strncmp(argv[1], "1", 5))
 			test_part_one();
