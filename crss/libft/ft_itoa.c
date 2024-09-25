@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:05:26 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/25 17:56:05 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/09/25 21:01:20 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_itoa(int n)
 		return ("-2147483648");
 	i = 0;
 	if (sign == -1)
-		array[i++] == '-';
+		array[i++] = '-';
 	while (n >= 0)
 	{
 		array[i++] = (n / 10) + '0';
