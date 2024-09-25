@@ -460,11 +460,22 @@ void	test_ft_striteri(char *s, void (*f)(unsigned int, char *),
 	funcresult(s, expected);	
 }
 
-void	test_ft_putsomething_fd(void (*put)(void *, int), char *func,
-		void *something, int fd)
+void	test_ft_putchrptr_fd(void (*put)(char *, int), char *func,
+		char *chrptr, int fd)
 {
 	teststr(func);	
-	put(something, fd);
+	put(chrptr, fd);
+}
+void	test_ft_putchar_fd(char c, int fd)
+{
+	teststr("ft_putchar_fd");	
+	ft_putchar_fd(c, fd);
+}
+
+void	test_ft_putnbr_fd(int nbr, int fd)
+{
+	teststr("ft_putnbr_fd");	
+	ft_putnbr_fd(nbr, fd);
 }
 
 //------TEST COMPILATION--------//
@@ -581,16 +592,12 @@ void	test_part_two(void)
 	free(alphastr);
 	free(numstr);
 	alphastr = buildstr('0', '9');
-	test_ft_strsomething(ft_strtrim, "ft_strtrim", alphastr, "01289",
-			"34567");
-	test_ft_strsomething(ft_strtrim, "ft_strtrim", alphastr, "9876",
-			"012345");
-	test_ft_strsomething(ft_strtrim, "ft_strtrim", "012310", "01",
-			"23");
+	test_ft_strsomething(ft_strtrim, "ft_strtrim", alphastr, "01289", "34567");
+	test_ft_strsomething(ft_strtrim, "ft_strtrim", alphastr, "9876", "012345");
+	test_ft_strsomething(ft_strtrim, "ft_strtrim", "012310", "01", "23");
 	free(alphastr);
 	write(1, "\n", 1);
 	char **splittest;
-	
 	splittest = malloc(2 * sizeof(char *));
 	splittest[0] = malloc(4 * sizeof(char));
 	splittest[0] = "AAAA";
@@ -599,6 +606,7 @@ void	test_part_two(void)
 	test_ft_split("AAAAbCCCC", 'b', splittest);	
 	free(splittest);
 	// SEGFAULT	
+	alphastr = buildstr('1', '9');
 	//test_ft_itoa(123456789, "123456789");
 	//ft_putstr_fd(ft_itoa(1), 1);
 	test_ft_strmapi("AAAA", charplusint, "ABCD");
@@ -607,13 +615,13 @@ void	test_part_two(void)
 	test_ft_striteri(alphastr, strplusint, "ACEGIK");
 	free(alphastr);
 	write(1, "\n", 1);
-	test_ft_putsomething_fd(ft_putchar_fd, "ft_putchar_fd", 'c', 1);
+	test_ft_putchar_fd('c', 1);
 	write(1, "\n", 1);
-	test_ft_putsomething_fd(ft_putstr_fd, "ft_putstr_fd", "str test", 1);
+	test_ft_putchrptr_fd(ft_putstr_fd, "ft_putstr_fd", "str test", 1);
 	write(1, "\n", 1);
-	test_ft_putsomething_fd(ft_putendl_fd, "ft_putendl_fd", "endl test", 1);
+	test_ft_putchrptr_fd(ft_putendl_fd, "ft_putendl_fd", "endl test", 1);
 	write(1, "\n", 1);
-	test_ft_putsomething_fd(ft_putnbr_fd, "ft_putnbr_fd", 1234, 1);
+	test_ft_putnbr_fd(1234, 1);
 }
 
 void	test_bonus(void)
