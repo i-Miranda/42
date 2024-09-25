@@ -1,5 +1,6 @@
 #include <ctype.h>
 #include <string.h>
+#include <bsd/string.h>
 #include "libft.h"
 
 static int lenstr(char *str)
@@ -320,7 +321,7 @@ void	test_ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 }
 
-void	test_ft_strnstr(const char *haystack, const char *needle, size_t len,
+void	test_ft_strnstr(const char *haystack, const char *needle, size_t len, 
 		char *expected)
 {
 	char	*result;
@@ -368,6 +369,26 @@ void	test_ft_strdup(const char *str, char *expected)
 
 	teststr("ft_strdup");
 	result = ft_strdup(str);
+	funcresult(result, expected);
+}
+
+void	test_ft_substr(char	const *s, unsigned int start, size_t len,
+		char	*expected)
+{
+	char	*result;
+	
+	teststr("ft_substr");
+	result = ft_substr(s, start, len);
+	funcresult(result, expected);
+}
+
+void	test_ft_strsomething(char *(*f)(char const *, char const *), 
+		char *func, char const *s1, char const *s2, char *expected)
+{
+	char	*result;
+
+	teststr(func);
+	result = f(s1, s2);
 	funcresult(result, expected);
 }
 
@@ -443,9 +464,10 @@ void	test_part_one(void)
 	free(alphastr);
 	write(1, "\n", 1);
 
-	test_ft_strncmp("ABC", "ABC", 3, strncmp("ABC", "ABC", 3));
-	// FAILS
 	test_ft_strncmp("AB", "ABC", 3, strncmp("AB", "ABC", 3));
+	// FAILS
+	ft_putnbr_fd(strncmp("AB", "ABC", 3), 1);
+	ft_putnbr_fd(strncmp("AB", "ABC", 3), 1);
 	write(1, "\n", 1);
 
 	capstr = buildstr('A', 'Z');
@@ -457,16 +479,9 @@ void	test_part_one(void)
 	test_ft_memcmp("test 1", "test 2", 4);
 	write(1, "\n", 1);
 
-	// FAILS
 	capstr = buildstr('A', 'J');
 	alphastr = buildstr('C', 'F');
-	ft_putstr_fd(capstr, 1);
-	write(1, "\n", 1);
-	ft_putstr_fd(alphastr, 1);
-	write(1, "\n", 1);
-	test_ft_strnstr(capstr, alphastr, 8, 
-			strnstr(capstr, alphastr, 8));
-	write(1, "\n", 1);
+	test_ft_strnstr(capstr, alphastr, 8, strnstr(capstr, alphastr, 8));
 	free(capstr);
 	free(alphastr);
 	write(1, "\n", 1);
@@ -474,12 +489,32 @@ void	test_part_one(void)
 	test_ft_atoi("  -1b23456789", atoi("  -1b23456789"));
 	test_ft_calloc(8, 1, "00000000");	
 	test_ft_strdup("0123456789", "0123456789");
-	//free(numstr);
 }
 
 void	test_part_two(void)
 {
+	char	*alphastr;
+	char	*numstr;
+
 	write(1, "\nTESTING PART 2\n", 16);
+	alphastr = buildstr('A', 'Z');
+	test_ft_substr(alphastr, 0, 4, "ABCD");
+	free(alphastr);
+	write(1, "\n", 1);
+	alphastr = buildstr('A', 'D');
+	numstr = buildstr('0', '9');
+	test_ft_strsomething(ft_strjoin, "ft_strjoin", alphastr, numstr,
+			"ABCD0123456789");
+	free(alphastr);
+	free(numstr);
+	alphastr = buildstr('0', '9');
+	test_ft_strsomething(ft_strtrim, "ft_strtrim", alphastr, "01289",
+			"3456789");
+	test_ft_strsomething(ft_strtrim, "ft_strtrim", alphastr, "9876",
+			"0123456789");
+	test_ft_strsomething(ft_strtrim, "ft_strtrim", "012310", "01",
+			"23");
+	free(alphastr);
 }
 
 void	test_bonus(void)

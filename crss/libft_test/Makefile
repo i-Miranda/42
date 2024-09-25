@@ -11,7 +11,7 @@ OUTPUT := $(SOURCES:.c=.o)
 CCFLAGS := -Wall -Wextra -Werror
 
 %.o : %.c libft.h
-	$(COMPILER) $< $(LIBRARY) -o $@ 
+	$(COMPILER) $< $(LIBRARY) -lbsd -o $@ 
 
 $(NAME) : $(OUTPUT)
 	./test.o
