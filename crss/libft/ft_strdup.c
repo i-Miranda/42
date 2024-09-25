@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:08:53 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/17 12:47:05 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:12:23 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strdup(const char *s1)
 	size_t	len;
 
 	i = 0;
-	len = ft_strlen(s1);
+	len = ft_strlen(s1) + 1;
 	str = malloc(len * sizeof(char));
 	if (str == NULL)
 		return (NULL);

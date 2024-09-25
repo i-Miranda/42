@@ -103,6 +103,23 @@ static char *buildstr(int start, int end)
 	return (str);
 }
 
+static char charplusint(unsigned int index, char c)
+{
+	char result;
+
+	result = c + index;
+	return (result);
+}
+
+static void	strplusint(unsigned int index, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		str[i++] += index;
+}
+
 //!---TESTS---!//
 
 void	test_ft_issomething(int(*ft)(int), int(*f)(int), char *func)
@@ -392,6 +409,68 @@ void	test_ft_strsomething(char *(*f)(char const *, char const *),
 	funcresult(result, expected);
 }
 
+void	test_ft_split(char const *s, char c, char **expected)
+{
+	char 	**result;
+	size_t	result_len;
+	size_t	expected_len;
+	size_t	i;
+
+	teststr("ft_split");
+	i = 0;
+	expected_len = 0;
+	while (expected[i++])
+		expected_len++;
+	i = 0;
+	result_len = 0;
+	result = ft_split(s, c);
+	while (result[i++])
+		result_len++;
+	i = 0;
+	write(1, "\n", 1);
+	while (result[i])
+	{
+		write(1, "\t", 1);
+		teststr(result[i]);
+		funcresult(result[i], expected[i]);
+		i++;
+	}
+}
+
+void	test_ft_itoa(int n, char *expected)
+{
+	char	*result;
+
+	teststr("ft_itoa");
+	result = ft_itoa(n);
+	funcresult(result, expected);
+}
+
+void	test_ft_strmapi(char const *s, char (*f)(unsigned int, char),
+		char *expected)
+{
+	char	*result;
+	
+	teststr("ft_strmapi");
+	result = ft_strmapi(s, f);
+	funcresult(result, expected);	
+}
+
+void	test_ft_striteri(char const *s, char (*f)(unsigned int, char *),
+		char *expected)
+{
+	teststr("ft_striteri");
+	ft_striteri(s, f);
+	funcresult(s, expected);	
+}
+
+void	test_ft_putsomething_fd(void (*put)(void *, int), char *func,
+		void *something, int fd)
+{
+	teststr(func);	
+	put(something, fd);
+}
+
 //------TEST COMPILATION--------//
 void	test_part_one(void)
 {
@@ -464,10 +543,8 @@ void	test_part_one(void)
 	free(alphastr);
 	write(1, "\n", 1);
 
-	test_ft_strncmp("AB", "ABC", 3, strncmp("AB", "ABC", 3));
 	// FAILS
-	ft_putnbr_fd(strncmp("AB", "ABC", 3), 1);
-	ft_putnbr_fd(strncmp("AB", "ABC", 3), 1);
+	test_ft_strncmp("AB", "ABC", 3, strncmp("AB", "ABC", 3));
 	write(1, "\n", 1);
 
 	capstr = buildstr('A', 'Z');
@@ -509,12 +586,37 @@ void	test_part_two(void)
 	free(numstr);
 	alphastr = buildstr('0', '9');
 	test_ft_strsomething(ft_strtrim, "ft_strtrim", alphastr, "01289",
-			"3456789");
+			"34567");
 	test_ft_strsomething(ft_strtrim, "ft_strtrim", alphastr, "9876",
-			"0123456789");
+			"012345");
 	test_ft_strsomething(ft_strtrim, "ft_strtrim", "012310", "01",
 			"23");
 	free(alphastr);
+	write(1, "\n", 1);
+	char **splittest;
+	
+	splittest = malloc(2 * sizeof(char *));
+	splittest[0] = malloc(4 * sizeof(char));
+	splittest[0] = "AAAA";
+	splittest[1] = malloc(4 * sizeof(char));
+	splittest[1] = "BBBB";
+	test_ft_split("AAAAbCCCC", 'b', splittest);	
+	free(splittest);
+	// SEGFAULT	
+	//test_ft_itoa(123456789, "123456789");
+	//ft_putstr_fd(ft_itoa(1), 1);
+	test_ft_strmapi("AAAA", charplusint, "ABCD");
+	write(1, "\n", 1);
+	// SEGFAULT
+	//test_ft_striteri("AAAA", strplusint, "ABCD");
+	write(1, "\n", 1);
+	test_ft_putsomething_fd(ft_putchar_fd, "ft_putchar_fd", 'c', 1);
+	write(1, "\n", 1);
+	test_ft_putsomething_fd(ft_putstr_fd, "ft_putstr_fd", "str test", 1);
+	write(1, "\n", 1);
+	test_ft_putsomething_fd(ft_putendl_fd, "ft_putendl_fd", "endl test", 1);
+	write(1, "\n", 1);
+	test_ft_putsomething_fd(ft_putnbr_fd, "ft_putnbr_fd", 1234, 1);
 }
 
 void	test_bonus(void)

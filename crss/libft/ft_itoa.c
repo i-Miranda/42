@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:05:26 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/17 12:32:12 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:56:05 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	ft_intdigits(int n)
 	int	i;
 
 	i = 0;
-	if (n < 0)
+	if (n > 0)
 		i++;
 	while (n != 0)
 	{
@@ -31,23 +31,25 @@ char	*ft_itoa(int n)
 {
 	char	*array;
 	int		i;
+	int		sign;
 
+	if (n < 0)
+	{
+		sign = -1;
+		n *= -1;
+	}
 	array = malloc(ft_intdigits(n) * sizeof(char));
 	if (array == NULL)
 		return (NULL);
 	if (n == -2147483648)
 		return ("-2147483648");
-	if (n < 0)
-	{
-		array[0] = '-';
-		n *= 1;
-	}
 	i = 0;
+	if (sign == -1)
+		array[i++] == '-';
 	while (n >= 0)
 	{
-		array[i] = (n / 10) + '0';
+		array[i++] = (n / 10) + '0';
 		n %= 10;
-		i++;
 	}
 	return (array);
 }
