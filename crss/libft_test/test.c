@@ -362,10 +362,9 @@ void	test_ft_calloc(size_t count, size_t size, char *expected)
 	funcresult(testptr, expected);
 }
 
-void	test_ft_strdup(char *expected)
+void	test_ft_strdup(const char *str, char *expected)
 {
 	char	*result;
-	const char *str = "0123456789";
 
 	teststr("ft_strdup");
 	result = ft_strdup(str);
@@ -461,15 +460,20 @@ void	test_part_one(void)
 	// FAILS
 	capstr = buildstr('A', 'J');
 	alphastr = buildstr('C', 'F');
-	test_ft_strnstr(capstr, alphastr, 12, 
-			strnstr(capstr, alphastr, 12));
+	ft_putstr_fd(capstr, 1);
+	write(1, "\n", 1);
+	ft_putstr_fd(alphastr, 1);
+	write(1, "\n", 1);
+	test_ft_strnstr(capstr, alphastr, 8, 
+			strnstr(capstr, alphastr, 8));
+	write(1, "\n", 1);
 	free(capstr);
 	free(alphastr);
 	write(1, "\n", 1);
 
 	test_ft_atoi("  -1b23456789", atoi("  -1b23456789"));
 	test_ft_calloc(8, 1, "00000000");	
-	test_ft_strdup("456789");
+	test_ft_strdup("0123456789", "0123456789");
 	//free(numstr);
 }
 
