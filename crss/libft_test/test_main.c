@@ -13,5 +13,6 @@ int	main(int argc, char *argv[])
 		if (argc == 1 || ft_strncmp(argv[1], "bonus", 5))
 			test_bonus();
 	}
+	write(1, "!!!!", 4);
 	return (0);
 }

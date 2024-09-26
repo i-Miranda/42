@@ -2,7 +2,11 @@ NAME := libfttest
 
 COMPILER := cc
 
-SOURCES := test.c
+SOURCES := test_main.c \
+	test_1.c \
+	test_2.c \
+	test_bonus.c \
+	test_auxiliary.c \
 
 LIBRARY := libft.a
 
@@ -11,7 +15,7 @@ OUTPUT := $(SOURCES:.c=.o)
 CCFLAGS := -Wall -Wextra -Werror
 
 %.o : %.c libft.h
-	$(COMPILER) $< $(LIBRARY) -lbsd -o $@ 
+	$(COMPILER) $(LIBRARY) -lbsd -c $< -o $@ 
 
 $(NAME) : $(OUTPUT)
 
