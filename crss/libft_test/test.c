@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 02:00:46 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/26 02:41:59 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/09/26 02:50:39 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -505,7 +505,7 @@ void	test_part_one(void)
 	void		*voidnum;
 	const void	*cnstvdnum;
 
-	write(1, "\x1b[31m", 5); 
+	write(1, "\x1b[34m", 5); 
 	write(1, "\nTESTING PART 1\n", 16);
 	write(1, "\x1b[37m", 5); 
 	test_ft_issomething(ft_isalpha, isalpha, "ft_isalpha");
@@ -575,7 +575,7 @@ void	test_part_two(void)
 	char	*alphastr;
 	char	*numstr;
 
-	write(1, "\x1b[31m", 5); 
+	write(1, "\x1b[34m", 5); 
 	write(1, "\nTESTING PART 2\n", 16);
 	write(1, "\x1b[37m", 5); 
 	alphastr = buildstr('A', 'Z');
@@ -616,7 +616,7 @@ void	test_part_two(void)
 
 void	test_bonus(void)
 {
-	write(1, "\x1b[31m", 5); 
+	write(1, "\x1b[34m", 5); 
 	write(1, "\nTESTING BONUS\n", 15);
 	write(1, "\x1b[37m", 5); 
 	t_list *head;
