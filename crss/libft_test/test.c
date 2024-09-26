@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/26 02:00:46 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/09/26 02:41:59 by ivmirand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ctype.h>
 #include <string.h>
 #include <bsd/string.h>
@@ -464,18 +476,24 @@ void	test_ft_putchrptr_fd(void (*put)(char *, int), char *func,
 		char *chrptr, int fd)
 {
 	teststr(func);	
+	write(1, "\n\t", 2);
 	put(chrptr, fd);
+	write(1, "\n", 1);
 }
 void	test_ft_putchar_fd(char c, int fd)
 {
 	teststr("ft_putchar_fd");	
+	write(1, "\n\t", 2);
 	ft_putchar_fd(c, fd);
+	write(1, "\n", 1);
 }
 
 void	test_ft_putnbr_fd(int nbr, int fd)
 {
 	teststr("ft_putnbr_fd");	
+	write(1, "\n\t", 2);
 	ft_putnbr_fd(nbr, fd);
+	write(1, "\n", 1);
 }
 
 //------TEST COMPILATION--------//
@@ -487,89 +505,66 @@ void	test_part_one(void)
 	void		*voidnum;
 	const void	*cnstvdnum;
 
+	write(1, "\x1b[31m", 5); 
 	write(1, "\nTESTING PART 1\n", 16);
+	write(1, "\x1b[37m", 5); 
 	test_ft_issomething(ft_isalpha, isalpha, "ft_isalpha");
 	test_ft_issomething(ft_isdigit, isdigit, "ft_isdigit");
 	test_ft_issomething(ft_isalnum, isalnum, "ft_isalnum");
 	test_ft_issomething(ft_isascii, isascii, "ft_isascii");
 	test_ft_issomething(ft_isprint, isprint, "ft_isprint");
-	write(1, "\n", 1); 
-
 	test_ft_strlen(10);
-	write(1, "\n", 1);
-
 	numstr = buildstr('0', '9');
 	voidnum = (void *)numstr;
 	test_ft_memset(voidnum, 'B', 4);
 	test_ft_bzero(voidnum, 4);
 	free(numstr);
-	write(1, "\n", 1);
-
 	numstr = buildstr('0', '9');
 	cnstvdnum = (const void *)numstr;
 	alphastr = buildstr('A', 'J');
 	test_ft_memcpymove(ft_memcpy, "ft_memcpy", alphastr, &cnstvdnum[8],
 			5, "89"); 
-	test_ft_memcpymove(ft_memmove, "ft_memmove", (void *)cnstvdnum, &cnstvdnum[3], 
-			5, (char *)cnstvdnum); 
+	test_ft_memcpymove(ft_memmove, "ft_memmove", (void *)cnstvdnum, 
+			&cnstvdnum[3], 5, (char *)cnstvdnum); 
 	free(numstr);
 	free(alphastr);
-	write(1, "\n", 1);
-
 	numstr = buildstr('0', '9');
 	alphastr = buildstr('A', 'J');
 	test_ft_strlsomething(ft_strlcpy, "ft_strlcpy", numstr,
 			(const char *)alphastr, 4, 4);
 	free(numstr);
 	free(alphastr);
-
 	numstr = buildstr('0', '9');
 	alphastr = buildstr('A', 'J');
 	test_ft_strlsomething(ft_strlcat, "ft_strlcat", numstr, 
 			(const char *)alphastr, 14, 20);
 	free(numstr);
 	free(alphastr);
-	write(1, "\n", 1);
-
 	alphastr = buildstr('a', 'z');
 	capstr = buildstr('A', 'Z');
 	test_ft_tosomething(ft_toupper, "ft_toupper", alphastr, capstr);
 	free(alphastr);
 	free(capstr);
-
 	alphastr = buildstr('a', 'z');
 	capstr = buildstr('A', 'Z');
 	test_ft_tosomething(ft_tolower, "ft_tolower", capstr, alphastr);
 	free(alphastr);
 	free(capstr);
-	write(1, "\n", 1);
-
 	alphastr = buildstr('A', 'I');
 	test_ft_strchr(ft_strchr, "ft_strchr", alphastr, 'A', &alphastr[0]);
 	test_ft_strchr(ft_strrchr, "ft_strrchr", alphastr, 'H', &alphastr[7]);
 	free(alphastr);
-	write(1, "\n", 1);
-
 	// FAILS
-	test_ft_strncmp("AB", "ABC", 3, strncmp("AB", "ABC", 3));
-	write(1, "\n", 1);
-
+	test_ft_strncmp("ABC", "AB", 3, strncmp("ABC", "AB", 3));
 	capstr = buildstr('A', 'Z');
-	test_ft_memchr(capstr, 'D', 6, 
-			&capstr[3]);
+	test_ft_memchr(capstr, 'D', 6, &capstr[3]);
 	free(capstr);
-	write(1, "\n", 1);
-
 	test_ft_memcmp("test 1", "test 2", 4);
-	write(1, "\n", 1);
-
 	capstr = buildstr('A', 'J');
 	alphastr = buildstr('C', 'F');
 	test_ft_strnstr(capstr, alphastr, 8, strnstr(capstr, alphastr, 8));
 	free(capstr);
 	free(alphastr);
-	write(1, "\n", 1);
-
 	test_ft_atoi("  -1b23456789", atoi("  -1b23456789"));
 	test_ft_calloc(8, 1, "00000000");	
 	test_ft_strdup("0123456789", "0123456789");
@@ -580,11 +575,12 @@ void	test_part_two(void)
 	char	*alphastr;
 	char	*numstr;
 
+	write(1, "\x1b[31m", 5); 
 	write(1, "\nTESTING PART 2\n", 16);
+	write(1, "\x1b[37m", 5); 
 	alphastr = buildstr('A', 'Z');
 	test_ft_substr(alphastr, 0, 4, "ABCD");
 	free(alphastr);
-	write(1, "\n", 1);
 	alphastr = buildstr('A', 'D');
 	numstr = buildstr('0', '9');
 	test_ft_strsomething(ft_strjoin, "ft_strjoin", alphastr, numstr,
@@ -596,7 +592,6 @@ void	test_part_two(void)
 	test_ft_strsomething(ft_strtrim, "ft_strtrim", alphastr, "9876", "012345");
 	test_ft_strsomething(ft_strtrim, "ft_strtrim", "012310", "01", "23");
 	free(alphastr);
-	write(1, "\n", 1);
 	char **splittest;
 	splittest = malloc(2 * sizeof(char *));
 	splittest[0] = malloc(4 * sizeof(char));
@@ -605,28 +600,26 @@ void	test_part_two(void)
 	splittest[1] = "BBBB";
 	test_ft_split("AAAAbCCCC", 'b', splittest);	
 	free(splittest);
-	// SEGFAULT	
 	alphastr = buildstr('1', '9');
 	test_ft_itoa(123456789, alphastr);
+	test_ft_itoa(0, "0");
 	free(alphastr);
 	test_ft_strmapi("AAAA", charplusint, "ABCD");
-	write(1, "\n", 1);
 	alphastr = buildstr('A', 'F');	
 	test_ft_striteri(alphastr, strplusint, "ACEGIK");
 	free(alphastr);
-	write(1, "\n", 1);
 	test_ft_putchar_fd('c', 1);
-	write(1, "\n", 1);
 	test_ft_putchrptr_fd(ft_putstr_fd, "ft_putstr_fd", "str test", 1);
-	write(1, "\n", 1);
 	test_ft_putchrptr_fd(ft_putendl_fd, "ft_putendl_fd", "endl test", 1);
-	write(1, "\n", 1);
 	test_ft_putnbr_fd(1234, 1);
 }
 
 void	test_bonus(void)
 {
+	write(1, "\x1b[31m", 5); 
 	write(1, "\nTESTING BONUS\n", 15);
+	write(1, "\x1b[37m", 5); 
+	t_list *head;
 }
 
 int	main(int argc, char *argv[])
