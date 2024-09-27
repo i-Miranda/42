@@ -19,6 +19,8 @@ char	*ft_strrchr(const char *s, int c)
 	int		found;
 	char	*str;
 
+	if (s == NULL)
+		return (NULL);
 	i = 0;
 	found = -1;
 	len = ft_strlen(s);
