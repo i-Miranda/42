@@ -12,23 +12,18 @@
 
 #include "libft.h"
 
-//if dst memaddr comes before src, we can memcpy
-void	*ft_memmove(void *dst, const void *src, size_t n)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t			i;
-	unsigned char	*temp_src;
+	const unsigned char	*temp_src;
+	unsigned char		*temp_dst;
 
+	if (!dst && !src)
+		return (NULL);
+	temp_dst = (unsigned char *)dst;
+	temp_src = (unsigned char *)src;
 	if (dst < src)
-		ft_memcpy(dst, src, n);
-	else
-	{
-		i = 0;
-		temp_src = (unsigned char *)src;
-		while (i < n)
-		{
-			((unsigned char *)dst)[i] = temp_src[i];
-			i++;
-		}
-	}
+		return (ft_memcpy(dst, src, len));
+	while (len--)
+		temp_dst[len] = temp_src[len];
 	return (dst);
 }

@@ -14,12 +14,12 @@
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (dstsize != 0)
 	{
-		while (i < (int)dstsize)
+		while (i < dstsize)
 		{
 			dst[i] = src[i];
 			i++;
