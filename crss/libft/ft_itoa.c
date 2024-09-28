@@ -35,7 +35,7 @@ char	*ft_itoa(int n)
 
 	nbr = n;
 	i = ft_longdigits(nbr);
-	array = ft_calloc(i + 2, sizeof(char));
+	array = ft_calloc(i + 1, sizeof(char));
 	if (array == NULL)
 		return (NULL);
 	if (nbr == 0)

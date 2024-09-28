@@ -15,9 +15,9 @@
 static size_t	ft_charcount(char const *str, char c)
 {
 	int		i;
-	int		previous;
+	char	*previous;
+	int		len;
 	size_t	word_count;
-	size_t	len;
 
 	i = 0;
 	previous = 0;
@@ -25,8 +25,11 @@ static size_t	ft_charcount(char const *str, char c)
 	len = ft_strlen(str);
 	while (i < len)
 	{
-		if (str[i] == c && previous != c)
+		if (str[i] == c && previous != (char *)&str[i])
+		{
 			word_count++;
+			previous = (char *)&str[i];
+		}
 		i++;
 	}
 	return (word_count);
@@ -35,8 +38,8 @@ static size_t	ft_charcount(char const *str, char c)
 char	**ft_split(char const *s, char c)
 {
 	size_t	count;
-	int		i;
-	int		len;
+	size_t	i;
+	size_t	len;
 	char	**strarray;
 
 	if (s == NULL)
