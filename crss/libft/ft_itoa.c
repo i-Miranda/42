@@ -45,9 +45,9 @@ char	*ft_itoa(int n)
 		array[0] = '-';
 		nbr *= -1;
 	}
-	while (nbr > 0)
+	while (i-- && nbr > 0)
 	{
-		array[i--] = (nbr % 10) + '0';
+		array[i] = (nbr % 10) + '0';
 		nbr /= 10;
 	}
 	return (array);
