@@ -17,12 +17,7 @@ static int	ft_longdigits(long nbr)
 	int	i;
 
 	i = 0;
-	if (nbr < 0)
-	{
-		i++;
-		nbr *= -1;
-	}
-	if (nbr == 0)
+	if (nbr <= 0)
 		i++;
 	while (nbr != 0)
 	{
@@ -39,18 +34,17 @@ char	*ft_itoa(int n)
 	long	nbr;
 
 	nbr = n;
-	array = malloc(ft_longdigits(nbr) + 1 * sizeof(char));
+	i = ft_longdigits(nbr);
+	array = ft_calloc(i + 2, sizeof(char));
 	if (array == NULL)
 		return (NULL);
-	ft_bzero(array, ft_strlen(array));
-	ft_putstr_fd(array, 1);
-	i = 0;
+	if (nbr == 0)
+		array[0] = '0';
 	if (nbr < 0)
 	{
 		nbr *= -1;
-		array[i++] = '-';
+		array[0] = '-';
 	}
-	i = ft_longdigits(nbr);
 	while (nbr > 0)
 	{
 		array[i--] = (nbr % 10) + '0';
