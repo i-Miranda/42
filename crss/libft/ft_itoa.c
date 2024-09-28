@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:05:26 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/26 01:42:16 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/09/28 11:59:45 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_longdigits(long nbr)
 	i = 0;
 	if (nbr <= 0)
 		i++;
-	while (nbr != 0)
+	while (nbr)
 	{
 		nbr /= 10;
 		i++;
@@ -42,8 +42,8 @@ char	*ft_itoa(int n)
 		array[0] = '0';
 	if (nbr < 0)
 	{
-		nbr *= -1;
 		array[0] = '-';
+		nbr *= -1;
 	}
 	while (nbr > 0)
 	{
