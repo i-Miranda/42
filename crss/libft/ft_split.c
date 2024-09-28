@@ -47,8 +47,7 @@ static void	*ft_freeptr(char **strarray, int count)
 
 char	**ft_split(char const *s, char c)
 {
-	int		i;
-	int		build_word;
+	size_t	i;
 	size_t	count;
 	size_t	len;
 	char	**strarray;
@@ -57,7 +56,6 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	i = 0;
 	count = 0;
-	build_word = -1;
 	len = ft_strlen(s);
 	while (i++ < len)
 		count += ft_wordcount(&s[i], c);
@@ -69,7 +67,7 @@ char	**ft_split(char const *s, char c)
 	{
 		strarray[i] = ft_substr(s, len, ft_wordcount(&s[len], c));
 		if (strarray[i] == NULL)
-			free(strarray[i]);
+			strarray = ft_freeptr(strarray, i);
 		len += ft_wordcount(&s[len], c);
 	}
 	return (strarray);
