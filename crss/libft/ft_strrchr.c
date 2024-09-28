@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:09:24 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/28 12:43:41 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/09/28 13:05:39 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,15 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	size_t	i;
-	size_t	len;
-	int		found;
 	char	*str;
 
 	i = 0;
-	found = -1;
-	len = ft_strlen(s);
 	str = (char *)s;
-	while (i <= len)
+	while (str[i])
 	{
 		if (str[i] == c)
-			found = i;
+			return (&str[i]);
 		i++;
 	}
-	if (found != -1)
-		return (&str[found]);
 	return (NULL);
 }
