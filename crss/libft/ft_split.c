@@ -12,29 +12,50 @@
 
 #include "libft.h"
 
-static int	ft_wordcount(char const *str, char c)
+static void	ft_initialize(size_t *s_i, int *arr_i, int *start)
 {
+	*s_i = 0;
+	*arr_i = 0;
+	*start = -1;
+}
+
+static char	*build_word(const char *str, int start, int end)
+{
+	char	*word;
 	int		i;
-	int		chr_match;
-	int		len;
-	int		word_count;
 
 	i = 0;
-	chr_match = 0;
-	word_count = 0;
-	len = ft_strlen(str);
-	while (i < len)
+	word = ft_calloc(end - start + 1, sizeof(char));
+	if (!word)
+		return (NULL);
+	while (start < end)
 	{
-		if (str[i] != c && chr_match == 0)
-		{
-			word_count++;
-			chr_match = 1;
-		}
-		else if (str[i] == c)
-			chr_match = 0;
+		word[i] = str[start];
 		i++;
+		start++;
 	}
-	return (word_count);
+	return (word);
+}
+
+static int	ft_word_count(const char *str, char c)
+{
+	int	count;
+	int	split;
+
+	count = 0;
+	split = 0;
+	while (*str)
+	{
+		if (*str != c && split == 0)
+		{
+			split = 1;
+			count++;
+		}
+		else if (*str == c)
+			split = 0;
+		str++;
+	}
+	return (count);
 }
 
 static void	*ft_freeptr(char **strarray, int count)
@@ -45,30 +66,30 @@ static void	*ft_freeptr(char **strarray, int count)
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(const char *s, char c)
 {
-	size_t	i;
-	size_t	count;
-	size_t	len;
 	char	**strarray;
+	size_t	s_i;
+	int		arr_i;
+	int		start;
 
-	if (s == NULL)
+	ft_initialize(&s_i, &arr_i, &start);
+	strarray = ft_calloc((ft_word_count(s, c) + 1), sizeof(char *));
+	if (!strarray)
 		return (NULL);
-	i = 0;
-	count = 0;
-	len = ft_strlen(s);
-	while (i++ < len)
-		count += ft_wordcount(&s[i], c);
-	strarray = ft_calloc(count + 1, sizeof(char *));
-	if (strarray != NULL)
-		return (strarray);
-	i = 0;
-	while (i++ <= len)
+	while (s_i <= ft_strlen(s))
 	{
-		strarray[i] = ft_substr(s, len, ft_wordcount(&s[len], c));
-		if (strarray[i] == NULL)
-			strarray = ft_freeptr(strarray, i);
-		len += ft_wordcount(&s[len], c);
+		if (s[s_i] != c && start < 0)
+			start = s_i;
+		else if ((s[s_i] == c || s_i == ft_strlen(s)) && start >= 0)
+		{
+			strarray[arr_i] = build_word(s, start, s_i);
+			if (!(strarray[arr_i]))
+				return (ft_freeptr(strarray, arr_i));
+			start = -1;
+			arr_i++;
+		}
+		s_i++;
 	}
 	return (strarray);
 }
