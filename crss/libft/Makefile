@@ -1,5 +1,7 @@
 NAME := libft.a
 
+HEADER := libft.h
+
 COMPILER := cc
 
 SOURCES := ft_isalpha.c \
@@ -57,24 +59,26 @@ CCFLAGS := -Wall -Wextra -Werror
 	$(COMPILER) $(CCFLAGS) -c $< -o $@
 
 # -r replaces or adds a file if doesn't already exist in archive
+# -c creates the archive silently 
 # -s writes object-files 
-ARFLAGS := -r -s
+ARFLAGS := -r -c -s
 
-$(NAME): $(OBJ_O) 
+$(NAME): $(OBJ_O) $(HEADER) 
 	ar $(ARFLAGS) $(NAME) $(OBJ_O)
-
-.PHONY: all, clean, fclean, re
 
 all: $(NAME)
 
 clean:
 	rm -rf $(OBJ_O)
 
+# -f ignores if file does not exist
 fclean: clean
-	rm $(NAME)
+	rm -f $(NAME)
 	rm -rf $(BONUS_O)
 
 re: fclean all
 
-bonus: $(BONUS_O) 
+bonus: $(BONUS_O) $(HEADER) 
 	ar $(ARFLAGS) $(NAME) $(BONUS_O)
+
+.PHONY: all, clean, fclean, re, bonus
