@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 01:53:11 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/29 04:17:31 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/09/29 05:25:31 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@ static void	*getnew_content(void *content)
 static void	del_content(void *content)
 {
 	content = NULL;
+}
+
+static void charplusindex(unsigned int index, char *ptr)
+{
+	*ptr += index;
+}
+
+static char newcharminusindex(unsigned int index, char chr)
+{
+	return (chr -= index);
 }
 
 int	main(int argc, char **argv)
@@ -98,42 +108,69 @@ int	main(int argc, char **argv)
 
 		i = 0;
 		ft_putstr_fd("FT_STRLEN of ", 1);
-		ft_putstr_fd(argv[2], 1);
+		ft_putstr_fd(argv[1], 1);
 		ft_putstr_fd(" is: ", 1);
-		ft_putendl_fd(ft_itoa(ft_strlen(argv[2])), 1);
+		ft_putendl_fd(ft_itoa(ft_strlen(argv[1])), 1);
 		ft_putstr_fd("FT_ATOI of ", 1);
-		ft_putstr_fd(argv[2], 1);
+		ft_putstr_fd(argv[1], 1);
 		ft_putstr_fd(" is: ", 1);
-		ft_putnbr_fd(ft_atoi(argv[2]), 1);
+		ft_putnbr_fd(ft_atoi(argv[1]), 1);
 		ft_putendl_fd("", 1);
-		while (i < ft_strlen(argv[2]))
+		while (i < ft_strlen(argv[1]))
 		{
-			if (ft_toupper(argv[2][i]) != argv[2][i])
-				ft_putchar_fd(ft_toupper(argv[2][i]), 1);
-			if (ft_tolower(argv[2][i]) != argv[2][i])
-				ft_putchar_fd(ft_tolower(argv[2][i]), 1);
-			if (ft_isdigit(argv[2][i]) != argv[2][i])
-				ft_putchar_fd(argv[2][i], 1);
+			if (ft_toupper(argv[1][i]) != argv[1][i])
+				ft_putchar_fd(ft_toupper(argv[1][i]), 1);
+			if (ft_tolower(argv[1][i]) != argv[1][i])
+				ft_putchar_fd(ft_tolower(argv[1][i]), 1);
+			if (ft_isdigit(argv[1][i]) != argv[1][i])
+				ft_putchar_fd(argv[1][i], 1);
 			ft_putstr_fd(" : ", 1);
-			if (ft_isalpha(argv[2][i]) == 1)
+			if (ft_isalpha(argv[1][i]) == 1)
 				ft_putstr_fd("isalpha ", 1);
-			if (ft_isdigit(argv[2][i]) == 1)
+			if (ft_isdigit(argv[1][i]) == 1)
 				ft_putstr_fd("isdigit ", 1);
-			if (ft_isalnum(argv[2][i]) == 1)
+			if (ft_isalnum(argv[1][i]) == 1)
 				ft_putstr_fd("isalnum ", 1);
-			if (ft_isascii(argv[2][i]) == 1)
+			if (ft_isascii(argv[1][i]) == 1)
 				ft_putstr_fd("isascii ", 1);
-			if (ft_isprint(argv[2][i]) == 1)
+			if (ft_isprint(argv[1][i]) == 1)
 				ft_putstr_fd("isprint ", 1);
 			ft_putendl_fd("", 1);
 			i++;
 		}
+
+		char *substr;
+
+		ft_putstr_fd("FT_SUBSTR (start 2, len 5) : ", 1);
+		substr = ft_substr(argv[1], 2, 5);
+		ft_putendl_fd(substr, 1);
+
+		ft_putstr_fd("FT_STRITERI : ", 1);
+		ft_striteri(argv[1], charplusindex);
+		ft_putendl_fd(argv[1], 1);
+
+		ft_putstr_fd("FT_STRMAPI : ", 1);
+		substr = ft_strmapi(argv[1], newcharminusindex);
+		if (!substr)
+			return (1);
+		ft_putendl_fd(substr, 1);
 	}
 	//TWO strings test
 	else if (argc == 3) 
 	{
 		ft_putstr_fd("FT_STRNCMP (n 6): ", 1);
 		if (ft_strncmp(argv[1], argv[2], 6) == 0)
+			ft_putendl_fd("EQUAL", 1);
+		else
+			ft_putendl_fd("NOT EQUAL", 1);
+		ft_putstr_fd(argv[1], 1);
+		ft_putstr_fd(" + ", 1);
+		ft_putstr_fd(argv[2], 1);
+		ft_putstr_fd(" = ", 1);
+		ft_putendl_fd(ft_itoa(ft_atoi(argv[1]) + ft_atoi(argv[2])), 1);
+
+		ft_putstr_fd("FT_MEMCMP (n 6): ", 1);
+		if (ft_memcmp(argv[1], argv[2], 6) == 0)
 			ft_putendl_fd("EQUAL", 1);
 		else
 			ft_putendl_fd("NOT EQUAL", 1);
@@ -220,7 +257,10 @@ int	main(int argc, char **argv)
 		ft_putstr_fd(argv[2], 1);
 		ft_putstr_fd(" = ", 1);
 		catargs = ft_strnstr(argv[1], argv[2], ft_strlen(argv[1]));
-		ft_putendl_fd(catargs, 1);
+		if (catargs != NULL)
+			ft_putendl_fd(catargs, 1);
+		else
+			ft_putendl_fd("", 1);
 
 		catargs = ft_calloc(ft_strlen(argv[1]) + ft_strlen(argv[2]), 
 				sizeof(char));			
@@ -232,7 +272,25 @@ int	main(int argc, char **argv)
 		ft_putchar_fd(argv[2][0], 1);
 		ft_putstr_fd(" = ", 1);
 		catargs = ft_strchr(argv[1], argv[2][0]);
-		ft_putendl_fd(catargs, 1);
+		if (catargs != NULL)
+			ft_putendl_fd(catargs, 1);
+		else
+			ft_putendl_fd("", 1);
+
+		catargs = ft_calloc(ft_strlen(argv[1]) + ft_strlen(argv[2]), 
+				sizeof(char));			
+		if (!catargs)
+			return (1);
+		ft_putstr_fd("FT_MEMCHR (len 4) of ", 1);
+		ft_putstr_fd(argv[1], 1);
+		ft_putstr_fd(" + ", 1);
+		ft_putchar_fd(argv[2][0], 1);
+		ft_putstr_fd(" = ", 1);
+		catargs = ft_memchr(argv[1], argv[2][0], 4);
+		if (catargs != NULL)
+			ft_putendl_fd(catargs, 1);
+		else
+			ft_putendl_fd("", 1);
 
 		catargs = ft_calloc(ft_strlen(argv[1]) + ft_strlen(argv[2]), 
 				sizeof(char));			
@@ -244,7 +302,10 @@ int	main(int argc, char **argv)
 		ft_putchar_fd(argv[2][0], 1);
 		ft_putstr_fd(" = ", 1);
 		catargs = ft_strrchr(argv[1], argv[2][0]);
-		ft_putendl_fd(catargs, 1);
+		if (catargs != NULL)
+			ft_putendl_fd(catargs, 1);
+		else
+			ft_putendl_fd("", 1);
 
 		ft_putstr_fd("FT_SPLIT of ", 1);
 		ft_putstr_fd(argv[1], 1);
@@ -261,6 +322,33 @@ int	main(int argc, char **argv)
 		}
 		free(splitarr);
 
+		ft_putstr_fd("FT_MEMCPY (dstsize 5) of ", 1);
+		ft_putstr_fd(arg1, 1);
+		ft_putstr_fd(" and ", 1);
+		ft_putstr_fd(arg2, 1);
+		printf("%p\n", ft_memcpy(arg1, arg2, 5)); 
+		ft_putendl_fd("", 1);
+		ft_putstr_fd("New string is: ", 1);
+		ft_putendl_fd(arg1, 1);
+
+		ft_putstr_fd("FT_MEMMOVE (len 5) of ", 1);
+		ft_putstr_fd(arg2, 1);
+		ft_putstr_fd(" and ", 1);
+		ft_putstr_fd(&arg2[3], 1);
+		printf("%p\n", ft_memmove(arg2, &arg2[3], 5)); 
+		ft_putendl_fd("", 1);
+		ft_putstr_fd("New string is: ", 1);
+		ft_putendl_fd(arg1, 1);
+
+		ft_putstr_fd("FT_MEMMOVE (len 5) of ", 1);
+		ft_putstr_fd(&arg2[5], 1);
+		ft_putstr_fd(" and ", 1);
+		ft_putstr_fd(arg2, 1);
+		printf("%p\n", ft_memmove(&arg2[5], arg2, 5)); 
+		ft_putendl_fd("", 1);
+		ft_putstr_fd("New string is: ", 1);
+		ft_putendl_fd(arg2, 1);
+
 		catargs = ft_calloc(ft_strlen(argv[1]) + ft_strlen(argv[2]), 
 				sizeof(char));			
 		if (!catargs)
@@ -269,12 +357,4 @@ int	main(int argc, char **argv)
 		free(arg1);
 		free(arg2);
 	}
-	//*ft_memcpy(void *dst, const void *src, size_t n);
-	//*ft_memmove(void *dst, const void *src, size_t len);
-	//*ft_memchr(const void *s, int c, size_t n);
-	//ft_memcmp(const void *s1, const void *s2, size_t n);
-
-	//*ft_substr(char const *s, unsigned int start, size_t len);
-	//*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-	//ft_striteri(char *s, void (*f)(unsigned int, char*));
 }
