@@ -62,7 +62,7 @@ static void	*ft_freeptr(char **strarray, int count)
 {
 	while (count--)
 		free(strarray[count]);
-	free(strarray[count]);
+	free(strarray);
 	return (NULL);
 }
 
