@@ -6,15 +6,12 @@ t_list	*ft_lst_new(char *content)
 	
 	new = malloc(sizeof(t_list));
 	if (!new)
-	{
-		free(new);
 		return (NULL);
-	}
 	*new->content = content;
 	return (new);
 }
 
-t_list	*ft_lst_append(t_list *list, t_list *new)
+t_list	*ft_lst_append(t_list **list, t_list *new)
 {
 	t_list *last_node;
 	if (!list || !new)
@@ -35,16 +32,47 @@ t_list	**ft_build_list(t_list **list)
 	}
 }
 
-t_list	*check_newline(char *c, t_list **list)
+char	*build_newline(t_list **list, int nl)
 {
-	t_list *node;
+	char	*str;
+	int		i;
+	t_list	*iter;
 
-	node = ft_lst_new(c);
-	list = ft_lst_append(list, node);
+	str = malloc(nl + 1 * sizeof(list));
+	if (!str)
+		return (NULL);
+	while (i != nl)
+	{
+		while(iter->next != NULL || iter->content != NULL)
+		{		
+			if (iter->content != NULL)
+				str[i++] = iter->content++;
+		}
+		iter = iter->next;
+	}
+	return (str);
+}
+
+char	*check_newline(t_list **lst)
+{
+	t_list	*iter;
+	int		i;
+
+	if (!lst)
+		return (NULL);
+	iter = *lst;	
 	i = 0;
-	while (c[i] != '\n' || c[i] != '\0')
-		i++;
-	if (c[i] == '\n')
-		return ();
+	while(iter->next != NULL || iter->content != NULL)
+	{
+		if (iter->content != NULL)
+		{
+			while (iter->content[i] != '\n' || iter->content[i] != '\0')
+				i++;
+		}
+		if (iter->next != NULL)
+			iter = iter->next;
+	}
+	if (iter->content[i] == '\n')
+		return (build_newline(lst, ++i));
 	return (NULL);
 }

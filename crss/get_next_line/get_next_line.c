@@ -3,19 +3,24 @@
 char	*get_next_line(int fd)
 {
 	static t_list	**list;
+	t_list			*list;
 	char			*buf;
 	char			*next_line;
 	
 	if (build_t_list(list) == NULL)
 		return (NULL);
-	buf = malloc(BUFFER_SIZE * sizeof(char));
+	buf = malloc(BUFFER_SIZE + 1 * sizeof(char));
 	if (!buf)
 		return (NULL);
-	read(fd, buf, BUFFER_SIZE - 1);
-	if (!check_newline(buf))
+	read(fd, buf, BUFFER_SIZE);
+	buf[BUFFER_SIZE + 1] = '\0';
+	list = ft_lst_new(buf);
+	if (!list)
+		return (NULL);
+	next_line = check_newline(list)
+	if (!next_line)
 		get_next_line(fd);
-	else
-		return (next_line);
+	return (next_line);
 }
 
 int	main(int argc, char **argv)
