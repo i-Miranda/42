@@ -8,6 +8,7 @@ typedef struct s_list{
 	struct s_list	*next;
 }	t_list;
 
+
 char	*get_next_line(int fd);
 
 // Utils
@@ -15,6 +16,7 @@ char	*get_next_line(int fd);
 //list functions
 t_list	*ft_lst_new(char *content);
 t_list	*ft_lst_last(t_list	*node)
-void	ft_lst_append(t_list **list, t_list *new);
+t_list	*ft_lst_append(t_list **list, t_list *new);
+t_list	**ft_build_list(t_list **list);
 
 int		ft_check_newline(char *c);

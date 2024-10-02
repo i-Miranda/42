@@ -70,11 +70,11 @@ all: $(NAME)
 
 clean:
 	rm -rf $(OBJ_O)
+	rm -rf $(BONUS_O)
 
 # -f ignores if file does not exist
 fclean: clean
 	rm -f $(NAME)
-	rm -rf $(BONUS_O)
 
 re: fclean all
 

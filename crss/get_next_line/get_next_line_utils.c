@@ -4,7 +4,7 @@ t_list	*ft_lst_new(char *content)
 {
 	t_list *new;
 	
-	new = malloc(sizeof (t_list));
+	new = malloc(sizeof(t_list));
 	if (!new)
 	{
 		free(new);
@@ -14,30 +14,37 @@ t_list	*ft_lst_new(char *content)
 	return (new);
 }
 
-t_list	*ft_lst_last(t_list	*node)
-{
-	if (!node)
-		return (NULL);
-	if (node->next != NULL)
-	{
-		node = node->next;
-		ft_lst_last(node);
-	}
-	return (node);
-}
-
-void	ft_lst_append(t_list *list, t_list *new)
+t_list	*ft_lst_append(t_list *list, t_list *new)
 {
 	t_list *last_node;
 	if (!list || !new)
 		return (NULL);
-	last_node = ft_lst_back(list);
-	last_node->next = new;
+	while (list->next != NULL)
+		list = list->next;
+	list->next = new;
+	return (new);
 }
 
-int	check_newline(char *c)
+t_list	**ft_build_list(t_list **list)
 {
-	if (*c == '\n')
-		return (1);
-	return (0);
+	if (!list)
+	{
+		list = malloc(sizeof(t_list *));
+		if (!list)
+			return (NULL);
+	}
+}
+
+t_list	*check_newline(char *c, t_list **list)
+{
+	t_list *node;
+
+	node = ft_lst_new(c);
+	list = ft_lst_append(list, node);
+	i = 0;
+	while (c[i] != '\n' || c[i] != '\0')
+		i++;
+	if (c[i] == '\n')
+		return ();
+	return (NULL);
 }

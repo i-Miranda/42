@@ -2,21 +2,20 @@
 
 char	*get_next_line(int fd)
 {
+	static t_list	**list;
 	char			*buf;
-	t_list			**list;
-	ssize_t			read_val;
+	char			*next_line;
 	
+	if (build_t_list(list) == NULL)
+		return (NULL);
 	buf = malloc(BUFFER_SIZE * sizeof(char));
 	if (!buf)
 		return (NULL);
-	read_val = -1;
-	while (!check_new_line(buf))
-	{
-		read_val = read(fd, buf, count);
-		if (read_val == -1)
-			return (NULL);
-	}
-	return (buf);
+	read(fd, buf, BUFFER_SIZE - 1);
+	if (!check_newline(buf))
+		get_next_line(fd);
+	else
+		return (next_line);
 }
 
 int	main(int argc, char **argv)
