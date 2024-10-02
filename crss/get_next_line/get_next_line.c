@@ -2,19 +2,19 @@
 
 char	*get_next_line(int fd)
 {
-	char			buf[1];
-	size_t			count;
+	char			*buf;
+	t_list			**list;
 	ssize_t			read_val;
 	
-	buf[0] = 0;
-	count = sizeof(char);
+	buf = malloc(BUFFER_SIZE * sizeof(char));
+	if (!buf)
+		return (NULL);
 	read_val = -1;
-	while (!check_new_line(buf[0]))
+	while (!check_new_line(buf))
 	{
 		read_val = read(fd, buf, count);
 		if (read_val == -1)
 			return (NULL);
-		buf[1] = 0;
 	}
 	return (buf);
 }
