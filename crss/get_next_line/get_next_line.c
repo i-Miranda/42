@@ -1,49 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/10/05 09:55:43 by ivmirand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*get_next_line(int fd)
 {
 	static t_list	**list;
-	t_list			*list;
 	char			*buf;
 	char			*next_line;
-	
-	if (build_t_list(list) == NULL)
+
+	if (ft_build_list(list) == NULL)
 		return (NULL);
 	buf = malloc(BUFFER_SIZE + 1 * sizeof(char));
 	if (!buf)
 		return (NULL);
-	read(fd, buf, BUFFER_SIZE);
+	if (read(fd, buf, BUFFER_SIZE) < 0)
+	{
+		free(buf);
+		return (NULL);
+	}
 	buf[BUFFER_SIZE + 1] = '\0';
-	list = ft_lst_new(buf);
+	*list = ft_lst_new(buf);
 	if (!list)
 		return (NULL);
-	next_line = check_newline(list)
+	next_line = check_newline(list);
 	if (!next_line)
 		get_next_line(fd);
+	free(buf);
+	ft_lst_clear(list);
 	return (next_line);
-}
-
-int	main(int argc, char **argv)
-{
-	if (argc == 3)
-	{
-		if (argv[1] == "0")
-		{
-			get_next_line(0);
-			return (0);
-		}
-		else if (argv[1] == "1")
-		{
-			get_next_line(1);
-			return (0);
-		}
-		else if (argv[1] == "2")
-		{
-			get_next_line(2);
-			return (0);
-		}
-		else
-			return (1);
-	}
-	return (1);
 }
