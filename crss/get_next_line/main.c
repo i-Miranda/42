@@ -12,11 +12,13 @@
 
 #include "get_next_line.h"
 #include <fcntl.h>
+#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
 	int	fd = open(argv[1], O_RDWR);
-	get_next_line(fd);
+	char *line = get_next_line(fd);
+	printf("%s", line);
 	close(fd);
 	return (1);
 }

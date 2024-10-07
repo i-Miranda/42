@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-t_list	*ft_lst_append(t_list **list, char *content)
+t_list	**ft_lst_append(t_list **list, char *content)
 {
 	t_list	*last_node;
 	t_list	*new;
@@ -27,7 +27,7 @@ t_list	*ft_lst_append(t_list **list, char *content)
 		return (NULL);
 	new->content = content;
 	last_node->next = new;
-	return (new);
+	return (list);
 }
 
 t_list	**ft_build_list(t_list **list)
@@ -68,7 +68,7 @@ char	*build_newline(t_list **list, int nl)
 	int		i;
 	t_list	*iter;
 
-	str = malloc(nl + 1 * sizeof(list));
+	str = malloc((nl + 1) * sizeof(list));
 	if (!str)
 		return (NULL);
 	i = 0;

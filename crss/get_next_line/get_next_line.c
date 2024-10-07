@@ -17,8 +17,10 @@ char	*get_next_line(int fd)
 	static t_list	**list;
 	char			*buf;
 	char			*next_line;
-
-	if (ft_build_list(list) == NULL)
+	
+	if (!list)
+		ft_build_list(list);
+	if (!list)
 		return (NULL);
 	buf = malloc(BUFFER_SIZE + 1 * sizeof(char));
 	if (!buf)
@@ -29,7 +31,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	buf[BUFFER_SIZE + 1] = '\0';
-	*list = ft_lst_new(buf);
+	list = ft_lst_append(list, buf);
 	if (!list)
 		return (NULL);
 	next_line = check_newline(list);
@@ -37,5 +39,6 @@ char	*get_next_line(int fd)
 		get_next_line(fd);
 	free(buf);
 	ft_lst_clear(list);
+	free(list);
 	return (next_line);
 }

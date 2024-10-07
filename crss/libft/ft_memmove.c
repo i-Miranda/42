@@ -15,15 +15,13 @@
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	const unsigned char	*temp_src;
-	unsigned char		*temp_dst;
 
 	if (dst == NULL && src == NULL)
 		return (NULL);
-	temp_dst = (unsigned char *)dst;
 	temp_src = (unsigned char *)src;
 	if (dst < src)
 		return (ft_memcpy(dst, src, len));
 	while (len--)
-		temp_dst[len] = temp_src[len];
+		((unsigned char *)dst)[len] = temp_src[len];
 	return (dst);
 }
