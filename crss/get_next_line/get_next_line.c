@@ -17,7 +17,7 @@ char	*get_next_line(int fd)
 	static t_list	**list;
 	char			*buf;
 	char			*next_line;
-	
+
 	if (!list)
 		ft_build_list(list);
 	if (!list)

@@ -16,8 +16,11 @@
 
 int	main(int argc, char **argv)
 {
-	int	fd = open(argv[1], O_RDWR);
-	char *line = get_next_line(fd);
+	int		fd;
+	char	*line;
+
+	fd = open(argv[1], O_RDWR);
+	line = get_next_line(fd);
 	printf("%s", line);
 	close(fd);
 	return (1);

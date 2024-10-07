@@ -44,15 +44,16 @@ t_list	**ft_build_list(t_list **list)
 
 int	ft_lst_clear(t_list **list)
 {
-	t_list *current;
-	t_list *previous;
+	t_list	*current;
+	t_list	*previous;
+
 	if (!list)
 		return (0);
 	current = *list;
 	previous = NULL;
 	while (current->next != NULL)
 	{
-		previous = current;		
+		previous = current;
 		current = current->next;
 		free(previous->content);
 		free(previous);
