@@ -24,7 +24,10 @@ t_list	**ft_lst_append(t_list **list, char *content)
 		last_node = last_node->next;
 	new = malloc(sizeof(t_list));
 	if (new == NULL)
+	{
+		ft_lst_clear(list);
 		return (NULL);
+	}
 	new->content = content;
 	last_node->next = new;
 	return (list);
@@ -64,6 +67,7 @@ int	ft_lst_clear(t_list **list)
 		free(previous->content);
 		free(previous);
 	}
+	free(current->content);
 	free(current);
 	free(list);
 	return (1);

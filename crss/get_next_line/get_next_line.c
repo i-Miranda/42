@@ -87,6 +87,6 @@ char	*get_next_line(int fd)
 	ft_build_list(list, fd);
 	if (!list)
 		return (NULL);
-	next_line = build_newline(list);
+	next_line = check_newline(list);
 	return (next_line);
 }
