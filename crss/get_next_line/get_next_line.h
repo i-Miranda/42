@@ -31,10 +31,10 @@ char	*get_next_line(int fd);
 
 // Utils
 //list functions
-t_list	**ft_build_list(t_list **list);
+void	ft_build_list(t_list **list, int fd);
 t_list	**ft_lst_append(t_list **list, char *content);
 int		ft_lst_clear(t_list **list);
 
-char	*build_newline(t_list **list, int nl);
+char	*build_newline(t_list **list);
 char	*check_newline(t_list **list);
 #endif
