@@ -6,12 +6,40 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/05 10:00:57 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:42:09 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+int	ft_count_chars(t_list **list)
+{
+	t_list	*iter;
+	int		i;
+	int		nl_found;
+	
+	iter = *list;
+	i = 0;
+	nl_found = 0;
+	while (iter)
+	{
+		while(iter->content[i] != '\0')
+		{
+			i++;
+			if (iter->content[i] == '\n')
+			{
+				nl_found = 1;
+				break;
+			}
+		}
+		if (nl_found == 1)
+			break;
+		iter = iter->next;
+	}
+	return (i);
+}
+
+// List functions
 t_list	**ft_lst_append(t_list **list, char *content)
 {
 	t_list	*last_node;
@@ -31,25 +59,6 @@ t_list	**ft_lst_append(t_list **list, char *content)
 	new->content = content;
 	last_node->next = new;
 	return (list);
-}
-
-void	ft_build_list(t_list **list, int fd)
-{
-	char	*buf;
-	
-	while (!list)
-	{
-		buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
-		if (!list)
-			return ;
-		if (read(fd, buf, BUFFER_SIZE) < 0)
-		{
-			free(buf);
-			return ;
-		}
-		buf[BUFFER_SIZE] = '\0';
-		ft_lst_append(list, buf);
-	}
 }
 
 int	ft_lst_clear(t_list **list)
@@ -72,4 +81,3 @@ int	ft_lst_clear(t_list **list)
 	free(list);
 	return (1);
 }
-

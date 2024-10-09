@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:17:45 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/05 09:37:08 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:36:39 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ char	*get_next_line(int fd);
 
 // Utils
 //list functions
-void	ft_build_list(t_list **list, int fd);
+int		ft_count_chars(t_list **list);
 t_list	**ft_lst_append(t_list **list, char *content);
 int		ft_lst_clear(t_list **list);
 
-char	*build_newline(t_list **list);
+void	ft_build_list(t_list **list, int fd);
 char	*check_newline(t_list **list);
+char	*build_newline(t_list **list);
 #endif
