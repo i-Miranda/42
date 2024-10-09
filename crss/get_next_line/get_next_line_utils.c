@@ -25,12 +25,12 @@ int	ft_count_chars(t_list **list)
 	{
 		while(iter->content[i] != '\0')
 		{
-			i++;
 			if (iter->content[i] == '\n')
 			{
 				nl_found = 1;
 				break;
 			}
+			i++;
 		}
 		if (nl_found == 1)
 			break;
@@ -51,7 +51,7 @@ t_list	**ft_lst_append(t_list **list, char *content)
 	while (last_node->next != NULL)
 		last_node = last_node->next;
 	new = malloc(sizeof(t_list));
-	if (new == NULL)
+	if (!new)
 	{
 		ft_lst_clear(list);
 		return (NULL);
