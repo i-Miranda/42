@@ -61,9 +61,9 @@ char	*check_newline(t_list **lst)
 	if (!lst)
 		return (NULL);
 	iter = *lst;
-	i = 0;
 	while (iter->next != NULL)
 	{
+		i = 0;
 		if (iter->content != NULL)
 		{
 			while (iter->content[i] != '\n' || iter->content[i] != '\0')
