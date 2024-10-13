@@ -38,24 +38,31 @@ void	ft_build_list(t_list **list, int fd)
 	}
 }
 
-int	*check_newline(t_list **list)
+int	check_newline(t_list **list)
 {
 	t_list	*iter;
 	int		i;
 	int		nl_found;
 
 	if (!list)
-		return (NULL);
+		return (0);
 	iter = *list;
 	nl_found = 0;
 	while (iter->next != NULL)
 	{
 		i = 0;
 		if (iter->content != NULL)
-		{
-			while (iter->content[i] != '\n' || iter->content[i] != '\0')
+			while (iter->content[i] != '\0')
+			{
+				if (iter->content[i] == '\n')
+				{
+					nl_found = 1;
+					break;
+				}
 				i++;
-		}
+			}
+		if (nl_found == 1)
+			break;
 		iter = iter->next;
 	}
 	i = 0;
@@ -81,11 +88,10 @@ char	*build_newline(t_list **list)
 	iter = *list;
 	while (j < i)
 	{
-		while (iter->next != NULL || iter->content != NULL)
-		{
+		if (iter->next != NULL || iter->content != NULL)
+		while (*iter->content != '\0')
 			str[j++] = *iter->content++;
-			iter = iter->next;
-		}
+		iter = iter->next;
 	}
 	return (str);
 }
@@ -100,7 +106,13 @@ char	*get_next_line(int fd)
 	ft_build_list(list, fd);
 	if (!list)
 		return (NULL);
-	next_line = check_newline(list);
-	ft_lst_clear(list);
-	return (next_line);
+	if (check_newline(list) != 0)
+	{
+		next_line = build_newline(list);
+		ft_lst_clear(list);
+		return (next_line);
+	}
+	else
+		ft_lst_clear(list);
+	return (NULL);
 }
