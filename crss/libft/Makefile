@@ -78,7 +78,7 @@ fclean: clean
 
 re: fclean all
 
-bonus: $(BONUS_O) $(HEADER) 
-	ar $(ARFLAGS) $(NAME) $(BONUS_O)
+bonus:
+	@make $(NAME) $(BONUS_O)
 
 .PHONY: all, clean, fclean, re, bonus
