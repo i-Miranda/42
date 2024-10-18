@@ -68,6 +68,7 @@ char	*build_newline(t_list **list)
 				str[j++] = *iter->content++;
 		iter = iter->next;
 	}
+	str[i] = '\0';
 	return (str);
 }
 
