@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/18 15:38:04 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:13:08 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,18 @@ void	ft_build_list(t_list **list, int fd)
 		if (!buf)
 			return ;
 		bytes_read = read(fd, buf, BUFFER_SIZE);
-		buf[BUFFER_SIZE] = '\0';
-		if (bytes_read < 0 || ft_lst_append(list, buf) == NULL)
+		if (bytes_read <= 0)
 		{
 			free(buf);
 			return ;
 		}
+		buf[bytes_read] = '\0';
+ 		if (ft_lst_append(list, buf) == NULL)
+		{
+			free(buf);
+			return ;
+		}
+		free(buf);
 	}
 }
 
@@ -42,18 +48,16 @@ int	check_newline(t_list **list)
 		return (0);
 	total_chars = 0;
 	iter = *list;
-	i = 0;
-	while (iter && iter->content[i] != '\0')
+	while (iter) 
 	{
-		total_chars++;
-		if (iter->content[i] == '\n')
+		i = 0;
+		while (iter->content[i] != '\0')
 		{
-			if (total_chars == 0)
-				return (total_chars);
-			else
+			if (iter->content[i] == '\n')
 				return (total_chars + 1);
+			total_chars++;
+			i++;
 		}
-		i++;
 		iter = iter->next;
 	}
 	return (-total_chars);
@@ -62,48 +66,47 @@ int	check_newline(t_list **list)
 char	*build_newline(t_list **list)
 {
 	char	*str;
+	t_list	*iter;
 	int		i;
 	int		j;
-	t_list	*iter;
+	int		k;
 
 	if (!list)
 		return (NULL);
 	i = check_newline(list);
+	if (i < 0)
+		return (NULL);
 	str = malloc((i + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	j = 0;
 	iter = *list;
-	while (j < i)
-	{
-		if (iter->next != NULL || iter->content != NULL)
-			while (*iter->content != '\0')
-				str[j++] = *iter->content++;
-		iter = iter->next;
-	}
-	str[i] = '\0';
+	k = 0;
+	while (j < i && iter->content[k] != '\0')
+		str[j++] = iter->content[k++];
+	iter = iter->next;
 	return (str);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_list	**list;
+	static t_list	*list;
 	char			*next_line;
 	int				nl_check;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	ft_build_list(list, fd);
+	ft_build_list(&list, fd);
 	if (!list)
 		return (NULL);
-	nl_check = check_newline(list);
+	nl_check = check_newline(&list);
 	if (nl_check >= 0)
 	{
-		next_line = build_newline(list);
-		ft_lst_clear(list);
+		next_line = build_newline(&list);
+		ft_lst_clear(&list);
 		return (next_line);
 	}
 	else
-		ft_lst_clear(list);
+		ft_lst_clear(&list);
 	return (NULL);
 }
