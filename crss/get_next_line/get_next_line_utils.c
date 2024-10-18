@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/18 14:59:32 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:32:17 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,23 @@ t_list	**ft_lst_append(t_list **list, char *content)
 		last_node = last_node->next;
 	last_node->next = new;
 	return (list);
+}
+
+void	ft_lst_to_string(t_list **list, char *str, int i)
+{
+	t_list	*iter;
+	int		j;
+	int		k;
+
+	j = 0;
+	iter = *list;
+	while (iter)
+	{
+		k = 0;
+		while (j < i && iter->content[k] != '\0')
+			str[j++] = iter->content[k++];
+		iter = iter->next;
+	}
 }
 
 int	ft_lst_clear(t_list **list)

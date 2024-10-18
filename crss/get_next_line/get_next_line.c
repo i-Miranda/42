@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/18 16:15:09 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:00:00 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,17 @@ int	check_newline(t_list **list)
 char	*build_newline(t_list **list)
 {
 	char	*str;
-	t_list	*iter;
 	int		i;
-	int		j;
-	int		k;
 
 	if (!list)
 		return (NULL);
 	i = check_newline(list);
 	if (i < 0)
 		return (NULL);
-	i--;
-	str = malloc((i + 1) * sizeof(char));
+	str = malloc(i * sizeof(char));
 	if (!str)
 		return (NULL);
-	j = 0;
-	iter = *list;
-	k = 0;
-	while (j < i && iter->content[k] != '\0')
-		str[j++] = iter->content[k++];
-	iter = iter->next;
+	ft_lst_to_string(list, str, i - 1);
 	return (str);
 }
 
@@ -93,21 +84,18 @@ char	*get_next_line(int fd)
 {
 	static t_list	*list;
 	char			*next_line;
-	int				nl_check;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	ft_build_list(&list, fd);
 	if (!list)
 		return (NULL);
-	nl_check = check_newline(&list);
-	if (nl_check >= 0)
+	if (check_newline(&list) >= 0)
 	{
 		next_line = build_newline(&list);
 		ft_lst_clear(&list);
 		return (next_line);
 	}
-	else
-		ft_lst_clear(&list);
+	ft_lst_clear(&list);
 	return (NULL);
 }
