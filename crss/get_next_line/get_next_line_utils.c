@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/09 16:42:09 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:40:09 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,19 @@ int	ft_count_chars(t_list **list)
 	while (iter)
 	{
 		j = 0;
-		while(iter->content[j] != '\0')
+		while (iter->content[j] != '\0')
 		{
+			j++;
+			i++;
 			if (iter->content[j] == '\n')
 			{
 				nl_found = 1;
-				break;
+				break ;
 			}
-			j++;
-			i++;
+			write(1, &iter->content[j], 1);
 		}
 		if (nl_found == 1)
-			break;
+			break ;
 		iter = iter->next;
 	}
 	return (i);
