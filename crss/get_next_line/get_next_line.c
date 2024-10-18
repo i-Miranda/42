@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/18 16:13:08 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:15:09 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*build_newline(t_list **list)
 	i = check_newline(list);
 	if (i < 0)
 		return (NULL);
+	i--;
 	str = malloc((i + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
