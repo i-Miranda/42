@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/09 17:31:09 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:38:04 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,28 @@ void	ft_build_list(t_list **list, int fd)
 int	check_newline(t_list **list)
 {
 	t_list	*iter;
+	int		total_chars;
 	int		i;
 
 	if (!list)
 		return (0);
-	i = ft_count_chars(list);
+	total_chars = 0;
 	iter = *list;
-	while (iter->content[i] != '\n' || iter->content[i] != '\0')
+	i = 0;
+	while (iter && iter->content[i] != '\0')
+	{
+		total_chars++;
+		if (iter->content[i] == '\n')
+		{
+			if (total_chars == 0)
+				return (total_chars);
+			else
+				return (total_chars + 1);
+		}
 		i++;
-	return (i);
+		iter = iter->next;
+	}
+	return (-total_chars);
 }
 
 char	*build_newline(t_list **list)
@@ -55,7 +68,7 @@ char	*build_newline(t_list **list)
 
 	if (!list)
 		return (NULL);
-	i = ft_count_chars(list);
+	i = check_newline(list);
 	str = malloc((i + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
@@ -76,13 +89,15 @@ char	*get_next_line(int fd)
 {
 	static t_list	**list;
 	char			*next_line;
+	int				nl_check;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	ft_build_list(list, fd);
 	if (!list)
 		return (NULL);
-	if (check_newline(list) != 0)
+	nl_check = check_newline(list);
+	if (nl_check >= 0)
 	{
 		next_line = build_newline(list);
 		ft_lst_clear(list);

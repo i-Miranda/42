@@ -6,44 +6,12 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/18 13:40:09 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:59:32 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_count_chars(t_list **list)
-{
-	t_list	*iter;
-	int		i;
-	int		j;
-	int		nl_found;
-
-	iter = *list;
-	i = 0;
-	nl_found = 0;
-	while (iter)
-	{
-		j = 0;
-		while (iter->content[j] != '\0')
-		{
-			j++;
-			i++;
-			if (iter->content[j] == '\n')
-			{
-				nl_found = 1;
-				break ;
-			}
-			write(1, &iter->content[j], 1);
-		}
-		if (nl_found == 1)
-			break ;
-		iter = iter->next;
-	}
-	return (i);
-}
-
-// List functions
 t_list	**ft_lst_append(t_list **list, char *content)
 {
 	t_list	*last_node;
@@ -51,14 +19,19 @@ t_list	**ft_lst_append(t_list **list, char *content)
 
 	if (!list)
 		return (NULL);
-	last_node = *list;
-	if (last_node != NULL)
-		while (last_node->next != NULL)
-			last_node = last_node->next;
 	new = malloc(sizeof(t_list));
 	if (!new)
 		return (NULL);
 	new->content = content;
+	new->next = NULL;
+	if (*list == NULL)
+	{
+		*list = new;
+		return (list);
+	}
+	last_node = *list;
+	while (last_node->next != NULL)
+		last_node = last_node->next;
 	last_node->next = new;
 	return (list);
 }
