@@ -25,50 +25,48 @@ t_list	**ft_lst_append(t_list **list, char *content)
 	new->content = content;
 	new->next = NULL;
 	if (*list == NULL)
-	{
 		*list = new;
-		return (list);
+	else
+	{
+		last_node = *list;
+		while (last_node->next != NULL)
+			last_node = last_node->next;
+		last_node->next = new;
 	}
-	last_node = *list;
-	while (last_node->next != NULL)
-		last_node = last_node->next;
-	last_node->next = new;
 	return (list);
 }
 
 // Turns the list content into a string and null terminates it
-void	ft_lst_to_string(t_list **list, char *str, int i)
+void	ft_lst_to_string(t_list **list, char *str, int len)
 {
 	t_list	*iter;
+	int		i;
 	int		j;
-	int		k;
 
-	j = 0;
+	i = 0;
 	iter = *list;
 	while (iter)
 	{
-		k = 0;
-		while (j < i && iter->content[k] != '\0')
-			str[j++] = iter->content[k++];
+		j = 0;
+		while (i < len && iter->content[j] != '\0')
+			str[i++] = iter->content[j++];
 		iter = iter->next;
 	}
-	str[j] = '\0';
+	str[i] = '\0';
 }
 
 void	ft_lst_clear(t_list **list)
 {
 	t_list	*current;
-	t_list	*previous;
+	t_list	*next_node;
 
 	current = *list;
-	while (current->next != NULL)
+	while (current)
 	{
-		previous = current;
-		current = current->next;
-		free(previous->content);
-		free(previous);
+		next_node = current->next;
+		free(current->content);
+		free(current);
+		current = next_node;
 	}
-	free(current->content);
-	free(current);
 	list = NULL;
 }
