@@ -16,24 +16,18 @@ void	ft_build_list(t_list **list, int fd)
 {
 	char	*buf;
 	ssize_t	bytes_read;
-	
-	while (!list)
+
+	while (check_newline(list) <= 0)
 	{
 		buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
 		if (!buf)
 			return ;
 		bytes_read = read(fd, buf, BUFFER_SIZE);
-		if (bytes_read < 0)
-		{
-			free(buf);
-			ft_lst_clear(list);
-			return ;
-		}
 		buf[BUFFER_SIZE] = '\0';
-		if (ft_lst_append(list, buf) == NULL)
+		if (bytes_read < 0 || ft_lst_append(list, buf) == NULL)
 		{
 			free(buf);
-			ft_lst_clear(list);
+			return ;
 		}
 	}
 }
@@ -42,33 +36,14 @@ int	check_newline(t_list **list)
 {
 	t_list	*iter;
 	int		i;
-	int		nl_found;
 
 	if (!list)
 		return (0);
+	i = ft_count_chars(list);
 	iter = *list;
-	nl_found = 0;
-	while (iter->next != NULL)
-	{
-		i = 0;
-		if (iter->content != NULL)
-			while (iter->content[i] != '\0')
-			{
-				if (iter->content[i] == '\n')
-				{
-					nl_found = 1;
-					break;
-				}
-				i++;
-			}
-		if (nl_found == 1)
-			break;
-		iter = iter->next;
-	}
-	i = 0;
 	while (iter->content[i] != '\n' || iter->content[i] != '\0')
 		i++;
-	return (nl_found);
+	return (i);
 }
 
 char	*build_newline(t_list **list)
@@ -89,8 +64,8 @@ char	*build_newline(t_list **list)
 	while (j < i)
 	{
 		if (iter->next != NULL || iter->content != NULL)
-		while (*iter->content != '\0')
-			str[j++] = *iter->content++;
+			while (*iter->content != '\0')
+				str[j++] = *iter->content++;
 		iter = iter->next;
 	}
 	return (str);
