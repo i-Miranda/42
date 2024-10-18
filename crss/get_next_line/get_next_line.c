@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/18 17:00:00 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:15:10 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ char	*build_newline(t_list **list)
 	i = check_newline(list);
 	if (i < 0)
 		return (NULL);
-	str = malloc(i * sizeof(char));
+	str = malloc((i + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-	ft_lst_to_string(list, str, i - 1);
+	ft_lst_to_string(list, str, i);
 	return (str);
 }
 
@@ -93,7 +93,6 @@ char	*get_next_line(int fd)
 	if (check_newline(&list) >= 0)
 	{
 		next_line = build_newline(&list);
-		ft_lst_clear(&list);
 		return (next_line);
 	}
 	ft_lst_clear(&list);
