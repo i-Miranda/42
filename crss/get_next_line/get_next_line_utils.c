@@ -55,13 +55,11 @@ void	ft_lst_to_string(t_list **list, char *str, int i)
 	str[j] = '\0';
 }
 
-int	ft_lst_clear(t_list **list)
+void	ft_lst_clear(t_list **list)
 {
 	t_list	*current;
 	t_list	*previous;
 
-	if (!list)
-		return (0);
 	current = *list;
 	while (current->next != NULL)
 	{
@@ -73,5 +71,4 @@ int	ft_lst_clear(t_list **list)
 	free(current->content);
 	free(current);
 	list = NULL;
-	return (1);
 }

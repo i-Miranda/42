@@ -29,11 +29,7 @@ void	ft_build_list(t_list **list, int fd)
 			return ;
 		}
 		buf[bytes_read] = '\0';
- 		if (ft_lst_append(list, buf) == NULL)
-		{
-			free(buf);
-			return ;
-		}
+ 		ft_lst_append(list, buf);
 		free(buf);
 	}
 }
@@ -53,9 +49,9 @@ int	check_newline(t_list **list)
 		i = 0;
 		while (iter->content[i] != '\0')
 		{
-			if (iter->content[i] == '\n')
-				return (total_chars + 1);
 			total_chars++;
+			if (iter->content[i] == '\n')
+					return (total_chars);
 			i++;
 		}
 		iter = iter->next;

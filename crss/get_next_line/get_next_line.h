@@ -32,7 +32,7 @@ char	*get_next_line(int fd);
 //list functions
 t_list	**ft_lst_append(t_list **list, char *content);
 void	ft_lst_to_string(t_list **list, char *str, int i);
-int		ft_lst_clear(t_list **list);
+void	ft_lst_clear(t_list **list);
 
 void	ft_build_list(t_list **list, int fd);
 int		check_newline(t_list **list);
