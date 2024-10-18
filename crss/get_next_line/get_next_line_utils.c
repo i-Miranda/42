@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/18 17:16:03 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:15:14 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_list	**ft_lst_append(t_list **list, char *content)
 	if (*list == NULL)
 	{
 		*list = new;
-		return (NULL);
+		return (list);
 	}
 	last_node = *list;
 	while (last_node->next != NULL)
