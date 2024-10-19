@@ -6,24 +6,40 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/18 18:24:28 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/19 20:18:04 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
-static void	ft_after_nl(t_list **list)
+static t_list	*ft_after_nl(t_list **list)
 {
-	t_list *last;
-	t_list *temp;
+	t_list	*last;
+	t_list	*temp;
+	char	*buf;
+	int		i;
+	int		j;
 
 	last = ft_lst_last(list);
 	while (*list != last)
 	{
 		temp = *list;
 		*list = temp->next;
-		free(temp);
+		free(temp->content);
 	}
+	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buf)
+		return (NULL);
+	i = 0;	
+	while (last->content[i] != '\0' && last->content[i] != '\n')
+		i++;
+	j = 0;
+	while (last->content[i] && last->content[i++])
+		buf[j++] = last->content[i];
+	free(last->content);
+	last->content = buf;
+	return (last);
 }
 
 static void	ft_build_list(t_list **list, int fd)
@@ -65,9 +81,12 @@ static char	*build_newline(t_list **list)
 	while (temp)
 	{
 		i = 0;
-		while (temp->content[i] != '\0')
-			i++;
-		len += i;
+		if (temp->content)
+		{
+			while (temp->content[i] != '\0')
+				i++;
+			len += i;
+		}
 		temp = temp->next;
 	}
 	new_line = malloc(len * sizeof(char));
@@ -96,8 +115,10 @@ char	*get_next_line(int fd)
 	next_line = build_newline(&list);
 	if (!next_line)
 		return (NULL);
-	if (ft_nl_check(next_line) == 0)
-		return (next_line);
-	ft_after_nl(&list);
+	if (ft_nl_check(next_line) != 0)
+	{
+		list = ft_after_nl(&list);
+		printf("list=%s\n", list->content);
+	}
 	return (next_line);
 }

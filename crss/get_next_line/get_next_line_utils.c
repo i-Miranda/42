@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/18 18:15:14 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/19 19:23:02 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int	ft_nl_check(char *str)
 
 	i = 0;
 	while (str[i] != '\0')
+	{
 		if (str[i] == '\n')
 			return (i);
+		i++;
+	}
 	return (0);
 }

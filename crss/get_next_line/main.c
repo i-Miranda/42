@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:34:40 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/18 16:53:34 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/19 19:27:49 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@ int	main(int argc, char **argv)
 
 	fd = open(argv[1], O_RDONLY);
 	line = get_next_line(fd);
-	printf("%s", line);
-	free (line);
+	printf("line=%s\n", line);
+	line = get_next_line(fd);
+	printf("line=%s\n", line);
+	line = get_next_line(fd);
+	printf("line=%s\n", line);
+	line = get_next_line(fd);
+	printf("line=%s\n", line);
+	free(line);
 	close(fd);
 	return (0);
 }
