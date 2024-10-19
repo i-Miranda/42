@@ -13,7 +13,7 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-static t_list	*ft_after_nl(t_list **list)
+static t_list	*ft_after_nl(t_list **list, int nl_position)
 {
 	t_list	*last;
 	t_list	*temp;
@@ -28,15 +28,15 @@ static t_list	*ft_after_nl(t_list **list)
 		*list = temp->next;
 		free(temp->content);
 	}
-	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	i = nl_position;
+	while (last->content[nl_position])
+		i++;
+	buf = malloc((i + 1) * sizeof(char));
 	if (!buf)
 		return (NULL);
-	i = 0;	
-	while (last->content[i] != '\0' && last->content[i] != '\n')
-		i++;
 	j = 0;
-	while (last->content[i] && last->content[i++])
-		buf[j++] = last->content[i];
+	while (last->content[nl_position])
+		buf[j++] = last->content[nl_position++];
 	free(last->content);
 	last->content = buf;
 	return (last);
@@ -56,16 +56,25 @@ static void	ft_build_list(t_list **list, int fd)
 	if (!buf)
 		return ;
 	bytes_read = read(fd, buf, BUFFER_SIZE);
+	if (bytes_read == 0)
+	{
+		free(new);
+		free(buf);
+		return ;
+	}
 	buf[bytes_read] = '\0';
 	new->content = buf;
+	new->next = NULL;
 	if (!*list)
 		*list = new;
 	else
 	{
-		last = ft_lst_last(list);	
+		last = ft_lst_last(list);
 		last->content = buf;
 		last->next = new;
 	}
+	if (ft_nl_check(buf) == 0)
+		ft_build_list(list, fd);
 }
 
 // Gets the list content, saves it into a string and null terminates it
@@ -106,6 +115,7 @@ char	*get_next_line(int fd)
 {
 	static t_list	*list;
 	char			*next_line;
+	int				nl_position;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
 		return (NULL);
@@ -114,10 +124,14 @@ char	*get_next_line(int fd)
 		return (NULL);
 	next_line = build_newline(&list);
 	if (!next_line)
-		return (NULL);
-	if (ft_nl_check(next_line) != 0)
 	{
-		list = ft_after_nl(&list);
+		ft_lst_iter(&list, free);
+		return (NULL);
+	}
+	nl_position = ft_nl_check(next_line); 
+	if (nl_position != 0)
+	{
+		list = ft_after_nl(&list, nl_position);
 		printf("list=%s\n", list->content);
 	}
 	return (next_line);
