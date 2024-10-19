@@ -12,3 +12,5 @@ test
 */test
 tags
 */tags
+*.dSYM
+*/*.dSYM

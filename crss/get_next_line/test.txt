@@ -1,1 +1,3 @@
-help\n
+help
+help2
+help3

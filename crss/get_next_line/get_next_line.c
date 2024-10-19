@@ -12,68 +12,75 @@
 
 #include "get_next_line.h"
 
-void	ft_build_list(t_list **list, int fd)
+static void	ft_after_nl(t_list **list)
 {
+	t_list *last;
+	t_list *temp;
+
+	last = ft_lst_last(list);
+	while (*list != last)
+	{
+		temp = *list;
+		*list = temp->next;
+		free(temp);
+	}
+}
+
+static void	ft_build_list(t_list **list, int fd)
+{
+	t_list	*new;
+	t_list	*last;
 	char	*buf;
 	ssize_t	bytes_read;
 
-	while (check_newline(list) <= 0)
+	new = malloc(sizeof(t_list));
+	if (!new)
+		return ;
+	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buf)
+		return ;
+	bytes_read = read(fd, buf, BUFFER_SIZE);
+	buf[bytes_read] = '\0';
+	new->content = buf;
+	if (!*list)
+		*list = new;
+	else
 	{
-		buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
-		if (!buf)
-			return ;
-		bytes_read = read(fd, buf, BUFFER_SIZE);
-		if (bytes_read <= 0)
-		{
-			free(buf);
-			return ;
-		}
-		buf[bytes_read] = '\0';
- 		ft_lst_append(list, buf);
-		free(buf);
+		last = ft_lst_last(list);	
+		last->content = buf;
+		last->next = new;
 	}
 }
 
-int	check_newline(t_list **list)
+// Gets the list content, saves it into a string and null terminates it
+static char	*build_newline(t_list **list)
 {
-	t_list	*iter;
-	int		total_chars;
-	int		i;
+	t_list	*temp;
+	size_t	len;
+	size_t	i;
+	char	*new_line;
 
-	if (!list)
-		return (0);
-	total_chars = 0;
-	iter = *list;
-	while (iter) 
+	temp = *list;
+	len = 0;
+	while (temp)
 	{
 		i = 0;
-		while (iter->content[i] != '\0')
-		{
-			total_chars++;
-			if (iter->content[i] == '\n')
-					return (total_chars);
+		while (temp->content[i] != '\0')
 			i++;
-		}
-		iter = iter->next;
+		len += i;
+		temp = temp->next;
 	}
-	return (-total_chars);
-}
-
-char	*build_newline(t_list **list)
-{
-	char	*str;
-	int		i;
-
-	if (!list)
+	new_line = malloc(len * sizeof(char));
+	if (!new_line)
 		return (NULL);
-	i = check_newline(list);
-	if (i < 0)
-		return (NULL);
-	str = malloc((i + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	ft_lst_to_string(list, str, i);
-	return (str);
+	temp = *list;
+	while (temp)
+	{
+		ft_lst_to_string(temp, new_line);
+		temp = temp->next;
+	}
+	new_line[len] = '\0';
+	return (new_line);
 }
 
 char	*get_next_line(int fd)
@@ -81,16 +88,16 @@ char	*get_next_line(int fd)
 	static t_list	*list;
 	char			*next_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
 		return (NULL);
 	ft_build_list(&list, fd);
 	if (!list)
 		return (NULL);
-	if (check_newline(&list) >= 0)
-	{
-		next_line = build_newline(&list);
+	next_line = build_newline(&list);
+	if (!next_line)
+		return (NULL);
+	if (ft_nl_check(next_line) == 0)
 		return (next_line);
-	}
-	ft_lst_clear(&list);
-	return (NULL);
+	ft_after_nl(&list);
+	return (next_line);
 }

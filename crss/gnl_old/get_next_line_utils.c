@@ -12,56 +12,59 @@
 
 #include "get_next_line.h"
 
-// Get last node in list, does NOT check for null list
-t_list	*ft_lst_last(t_list **list)
+t_list	**ft_lst_append(t_list **list, char *content)
 {
 	t_list	*last_node;
+	t_list	*new;
 
-	last_node = *list;
-	while (last_node->next != NULL)
-		last_node = last_node->next;
-	return (last_node);
+	new = malloc(sizeof(t_list));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	if (*list == NULL)
+		*list = new;
+	else
+	{
+		last_node = *list;
+		while (last_node->next != NULL)
+			last_node = last_node->next;
+		last_node->next = new;
+	}
+	return (list);
 }
 
-// Copies list content into a string
-void	ft_lst_to_string(t_list *list, char *str)
+// Turns the list content into a string and null terminates it
+void	ft_lst_to_string(t_list **list, char *str, int len)
 {
-	size_t	i;
-	size_t	j;
+	t_list	*iter;
+	int		i;
+	int		j;
 
 	i = 0;
-	while (str[i] != '\0')
-		i++;
-	j = 0;
-	while (list->content[j] != '\0')
+	iter = *list;
+	while (iter)
 	{
-		str[i] = list->content[j];
-		i++;
-		j++;
+		j = 0;
+		while (i < len && iter->content[j] != '\0')
+			str[i++] = iter->content[j++];
+		iter = iter->next;
 	}
 	str[i] = '\0';
 }
 
-// Iterates a function along a list (such as free)
-void	ft_lst_iter(t_list **list, void (*f)(void *))
+void	ft_lst_clear(t_list **list)
 {
 	t_list	*current;
+	t_list	*next_node;
 
 	current = *list;
 	while (current)
 	{
-		f(current->content);
-		current = current->next;
+		next_node = current->next;
+		free(current->content);
+		free(current);
+		current = next_node;
 	}
-}
-
-int	ft_nl_check(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		if (str[i] == '\n')
-			return (i);
-	return (0);
+	list = NULL;
 }

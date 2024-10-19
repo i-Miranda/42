@@ -29,8 +29,12 @@ typedef struct s_list
 char	*get_next_line(int fd);
 
 // Utils
-t_list	*ft_lst_last(t_list **list);
-void	ft_lst_to_string(t_list *list, char *str);
-void	ft_lst_iter(t_list **list, void (*f)(void *));
-int		ft_nl_check(char *str);
+//list functions
+t_list	**ft_lst_append(t_list **list, char *content);
+void	ft_lst_to_string(t_list **list, char *str, int i);
+void	ft_lst_clear(t_list **list);
+
+void	ft_build_list(t_list **list, int fd);
+int		check_newline(t_list **list);
+char	*build_newline(t_list **list);
 #endif
