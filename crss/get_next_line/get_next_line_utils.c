@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/21 11:44:48 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:44:23 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,17 @@ void	ft_lst_clear(t_list **list, t_list *stop)
 	t_list	*next;
 
 	current = *list;
+	while (current != stop)
+	{
+		next = current->next;
+		free(current->content);
+		free(current);
+		current = next;
+	}
 	if (stop == NULL)
-	{
-		while (current)
-		{
-			next = current->next;
-			free(current->content);
-			free(current);
-			current = next;
-		}
 		list = NULL;
-	}
 	else
-	{
-		while (current != stop)
-		{
-			next = current->next;
-			free(current->content);
-			free(current);
-			current = next;
-		}
 		*list = current;
-	}
 }
 
 int	ft_nl_check(char *str)
@@ -79,6 +68,8 @@ int	ft_nl_check(char *str)
 	int	i;
 
 	i = 0;
+	if (str == NULL)
+		return (-1);
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\n')
