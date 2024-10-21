@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/21 14:55:36 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:09:05 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_lst_clear(t_list **list, t_list *stop)
 		current = next;
 	}
 	if (stop == NULL)
-		list = NULL;
+		*list = NULL;
 	else
 		*list = current;
 }

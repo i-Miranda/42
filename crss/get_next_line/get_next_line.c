@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/21 14:57:24 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:15:04 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static t_list	*ft_after_nl(t_list **list, int nl_position)
 	int		j;
 
 	last = ft_lst_last(list);
-	ft_lst_clear(list, last);
-	i = nl_position;
 	if (!last || !last->content)
 		return (NULL);
+	ft_lst_clear(list, last);
+	i = nl_position;
 	while (last->content[i] != '\0')
 		i++;
 	buf = malloc((i - nl_position + 1) * sizeof(char));
@@ -60,6 +60,8 @@ static void	ft_build_list(t_list **list, int fd)
 	{
 		free(buf);
 		free(new);
+		if (bytes_read < 0)
+			ft_lst_clear(list, NULL);
 		return ;
 	}
 	buf[bytes_read] = '\0';
@@ -70,13 +72,6 @@ static void	ft_build_list(t_list **list, int fd)
 	else
 	{
 		last = ft_lst_last(list);
-		if (last == NULL)
-		{
-			free(buf);
-			free(new);
-			ft_lst_clear(list, NULL);
-			return ;
-		}
 		last->next = new;
 	}
 }
@@ -89,7 +84,7 @@ static char	*build_newline(t_list **list)
 	size_t	i;
 	char	*new_line;
 
-	if (!*list)
+	if (*list == NULL)
 		return (NULL);
 	temp = *list;
 	len = 0;
