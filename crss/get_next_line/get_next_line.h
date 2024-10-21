@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:17:45 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/21 14:15:12 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:29:11 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ t_list	*ft_lst_last(t_list **list);
 void	ft_lst_to_string(t_list *list, char *str, size_t *i);
 void	ft_lst_clear(t_list **list, t_list *stop);
 int		ft_nl_check(char *str);
+t_list	*ft_fd_to_lst(t_list **list, int fd);
 #endif
