@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/19 20:18:04 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/21 11:43:01 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,12 @@
 static t_list	*ft_after_nl(t_list **list, int nl_position)
 {
 	t_list	*last;
-	t_list	*current;
-	t_list	*next;
 	char	*buf;
-	char	*tempbuf;
 	int		i;
 	int		j;
 
-	current = *list;
 	last = ft_lst_last(list);
-	while (*list != last)
-	{
-		next = current->next;
-		free(current->content);
-		free(current);
-		current = next;
-	}
+	ft_lst_clear(list, last);
 	i = nl_position;
 	while (last->content[nl_position])
 		i++;
@@ -41,9 +31,8 @@ static t_list	*ft_after_nl(t_list **list, int nl_position)
 	j = 0;
 	while (last->content[nl_position])
 		buf[j++] = last->content[nl_position++];
-	tempbuf = last->content;
+	free(last->content);
 	last->content = buf;
-	free(tempbuf);
 	return (last);
 }
 
@@ -59,25 +48,33 @@ static void	ft_build_list(t_list **list, int fd)
 		return ;
 	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buf)
+	{
+		free(new);
+		ft_lst_clear(list, NULL);
 		return ;
+	}
 	bytes_read = read(fd, buf, BUFFER_SIZE);
 	if (bytes_read <= 0)
 	{
-		free(new);
 		free(buf);
+		free(new);
+		ft_lst_clear(list, NULL);
 		return ;
 	}
 	buf[bytes_read] = '\0';
 	new->content = buf;
 	new->next = NULL;
-	if (!*list)
-		*list = new;
+	last = ft_lst_last(list);
+	if (last == NULL)
 	{
-		last = ft_lst_last(list);
-		last->next = new;
+		free(buf);
+		free(new);
+		ft_lst_clear(list, NULL);
+		return ;
 	}
-	if (ft_nl_check(buf) == 0 && bytes_read != 0)
-		ft_build_list(list, fd);
+	last->next = new;
+//	while (ft_nl_check(buf) == 0 && bytes_read != 0)
+//		ft_build_list(list, fd);
 }
 
 // Gets the list content, saves it into a string and null terminates it
@@ -101,7 +98,7 @@ static char	*build_newline(t_list **list)
 		}
 		temp = temp->next;
 	}
-	new_line = malloc((len + 1)* sizeof(char));
+	new_line = malloc((len + 1) * sizeof(char));
 	if (!new_line)
 		return (NULL);
 	temp = *list;
@@ -128,7 +125,7 @@ char	*get_next_line(int fd)
 	next_line = build_newline(&list);
 	if (!next_line)
 	{
-		ft_lst_iter(&list, free);
+		ft_lst_clear(&list, NULL);
 		return (NULL);
 	}
 	nl_position = ft_nl_check(next_line); 

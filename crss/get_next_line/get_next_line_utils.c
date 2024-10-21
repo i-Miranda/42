@@ -6,17 +6,18 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/19 19:23:02 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/21 11:44:48 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// Get last node in list, does NOT check for null list
 t_list	*ft_lst_last(t_list **list)
 {
 	t_list	*last_node;
 
+	if (!list || !*list)
+		return (NULL);
 	last_node = *list;
 	while (last_node->next != NULL)
 		last_node = last_node->next;
@@ -42,16 +43,34 @@ void	ft_lst_to_string(t_list *list, char *str)
 	str[i] = '\0';
 }
 
-// Iterates a function along a list (such as free)
-void	ft_lst_iter(t_list **list, void (*f)(void *))
+// Clears list, if a stop is added clears list until stop
+void	ft_lst_clear(t_list **list, t_list *stop)
 {
 	t_list	*current;
+	t_list	*next;
 
 	current = *list;
-	while (current)
+	if (stop == NULL)
 	{
-		f(current->content);
-		current = current->next;
+		while (current)
+		{
+			next = current->next;
+			free(current->content);
+			free(current);
+			current = next;
+		}
+		list = NULL;
+	}
+	else
+	{
+		while (current != stop)
+		{
+			next = current->next;
+			free(current->content);
+			free(current);
+			current = next;
+		}
+		*list = current;
 	}
 }
 
