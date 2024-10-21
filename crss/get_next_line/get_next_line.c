@@ -61,7 +61,7 @@ static void	ft_build_list(t_list **list, int fd)
 	if (!buf)
 		return ;
 	bytes_read = read(fd, buf, BUFFER_SIZE);
-	if (bytes_read == 0)
+	if (bytes_read <= 0)
 	{
 		free(new);
 		free(buf);
