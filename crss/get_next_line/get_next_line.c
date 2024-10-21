@@ -16,17 +16,21 @@
 static t_list	*ft_after_nl(t_list **list, int nl_position)
 {
 	t_list	*last;
-	t_list	*temp;
+	t_list	*current;
+	t_list	*next;
 	char	*buf;
+	char	*tempbuf;
 	int		i;
 	int		j;
 
+	current = *list;
 	last = ft_lst_last(list);
 	while (*list != last)
 	{
-		temp = *list;
-		*list = temp->next;
-		free(temp->content);
+		next = current->next;
+		free(current->content);
+		free(current);
+		current = next;
 	}
 	i = nl_position;
 	while (last->content[nl_position])
@@ -37,8 +41,9 @@ static t_list	*ft_after_nl(t_list **list, int nl_position)
 	j = 0;
 	while (last->content[nl_position])
 		buf[j++] = last->content[nl_position++];
-	free(last->content);
+	tempbuf = last->content;
 	last->content = buf;
+	free(tempbuf);
 	return (last);
 }
 
@@ -67,13 +72,11 @@ static void	ft_build_list(t_list **list, int fd)
 	new->next = NULL;
 	if (!*list)
 		*list = new;
-	else
 	{
 		last = ft_lst_last(list);
-		last->content = buf;
 		last->next = new;
 	}
-	if (ft_nl_check(buf) == 0)
+	if (ft_nl_check(buf) == 0 && bytes_read != 0)
 		ft_build_list(list, fd);
 }
 

@@ -63,7 +63,7 @@ int	ft_nl_check(char *str)
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\n')
-			return (i);
+			return (i + 1);
 		i++;
 	}
 	return (0);
