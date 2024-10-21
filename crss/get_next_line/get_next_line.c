@@ -101,7 +101,7 @@ static char	*build_newline(t_list **list)
 		}
 		temp = temp->next;
 	}
-	new_line = malloc(len * sizeof(char));
+	new_line = malloc((len + 1)* sizeof(char));
 	if (!new_line)
 		return (NULL);
 	temp = *list;
