@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/21 11:43:01 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:13:11 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ static t_list	*ft_after_nl(t_list **list, int nl_position)
 	i = nl_position;
 	while (last->content[nl_position])
 		i++;
-	buf = malloc((i + 1) * sizeof(char));
+	buf = malloc((i - nl_position + 1) * sizeof(char));
 	if (!buf)
 		return (NULL);
 	j = 0;
 	while (last->content[nl_position])
 		buf[j++] = last->content[nl_position++];
+	buf[j] = '\0';
 	free(last->content);
 	last->content = buf;
 	return (last);
@@ -64,17 +65,22 @@ static void	ft_build_list(t_list **list, int fd)
 	buf[bytes_read] = '\0';
 	new->content = buf;
 	new->next = NULL;
-	last = ft_lst_last(list);
-	if (last == NULL)
+	if (*list ==NULL)
+		*list = new;	
+	else
 	{
-		free(buf);
-		free(new);
-		ft_lst_clear(list, NULL);
-		return ;
+		last = ft_lst_last(list);
+		if (last == NULL)
+		{
+			free(buf);
+			free(new);
+			ft_lst_clear(list, NULL);
+			return ;
+		}
+		last->next = new;
 	}
-	last->next = new;
-//	while (ft_nl_check(buf) == 0 && bytes_read != 0)
-//		ft_build_list(list, fd);
+	while (ft_nl_check(buf) == 0 && bytes_read != 0)
+		ft_build_list(list, fd);
 }
 
 // Gets the list content, saves it into a string and null terminates it
