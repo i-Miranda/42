@@ -30,6 +30,8 @@ void	ft_lst_to_string(t_list *list, char *str, size_t *i)
 	size_t	j;
 
 	j = 0;
+	if (!list->content)
+		return ;
 	while (list->content[j] != '\0')
 	{
 		str[*i] = list->content[j];

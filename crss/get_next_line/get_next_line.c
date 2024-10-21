@@ -15,11 +15,11 @@
 
 static t_list	*ft_after_nl(t_list **list, int nl_position)
 {
+	int		i;
 	t_list	*last;
 	char	*buf;
-	int		i;
-	int		j;
 
+	i = nl_position;
 	last = ft_lst_last(list);
 	if (!last || !last->content)
 		return (NULL);
@@ -27,20 +27,24 @@ static t_list	*ft_after_nl(t_list **list, int nl_position)
 	if (last->content[nl_position] == '\0')
 	{
 		free(last->content);
+		last->content = NULL;
+		last->next = NULL;
 		return (last);
 	}
-	i = nl_position;
 	while (last->content[i] != '\0')
 		i++;
 	buf = malloc((i - nl_position + 1) * sizeof(char));
 	if (!buf)
 		return (NULL);
-	j = 0;
+	i = 0;
 	while (last->content[nl_position] != '\0')
-		buf[j++] = last->content[nl_position++];
-	buf[j] = '\0';
+		buf[i++] = last->content[nl_position++];
+	buf[i] = '\0';
 	free(last->content);
 	last->content = buf;
+	nl_position = ft_nl_check(last->content);
+	if (nl_position > 0)
+		ft_after_nl(list, nl_position);
 	return (last);
 }
 
@@ -86,7 +90,7 @@ static t_list	*ft_build_list(t_list **list, int fd, int *nl_position)
 	while (1)
 	{
 		*list = ft_fd_to_lst(list, fd);
-		if (!*list)
+		if (!*list || !ft_lst_last(list)->content)
 			return (NULL);
 		*nl_position = ft_nl_check(ft_lst_last(list)->content);
 		if (*nl_position > 0)
@@ -119,5 +123,6 @@ char	*get_next_line(int fd)
 	}
 	if (nl_position != 0)
 		list = ft_after_nl(&list, nl_position);
+	ft_lst_clear(&list, NULL);
 	return (next_line);
 }

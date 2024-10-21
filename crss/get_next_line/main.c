@@ -27,9 +27,11 @@ int	main(int argc, char **argv)
 	while (i < line_count)
 	{
 		line = get_next_line(fd);
+		if (line == NULL)
+			break;
 		printf("line=%s\n", line);
+		free(line);
 	}
-	free(line);
 	close(fd);
 	return (0);
 }
