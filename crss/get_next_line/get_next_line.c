@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/21 12:13:11 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:16:35 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	ft_build_list(t_list **list, int fd)
 		}
 		last->next = new;
 	}
-	while (ft_nl_check(buf) == 0 && bytes_read != 0)
+	while (ft_nl_check(buf) == 0 && bytes_read > 0)
 		ft_build_list(list, fd);
 }
 
