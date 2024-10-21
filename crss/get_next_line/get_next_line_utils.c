@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/21 12:44:23 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:40:54 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,18 @@ t_list	*ft_lst_last(t_list **list)
 }
 
 // Copies list content into a string
-void	ft_lst_to_string(t_list *list, char *str)
+void	ft_lst_to_string(t_list *list, char *str, size_t *i)
 {
-	size_t	i;
 	size_t	j;
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
 	j = 0;
 	while (list->content[j] != '\0')
 	{
-		str[i] = list->content[j];
-		i++;
+		str[*i] = list->content[j];
+		(*i)++;
 		j++;
 	}
-	str[i] = '\0';
+	str[*i] = '\0';
 }
 
 // Clears list, if a stop is added clears list until stop

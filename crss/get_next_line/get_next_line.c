@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/21 13:48:41 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:37:38 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ static t_list	*ft_after_nl(t_list **list, int nl_position)
 	last = ft_lst_last(list);
 	ft_lst_clear(list, last);
 	i = nl_position;
-	while (last->content[nl_position] != '\0')
+	if (!last || !last->content)
+		return (NULL);
+	while (last->content[i] != '\0')
 		i++;
 	buf = malloc((i - nl_position + 1) * sizeof(char));
 	if (!buf)
@@ -105,11 +107,12 @@ static char	*build_newline(t_list **list)
 	new_line = malloc((len + 1) * sizeof(char));
 	if (!new_line)
 		return (NULL);
-	temp = *list;
+	i = 0;
 	new_line[0] = '\0';
+	temp = *list;
 	while (temp)
 	{
-		ft_lst_to_string(temp, new_line);
+		ft_lst_to_string(temp, new_line, &i);
 		temp = temp->next;
 	}
 	return (new_line);
@@ -128,7 +131,7 @@ char	*get_next_line(int fd)
 		ft_build_list(&list, fd);
 		if (!list)
 			return (NULL);
-		nl_position = ft_nl_check(build_newline(&list));
+		nl_position = ft_nl_check(ft_lst_last(&list)->content);
 		if (nl_position != 0)
 			break ;
 	}
@@ -139,9 +142,6 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	if (nl_position != 0)
-	{
 		list = ft_after_nl(&list, nl_position);
-		printf("list=%s\n", list->content);
-	}
 	return (next_line);
 }
