@@ -99,6 +99,7 @@ t_list	*ft_fd_to_lst(t_list **list, int fd)
 		return (NULL);
 	}
 	new->content = buf;
+	new->next = NULL;
 	if (*list == NULL)
 		*list = new;
 	else
