@@ -56,7 +56,9 @@ void	ft_lst_clear(t_list **list, t_list *stop)
 		current = next;
 	}
 	if (stop == NULL)
+	{
 		*list = NULL;
+	}
 	else
 		*list = current;
 }

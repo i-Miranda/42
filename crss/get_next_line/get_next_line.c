@@ -116,11 +116,6 @@ char	*get_next_line(int fd)
 	if (!list)
 		return (NULL);
 	next_line = build_newline(&list);
-	if (!next_line)
-	{
-		ft_lst_clear(&list, NULL);
-		return (NULL);
-	}
 	if (nl_position != 0)
 		list = ft_after_nl(&list, nl_position);
 	ft_lst_clear(&list, NULL);
