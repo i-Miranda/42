@@ -12,7 +12,6 @@
 
 #include "get_next_line.h"
 #include <fcntl.h>
-#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
@@ -27,10 +26,12 @@ int	main(int argc, char **argv)
 	while (i < line_count)
 	{
 		line = get_next_line(fd);
-		if (line == NULL)
-			break;
-		printf("line=%s\n", line);
-		free(line);
+		if (line != NULL)
+		{
+			printf("line=%s\n", line);
+			free(line);
+		}
+		i++;
 	}
 	close(fd);
 	return (0);

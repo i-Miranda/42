@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
@@ -33,9 +34,9 @@ typedef struct s_list
 char	*get_next_line(int fd);
 
 // Utils
-t_list	*ft_lst_last(t_list **list);
-void	ft_lst_to_string(t_list *list, char *str, size_t *i);
+t_list	*ft_lst_last(t_list *list);
+char	*ft_lst_to_string(t_list *list, size_t len);
 void	ft_lst_clear(t_list **list, t_list *stop);
 int		ft_nl_check(char *str);
-t_list	*ft_fd_to_lst(t_list **list, int fd);
+ssize_t	ft_fd_to_lst(t_list *list, int fd);
 #endif
