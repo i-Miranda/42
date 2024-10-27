@@ -18,7 +18,7 @@
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 10
 # endif
 
 # ifndef MAX_FD
@@ -37,6 +37,6 @@ char	*get_next_line(int fd);
 t_list	*ft_lst_last(t_list *list);
 char	*ft_lst_to_string(t_list *list, size_t len);
 void	ft_lst_clear(t_list **list, t_list *stop);
-int		ft_nl_check(char *str);
+int		ft_nl_check(char *str, int limit);
 ssize_t	ft_fd_to_lst(t_list *list, int fd);
 #endif

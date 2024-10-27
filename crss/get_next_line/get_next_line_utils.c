@@ -29,24 +29,33 @@ char	*ft_lst_to_string(t_list *list, size_t len)
 {
 	size_t	i;
 	size_t	j;
+	int		nl_found;
 	char	*str;
 
 	str = malloc((len + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
+	nl_found = 0;
 	i = 0;
 	while (list)
 	{
-		if (list->content)
+		j = 0;
+		while (list->content && list->content[j] && i < len)
 		{
-			j = 0;
-			while (list->content[j] != '\0')
-				str[i++] = list->content[j++];
+			str[i++] = list->content[j++];
+			if (str[i - 1] == '\n')
+				nl_found = 1;	
 		}
 		list = list->next;
+		if (nl_found)
+			break;
 	}
 	str[i] = '\0';
-	printf("str is %s : ft_lst_to_string\n", str);
+	if (str[0] == '\0')
+	{
+		free(str);
+		return (NULL);
+	}
 	return (str);
 }
 
@@ -72,25 +81,19 @@ void	ft_lst_clear(t_list **list, t_list *stop)
 		*list = current;
 }
 
-int	ft_nl_check(char *str)
+int	ft_nl_check(char *str, int limit)
 {
 	int	i;
 
 	i = 0;
 	if (str == NULL)
-	{
-		//printf("str is NULL. returning -1: ft_nl_check\n");
 		return (-1);
-	}
-	while (i < BUFFER_SIZE)
+	while (i < limit)
 	{
-		if (str[i++] == '\n')
-		{
-			printf("newline found. returning i(%d): ft_nl_check\n", i);
+		if (str[i] == '\n')
 			return (i);
-		}
+		i++;	
 	}
-	printf("newline not found. returning 0: ft_nl_check\n");
 	return (0);
 }
 
@@ -107,7 +110,6 @@ ssize_t	ft_fd_to_lst(t_list *list, int fd)
 	bytes_read = read(fd, buf, BUFFER_SIZE);
 	if (bytes_read <= 0)
 	{
-		//printf("bytes_read <= 0. Freeing buf. : ft_fd_to_last\n");
 		free(buf);
 		return (bytes_read);
 	}

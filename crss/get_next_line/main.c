@@ -28,10 +28,11 @@ int	main(int argc, char **argv)
 		line = get_next_line(fd);
 		if (line != NULL)
 		{
-			printf("line=%s\n", line);
+			printf("line=%s\ni=%d\n", line, ++i);
 			free(line);
 		}
-		i++;
+		else
+			i++;
 	}
 	close(fd);
 	return (0);
