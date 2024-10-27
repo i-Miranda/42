@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 		line = get_next_line(fd);
 		if (line != NULL)
 		{
-			printf("line=%s\ni=%d\n", line, ++i);
+			printf("line=%si=%d\n", line, ++i);
 			free(line);
 		}
 		else

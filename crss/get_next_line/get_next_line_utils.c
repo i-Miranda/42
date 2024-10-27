@@ -32,7 +32,7 @@ char	*ft_lst_to_string(t_list *list, size_t len)
 	int		nl_found;
 	char	*str;
 
-	str = malloc((len + 1) * sizeof(char));
+	str = malloc((len + 2) * sizeof(char));
 	if (!str)
 		return (NULL);
 	nl_found = 0;

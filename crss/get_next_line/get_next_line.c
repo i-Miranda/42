@@ -24,12 +24,11 @@ static t_list	*ft_after_nl(t_list **list, int *nl_position)
 	last = ft_lst_last(*list);
 	if (last == NULL || last->content == NULL)
 	{
-		//printf("last is NULL or last->content is NULL. Returning NULL. : ft_after_nl\n");
 		if (last)
 			ft_lst_clear(&last, NULL);
 		return (NULL);
 	}
-	while (last->content[i])
+	while (i < BUFFER_SIZE && last->content[i] != '\0')
 		i++;
 	if (i - *nl_position < -1)
 	{
@@ -46,7 +45,6 @@ static t_list	*ft_after_nl(t_list **list, int *nl_position)
 	buf[i] = '\0';
 	free(last->content);
 	last->content = buf;
-	//*nl_position = ft_nl_check(last->content, i);
 	ft_lst_clear(list, last);
 	return (last);
 }
@@ -65,9 +63,9 @@ static size_t	build_newline(t_list **list)
 		i = 0;
 		while (temp->content && i < BUFFER_SIZE && temp->content[i])
 		{	
-			if (temp->content[i] == '\n')
-				return (len + i + 1);
 			i++;
+			if (temp->content[i - 1] == '\n')
+				return (len + i);
 		}
 		len += i;
 		temp = temp->next;
@@ -131,7 +129,7 @@ char	*get_next_line(int fd)
 	if (bytes_read < 0)
 	{
 		free(next_line);
-		return ("");
+		return (NULL);
 	}
 	return (next_line);
 }
