@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/21 16:44:43 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/28 10:20:41 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,42 @@
 
 t_list	*ft_lst_last(t_list *list)
 {
-	t_list	*last_node;
-
-	last_node = list;
-	if (last_node == NULL)
+	if (list == NULL)
 		return (NULL);
-	while (last_node->next != NULL)
-		last_node = last_node->next;
-	return (last_node);
+	while (list->next != NULL)
+		list = list->next;
+	return (list);
 }
 
 // Copies list content into a string
-char	*ft_lst_to_string(t_list *list, size_t len)
+char	*ft_lst_to_string(t_list **list, size_t len)
 {
 	size_t	i;
 	size_t	j;
 	int		nl_found;
 	char	*str;
+	t_list	*temp;
 
+	temp = *list;
 	str = malloc((len + 2) * sizeof(char));
 	if (!str)
 		return (NULL);
 	nl_found = 0;
 	i = 0;
-	while (list)
+	while (temp)
 	{
 		j = 0;
-		while (list->content && list->content[j] && i < len)
+		while (temp->content && temp->content[j] && i < len)
 		{
-			str[i++] = list->content[j++];
+			str[i++] = temp->content[j++];
 			if (str[i - 1] == '\n')
 				nl_found = 1;	
 		}
-		list = list->next;
 		if (nl_found)
 			break;
+		temp = temp->next;
 	}
 	str[i] = '\0';
-	if (str[0] == '\0')
-	{
-		free(str);
-		return (NULL);
-	}
 	return (str);
 }
 
@@ -74,27 +68,32 @@ void	ft_lst_clear(t_list **list, t_list *stop)
 		current = next;
 	}
 	if (stop == NULL)
-	{
 		*list = NULL;
-	}
 	else
 		*list = current;
 }
 
-int	ft_nl_check(char *str, int limit)
+// -1 if found
+int	ft_nl_check(char *str)
 {
 	int	i;
+	int	len;
 
 	i = 0;
-	if (str == NULL)
-		return (-1);
-	while (i < limit)
+	len = 0;
+	while (str[i])
+	{
+		len++;
+		i++;
+	}
+	i = 0;
+	while (i < len)
 	{
 		if (str[i] == '\n')
 			return (i);
 		i++;	
 	}
-	return (0);
+	return (-1);
 }
 
 ssize_t	ft_fd_to_lst(t_list *list, int fd)
@@ -114,6 +113,7 @@ ssize_t	ft_fd_to_lst(t_list *list, int fd)
 		return (bytes_read);
 	}
 	buf[bytes_read] = '\0';
+	//printf("\nbuf = %s : ft_fd_to_lst\n", buf);
 	new = malloc(sizeof(t_list));
 	if (!new)
 	{

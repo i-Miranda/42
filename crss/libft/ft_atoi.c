@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:50:35 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/28 23:03:35 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/28 00:20:04 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ int	ft_atoi(const char *str)
 	while (ft_isdigit(str[i]))
 	{
 		result = (result * 10) + (str[i] - '0');
-		// not sure about this one
-		//if (result < -2147483648)
-		//	return (0);
 		i++;
 	}
 	return (result * neg);
