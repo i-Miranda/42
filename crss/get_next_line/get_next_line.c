@@ -6,14 +6,13 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/28 11:38:23 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/10/30 18:44:00 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 #include <string.h>
-
 
 static t_list	*ft_after_nl(t_list **list)
 {
@@ -44,32 +43,42 @@ static t_list	*ft_after_nl(t_list **list)
 	free(last->content);
 	last->content = buf;
 	last->next = NULL;
-	ft_lst_clear(&((*list)->next), last);
+	if (last->content[0])
+		ft_lst_clear(&(*list)->next, last);
+	else
+		ft_lst_clear(&(*list)->next, NULL);
 	return (last);
 }
 
-// Gets the list content and returns the len
-static size_t	get_newline_len(t_list **list)
+// Copies list content into a string
+static char	*ft_lst_to_string(t_list **list, size_t len)
 {
-	t_list	*temp;
-	size_t	len;
 	size_t	i;
+	size_t	j;
+	char	*str;
+	t_list	*temp;
 
 	temp = *list;
-	len = 0;
+	str = malloc((len + 2) * sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
 	while (temp)
 	{
-		i = 0;
-		while (temp->content && i < BUFFER_SIZE && temp->content[i])
-		{	
-			i++;
-			if (temp->content[i - 1] == '\n')
-				return (len + i);
+		j = 0;
+		while (temp->content && temp->content[j] && i < len)
+		{
+			str[i] = temp->content[j++];
+			if (str[i++] == '\n')
+			{
+				str[i] = '\0';
+				return (str);
+			}
 		}
-		len += i;
 		temp = temp->next;
 	}
-	return (len); 
+	str[i] = '\0';
+	return (str);
 }
 
 static void	ft_build_list(t_list **list, int fd, ssize_t *bytes_read)
@@ -78,7 +87,7 @@ static void	ft_build_list(t_list **list, int fd, ssize_t *bytes_read)
 
 	if (*list == NULL)
 	{
-		*list = malloc(sizeof(t_list)); //last paco 1char.txt expected NULL
+		*list = malloc(sizeof(t_list));
 		if (*list == NULL)
 			return ;
 		(*list)->content = NULL;
@@ -113,18 +122,12 @@ char	*get_next_line(int fd)
 		return (NULL);
 	bytes_read = -1;
 	ft_build_list(&head, fd, &bytes_read);
-	if (bytes_read < 0)
+	if (bytes_read <= 0)
 	{
 		ft_lst_clear(&head, NULL);
 		return (NULL);
 	}
 	next_line = ft_lst_to_string(&head, get_newline_len(&head));
 	head->next = ft_after_nl(&head);
-	if (bytes_read == 0 && head->next == NULL)
-	{
-		ft_lst_clear(&head, NULL);
-		free(next_line);
-		return (NULL);
-	}
 	return (next_line);
 }
