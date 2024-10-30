@@ -27,7 +27,9 @@ static t_list	*ft_after_nl(t_list **list)
 	i = -1;
 	b_len = 0;
 	c_len = 0;
-	while (last->content[c_len])
+	if (!last->content)
+		return (NULL);
+	while (last->content[c_len] != '\0')
 	{
 		if (i < 0 && (last->content)[c_len] == '\n')
 			i = c_len;
@@ -76,7 +78,7 @@ static void	ft_build_list(t_list **list, int fd, ssize_t *bytes_read)
 
 	if (*list == NULL)
 	{
-		*list = malloc(sizeof(t_list));
+		*list = malloc(sizeof(t_list)); //last paco 1char.txt expected NULL
 		if (*list == NULL)
 			return ;
 		(*list)->content = NULL;
@@ -111,12 +113,18 @@ char	*get_next_line(int fd)
 		return (NULL);
 	bytes_read = -1;
 	ft_build_list(&head, fd, &bytes_read);
-	if (bytes_read <= 0)
+	if (bytes_read < 0)
 	{
 		ft_lst_clear(&head, NULL);
 		return (NULL);
 	}
 	next_line = ft_lst_to_string(&head, get_newline_len(&head));
 	head->next = ft_after_nl(&head);
+	if (bytes_read == 0 && head->next == NULL)
+	{
+		ft_lst_clear(&head, NULL);
+		free(next_line);
+		return (NULL);
+	}
 	return (next_line);
 }
