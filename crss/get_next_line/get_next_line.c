@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 
+
 static t_list	*ft_after_nl(t_list **list)
 {
 	int		i;
@@ -81,6 +82,13 @@ static void	ft_build_list(t_list **list, int fd, ssize_t *bytes_read)
 		(*list)->content = NULL;
 		(*list)->next = NULL;
 	}
+	if ((*list)->content != NULL)
+	{
+		*bytes_read = ft_nl_check((*list)->content);
+		if (*bytes_read > 0 || 
+				(*bytes_read == 0 && (*list)->content[0] == '\n'))
+			return ;
+	}
 	last = ft_lst_last(*list);
 	while (last)
 	{
@@ -104,7 +112,10 @@ char	*get_next_line(int fd)
 	bytes_read = -1;
 	ft_build_list(&head, fd, &bytes_read);
 	if (bytes_read <= 0)
-		return (ft_lst_clear(&head, NULL), NULL);
+	{
+		ft_lst_clear(&head, NULL);
+		return (NULL);
+	}
 	next_line = ft_lst_to_string(&head, get_newline_len(&head));
 	head->next = ft_after_nl(&head);
 	return (next_line);

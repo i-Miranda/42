@@ -30,8 +30,10 @@ char	*ft_lst_to_string(t_list **list, size_t len)
 	char	*str;
 	t_list	*temp;
 
+	if (*list == NULL)
+		return (NULL);
 	temp = *list;
-	str = malloc((len + 2) * sizeof(char));
+	str = malloc((len + 2) * sizeof(char)); //	paco complains about this
 	if (!str)
 		return (NULL);
 	nl_found = 0;
