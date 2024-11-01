@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/30 18:44:00 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/01 14:24:30 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ static t_list	*ft_after_nl(t_list **list)
 		buf[b_len++] = last->content[++i];
 	buf[b_len] = '\0';
 	free(last->content);
-	if (buf[0] != '\0')
-		last->content = buf;
-	else
-		free(buf);
-	last->next = NULL;
-	if (last->content[0])
+	last->content = buf;
+	if (last->content[0] != '\0')
 		ft_lst_clear(&(*list)->next, last);
 	else
+	{
 		ft_lst_clear(&(*list)->next, NULL);
+		(*list)->next = NULL;
+		last = NULL;
+	}
 	return (last);
 }
 
@@ -67,11 +67,14 @@ static t_list	*ft_head_check(t_list **list, ssize_t *bytes_read)
 		temp->content = NULL;
 		temp->next = NULL;
 	}
-	if (temp->next && temp->next->content)
+	if (temp->next != NULL)  
 	{
-		*bytes_read = ft_nl_check(temp->content);
-		temp->next = ft_after_nl(&temp);
-		return (temp);
+		if(temp->next->content != NULL)
+		{
+			*bytes_read = ft_nl_check(temp->next->content);
+			temp->next = ft_after_nl(&temp);
+			return (temp);
+		}
 	} 
 	return (temp);
 }

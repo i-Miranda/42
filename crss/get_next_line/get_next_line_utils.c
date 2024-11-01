@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/30 18:31:57 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/01 13:36:48 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 t_list	*ft_lst_last(t_list *list)
 {
-	if (list == NULL)
+	t_list *temp;
+
+	temp = list;
+	if (temp == NULL)
 		return (NULL);
-	while (list->next != NULL)
-		list = list->next;
-	return (list);
+	while (temp->next != NULL)
+		temp = temp->next;
+	return (temp);
 }
 
 // Gets the list content and returns the len
@@ -40,30 +43,23 @@ size_t	get_newline_len(t_list **list)
 				return (len + i);
 		}
 		len += i;
-		temp = temp->next;
-	}
-	return (len);
+		temp = temp->next; } return (len);
 }
 
 // Clears list, if a stop is added clears list until stop
 void	ft_lst_clear(t_list **list, t_list *stop)
 {
-	t_list	*current;
 	t_list	*next;
 
-	current = *list;
-	while (current != stop)
+	while (*list != stop)
 	{
-		next = current->next;
-		free(current->content);
-		free(current);
-		current = NULL;
-		current = next;
+		next = (*list)->next;
+		free((*list)->content);
+		free(*list);
+		*list = next;
 	}
 	if (stop == NULL)
 		*list = NULL;
-	else
-		*list = current;
 }
 
 ssize_t	ft_fd_to_lst(t_list *list, int fd)
