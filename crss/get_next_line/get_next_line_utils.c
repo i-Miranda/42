@@ -34,7 +34,7 @@ size_t	get_newline_len(t_list **list)
 	{
 		i = 0;
 		while (temp->content && i < BUFFER_SIZE && temp->content[i])
-		{	
+		{
 			i++;
 			if (temp->content[i - 1] == '\n')
 				return (len + i);
@@ -42,7 +42,7 @@ size_t	get_newline_len(t_list **list)
 		len += i;
 		temp = temp->next;
 	}
-	return (len); 
+	return (len);
 }
 
 // Clears list, if a stop is added clears list until stop
@@ -57,6 +57,7 @@ void	ft_lst_clear(t_list **list, t_list *stop)
 		next = current->next;
 		free(current->content);
 		free(current);
+		current = NULL;
 		current = next;
 	}
 	if (stop == NULL)
@@ -98,7 +99,6 @@ ssize_t	ft_fd_to_lst(t_list *list, int fd)
 	}
 	list->next = new;
 	return (bytes_read);
-
 }
 
 // -1 if found

@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 
+
 static t_list	*ft_after_nl(t_list **list)
 {
 	int		i;
@@ -22,11 +23,11 @@ static t_list	*ft_after_nl(t_list **list)
 	t_list	*last;
 	char	*buf;
 
-	last = ft_lst_last(*list);
 	i = -1;
 	b_len = 0;
 	c_len = 0;
-	if (!last->content)
+	last = ft_lst_last(*list);
+	if (last == NULL || last->content == NULL)
 		return (NULL);
 	while (last->content[c_len] != '\0')
 	{
@@ -41,13 +42,38 @@ static t_list	*ft_after_nl(t_list **list)
 		buf[b_len++] = last->content[++i];
 	buf[b_len] = '\0';
 	free(last->content);
-	last->content = buf;
+	if (buf[0] != '\0')
+		last->content = buf;
+	else
+		free(buf);
 	last->next = NULL;
 	if (last->content[0])
 		ft_lst_clear(&(*list)->next, last);
 	else
 		ft_lst_clear(&(*list)->next, NULL);
 	return (last);
+}
+
+static t_list	*ft_head_check(t_list **list, ssize_t *bytes_read)
+{
+	t_list *temp;
+
+	temp = *list;
+	if (temp == NULL)
+	{
+		temp = malloc(sizeof(t_list));
+		if (temp == NULL)
+			return (NULL);
+		temp->content = NULL;
+		temp->next = NULL;
+	}
+	if (temp->next && temp->next->content)
+	{
+		*bytes_read = ft_nl_check(temp->content);
+		temp->next = ft_after_nl(&temp);
+		return (temp);
+	} 
+	return (temp);
 }
 
 // Copies list content into a string
@@ -85,22 +111,10 @@ static void	ft_build_list(t_list **list, int fd, ssize_t *bytes_read)
 {
 	t_list	*last;
 
-	if (*list == NULL)
-	{
-		*list = malloc(sizeof(t_list));
-		if (*list == NULL)
-			return ;
-		(*list)->content = NULL;
-		(*list)->next = NULL;
-	}
-	if ((*list)->content != NULL)
-	{
-		*bytes_read = ft_nl_check((*list)->content);
-		if (*bytes_read > 0 || 
-				(*bytes_read == 0 && (*list)->content[0] == '\n'))
-			return ;
-	}
-	last = ft_lst_last(*list);
+	*list = ft_head_check(list, bytes_read);
+	last = *list;
+	if (last->next && last->next->content)
+		return ;
 	while (last)
 	{
 		*bytes_read = ft_fd_to_lst(last, fd);
@@ -122,12 +136,22 @@ char	*get_next_line(int fd)
 		return (NULL);
 	bytes_read = -1;
 	ft_build_list(&head, fd, &bytes_read);
+	next_line = ft_lst_to_string(&head, get_newline_len(&head));
 	if (bytes_read <= 0)
 	{
 		ft_lst_clear(&head, NULL);
-		return (NULL);
+		if (bytes_read < 0)
+		{
+			free(next_line);
+			return (NULL);
+		}
 	}
-	next_line = ft_lst_to_string(&head, get_newline_len(&head));
-	head->next = ft_after_nl(&head);
+	if (next_line[0] == '\0')
+	{
+		free(next_line);
+		next_line = NULL;
+	}
+	if (head)
+		head->next = ft_after_nl(&head);
 	return (next_line);
 }
