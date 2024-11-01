@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/01 13:36:48 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:28:48 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ ssize_t	ft_fd_to_lst(t_list *list, int fd)
 		return (bytes_read);
 	}
 	buf[bytes_read] = '\0';
-	new = malloc(sizeof(t_list));
-	if (!new)
+	if ((new = malloc(sizeof(t_list))) == NULL)
 	{
 		free(buf);
 		return (bytes_read);
