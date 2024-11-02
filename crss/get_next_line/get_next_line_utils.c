@@ -14,7 +14,7 @@
 
 t_list	*ft_lst_last(t_list *list)
 {
-	t_list *temp;
+	t_list	*temp;
 
 	temp = list;
 	if (temp == NULL)
@@ -43,7 +43,9 @@ size_t	get_newline_len(t_list **list)
 				return (len + i);
 		}
 		len += i;
-		temp = temp->next; } return (len);
+		temp = temp->next;
+	}
+	return (len);
 }
 
 // Clears list, if a stop is added clears list until stop
@@ -79,19 +81,14 @@ ssize_t	ft_fd_to_lst(t_list *list, int fd)
 		return (bytes_read);
 	}
 	buf[bytes_read] = '\0';
-	if ((new = malloc(sizeof(t_list))) == NULL)
+	new = malloc(sizeof(t_list));
+	if (new == NULL)
 	{
 		free(buf);
 		return (bytes_read);
 	}
 	new->content = buf;
 	new->next = NULL;
-	if (list == NULL)
-	{
-		free(new);
-		free(buf);
-		return (-1);
-	}
 	list->next = new;
 	return (bytes_read);
 }
@@ -114,7 +111,7 @@ int	ft_nl_check(char *str)
 	{
 		if (str[i] == '\n')
 			return (i);
-		i++;	
+		i++;
 	}
 	return (-1);
 }

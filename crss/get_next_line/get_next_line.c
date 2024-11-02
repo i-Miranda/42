@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
 /*   Updated: 2024/11/01 14:25:43 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "get_next_line.h"
 #include <stdio.h>
-#include <string.h>
-
 
 static t_list	*ft_after_nl(t_list **list)
 {
@@ -21,17 +20,31 @@ static t_list	*ft_after_nl(t_list **list)
 	t_list	*last;
 	char	*buf;
 
-	i = -1;
 	b_len = 0;
-	c_len = 0;
-	last = ft_lst_last(*list);
+	last = *list;
+	last = last->next;
 	if (last == NULL || last->content == NULL)
 		return (NULL);
-	while (last->content[c_len] != '\0')
+	while (last)
 	{
-		if (i < 0 && last->content[c_len] == '\n')
-			i = c_len;
-		c_len++;	
+		if (last->content == NULL)
+			break;
+		i = -1;
+		c_len = 0;
+		while (last->content[c_len] != '\0')
+		{
+			if (i < 0 && last->content[c_len] == '\n')
+				i = c_len;
+			c_len++;
+		}
+		if (i >= 0)
+			break;
+		last = last->next;
+	}
+	if (i < 0)
+	{
+		ft_lst_clear(list, NULL);
+		return (NULL);
 	}
 	buf = malloc((c_len - i + 1) * sizeof(char)); if (!buf)
 		return (NULL);
@@ -48,30 +61,6 @@ static t_list	*ft_after_nl(t_list **list)
 		last = NULL;
 	}
 	return (last);
-}
-
-static t_list	*ft_head_check(t_list **list, ssize_t *bytes_read)
-{
-	t_list *temp;
-
-	temp = *list;
-	if (temp == NULL)
-	{
-		temp = malloc(sizeof(t_list));
-		if (temp == NULL)
-			return (NULL);
-		temp->content = NULL;
-		temp->next = NULL;
-	}
-	if (temp->next != NULL)  
-	{
-		if(temp->next->content != NULL)
-		{
-			*bytes_read = ft_nl_check(temp->next->content);
-			return (temp);
-		}
-	} 
-	return (temp);
 }
 
 // Copies list content into a string
@@ -109,13 +98,24 @@ static void	ft_build_list(t_list **list, int fd, ssize_t *bytes_read)
 {
 	t_list	*last;
 
-	*list = ft_head_check(list, bytes_read);
 	last = *list;
-	if (last->next && last->next->content)
-		return ;
+	if (last == NULL)
+	{
+		last = malloc(sizeof(t_list));
+		if (last == NULL)
+			return ;
+		last->content = NULL;
+		last->next = NULL;
+		*list = last;
+	}
 	while (last)
 	{
 		*bytes_read = ft_fd_to_lst(last, fd);
+		if (last == NULL)
+		{
+			ft_lst_clear(&last, NULL);
+			break;
+		}
 		if (*bytes_read <= 0)
 			return ;
 		last = last->next;
@@ -127,8 +127,9 @@ static void	ft_build_list(t_list **list, int fd, ssize_t *bytes_read)
 char	*get_next_line(int fd)
 {
 	static t_list	*head;
+	t_list			*temp;
 	char			*next_line;
-	ssize_t			bytes_read;	
+	ssize_t			bytes_read;
 
 	if (fd < 0 || fd > MAX_FD || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -148,6 +149,10 @@ char	*get_next_line(int fd)
 		next_line = NULL;
 	}
 	if (head)
-		head->next = ft_after_nl(&head);
+	{
+		temp = ft_after_nl(&head);
+		if (temp != NULL)
+			head->next = temp;
+	}
 	return (next_line);
 }

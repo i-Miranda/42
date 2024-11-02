@@ -19,12 +19,12 @@ int	main(int argc, char **argv)
 	char	*line;
 
 	fd = open(argv[1], O_RDONLY);
-	line = get_next_line(fd); 
+	line = get_next_line(fd);
 	while (line != NULL)
 	{
 		printf("line=%s\n", line);
 		free(line);
-		line = get_next_line(fd); 
+		line = get_next_line(fd);
 	}
 	close(fd);
 	return (0);
