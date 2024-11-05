@@ -24,6 +24,7 @@ static t_list	*ft_after_nl(t_list **list)
 	last = (*list)->next;
 	if (last == NULL || last->content == NULL)
 		return (NULL);
+	//this should be get_newline_len
 	while (last)
 	{
 		i = -1;
@@ -40,6 +41,7 @@ static t_list	*ft_after_nl(t_list **list)
 			break ;
 		last = last->next;
 	}
+	/**/
 	if (i < 0)
 	{
 		ft_lst_clear(list, NULL);
