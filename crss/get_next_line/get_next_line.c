@@ -21,16 +21,15 @@ static t_list	*ft_after_nl(t_list **list)
 	char	*buf;
 
 	b_len = 0;
-	last = *list;
-	last = last->next;
+	last = (*list)->next;
 	if (last == NULL || last->content == NULL)
 		return (NULL);
 	while (last)
 	{
-		if (last->content == NULL)
-			break;
 		i = -1;
 		c_len = 0;
+		if (last->content == NULL)
+			break ;
 		while (last->content[c_len] != '\0')
 		{
 			if (i < 0 && last->content[c_len] == '\n')
@@ -38,7 +37,7 @@ static t_list	*ft_after_nl(t_list **list)
 			c_len++;
 		}
 		if (i >= 0)
-			break;
+			break ;
 		last = last->next;
 	}
 	if (i < 0)
@@ -46,7 +45,8 @@ static t_list	*ft_after_nl(t_list **list)
 		ft_lst_clear(list, NULL);
 		return (NULL);
 	}
-	buf = malloc((c_len - i + 1) * sizeof(char)); if (!buf)
+	buf = malloc((c_len - i + 1) * sizeof(char));
+	if (!buf)
 		return (NULL);
 	while (i < c_len)
 		buf[b_len++] = last->content[++i];
@@ -91,6 +91,11 @@ static char	*ft_lst_to_string(t_list **list, size_t len)
 		temp = temp->next;
 	}
 	str[i] = '\0';
+	if (str[0] == '\0')
+	{
+		free(str);
+		str = NULL;
+	}
 	return (str);
 }
 
@@ -110,17 +115,17 @@ static void	ft_build_list(t_list **list, int fd, ssize_t *bytes_read)
 	}
 	while (last)
 	{
-		*bytes_read = ft_fd_to_lst(last, fd);
+		ft_fd_to_lst(last, fd, bytes_read);
 		if (last == NULL)
 		{
 			ft_lst_clear(&last, NULL);
-			break;
+			return ;
 		}
 		if (*bytes_read <= 0)
 			return ;
 		last = last->next;
 		if (ft_nl_check(last->content) >= 0)
-			return ;	
+			return ;
 	}
 }
 
@@ -131,9 +136,8 @@ char	*get_next_line(int fd)
 	char			*next_line;
 	ssize_t			bytes_read;
 
-	if (fd < 0 || fd > MAX_FD || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= MAX_FD || BUFFER_SIZE <= 0)
 		return (NULL);
-	bytes_read = -1;
 	ft_build_list(&head, fd, &bytes_read);
 	if (bytes_read < 0)
 	{
@@ -143,11 +147,6 @@ char	*get_next_line(int fd)
 	next_line = ft_lst_to_string(&head, get_newline_len(&head));
 	if (bytes_read == 0 && head->next == NULL)
 		ft_lst_clear(&head, NULL);
-	if (next_line[0] == '\0')
-	{
-		free(next_line);
-		next_line = NULL;
-	}
 	if (head)
 	{
 		temp = ft_after_nl(&head);

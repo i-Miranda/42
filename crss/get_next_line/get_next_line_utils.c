@@ -64,33 +64,30 @@ void	ft_lst_clear(t_list **list, t_list *stop)
 		*list = NULL;
 }
 
-ssize_t	ft_fd_to_lst(t_list *list, int fd)
+void	ft_fd_to_lst(t_list *list, int fd, ssize_t *bytes_read)
 {
 	char	*buf;
-	ssize_t	bytes_read;
-	t_list	*new;
+	t_list	*temp;
 
-	bytes_read = -1;
 	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buf)
-		return (bytes_read);
-	bytes_read = read(fd, buf, BUFFER_SIZE);
-	if (bytes_read <= 0)
+		return ;
+	*bytes_read = read(fd, buf, BUFFER_SIZE);
+	if (*bytes_read <= 0)
 	{
 		free(buf);
-		return (bytes_read);
+		return ;
 	}
-	buf[bytes_read] = '\0';
-	new = malloc(sizeof(t_list));
-	if (new == NULL)
+	buf[*bytes_read] = '\0';
+	temp = ft_lst_last(list);
+	temp->next = malloc(sizeof(t_list));
+	if (temp->next == NULL)
 	{
 		free(buf);
-		return (bytes_read);
+		return ;
 	}
-	new->content = buf;
-	new->next = NULL;
-	list->next = new;
-	return (bytes_read);
+	temp->next->content = buf;
+	temp->next->next = NULL;
 }
 
 // -1 if found
