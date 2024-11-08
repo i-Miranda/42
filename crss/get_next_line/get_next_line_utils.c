@@ -38,8 +38,7 @@ size_t	get_newline_len(t_list **list)
 		i = 0;
 		while (temp->content && i < BUFFER_SIZE && temp->content[i])
 		{
-			i++;
-			if (temp->content[i - 1] == '\n')
+			if (temp->content[i++] == '\n')
 				return (len + i);
 		}
 		len += i;
@@ -57,6 +56,7 @@ void	ft_lst_clear(t_list **list, t_list *stop)
 	{
 		next = (*list)->next;
 		free((*list)->content);
+		(*list)->content = NULL;
 		free(*list);
 		*list = next;
 	}
@@ -76,6 +76,7 @@ void	ft_fd_to_lst(t_list *list, int fd, ssize_t *bytes_read)
 	if (*bytes_read <= 0)
 	{
 		free(buf);
+		buf = NULL;
 		return ;
 	}
 	buf[*bytes_read] = '\0';
@@ -84,6 +85,7 @@ void	ft_fd_to_lst(t_list *list, int fd, ssize_t *bytes_read)
 	if (temp->next == NULL)
 	{
 		free(buf);
+		buf = NULL;
 		return ;
 	}
 	temp->next->content = buf;

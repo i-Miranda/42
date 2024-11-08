@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		printf("line=%s\n", line);
+		printf("line = %s", line);
 		free(line);
 		line = get_next_line(fd);
 	}
