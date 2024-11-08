@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
-#include <stdio.h>
 
 static t_list	*ft_after_nl(t_list **list)
 {
