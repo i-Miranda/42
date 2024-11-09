@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/09 16:56:43 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/09 17:11:13 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,14 @@ size_t	get_newline_len(t_list **list)
 void	ft_lst_clear(t_list **list, t_list *stop)
 {
 	t_list	*next;
-	t_list	*temp;
 
-	temp = *list;
-	while (temp != stop)
+	while (*list != stop)
 	{
-		next = temp->next;
-		free(temp->content);
-		temp->content = NULL;
-		free(temp);
-		temp = next;
+		next = (*list)->next;
+		free((*list)->content);
+		(*list)->content = NULL;
+		free(*list);
+		*list = next;
 	}
 	if (stop == NULL)
 		*list = NULL;
