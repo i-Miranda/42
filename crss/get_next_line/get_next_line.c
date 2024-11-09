@@ -6,12 +6,12 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/09 16:50:52 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/09 20:37:00 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-static t_list	*garbage(t_list **list, t_list *last, int i, int c_len)
+static t_list	*ft_leftovers(t_list **list, t_list *last, int i, int c_len)
 {
 	int		b_len;
 	char	*buf;
@@ -31,7 +31,10 @@ static t_list	*garbage(t_list **list, t_list *last, int i, int c_len)
 	free(last->content);
 	last->content = buf;
 	if (last->content[0] == '\0' && last->next == NULL)
+	{
 		ft_lst_clear(&(*list)->next, NULL);
+		last = NULL;
+	}
 	else
 		ft_lst_clear(&(*list)->next, last);
 	return (last);
@@ -62,12 +65,13 @@ static t_list	*ft_after_nl(t_list **list)
 			break ;
 		last = last->next;
 	}
-	return (garbage(list, last, i, c_len));
+	return (ft_leftovers(list, last, i, c_len));
 }
 
 // Copies list content into a string
-static char	*ft_lst_to_string(t_list **list, size_t len, size_t i)
+static char	*ft_lst_to_string(t_list **list, size_t len)
 {
+	size_t	i;
 	size_t	j;
 	char	*str;
 	t_list	*temp;
@@ -76,6 +80,7 @@ static char	*ft_lst_to_string(t_list **list, size_t len, size_t i)
 	str = malloc((len + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
+	i = 0;
 	while (temp)
 	{
 		j = 0;
@@ -124,23 +129,25 @@ char	*get_next_line(int fd)
 	char			*next_line;
 	ssize_t			bytes_read;
 
-	if (fd < 0 || fd >= MAX_FD || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > MAX_FD || BUFFER_SIZE <= 0)
 		return (NULL);
 	ft_build_list(&head, fd, &bytes_read);
-	if (bytes_read < 0)
+	if (bytes_read < 0 || (bytes_read == 0 && head->next == NULL))
 	{
 		ft_lst_clear(&head, NULL);
-		return (NULL);
+		if (bytes_read < 0)
+			return (NULL);
 	}
-	next_line = ft_lst_to_string(&head, get_newline_len(&head), 0);
-	if (next_line == NULL || next_line[0] == '\0')
-	{
-		free(next_line);
-		next_line = NULL;
-	}
-	if (bytes_read == 0 && head->next == NULL)
-		ft_lst_clear(&head, NULL);
 	if (head)
+	{
+		next_line = ft_lst_to_string(&head, get_newline_len(&head));
+		if (next_line == NULL || next_line[0] == '\0')
+		{
+			free(next_line);
+			next_line = NULL;
+		}
 		ft_after_nl(&head);
-	return (next_line);
+		return (next_line);
+	}
+	return (NULL);
 }

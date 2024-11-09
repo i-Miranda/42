@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:34:40 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/01 18:40:08 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/09 20:03:29 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int argc, char **argv)
 		free(line);
 		line = get_next_line(fd);
 	}
+	printf("%s", line);
 	close(fd);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/09 17:11:13 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/09 20:57:28 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_list	*ft_lst_last(t_list *list)
 	return (temp);
 }
 
-// Gets the list content and returns the len
+// Gets the list content and returns the entire len or up to newline
 size_t	get_newline_len(t_list **list)
 {
 	t_list	*temp;
@@ -59,7 +59,7 @@ void	ft_lst_clear(t_list **list, t_list *stop)
 		*list = next;
 	}
 	if (stop == NULL)
-		*list = NULL;
+		list = NULL;
 }
 
 void	ft_fd_to_lst(t_list *list, int fd, ssize_t *bytes_read)
@@ -90,19 +90,14 @@ void	ft_fd_to_lst(t_list *list, int fd, ssize_t *bytes_read)
 	temp->next->next = NULL;
 }
 
-// -1 if found
+// -1 if nl not found
 int	ft_nl_check(char *str)
 {
 	int	i;
-	int	len;
 
 	i = 0;
-	len = 0;
 	while (str[i++])
-		len++;
-	i = 0;
-	while (i < len)
-		if (str[i++] == '\n')
-			return (i - 1);
+		if (str[i] == '\n')
+			return (i);
 	return (-1);
 }
