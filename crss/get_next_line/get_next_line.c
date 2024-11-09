@@ -6,20 +6,43 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:20:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/01 14:25:43 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/09 16:50:52 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
+
+static t_list	*garbage(t_list **list, t_list *last, int i, int c_len)
+{
+	int		b_len;
+	char	*buf;
+
+	b_len = 0;
+	if (i < 0)
+	{
+		ft_lst_clear(list, NULL);
+		return (NULL);
+	}
+	buf = malloc((c_len - i + 1) * sizeof(char));
+	if (!buf)
+		return (NULL);
+	while (i < c_len)
+		buf[b_len++] = last->content[++i];
+	buf[b_len] = '\0';
+	free(last->content);
+	last->content = buf;
+	if (last->content[0] == '\0' && last->next == NULL)
+		ft_lst_clear(&(*list)->next, NULL);
+	else
+		ft_lst_clear(&(*list)->next, last);
+	return (last);
+}
 
 static t_list	*ft_after_nl(t_list **list)
 {
 	int		i;
 	int		c_len;
-	int		b_len;
 	t_list	*last;
-	char	*buf;
 
-	b_len = 0;
 	last = (*list)->next;
 	if (last == NULL || last->content == NULL)
 		return (NULL);
@@ -39,33 +62,12 @@ static t_list	*ft_after_nl(t_list **list)
 			break ;
 		last = last->next;
 	}
-	if (i < 0)
-	{
-		ft_lst_clear(list, NULL);
-		return (NULL);
-	}
-	buf = malloc((c_len - i + 1) * sizeof(char));
-	if (!buf)
-		return (NULL);
-	while (i < c_len)
-		buf[b_len++] = last->content[++i];
-	buf[b_len] = '\0';
-	free(last->content);
-	last->content = buf;
-	if (last->content[0] != '\0')
-		ft_lst_clear(&(*list)->next, last);
-	else
-	{
-		ft_lst_clear(&(*list)->next, NULL);
-		last = NULL;
-	}
-	return (last);
+	return (garbage(list, last, i, c_len));
 }
 
 // Copies list content into a string
-static char	*ft_lst_to_string(t_list **list, size_t len)
+static char	*ft_lst_to_string(t_list **list, size_t len, size_t i)
 {
-	size_t	i;
 	size_t	j;
 	char	*str;
 	t_list	*temp;
@@ -74,27 +76,20 @@ static char	*ft_lst_to_string(t_list **list, size_t len)
 	str = malloc((len + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-	i = 0;
 	while (temp)
 	{
 		j = 0;
-		while (temp->content && temp->content[j] && i < len)
+		while (temp->content && temp->content[j])
 		{
 			str[i] = temp->content[j++];
 			if (str[i++] == '\n')
-			{
-				str[i] = '\0';
-				return (str);
-			}
+				break ;
 		}
+		if (i > 0 && str[i - 1] == '\n')
+			break ;
 		temp = temp->next;
 	}
 	str[i] = '\0';
-	if (str[0] == '\0')
-	{
-		free(str);
-		str = NULL;
-	}
 	return (str);
 }
 
@@ -115,11 +110,6 @@ static void	ft_build_list(t_list **list, int fd, ssize_t *bytes_read)
 	while (last)
 	{
 		ft_fd_to_lst(last, fd, bytes_read);
-		if (last == NULL)
-		{
-			ft_lst_clear(&last, NULL);
-			return ;
-		}
 		if (*bytes_read <= 0)
 			return ;
 		last = last->next;
@@ -131,7 +121,6 @@ static void	ft_build_list(t_list **list, int fd, ssize_t *bytes_read)
 char	*get_next_line(int fd)
 {
 	static t_list	*head;
-	t_list			*temp;
 	char			*next_line;
 	ssize_t			bytes_read;
 
@@ -143,14 +132,15 @@ char	*get_next_line(int fd)
 		ft_lst_clear(&head, NULL);
 		return (NULL);
 	}
-	next_line = ft_lst_to_string(&head, get_newline_len(&head));
+	next_line = ft_lst_to_string(&head, get_newline_len(&head), 0);
+	if (next_line == NULL || next_line[0] == '\0')
+	{
+		free(next_line);
+		next_line = NULL;
+	}
 	if (bytes_read == 0 && head->next == NULL)
 		ft_lst_clear(&head, NULL);
 	if (head)
-	{
-		temp = ft_after_nl(&head);
-		if (temp != NULL)
-			head->next = temp;
-	}
+		ft_after_nl(&head);
 	return (next_line);
 }

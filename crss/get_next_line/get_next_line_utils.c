@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:19:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/01 18:28:48 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/09 16:56:43 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,9 @@ size_t	get_newline_len(t_list **list)
 	while (temp)
 	{
 		i = 0;
-		while (temp->content && i < BUFFER_SIZE && temp->content[i])
-		{
+		while (temp->content && temp->content[i])
 			if (temp->content[i++] == '\n')
 				return (len + i);
-		}
 		len += i;
 		temp = temp->next;
 	}
@@ -51,14 +49,16 @@ size_t	get_newline_len(t_list **list)
 void	ft_lst_clear(t_list **list, t_list *stop)
 {
 	t_list	*next;
+	t_list	*temp;
 
-	while (*list != stop)
+	temp = *list;
+	while (temp != stop)
 	{
-		next = (*list)->next;
-		free((*list)->content);
-		(*list)->content = NULL;
-		free(*list);
-		*list = next;
+		next = temp->next;
+		free(temp->content);
+		temp->content = NULL;
+		free(temp);
+		temp = next;
 	}
 	if (stop == NULL)
 		*list = NULL;
@@ -69,6 +69,7 @@ void	ft_fd_to_lst(t_list *list, int fd, ssize_t *bytes_read)
 	char	*buf;
 	t_list	*temp;
 
+	*bytes_read = -1;
 	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buf)
 		return ;
@@ -76,7 +77,6 @@ void	ft_fd_to_lst(t_list *list, int fd, ssize_t *bytes_read)
 	if (*bytes_read <= 0)
 	{
 		free(buf);
-		buf = NULL;
 		return ;
 	}
 	buf[*bytes_read] = '\0';
@@ -85,7 +85,7 @@ void	ft_fd_to_lst(t_list *list, int fd, ssize_t *bytes_read)
 	if (temp->next == NULL)
 	{
 		free(buf);
-		buf = NULL;
+		*bytes_read = -1;
 		return ;
 	}
 	temp->next->content = buf;
@@ -100,17 +100,11 @@ int	ft_nl_check(char *str)
 
 	i = 0;
 	len = 0;
-	while (str[i])
-	{
+	while (str[i++])
 		len++;
-		i++;
-	}
 	i = 0;
 	while (i < len)
-	{
-		if (str[i] == '\n')
-			return (i);
-		i++;
-	}
+		if (str[i++] == '\n')
+			return (i - 1);
 	return (-1);
 }
