@@ -2,19 +2,19 @@
 
 int	ft_printf(char const *str, ...)
 {
-	int		result;
 	int		arg_i;
+	int		pct_i;
 	size_t	len;
 	size_t	i;
 	va_list	arglist;
 
 	va_start(arglist, str);
 	arg_i = 0;
-	while (arglist[arg_i])
+	while (arglist)
 	{
-		va_arg(arglist[arg_i], char const *);
+		va_arg(arglist, char const *);
 		arg_i++;
 	}
 	va_end(arglist);
-	return (result); 
+	return (ft_strlen(str));
 }

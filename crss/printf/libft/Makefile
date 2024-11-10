@@ -1,4 +1,3 @@
-
 NAME := libft.a
 
 HEADER := libft.h
@@ -45,7 +44,7 @@ OBJ_O := $(SOURCES:.c=.o)
 CCFLAGS := -Wall -Wextra -Werror
 
 %.o: %.c libft.h
-	$(COMPILER) $(CCFLAGS) -c $< -o $@
+	$(COMPILER) $(CCFLAGS) -c $< -o output/$@
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently 
@@ -53,13 +52,12 @@ CCFLAGS := -Wall -Wextra -Werror
 ARFLAGS := -r -c -s
 
 $(NAME): $(OBJ_O) $(HEADER) 
-	ar $(ARFLAGS) $(NAME) $(OBJ_O)
+	ar $(ARFLAGS) $(NAME) output/*.o
 
 all: $(NAME)
 
 clean:
 	rm -rf $(OBJ_O)
-	rm -rf $(BONUS_O)
 
 # -f ignores if file does not exist
 fclean: clean
