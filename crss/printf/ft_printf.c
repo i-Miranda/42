@@ -10,23 +10,57 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libftprintf.h"
 
+static int	ft_process_char(char arg, va_list ap)
+{
+	int result;
+
+	result = -1;
+	if (arg == 'c')
+		result = ft_print_char(*ap);
+	else if (arg == 's')
+		result = ft_print_string(*ap);
+	else if (arg == 'p')
+		result = ft_print_address(*ap);
+	else if (arg == 'd' || arg == 'i')
+		result = ft_print_int(*ap);
+	else if (arg == 'x')
+		result = ft_print_hex(*ap, FALSE);
+	else if (arg == 'X')
+		result = ft_print_hex(*ap, TRUE);
+	return (result);
+}
 int	ft_printf(char const *str, ...)
 {
-	int		arg_i;
-	int		pct_i;
-	size_t	len;
 	size_t	i;
-	va_list	arglist;
+	size_t	j;
+	va_list	ap;
+	char	*substr;
 
-	va_start(arglist, str);
-	arg_i = 0;
-	while (arglist)
+	va_start(ap, str);
+	va_copy(ap2, ap);
+	i = 0;	
+	while (str[i] != '\0')
 	{
-		va_arg(arglist, char const *);
-		arg_i++;
+		va_arg(ap, char const *);
+		if (str[i] == '%')
+		{
+			j = 0;
+			while (str[i + j] == '%')
+				j++;
+			ft_process_char(str[i + j]);			
+		}
+		else
+		{
+			j = 0;
+			while (str[i + j] != '%')
+				j++;
+			substr = ft_substr(str, i, j);
+			ft_print_string(substr);
+		}
+		i += j;
 	}
-	va_end(arglist);
+	va_end(ap);
 	return (ft_strlen(str));
 }
