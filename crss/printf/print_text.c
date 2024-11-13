@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:35 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/12 21:43:37 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:22:39 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,13 @@ size_t	ft_print_address(void *addr, int is_big)
 	return (ft_print_string(output));
 }
 
-size_t	ft_print_percent(void)
+size_t	ft_print_percent(char *str)
 {
+	int	i;
+
+	i = 0;
+	while (str[i] == '%')
+		i++;
 	ft_putchar_fd('%', 1);
 	return (1);
 }

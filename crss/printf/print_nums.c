@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/13 15:24:54 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:34:35 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,8 @@ size_t	ft_print_hex(int hex, int is_big)
 	return (ft_print_string(output));
 }
 
-size_t	ft_print_udec(unsigned int u_int)
+size_t	ft_print_udec(int u_float)
 {
-	char			*output;
-	unsigned float	value;
-	
-	return (ft_print_string(output));
+	size_t itoa_len = ft_print_int(u_float);
+	return (ft_print_string(".00") + itoa_len);
 }

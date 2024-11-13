@@ -41,8 +41,11 @@ fclean: clean
 	cd libft && make fclean
 	rm -f $(NAME)
 
+testFlags:
+	cc $(CCFLAGS) main.c $(NAME) libft/$(LIBFT)
+
 test:
-	cc $(CCFLAGS) main.c -I $(NAME)
+	cc main.c $(NAME) libft/$(LIBFT)
 
 re: fclean all
 

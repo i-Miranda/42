@@ -78,7 +78,7 @@ fclean: clean
 
 re: fclean all
 
-bonus: $(BONUS_0)
+bonus: $(NAME) $(BONUS_O)
 	ar $(ARFLAGS) $(NAME) $(BONUS_O)
 
-.PHONY: all, clean, fclean, re, bonus
+.PHONY: all clean fclean re bonus
