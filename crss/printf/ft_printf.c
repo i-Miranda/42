@@ -41,23 +41,25 @@ static size_t	ft_process_char(va_list ap)
 int	ft_printf(char const *str, ...)
 {
 	va_list	ap;
+	va_list ap2;
 	size_t	i;
 	size_t	j;
 	size_t	arglen;
 	char	*substr;
 
 	va_start(ap, str);
+	va_copy(ap, ap2);
 	i = 0;	
 	arglen = 0;	
-	while (str[i] != '\0')
+	while (str[i])
 	{
 		j = 0;
 		if (str[i] == '%')
 		{
-			arglen += ft_process_char(ap);			
+			arglen += ft_process_char(ap2);			
 			j++;
 		}
-		else
+		else 
 		{
 			while (str[i + j] != '%')
 				j++;

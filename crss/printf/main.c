@@ -15,8 +15,10 @@
 
 int	main(int argc, char *argv[])
 {
-	
-	ft_printf("ft_printf: %s\n", argv[1]);
+	int	nbr;
+
+	nbr = ft_printf("ft_printf: %ls\n", argv[1]);
+	ft_putnbr_fd(nbr, 1);
 	printf("original printf: %s\n", argv[1]);
 	return (0);
 }

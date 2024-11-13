@@ -15,20 +15,20 @@
 size_t	ft_check_flags(va_list ap)
 {
 	size_t	result;
-	size_t	fld_bnds;
+	//size_t	fld_bnds;
 	char	*arg;
 	
 	result = 0;
 	arg = va_arg(ap, char *);
-	fld_bnds = 0;
+	//fld_bnds = 0;
 	if (*arg >= '0' && *arg <= '9')
 	{
 		if (*arg == '0')
 		{
 			// ZERO PAD VALUE ON LEFT
 		}
-		else
-			fld_bnds = *arg - '0';
+		//else
+		//	fld_bnds = *arg - '0';
 	}
 	if (*arg == '-')
 	{

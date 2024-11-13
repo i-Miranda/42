@@ -29,7 +29,6 @@ $(NAME): $(OBJ_O) $(HEADER)
 	ar $(ARFLAGS) $(NAME) output/*.o
 
 all: 
-	# $(NORME)
 	cd libft && make $(LIBFT)
 	@make $(NAME)
 
@@ -42,11 +41,19 @@ fclean: clean
 	rm -f $(NAME)
 
 testFlags:
-	cc $(CCFLAGS) main.c $(NAME) libft/$(LIBFT)
+	$(COMPILER) $(CCFLAGS) main.c $(NAME) libft/$(LIBFT)
 
 test:
-	cc main.c $(NAME) libft/$(LIBFT)
+	$(COMPILER) main.c $(NAME) libft/$(LIBFT)
+
+debug:
+	$(COMPILER) -fsanitize=address -g main.c $(NAME) libft/$(LIBFT)
+
+run:
+	./a.out test
+
+dev: fclean debug run
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re
+.PHONY: all clean fclean re
