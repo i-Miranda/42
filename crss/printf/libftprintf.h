@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   libftprintf.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/10 14:20:56 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/12 21:54:22 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include "libft/libft.h"
+#ifndef LIBFTPRINTF_H
+# define LIBFTPRINTF_H
 
-#define TRUE 1
-#define FALSE 0
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdarg.h>
+# include "libft/libft.h"
 
-int	ft_printf(char const *str, ...);
+# define TRUE 1
+# define FALSE 0
+
+int		ft_printf(char const *str, ...);
 
 //Number print functions
-int	ft_print_int(int nbr);
-int	ft_print_hex(int hex, int is_big);
+size_t	ft_print_int(int nbr);
+size_t	ft_print_hex(int hex, int is_big);
 
 //Text print functions
-int	ft_print_char(char c);
-int	ft_print_string(char *str);
-int	ft_print_address(void *addr);
-int	ft_print_percent(void);
+size_t	ft_print_char(char c);
+size_t	ft_print_string(char *str);
+size_t	ft_print_address(void *addr, int is_big);
+size_t	ft_print_percent(void);
+
+//Utils
+size_t	ft_check_flags(va_list ap);
+
+#endif

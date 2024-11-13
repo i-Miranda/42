@@ -43,13 +43,13 @@ OBJ_O := $(SOURCES:.c=.o)
 
 CCFLAGS := -Wall -Wextra -Werror
 
-%.o: %.c libft.h
+%.o: %.c $(HEADER)
 	$(COMPILER) $(CCFLAGS) -c $< -o output/$@
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently 
 # -s writes object-files 
-ARFLAGS := -r -c -s
+ARFLAGS := -rcs
 
 $(NAME): $(OBJ_O) $(HEADER) 
 	ar $(ARFLAGS) $(NAME) output/*.o
@@ -57,7 +57,7 @@ $(NAME): $(OBJ_O) $(HEADER)
 all: $(NAME)
 
 clean:
-	rm -rf $(OBJ_O)
+	rm -rf output/*.o
 
 # -f ignores if file does not exist
 fclean: clean
