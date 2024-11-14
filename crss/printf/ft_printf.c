@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 static size_t	ft_process_char(char c, va_list ap, size_t result)
 {
@@ -29,11 +29,12 @@ static size_t	ft_process_char(char c, va_list ap, size_t result)
 	else if (c == 'X')
 		result = ft_print_hex(va_arg(ap, unsigned int), TRUE);
 	else if (c == '%')
-		result = ft_print_percent(va_arg(ap, char *));
+		result = ft_print_percent();
 	else
 	{
 		result = ft_check_flags(va_arg(ap, int));
-		result = ft_process_char(c, ap, result); 		
+		if (result != 0)
+			result = ft_process_char(c, ap, result);
 	}
 	return (result);
 }
@@ -47,8 +48,8 @@ int	ft_printf(char const *str, ...)
 	char	*substr;
 
 	va_start(ap, str);
-	i = 0;	
-	arglen = 0;	
+	i = 0;
+	arglen = 0;
 	while (str[i] != '\0')
 	{
 		j = 0;
@@ -57,7 +58,7 @@ int	ft_printf(char const *str, ...)
 			arglen += ft_process_char(str[++i], ap, 0);
 			j++;
 		}
-		else 
+		else
 		{
 			while (str[i + j] != '%')
 				j++;

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 size_t	ft_check_flags(int c)
 {
@@ -26,7 +26,7 @@ size_t	ft_check_flags(int c)
 			// ZERO PAD VALUE ON LEFT
 		}
 		//else
-		//	fld_bnds = *arg - '0';
+		// fld_bnds = *arg - '0';
 	}
 	if (c == '-')
 	{

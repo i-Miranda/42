@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-static char *ft_base_16(int hex, int is_big)
+static char	*ft_base_16(int hex, int is_big)
 {
 	char	*mod;
 	int		i;
@@ -60,22 +60,23 @@ size_t	ft_print_hex(int hex, int is_big)
 	size_t	itoa_len;
 
 	itoa = ft_itoa(hex);
-	itoa_len = ft_strlen(itoa);	
+	itoa_len = ft_strlen(itoa);
 	output = malloc(((itoa_len * 2) + 1) * sizeof(char));
 	i = 0;
 	j = 0;
 	while (itoa[i])
 	{
-		output[j] = *ft_base_16(itoa[i] - '0', is_big);		
+		output[j] = *ft_base_16(itoa[i] - '0', is_big);
 		i++;
 		j += 2;
 	}
 	free(itoa);
-	return (ft_print_string(output));
+	return (ft_print_string(output)); //LEAK
 }
 
 size_t	ft_print_udec(int u_float)
 {
-	size_t itoa_len = ft_print_int(u_float);
+	size_t	itoa_len;
+	itoa_len = ft_print_int(u_float);
 	return (ft_print_string(".00") + itoa_len);
 }

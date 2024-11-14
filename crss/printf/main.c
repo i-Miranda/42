@@ -10,12 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 #include <stdio.h>
 
 int	main(int argc, char *argv[])
 {
-	ft_printf("ft_printf: %s %% %c", argv[1], argv[2]);
-	printf("original printf: %", argv[1]);
+	int pfreturn;
+
+	pfreturn = printf("printf: %s %% %c", argv[1], argv[1][2]);
+	printf("%d", pfreturn);
+	ft_printf("ft_printf: %s %% %c %d", argv[1], argv[1][2], pfreturn);
 	return (0);
 }

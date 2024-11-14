@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 size_t	ft_print_char(int c)
 {
@@ -44,13 +44,8 @@ size_t	ft_print_address(void *addr, int is_big)
 	return (ft_print_string(output));
 }
 
-size_t	ft_print_percent(char *str)
+size_t	ft_print_percent(void)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] == '%')
-		i++;
 	ft_putchar_fd('%', 1);
 	return (1);
 }
