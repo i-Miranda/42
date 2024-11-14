@@ -12,51 +12,49 @@
 
 #include "libftprintf.h"
 
-static size_t	ft_process_char(va_list ap)
+static size_t	ft_process_char(char c, va_list ap, size_t result)
 {
-	size_t	result;
-	char	*arg;
-
-	result = -1;
-	arg = va_arg(ap, char *);
-	if (*arg == 'c')
-		result = ft_print_char(*arg);
-	else if (*arg == 's')
-		result = ft_print_string(arg);
-	else if (*arg == 'p')
-		result = ft_print_address((void *)arg, 0);
-	else if (*arg == 'd' || *arg == 'i')
-		result = ft_print_int(*arg);
-	else if (*arg == 'u')
-		result = ft_print_udec(*arg);
-	else if (*arg == 'x')
-		result = ft_print_hex((int)*arg, FALSE);
-	else if (*arg == 'X')
-		result = ft_print_hex((int)*arg, TRUE);
-	else if (*arg == '%')
-		result = ft_print_percent(arg);
+	if (c == 'c')
+		result = ft_print_char(va_arg(ap, int));
+	else if (c == 's')
+		result = ft_print_string(va_arg(ap, char *));
+	else if (c == 'p')
+		result = ft_print_address(va_arg(ap, void *), FALSE);
+	else if (c == 'd' || c == 'i')
+		result = ft_print_int(va_arg(ap, int));
+	else if (c == 'u')
+		result = ft_print_udec(va_arg(ap, double));
+	else if (c == 'x')
+		result = ft_print_hex(va_arg(ap, unsigned int), FALSE);
+	else if (c == 'X')
+		result = ft_print_hex(va_arg(ap, unsigned int), TRUE);
+	else if (c == '%')
+		result = ft_print_percent(va_arg(ap, char *));
+	else
+	{
+		result = ft_check_flags(va_arg(ap, int));
+		result = ft_process_char(c, ap, result); 		
+	}
 	return (result);
 }
 
 int	ft_printf(char const *str, ...)
 {
 	va_list	ap;
-	va_list ap2;
 	size_t	i;
 	size_t	j;
 	size_t	arglen;
 	char	*substr;
 
 	va_start(ap, str);
-	va_copy(ap, ap2);
 	i = 0;	
 	arglen = 0;	
-	while (str[i])
+	while (str[i] != '\0')
 	{
 		j = 0;
 		if (str[i] == '%')
 		{
-			arglen += ft_process_char(ap2);			
+			arglen += ft_process_char(str[++i], ap, 0);
 			j++;
 		}
 		else 

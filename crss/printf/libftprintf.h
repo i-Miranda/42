@@ -29,12 +29,12 @@ size_t	ft_print_hex(int hex, int is_big);
 size_t	ft_print_udec(int u_float);
 
 //Text print functions
-size_t	ft_print_char(char c);
+size_t	ft_print_char(int c);
 size_t	ft_print_string(char *str);
 size_t	ft_print_address(void *addr, int is_big);
 size_t	ft_print_percent(char *str);
 
 //Utils
-size_t	ft_check_flags(va_list ap);
+size_t	ft_check_flags(int c);
 
 #endif

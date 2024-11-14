@@ -12,45 +12,43 @@
 
 #include "libftprintf.h"
 
-size_t	ft_check_flags(va_list ap)
+size_t	ft_check_flags(int c)
 {
 	size_t	result;
 	//size_t	fld_bnds;
-	char	*arg;
 	
 	result = 0;
-	arg = va_arg(ap, char *);
 	//fld_bnds = 0;
-	if (*arg >= '0' && *arg <= '9')
+	if (c >= '0' && c <= '9')
 	{
-		if (*arg == '0')
+		if (c == '0')
 		{
 			// ZERO PAD VALUE ON LEFT
 		}
 		//else
 		//	fld_bnds = *arg - '0';
 	}
-	if (*arg == '-')
+	if (c == '-')
 	{
 		// PADDING ON RIGHT INSTEAD OF LEFT
 		// pad with spaces ' '
 		// overrides '0' flag
 	}
-	else if (*arg == '.')
+	else if (c == '.')
 	{
 		// print how many decimals?
 	}
-	if (*arg == '#')
+	if (c == '#')
 	{
 		// if hex being printed (x or X)
 		// print 0x for !is_big 0X for is_big
 	}
-	else if (*arg == ' ')
+	else if (c == ' ')
 	{
 		// (a  space)  A blank should be left before a positive
 		// number (or empty string) produced by a signed conversion.
 	}
-	else if (*arg == '+')
+	else if (c == '+')
 	{
 		// always sign a signed conversion (+ or -)
 		// overrides ' ' flag' ' flag
