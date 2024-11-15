@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/16 00:44:08 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/15 18:25:43 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*ft_base_16(int hex, int is_big)
 	char	*mod;
 	int		i;
 
-	mod = ft_calloc((2 + 1), sizeof(char));
+	mod = malloc((2 + 1) * sizeof(char));
 	i = 0;
 	if (hex == 0)
 		mod[i] = '0';
@@ -43,18 +43,18 @@ static char	*ft_base_16(int hex, int is_big)
 	return (mod);
 }
 
-size_t	ft_print_int(int nbr, char *flags)
+size_t	ft_print_int(int nbr)
 {
 	char	*output;
 	size_t	chars_printed;
 
-	output = ft_itoa(nbr);
+	output = ft_itoa((float)nbr);
 	chars_printed = ft_print_string(output);
 	free(output);
 	return (chars_printed);
 }
 
-size_t	ft_print_hex(int hex, int is_big, char *flags)
+size_t	ft_print_hex(int hex, int is_big)
 {
 	char	*itoa;
 	char	*output;
@@ -64,7 +64,7 @@ size_t	ft_print_hex(int hex, int is_big, char *flags)
 
 	itoa = ft_itoa(hex);
 	len = ft_strlen(itoa);
-	output = ft_calloc(((len * 2) + 1) , sizeof(char));
+	output = malloc(((len * 2) + 1) * sizeof(char));
 	i = 0;
 	j = 0;
 	while (itoa[i])
@@ -79,37 +79,9 @@ size_t	ft_print_hex(int hex, int is_big, char *flags)
 	return (len);
 }
 
-size_t	ft_print_uint(int u_int, char *flags)
+size_t	ft_print_udec(int u_float)
 {
-	char	*output;
-	size_t	chars_printed;
-	unsigned int overflow;
-	int		i;
-
-	
-	overflow = 0;
-	overflow += (unsigned int)u_int;
-	i = 0;
-	if (overflow == 0)
-		i++;
-	while (overflow)
-	{
-		overflow /= 10;
-		i++;
-	}
-	overflow = 0;
-	overflow += (unsigned int)u_int;
-	output = ft_calloc(i + 1, sizeof(char));
-	if (output == NULL)
-		return (-1);
-	if (overflow == 0)
-		output[0] = '0';
-	while (i-- && overflow > 0)
-	{
-		output[i] = (overflow % 10) + '0';
-		overflow /= 10;
-	}
-	chars_printed = ft_print_string(output);
-	free(output);
-	return (chars_printed);
+	size_t	itoa_len;
+	itoa_len = ft_print_int(u_float);
+	return (ft_print_string(".00") + itoa_len);
 }

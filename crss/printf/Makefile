@@ -11,12 +11,21 @@ SOURCES := ft_printf.c \
 	print_text.c \
 	printf_utils.c
 
+BONUS := ft_printf_bonus.c \
+	print_nums_bonus.c \
+	print_text_bonus.c \
+	printf_utils_bonus.c
+
 OBJ_O := $(SOURCES:.c=.o)
+
+BONUS_O := $(BONUS:.c=.o)
 
 CCFLAGS := -Wall -Wextra -Werror
 
 %.o: src/printf/%.c $(HEADER)
-		$(COMPILER) $(CCFLAGS) -c $< -o output/printf/$@
+	mkdir -p output
+	mkdir -p output/printf
+	$(COMPILER) $(CCFLAGS) -c $< -o output/printf/$@
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently
@@ -27,6 +36,9 @@ $(NAME): $(OBJ_O) $(HEADER)
 	ar $(ARFLAGS) $(NAME) output/*/*.o
 
 all:
+	mkdir -p output
+	mkdir -p output/libft
+	mkdir -p output/printf
 	cd src/libft && make $(LIBFT)
 	@make $(NAME)
 
@@ -55,4 +67,6 @@ dev: fclean debug run
 
 re: fclean all
 
-.PHONY: all clean fclean re
+# bonus: $(BONUS_O) $(HEADER)
+
+.PHONY: all clean fclean re bonus

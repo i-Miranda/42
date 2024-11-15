@@ -6,16 +6,15 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:35 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/16 00:42:58 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/15 19:28:52 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 
-size_t	ft_print_char(int c, char *flags)
+size_t	ft_print_char(int c)
 {
-	if (flags == NULL)
-		ft_putchar_fd(c, 1);
+	ft_putchar_fd(c, 1);
 	return (1);
 }
 
@@ -41,15 +40,14 @@ size_t	ft_print_string(char *str)
 	return (result);
 }
 
-size_t	ft_print_address(void *addr, int is_big, char *flags)
+size_t	ft_print_address(void *addr, int is_big)
 {
 	int				j;
 	unsigned char	*uchar_addr;
 	char			*output;
-	size_t			result;
 
 	j = 7;
-	output = ft_calloc((j + 1), sizeof(char));
+	output = malloc((j + 1) * sizeof(char));
 	uchar_addr = (unsigned char *)&addr;
 	while (j >= 0)
 	{
@@ -59,9 +57,7 @@ size_t	ft_print_address(void *addr, int is_big, char *flags)
 			write(1, "00", 2);
 		j--;
 	}
-	result = ft_print_string(output);
-	free(output);
-	return (result);
+	return (ft_print_string(output)); // LEAK
 }
 
 size_t	ft_print_percent(void)
