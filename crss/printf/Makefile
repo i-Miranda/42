@@ -1,56 +1,55 @@
 NAME := libftprintf.a
 
-HEADER := ft_printf.h
+HEADER := includes/ft_printf.h
 
 LIBFT := libft.a
-
-NORME := norminette
 
 COMPILER := cc
 
 SOURCES := ft_printf.c \
 	print_nums.c \
 	print_text.c \
-	printf_utils.c 
+	printf_utils.c
 
 OBJ_O := $(SOURCES:.c=.o)
 
 CCFLAGS := -Wall -Wextra -Werror
 
-%.o: %.c $(HEADER)
-	$(COMPILER) $(CCFLAGS) -c $< -o output/$@
+%.o: src/printf/%.c $(HEADER)
+		$(COMPILER) $(CCFLAGS) -c $< -o output/printf/$@
 
 # -r replaces or adds a file if doesn't already exist in archive
-# -c creates the archive silently 
-# -s writes object-files 
+# -c creates the archive silently
+# -s writes object-files
 ARFLAGS := -rcs
 
-$(NAME): $(OBJ_O) $(HEADER) 
-	ar $(ARFLAGS) $(NAME) output/*.o
+$(NAME): $(OBJ_O) $(HEADER)
+	ar $(ARFLAGS) $(NAME) output/*/*.o
 
-all: 
-	cd libft && make $(LIBFT)
+all:
+	cd src/libft && make $(LIBFT)
 	@make $(NAME)
 
 clean:
-	rm -rf output/*.o
+	rm -rf output/printf/*.o
 
 # -f ignores if file does not exist
 fclean: clean
-	cd libft && make fclean
+	cd src/libft && make fclean
 	rm -f $(NAME)
+	rm -f test
 
 testFlags:
-	$(COMPILER) $(CCFLAGS) main.c $(NAME) libft/$(LIBFT)
+	$(COMPILER) $(CCFLAGS) src/printf/main.c $(NAME) src/libft/$(LIBFT) -o test
 
 test:
-	$(COMPILER) main.c $(NAME) libft/$(LIBFT)
+	$(COMPILER) src/printf/main.c $(NAME) src/libft/$(LIBFT) -o test
 
 debug:
-	$(COMPILER) -fsanitize=address -g main.c $(NAME) libft/$(LIBFT)
+	$(COMPILER) -fsanitize=address -g src/printf/main.c $(NAME) src/libft/$(LIBFT) -o test
 
 run:
-	./a.out test
+	./test "this string is a test"
 
 dev: fclean debug run
 
