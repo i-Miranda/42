@@ -43,12 +43,15 @@ static char	*ft_base_16(int hex, int is_big)
 	return (mod);
 }
 
-size_t	ft_print_int(int nbr)
+size_t	ft_print_sdec(int nbr)
 {
 	char	*output;
+	size_t	chars_printed;
 
-	output = ft_itoa(nbr);
-	return (ft_print_string(output));
+	output = ft_itoa((float)nbr);
+	chars_printed = ft_print_string(output);
+	free(output);
+	return (chars_printed);
 }
 
 size_t	ft_print_hex(int hex, int is_big)
@@ -57,11 +60,11 @@ size_t	ft_print_hex(int hex, int is_big)
 	char	*output;
 	int		i;
 	int		j;
-	size_t	itoa_len;
+	size_t	len;
 
 	itoa = ft_itoa(hex);
-	itoa_len = ft_strlen(itoa);
-	output = malloc(((itoa_len * 2) + 1) * sizeof(char));
+	len = ft_strlen(itoa);
+	output = malloc(((len * 2) + 1) * sizeof(char));
 	i = 0;
 	j = 0;
 	while (itoa[i])
@@ -71,7 +74,9 @@ size_t	ft_print_hex(int hex, int is_big)
 		j += 2;
 	}
 	free(itoa);
-	return (ft_print_string(output)); //LEAK
+	len = ft_print_string(output);	
+	free(output);
+	return (len);
 }
 
 size_t	ft_print_udec(int u_float)

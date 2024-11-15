@@ -21,7 +21,7 @@ static size_t	ft_process_char(char c, va_list ap, size_t result)
 	else if (c == 'p')
 		result = ft_print_address(va_arg(ap, void *), FALSE);
 	else if (c == 'd' || c == 'i')
-		result = ft_print_int(va_arg(ap, int));
+		result = ft_print_sdec(va_arg(ap, int));
 	else if (c == 'u')
 		result = ft_print_udec(va_arg(ap, double));
 	else if (c == 'x')
@@ -43,30 +43,18 @@ int	ft_printf(char const *str, ...)
 {
 	va_list	ap;
 	size_t	i;
-	size_t	j;
 	size_t	arglen;
-	char	*substr;
 
 	va_start(ap, str);
 	i = 0;
 	arglen = 0;
 	while (str[i] != '\0')
 	{
-		j = 0;
 		if (str[i] == '%')
-		{
 			arglen += ft_process_char(str[++i], ap, 0);
-			j++;
-		}
 		else
-		{
-			while (str[i + j] != '%')
-				j++;
-			substr = ft_substr(str, i, j);
-			arglen += ft_print_string(substr);
-			free(substr);
-		}
-		i += j;
+			arglen += ft_print_char(str[i]);
+		i++;
 	}
 	va_end(ap);
 	return ((int)arglen);

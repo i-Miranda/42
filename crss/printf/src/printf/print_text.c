@@ -46,7 +46,7 @@ size_t	ft_print_address(void *addr, int is_big)
 			write(1, "00", 2);
 		j--;
 	}
-	return (ft_print_string(output));
+	return (ft_print_string(output)); // LEAK
 }
 
 size_t	ft_print_percent(void)

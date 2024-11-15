@@ -24,7 +24,7 @@
 int		ft_printf(char const *str, ...);
 
 //Number print functions
-size_t	ft_print_int(int nbr);
+size_t	ft_print_sdec(int nbr);
 size_t	ft_print_hex(int hex, int is_big);
 size_t	ft_print_udec(int u_float);
 

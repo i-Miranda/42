@@ -17,11 +17,23 @@ int	main(int argc, char *argv[])
 {
 	int pfreturn;
 
-	pfreturn = printf("printf: %s %% %c ", argv[1], argv[1][2]);
-	printf("%d", pfreturn);
-	ft_printf("ft_printf: %s %% %c %d", argv[1], argv[1][2], pfreturn);
-	pfreturn = printf("printf: %s %s %% ", "", (char *)NULL);
-	printf("%d", pfreturn);
-	ft_printf("ft_printf: %s %s %% %d", "", (char *)NULL, pfreturn);
+	pfreturn = printf("printf: %s %% ", argv[1]);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf: %s %% ", argv[1]);
+	ft_printf("%d", pfreturn);
+	printf("\n\n");
+
+	pfreturn = printf("printf: %s ", "");
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf: %s ", "");
+	ft_printf("%d", pfreturn);
+	printf("\n\n");
+
+	pfreturn = printf("printf: %c ", '0');
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf: %c ", '0');
+	ft_printf("%d", pfreturn);
+	printf("\n\n");
+
 	return (0);
 }
