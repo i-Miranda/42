@@ -8,13 +8,11 @@ COMPILER := cc
 
 SOURCES := ft_printf.c \
 	print_nums.c \
-	print_text.c \
-	printf_utils.c
+	print_text.c 
 
 BONUS := ft_printf_bonus.c \
 	print_nums_bonus.c \
-	print_text_bonus.c \
-	printf_utils_bonus.c
+	print_text_bonus.c 
 
 OBJ_O := $(SOURCES:.c=.o)
 
