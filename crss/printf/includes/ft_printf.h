@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/16 00:45:23 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/16 02:34:59 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,14 @@
 int		ft_printf(char const *str, ...);
 
 //Number print functions
-size_t	ft_print_int(int nbr, char *flags);
-size_t	ft_print_hex(int hex, int is_big, char *flags);
-size_t	ft_print_uint(int u_int, char *flags);
+size_t	ft_print_int(int nbr);
+size_t	ft_print_hex(int hex, int is_big);
+size_t	ft_print_uint(int u_int);
 
 //Text print functions
-size_t	ft_print_char(int c, char *flags);
+size_t	ft_print_char(int c);
 size_t	ft_print_string(char *str);
-size_t	ft_print_address(void *addr, int is_big, char *flags);
+size_t	ft_print_address(void *addr, int is_big);
 size_t	ft_print_percent(void);
 
-//Utils
-char	*ft_check_padding(char *str);
-char	*ft_check_flags(char *str);
 #endif

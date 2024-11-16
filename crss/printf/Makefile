@@ -56,7 +56,7 @@ test:
 	$(COMPILER) src/printf/main.c $(NAME) src/libft/$(LIBFT) -o test
 
 debug:
-	$(COMPILER) -fsanitize=address -g src/printf/main.c $(NAME) src/libft/$(LIBFT) -o test
+	$(COMPILER) src/printf/main.c -g $(NAME) src/libft/$(LIBFT) -o test
 
 run:
 	./test "this string is a test"

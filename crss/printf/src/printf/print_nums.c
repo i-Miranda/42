@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/16 00:44:08 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/16 01:06:25 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*ft_base_16(int hex, int is_big)
 	return (mod);
 }
 
-size_t	ft_print_int(int nbr, char *flags)
+size_t	ft_print_int(int nbr)
 {
 	char	*output;
 	size_t	chars_printed;
@@ -54,7 +54,7 @@ size_t	ft_print_int(int nbr, char *flags)
 	return (chars_printed);
 }
 
-size_t	ft_print_hex(int hex, int is_big, char *flags)
+size_t	ft_print_hex(int hex, int is_big)
 {
 	char	*itoa;
 	char	*output;
@@ -79,14 +79,13 @@ size_t	ft_print_hex(int hex, int is_big, char *flags)
 	return (len);
 }
 
-size_t	ft_print_uint(int u_int, char *flags)
+size_t	ft_print_uint(int u_int)
 {
 	char	*output;
 	size_t	chars_printed;
 	unsigned int overflow;
 	int		i;
 
-	
 	overflow = 0;
 	overflow += (unsigned int)u_int;
 	i = 0;
