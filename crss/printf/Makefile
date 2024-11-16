@@ -20,10 +20,21 @@ BONUS_O := $(BONUS:.c=.o)
 
 CCFLAGS := -Wall -Wextra -Werror
 
+DEBUG ?= 0
+
+ifeq ($(DEBUG), 1)
+	DBFLAGS := -g
+else ifeq ($(DEBUG), 2)
+	DBFLAGS := -fsanitize=address
+else ifeq ($(DEBUG), 3)
+	DBFLAGS := -fsanitize=address -g
+else
+	DBFLAGS :=
+endif
+
 %.o: src/printf/%.c $(HEADER)
-	mkdir -p output
-	mkdir -p output/printf
-	$(COMPILER) $(CCFLAGS) -c $< -o output/printf/$@
+	mkdir -p output output/libft
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o output/printf/$@
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently
@@ -34,9 +45,7 @@ $(NAME): $(OBJ_O) $(HEADER)
 	ar $(ARFLAGS) $(NAME) output/*/*.o
 
 all:
-	mkdir -p output
-	mkdir -p output/libft
-	mkdir -p output/printf
+	mkdir -p output output/libft output/printf
 	cd src/libft && make $(LIBFT)
 	@make $(NAME)
 
@@ -48,20 +57,16 @@ fclean: clean
 	cd src/libft && make fclean
 	rm -f $(NAME)
 	rm -f test
+	rm -rf output
 
 testFlags:
-	$(COMPILER) $(CCFLAGS) src/printf/main.c $(NAME) src/libft/$(LIBFT) -o test
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) src/printf/main.c $(NAME) src/libft/$(LIBFT) -o test
 
 test:
-	$(COMPILER) src/printf/main.c $(NAME) src/libft/$(LIBFT) -o test
-
-debug:
-	$(COMPILER) src/printf/main.c -g $(NAME) src/libft/$(LIBFT) -o test
+	$(COMPILER) $(DBFLAGS) src/printf/main.c $(NAME) src/libft/$(LIBFT) -o test
 
 run:
 	./test "this string is a test"
-
-dev: fclean debug run
 
 re: fclean all
 

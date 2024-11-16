@@ -43,8 +43,20 @@ OBJ_O := $(SOURCES:.c=.o)
 
 CCFLAGS := -Wall -Wextra -Werror
 
+DEBUG ?= 0
+
+ifeq ($(DEBUG), 1)
+	DBFLAGS := -g
+else ifeq ($(DEBUG), 2)
+	DBFLAGS := -fsanitize=address
+else ifeq ($(DEBUG), 3)
+	DBFLAGS := -fsanitize=address -g
+else
+	DBFLAGS :=
+endif
+
 %.o: %.c $(HEADER)
-		$(COMPILER) $(CCFLAGS) -c $< -o ../../output/libft/$@
+		$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o ../../output/libft/$@
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently
@@ -53,8 +65,6 @@ ARFLAGS := -rcs
 
 $(NAME): $(OBJ_O) $(HEADER) 
 	ar $(ARFLAGS) $(NAME) ../../output/libft/*.o
-
-all: $(NAME)
 
 clean:
 	rm -rf ../../output/libft/*.o

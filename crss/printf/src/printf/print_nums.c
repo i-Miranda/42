@@ -6,39 +6,39 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/16 01:06:25 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/16 18:18:40 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 
-static char	*ft_base_16(int hex, int is_big)
+static char	*ft_base_16(int hex, int is_big, char *mod)
 {
-	char	*mod;
 	int		i;
 
-	mod = ft_calloc((2 + 1), sizeof(char));
 	i = 0;
-	if (hex == 0)
-		mod[i] = '0';
-	while (hex != 0)
+	if (hex > 15)
 	{
-		mod[i] = hex % 16;
-		hex = hex / 16;
-		if (hex == 0 && i == 0)
-			mod[i + 1] = 0;
-		i++;
+		mod[0] = hex / 16;
+		mod[1] = hex % 16;
 	}
-	while (i >= 0)
+	else
+	{
+		mod[0] = hex % 16;
+		mod[1] = '\0';
+	}
+	while (i <= 1)
 	{
 		if (mod[i] >= 10 && mod[i] <= 15)
 		{
-			if (is_big == 0)
-				mod[i] += 39;
+			if (is_big == TRUE)
+				mod[i] += 7;
 			else
 				mod[i] += 39;
 		}
-		i--;
+		if (hex > 15 || (hex <= 15 && i == 0))
+			mod[i] += '0';
+		i++;
 	}
 	return (mod);
 }
@@ -54,26 +54,28 @@ size_t	ft_print_int(int nbr)
 	return (chars_printed);
 }
 
-size_t	ft_print_hex(int hex, int is_big)
+size_t	ft_print_hex(int hex, int is_big, char *flags)
 {
-	char	*itoa;
 	char	*output;
-	int		i;
 	int		j;
 	size_t	len;
 
-	itoa = ft_itoa(hex);
-	len = ft_strlen(itoa);
-	output = ft_calloc(((len * 2) + 1) , sizeof(char));
-	i = 0;
+	len = 0;
+	if (flags && ft_strchr(flags, '#'))
+		len++;
+	output = ft_calloc((len + 1) , sizeof(char));
 	j = 0;
-	while (itoa[i])
+	if (flags && ft_strchr(flags, '#'))
 	{
-		output[j] = *ft_base_16(itoa[i] - '0', is_big);
-		i++;
-		j += 2;
+		output[j++] = '0';
+		if (is_big == FALSE)
+			output[j++] = 'x';
+		else
+			output[j++] = 'X';
 	}
-	free(itoa);
+	ft_base_16(hex, is_big, &output[j]);
+	j += 2;
+	output[j] = '\0';
 	len = ft_print_string(output);	
 	free(output);
 	return (len);

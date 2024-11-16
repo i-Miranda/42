@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/16 02:10:03 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/16 18:27:00 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,16 @@ int	main(int argc, char *argv[])
 	pfreturn = ft_printf("ft_printf p: %p ", &pfreturn); 
 	ft_printf("%d\n\n", pfreturn);
 
+	pfreturn = printf("rl_printf p: %p ", NULL);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf p: %p ", NULL); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = printf("rl_printf p: %p ", &pfreturn);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf p: %p ", &pfreturn); 
+	ft_printf("%d\n\n", pfreturn);
+
 	pfreturn = -14;
 	pfreturn = printf("rl_printf d and u: %d %u ", pfreturn, pfreturn);
 	printf("%d\n", pfreturn);
@@ -54,14 +64,24 @@ int	main(int argc, char *argv[])
 	pfreturn = ft_printf("ft_printf d and u: %d %u ", pfreturn, pfreturn); 
 	ft_printf("%d\n\n", pfreturn);
 
+	pfreturn = printf("rl_printf x: %x ", 15);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf x: %x ", 15); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = printf("rl_printf x: %x ", 16);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf x: %x ", 16); 
+	ft_printf("%d\n\n", pfreturn);
+
 	pfreturn = printf("rl_printf x and #x: %x %#x ", 127, 127);
 	printf("%d\n", pfreturn);
-	pfreturn = ft_printf("ft_printf x: %x ", 127); 
+	pfreturn = ft_printf("ft_printf x and #x: %x %x ", 127, 127); 
 	ft_printf("%d\n\n", pfreturn);
 
 	pfreturn = printf("rl_printf X and #X: %X %#X ", 127, 127);
 	printf("%d\n", pfreturn);
-	pfreturn = ft_printf("ft_printf X: %X ", 127); 
+	pfreturn = ft_printf("ft_printf X and #X: %X %X ", 127, 127); 
 	ft_printf("%d\n\n", pfreturn);
 
 	return (0);
