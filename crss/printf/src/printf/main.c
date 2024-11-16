@@ -6,12 +6,13 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/16 18:27:00 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/16 19:37:36 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 #include <stdio.h>
+#include <limits.h>
 
 int	main(int argc, char *argv[])
 {
@@ -57,6 +58,16 @@ int	main(int argc, char *argv[])
 	pfreturn = ft_printf("ft_printf p: %p ", &pfreturn); 
 	ft_printf("%d\n\n", pfreturn);
 
+	pfreturn = printf("rl_printf p and p: %p %p ", (void *)INT_MAX, (void *)INT_MIN);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf p and p: %p %p ", (void *)INT_MAX, (void *)INT_MIN); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = printf("rl_printf p and p: %p %p ", (void *)LONG_MAX, (void *)LONG_MIN);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf p and p: %p %p ", (void *)LONG_MAX, (void *)LONG_MIN); 
+	ft_printf("%d\n\n", pfreturn);
+
 	pfreturn = -14;
 	pfreturn = printf("rl_printf d and u: %d %u ", pfreturn, pfreturn);
 	printf("%d\n", pfreturn);
@@ -72,6 +83,16 @@ int	main(int argc, char *argv[])
 	pfreturn = printf("rl_printf x: %x ", 16);
 	printf("%d\n", pfreturn);
 	pfreturn = ft_printf("ft_printf x: %x ", 16); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = printf("rl_printf x: %x ", LONG_MAX);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf x: %x ", LONG_MAX); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = printf("rl_printf x: %x ", LONG_MIN);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf x: %x ", LONG_MIN); 
 	ft_printf("%d\n\n", pfreturn);
 
 	pfreturn = printf("rl_printf x and #x: %x %#x ", 127, 127);
