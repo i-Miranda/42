@@ -21,7 +21,7 @@ size_t	ft_print_char(int c)
 
 size_t	ft_print_string(char *str)
 {
-	size_t result;
+	size_t	result;
 
 	if (str == NULL)
 	{
@@ -46,26 +46,26 @@ size_t	ft_print_address(void *addr, char *flags)
 	unsigned char		*uchar_addr;
 	int					j;
 	size_t				result;
-	
+
 	j = 7;
-	uchar_addr = (unsigned char*)(unsigned long *)&addr;
+	uchar_addr = (unsigned char *)(unsigned long *)&addr;
 	result = 0;
 	if (addr == NULL)
 	{
 		result = ft_print_string("(nil)");
 		return (result);
 	}
-	result += ft_print_string("0x");	
+	result += ft_print_string("0x");
 	while (uchar_addr[j] == '\0')
 		j--;
 	while (j >= 0)
 	{
-		if (uchar_addr[j] != '\0')
+		if (uchar_addr[j] > 15)
 			result += ft_print_hex(uchar_addr[j], FALSE, flags);
 		else
 		{
-			result += ft_print_hex(0, FALSE, flags);
-			result += ft_print_hex(0, FALSE, flags);
+			result += ft_print_string("0");
+			result += ft_print_hex(uchar_addr[j], FALSE, flags);
 		}
 		j--;
 	}
