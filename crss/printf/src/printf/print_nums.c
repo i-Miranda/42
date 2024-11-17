@@ -15,11 +15,12 @@
 static char	*ft_base_16(int hex, int is_big, char *mod)
 {
 	int		i;
+
 	i = 0;
 	if (hex > 15)
 	{
-	  mod[0] = hex / 16;
-	  mod[1] = hex % 16;
+		mod[0] = hex / 16;
+		mod[1] = hex % 16;
 	}
 	else
 	{
@@ -62,7 +63,7 @@ size_t	ft_print_hex(unsigned int hex, int is_big, char *flags)
 	len = 2;
 	if (flags && ft_strchr(flags, '#'))
 		len++;
-	output = ft_calloc((len + 1) , sizeof(char));
+	output = ft_calloc((len + 1), sizeof(char));
 	j = 0;
 	if (flags && ft_strchr(flags, '#'))
 	{
@@ -77,17 +78,17 @@ size_t	ft_print_hex(unsigned int hex, int is_big, char *flags)
 		j++;
 	j++;
 	output[j] = '\0';
-	len = ft_print_string(output);	
+	len = ft_print_string(output);
 	free(output);
 	return (len);
 }
 
 size_t	ft_print_uint(int u_int)
 {
-	char	*output;
-	size_t	chars_printed;
-	unsigned int overflow;
-	int		i;
+	char			*output;
+	size_t			chars_printed;
+	unsigned int	overflow;
+	int				i;
 
 	overflow = 0;
 	overflow += (unsigned int)u_int;

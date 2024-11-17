@@ -42,8 +42,8 @@ static char	*ft_find_flags(char *c)
 
 	flags = NULL;
 	i = 0;
-	while (c[i] == '-' || c[i] == '0' || c[i] == '.' || c[i] == '#' ||
-			c[i] == ' ' || c[i] == '+')
+	while (c[i] == '-' || c[i] == '0' || c[i] == '.' || c[i] == '#'
+		|| c[i] == ' ' || c[i] == '+')
 		i++;
 	if (i > 0)
 	{
@@ -55,9 +55,9 @@ static char	*ft_find_flags(char *c)
 	return (flags);
 }
 
-static char *ft_remove_flags(char *c)
+static char	*ft_remove_flags(char *c)
 {
-	char 	*flags;
+	char	*flags;
 	size_t	len;
 	size_t	i;
 
@@ -66,18 +66,19 @@ static char *ft_remove_flags(char *c)
 		len--;
 	if (ft_strchr(c, '+') && ft_strchr(c, '0'))
 		len--;
-	flags = ft_calloc(len + 1, sizeof(char)); 
+	flags = ft_calloc(len + 1, sizeof(char));
 	i = len;
 	while (len >= 0)
 	{
-		if ((ft_strchr(c, '-') && c[len] != ' ') 
-				|| (ft_strchr(c, '+') && c[len] != '0'))
+		if ((ft_strchr(c, '-') && c[len] != ' ')
+			|| (ft_strchr(c, '+') && c[len] != '0'))
 			c[len] = flags[i--];
 		len--;
 	}
 	free(c);
 	return (flags);
 }
+
 int	ft_printf(char const *str, ...)
 {
 	va_list	ap;
@@ -96,7 +97,7 @@ int	ft_printf(char const *str, ...)
 			if (flags != NULL)
 			{
 				i += ft_strlen(flags);
-				flags = ft_remove_flags(flags);	
+				flags = ft_remove_flags(flags);
 			}
 			arglen += ft_process_char((char *)&str[i], ap, flags, 0);
 		}

@@ -52,7 +52,11 @@ size_t	ft_print_address(void *addr, char *flags)
 	result = 0;
 	if (addr == NULL)
 	{
+		# ifdef __unix
 		result = ft_print_string("(nil)");
+		# else
+		result = ft_print_string("0x0");
+		# endif
 		return (result);
 	}
 	result += ft_print_string("0x");
