@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/16 19:37:36 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/17 01:05:13 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,16 @@ int	main(int argc, char *argv[])
 	pfreturn = printf("rl_printf x: %x ", 16);
 	printf("%d\n", pfreturn);
 	pfreturn = ft_printf("ft_printf x: %x ", 16); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = printf("rl_printf x: %x ", -1);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf x: %x ", -1); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = printf("rl_printf x: %x ", -15);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf x: %x ", -15); 
 	ft_printf("%d\n\n", pfreturn);
 
 	pfreturn = printf("rl_printf x: %x ", LONG_MAX);

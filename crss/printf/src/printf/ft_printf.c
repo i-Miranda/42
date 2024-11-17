@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/16 12:47:20 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/16 23:14:52 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static size_t	ft_process_char(char *c, va_list ap, char *flags, size_t result)
 	else if (*c == 's')
 		result = ft_print_string(va_arg(ap, char *));
 	else if (*c == 'p')
-		result = ft_print_address(va_arg(ap, void *), FALSE, flags);
+		result = ft_print_address(va_arg(ap, void *), flags);
 	else if (*c == 'd' || *c == 'i')
 		result = ft_print_int(va_arg(ap, int));
 	else if (*c == 'u')

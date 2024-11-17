@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/16 19:31:28 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/17 01:16:12 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,17 @@
 static char	*ft_base_16(int hex, int is_big, char *mod)
 {
 	int		i;
-
 	i = 0;
-	if (hex > 15)
-	{
+	//if (hex > 15)
+	//{
 		mod[0] = hex / 16;
 		mod[1] = hex % 16;
-	}
-	else
-	{
-		mod[0] = hex % 16;
-		mod[1] = '\0';
-	}
+	//}
+	//else
+	//{
+	//	mod[0] = hex % 16;
+	//	mod[1] = '\0';
+	//}
 	while (i <= 1)
 	{
 		if (mod[i] >= 10 && mod[i] <= 15)
@@ -54,7 +53,7 @@ size_t	ft_print_int(int nbr)
 	return (chars_printed);
 }
 
-size_t	ft_print_hex(int hex, int is_big, char *flags)
+size_t	ft_print_hex(unsigned int hex, int is_big, char *flags)
 {
 	char	*output;
 	int		j;

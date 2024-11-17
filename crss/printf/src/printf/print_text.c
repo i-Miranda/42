@@ -6,11 +6,12 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:35 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/16 19:46:19 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/17 01:00:27 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
+#include <stdio.h>
 
 size_t	ft_print_char(int c)
 {
@@ -40,25 +41,25 @@ size_t	ft_print_string(char *str)
 	return (result);
 }
 
-size_t	ft_print_address(void *addr, int is_big, char *flags)
+size_t	ft_print_address(void *addr, char *flags)
 {
-	int				j;
-	unsigned char	*uchar_addr;
-	size_t			result;
-
+	unsigned char		*uchar_addr;
+	int					j;
+	size_t				result;
+	
 	j = 7;
+	uchar_addr = (unsigned char *)&addr;
 	result = 0;
 	if (addr == NULL)
 	{
 		result = ft_print_string("(nil)");
 		return (result);
 	}
-	uchar_addr = (unsigned char *)&addr;
 	result += ft_print_string("0x");	
 	while (j >= 0)
 	{
 		if (uchar_addr[j] != '\0')
-			result += ft_print_hex(uchar_addr[j], is_big, flags);
+			result += ft_print_hex(uchar_addr[j], FALSE, flags);
 		j--;
 	}
 	return (result);
