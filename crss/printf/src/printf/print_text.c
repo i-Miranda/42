@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:35 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/17 01:00:27 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/17 11:53:10 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ size_t	ft_print_address(void *addr, char *flags)
 	size_t				result;
 	
 	j = 7;
-	uchar_addr = (unsigned char *)&addr;
+	uchar_addr = (unsigned char*)(unsigned long *)&addr;
 	result = 0;
 	if (addr == NULL)
 	{
@@ -56,10 +56,17 @@ size_t	ft_print_address(void *addr, char *flags)
 		return (result);
 	}
 	result += ft_print_string("0x");	
+	while (uchar_addr[j] == '\0')
+		j--;
 	while (j >= 0)
 	{
 		if (uchar_addr[j] != '\0')
 			result += ft_print_hex(uchar_addr[j], FALSE, flags);
+		else
+		{
+			result += ft_print_hex(0, FALSE, flags);
+			result += ft_print_hex(0, FALSE, flags);
+		}
 		j--;
 	}
 	return (result);

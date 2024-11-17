@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/17 01:05:13 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/17 11:52:36 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int	main(int argc, char *argv[])
 	pfreturn = ft_printf("ft_printf p: %p ", &pfreturn); 
 	ft_printf("%d\n\n", pfreturn);
 
-	pfreturn = printf("rl_printf p and p: %p %p ", (void *)INT_MAX, (void *)INT_MIN);
+	pfreturn = printf("rl_printf p and p: %p %p ", INT_MAX, INT_MIN);
 	printf("%d\n", pfreturn);
-	pfreturn = ft_printf("ft_printf p and p: %p %p ", (void *)INT_MAX, (void *)INT_MIN); 
+	pfreturn = ft_printf("ft_printf p and p: %p %p ", INT_MAX, INT_MIN); 
 	ft_printf("%d\n\n", pfreturn);
 
-	pfreturn = printf("rl_printf p and p: %p %p ", (void *)LONG_MAX, (void *)LONG_MIN);
+	pfreturn = printf("rl_printf p and p: %p %p ", LONG_MAX, LONG_MIN);
 	printf("%d\n", pfreturn);
-	pfreturn = ft_printf("ft_printf p and p: %p %p ", (void *)LONG_MAX, (void *)LONG_MIN); 
+	pfreturn = ft_printf("ft_printf p and p: %p %p ", LONG_MAX, LONG_MIN); 
 	ft_printf("%d\n\n", pfreturn);
 
 	pfreturn = -14;
