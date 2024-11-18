@@ -18,7 +18,6 @@ OBJ_O := $(SOURCES:.c=.o)
 
 BONUS_O := $(BONUS:.c=.o)
 
-CCFLAGS := -Wall -Wextra -Werror
 
 DEBUG ?= 0
 
@@ -30,6 +29,15 @@ else ifeq ($(DEBUG), 3)
 	DBFLAGS := -fsanitize=address -g
 else
 	DBFLAGS :=
+endif
+
+NOFLAGS ?= 0
+
+ifeq ($(NOFLAGS), 1)
+	CCFLAGS :=
+	DBFLAGS :=
+else 
+	CCFLAGS := -Wall -Wextra -Werror
 endif
 
 %.o: src/printf/%.c $(HEADER)

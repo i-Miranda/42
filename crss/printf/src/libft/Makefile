@@ -55,6 +55,15 @@ else
 	DBFLAGS :=
 endif
 
+NOFLAGS ?= 0
+
+ifeq ($(NOFLAGS), 1)
+	CCFLAGS :=
+	DBFLAGS :=
+else 
+	CCFLAGS := -Wall -Wextra -Werror
+endif
+
 %.o: %.c $(HEADER)
 		$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o ../../output/libft/$@
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_text.c                                       :+:      :+:    :+:   */
+/*   print_text_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:35 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/15 19:28:52 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/18 13:23:39 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ size_t	ft_print_address(void *addr, int is_big)
 	char			*output;
 
 	j = 7;
-	output = malloc((j + 1) * sizeof(char));
+	output = ft_calloc(j + 1, sizeof(char));
 	uchar_addr = (unsigned char *)&addr;
 	while (j >= 0)
 	{

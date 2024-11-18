@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/16 22:45:31 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/18 13:43:54 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,19 @@
 
 # define TRUE 1
 # define FALSE 0
-#ifndef __unix
-# define NIL "0x0"	
+# ifndef __unix
+#  define NIL "0x0"	
 # else
-# define NIL "(nil)"	
-#endif
+#  define NIL "(nil)"	
+# endif
 
 int		ft_printf(char const *str, ...);
 
 //Number print functions
 size_t	ft_print_int(int nbr);
-size_t	ft_print_hex(unsigned int hex, int is_big, char *flags);
-size_t	ft_print_uint(int u_int);
+size_t	ft_print_hexbyte(unsigned char byte, int is_big, char *flags);
+size_t	ft_print_hex(int hex, int is_big, char *flags);
+size_t	ft_print_uint(unsigned int u_int);
 
 //Text print functions
 size_t	ft_print_char(int c);
