@@ -58,6 +58,7 @@ fclean: clean
 	rm -f $(NAME)
 	rm -f test
 	rm -rf output
+	rm -rf test.dSYM
 
 testFlags:
 	$(COMPILER) $(CCFLAGS) $(DBFLAGS) src/printf/main.c $(NAME) src/libft/$(LIBFT) -o test
