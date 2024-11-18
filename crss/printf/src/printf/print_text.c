@@ -44,34 +44,24 @@ size_t	ft_print_string(char *str)
 size_t	ft_print_address(void *addr, char *flags)
 {
 	unsigned char		*uchar_addr;
-	int					j;
+	int					i;
 	size_t				result;
 
-	j = 7;
+	i = 7;
 	uchar_addr = (unsigned char *)(unsigned long *)&addr;
 	result = 0;
 	if (addr == NULL)
-	{
-		# ifdef __unix
-		result = ft_print_string("(nil)");
-		# else
-		result = ft_print_string("0x0");
-		# endif
-		return (result);
-	}
+		return (ft_print_string(NIL));
 	result += ft_print_string("0x");
-	while (uchar_addr[j] == '\0')
-		j--;
-	while (j >= 0)
+	while (uchar_addr[i] == '\0')
+		i--;
+	if (uchar_addr[i] <= 15)
+		result += ft_print_hex(uchar_addr[i--], FALSE, flags);
+	while (i >= 0)
 	{
-		if (uchar_addr[j] > 15)
-			result += ft_print_hex(uchar_addr[j], FALSE, flags);
-		else
-		{
+		if (uchar_addr[i] <= 15)
 			result += ft_print_string("0");
-			result += ft_print_hex(uchar_addr[j], FALSE, flags);
-		}
-		j--;
+		result += ft_print_hex(uchar_addr[i--], FALSE, flags);
 	}
 	return (result);
 }

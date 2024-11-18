@@ -20,6 +20,11 @@
 
 # define TRUE 1
 # define FALSE 0
+#ifndef __unix
+# define NIL "0x0"	
+# else
+# define NIL "(nil)"	
+#endif
 
 int		ft_printf(char const *str, ...);
 
