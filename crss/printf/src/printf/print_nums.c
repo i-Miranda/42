@@ -6,25 +6,25 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/20 16:21:07 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/20 20:15:06 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 
-static void	ft_base_16(int hex, int is_big, char *mod)
+static void	ft_base_16(unsigned char byte, int is_big, char *mod)
 {
 	int		i;
 
 	i = 0;
-	if (hex > 15)
+	if (byte > 15)
 	{
-		mod[0] = hex / 16;
-		mod[1] = hex % 16;
+		mod[0] = byte / 16;
+		mod[1] = byte % 16;
 	}
 	else
 	{
-		mod[0] = hex % 16;
+		mod[0] = byte % 16;
 		mod[1] = '\0';
 	}
 	while (i <= 1)
@@ -67,6 +67,8 @@ size_t	ft_print_hex(void *hex, int is_big, char *flags)
 	size_t	result;
 
 	i = 7;
+//	if (sizeof(hex) == 8)
+//		write(1,"!",1);
 	if (hex == 0)
 		return (ft_print_string("0"));
 	uchar_hex = (unsigned char *)&hex;

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:35 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/20 15:24:56 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:59:36 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ size_t	ft_print_string(char *str)
 	else if (str[0] == '\0')
 	{
 		ft_putstr_fd("", 1);
-		result = 0;
-	}
+		result = 0; }
 	else
 	{
 		ft_putstr_fd(str, 1);
