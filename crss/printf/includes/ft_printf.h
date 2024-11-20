@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/18 13:43:54 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:40:27 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 int		ft_printf(char const *str, ...);
 
 //Number print functions
-size_t	ft_print_int(int nbr);
-size_t	ft_print_hexbyte(unsigned char byte, int is_big, char *flags);
+size_t	ft_print_hexbyte(unsigned char byte, int is_big);
 size_t	ft_print_hex(unsigned long long hex, int is_big, char *flags);
+size_t	ft_print_int(int nbr);
 size_t	ft_print_uint(unsigned int u_int);
 
 //Text print functions

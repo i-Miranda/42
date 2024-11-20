@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:35 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/18 13:23:39 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:38:28 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ size_t	ft_print_address(void *addr, int is_big)
 			write(1, "00", 2);
 		j--;
 	}
-	return (ft_print_string(output)); // LEAK
+	return (ft_print_string(output));
 }
 
 size_t	ft_print_percent(void)
