@@ -6,17 +6,14 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/20 16:38:51 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:18:34 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 
-static size_t	ft_process_char(char *c, va_list ap, char *flags)
+static size_t	ft_process_char(char *c, va_list ap, char *flags, size_t result)
 {
-	size_t result;
-
-	result = 0;
 	if (*c == 'c')
 		result = ft_print_char(va_arg(ap, int));
 	else if (*c == 's')
@@ -28,9 +25,9 @@ static size_t	ft_process_char(char *c, va_list ap, char *flags)
 	else if (*c == 'u')
 		result = ft_print_uint(va_arg(ap, unsigned int));
 	else if (*c == 'x')
-		result = ft_print_hex(va_arg(ap, void *), FALSE, flags);
+		result = ft_print_hex(va_arg(ap, unsigned long long), FALSE, flags);
 	else if (*c == 'X')
-		result = ft_print_hex(va_arg(ap, void *), TRUE, flags);
+		result = ft_print_hex(va_arg(ap, unsigned long long), TRUE, flags);
 	else if (*c == '%')
 		result = ft_print_percent();
 	if (flags)
@@ -45,18 +42,15 @@ static char	*ft_find_flags(char *c)
 
 	flags = NULL;
 	i = 0;
-	while (c[i] != 'c' && c[i] != 's' && c[i] != 'p' && c[i] != 'd'
-		&& c[i] != 'i' && c[i] != 'u' && c[i] != 'x' && c[i] != 'X'
-		&& c[i] != '%' && c[i] != '\0')
+	while (c[i] == '-' || c[i] == '0' || c[i] == '.' || c[i] == '#'
+		|| c[i] == ' ' || c[i] == '+')
 		i++;
-	if (i <= 0)
-		return (flags);
-	flags = ft_calloc(i + 1, sizeof(char));
-	if (!flags)
-		return (flags);
-	while (i-- > 0)
+	if (i > 0)
 	{
-		flags[i] = c[i];
+		flags = ft_calloc(i + 1, sizeof(char));
+		if (flags)
+			while (i >= 0)
+				flags[i] = c[i];
 	}
 	return (flags);
 }
@@ -65,21 +59,20 @@ static char	*ft_remove_flags(char *c)
 {
 	char	*flags;
 	size_t	len;
-	size_t	new_len;
+	size_t	i;
 
 	len = ft_strlen(c);
-	new_len = len;
-	if (ft_strchr(c, '-') && ft_strchr(c, '0'))
-		new_len--;
-	if (ft_strchr(c, '+') && ft_strchr(c, ' '))
-		new_len--;
-	if (new_len == len)
-		return (c);
+	if (ft_strchr(c, '-') && ft_strchr(c, ' '))
+		len--;
+	if (ft_strchr(c, '+') && ft_strchr(c, '0'))
+		len--;
 	flags = ft_calloc(len + 1, sizeof(char));
+	i = len;
 	while (len >= 0)
 	{
-		if (c[len] != ' ' || c[len] != '0')
-			c[len] = flags[new_len--];
+		if ((ft_strchr(c, '-') && c[len] != ' ')
+			|| (ft_strchr(c, '+') && c[len] != '0'))
+			c[len] = flags[i--];
 		len--;
 	}
 	free(c);
@@ -106,10 +99,11 @@ int	ft_printf(char const *str, ...)
 				i += ft_strlen(flags);
 				flags = ft_remove_flags(flags);
 			}
-			arglen += ft_process_char((char *)&str[i++], ap, flags);
+			arglen += ft_process_char((char *)&str[i], ap, flags, 0);
 		}
 		else
-			arglen += ft_print_char(str[i++]);
+			arglen += ft_print_char(str[i]);
+		i++;
 	}
 	va_end(ap);
 	return ((int)arglen);

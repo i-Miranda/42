@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/20 13:46:28 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:21:07 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ size_t	ft_print_hexbyte(unsigned char byte, int is_big)
 	return (len);
 }
 
-size_t	ft_print_hex(unsigned long long hex, int is_big, char *flags)
+size_t	ft_print_hex(void *hex, int is_big, char *flags)
 {
 	unsigned char		*uchar_hex;
 	int		i;
@@ -73,11 +73,10 @@ size_t	ft_print_hex(unsigned long long hex, int is_big, char *flags)
 	result = 0;
 	if (flags && ft_strchr(flags, '#'))
 	{
-		result += ft_print_char('0');
 		if (is_big == FALSE)
-			result += ft_print_char('x');
+			result += ft_print_string("0x");
 		else
-			result += ft_print_char('X');
+			result += ft_print_string("0X");
 	}
 	while (uchar_hex[i] == '\0')
 		i--;

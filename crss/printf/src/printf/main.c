@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/20 12:52:35 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:53:53 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,24 +95,24 @@ int	main(int argc, char *argv[])
 	pfreturn = ft_printf("ft_printf x: %x ", -15); 
 	ft_printf("%d\n\n", pfreturn);
 
-	pfreturn = printf("rl_printf x: %x ", LONG_MAX);
+	pfreturn = printf("rl_printf x: %x %x ", LONG_MIN, LONG_MAX);
 	printf("%d\n", pfreturn);
-	pfreturn = ft_printf("ft_printf x: %x ", LONG_MAX); 
+	pfreturn = ft_printf("ft_printf x: %x %x ", LONG_MIN, LONG_MAX); 
 	ft_printf("%d\n\n", pfreturn);
 
-	pfreturn = printf("rl_printf x: %x ", LONG_MIN);
+	pfreturn = printf("rl_printf x: %x %x ", INT_MIN, INT_MAX);
 	printf("%d\n", pfreturn);
-	pfreturn = ft_printf("ft_printf x: %x ", LONG_MIN); 
+	pfreturn = ft_printf("ft_printf x: %x %x ", INT_MIN, INT_MAX); 
 	ft_printf("%d\n\n", pfreturn);
 
 	pfreturn = printf("rl_printf x and #x: %x %#x ", 127, 127);
 	printf("%d\n", pfreturn);
-	pfreturn = ft_printf("ft_printf x and #x: %x %x ", 127, 127); 
+	pfreturn = ft_printf("ft_printf x and #x: %x %#x ", 127, 127); 
 	ft_printf("%d\n\n", pfreturn);
 
 	pfreturn = printf("rl_printf X and #X: %X %#X ", 127, 127);
 	printf("%d\n", pfreturn);
-	pfreturn = ft_printf("ft_printf X and #X: %X %X ", 127, 127); 
+	pfreturn = ft_printf("ft_printf X and #X: %X %#X ", 127, 127); 
 	ft_printf("%d\n\n", pfreturn);
 
 	pfreturn = printf("rl_printf x: %x ", 0);
