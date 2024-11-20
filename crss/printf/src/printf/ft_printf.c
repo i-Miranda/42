@@ -25,9 +25,9 @@ static size_t	ft_process_char(char *c, va_list ap, char *flags, size_t result)
 	else if (*c == 'u')
 		result = ft_print_uint(va_arg(ap, unsigned int));
 	else if (*c == 'x')
-		result = ft_print_hex(va_arg(ap, int), FALSE, flags);
+		result = ft_print_hex(va_arg(ap, unsigned long long), FALSE, flags);
 	else if (*c == 'X')
-		result = ft_print_hex(va_arg(ap, int), TRUE, flags);
+		result = ft_print_hex(va_arg(ap, unsigned long long), TRUE, flags);
 	else if (*c == '%')
 		result = ft_print_percent();
 	if (flags)

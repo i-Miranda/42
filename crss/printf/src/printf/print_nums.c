@@ -82,23 +82,32 @@ size_t	ft_print_hexbyte(unsigned char byte, int is_big, char *flags)
 	return (len);
 }
 
-size_t	ft_print_hex(int hex, int is_big, char *flags)
+size_t	ft_print_hex(unsigned long long hex, int is_big, char *flags)
 {
 	char	*output;
 	size_t	result;
 	size_t	hex_len;
 	int		hextemp;
+	int		is_neg;
 
 	result = 0;
 	hex_len = 0;
+	is_neg = 0;
+	if (hex < 0)
+	{
+		is_neg = 1;
+		hex *= -1;
+	}
 	hextemp = hex;
 	while (hextemp != 0)
 	{
 		hextemp /= 16;
 		hex_len++;
 	}
-	output = ft_calloc(hex_len + 1, sizeof(char));
+	output = ft_calloc(hex_len + is_neg + 1, sizeof(char));
 	hextemp = (int)hex_len;
+	if (is_neg == 1)
+		output[hex_len--] = '-';
 	while (hextemp > 0)
 	{		
 		output[hextemp] = hex % 16;
