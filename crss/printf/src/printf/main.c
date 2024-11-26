@@ -53,11 +53,6 @@ int	main(int argc, char *argv[])
 	pfreturn = ft_printf("ft_printf p: %p ", NULL); 
 	ft_printf("%d\n\n", pfreturn);
 
-	pfreturn = printf("rl_printf p: %p ", &pfreturn);
-	printf("%d\n", pfreturn);
-	pfreturn = ft_printf("ft_printf p: %p ", &pfreturn); 
-	ft_printf("%d\n\n", pfreturn);
-
 	pfreturn = printf("rl_printf p and p: %p %p ", INT_MAX, INT_MIN);
 	printf("%d\n", pfreturn);
 	pfreturn = ft_printf("ft_printf p and p: %p %p ", INT_MAX, INT_MIN); 
