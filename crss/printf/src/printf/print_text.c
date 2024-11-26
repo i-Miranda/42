@@ -48,7 +48,7 @@ size_t	ft_print_address(void *addr, char *flags)
 		return (ft_print_string(NIL));
 	result = 0;
 	result += ft_print_string("0x");
-	result += ft_print_hex(addr, FALSE, flags);
+	result += ft_print_hex(addr, FALSE, flags, 7);
 	return (result);
 }
 

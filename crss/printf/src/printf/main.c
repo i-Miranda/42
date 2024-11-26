@@ -105,6 +105,11 @@ int	main(int argc, char *argv[])
 	pfreturn = ft_printf("ft_printf x: %x %x ", INT_MIN, INT_MAX); 
 	ft_printf("%d\n\n", pfreturn);
 
+	pfreturn = printf("rl_printf x: %x ", ULONG_MAX);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf x: %x ", ULONG_MAX); 
+	ft_printf("%d\n\n", pfreturn);
+
 	pfreturn = printf("rl_printf x and #x: %x %#x ", 127, 127);
 	printf("%d\n", pfreturn);
 	pfreturn = ft_printf("ft_printf x and #x: %x %#x ", 127, 127); 

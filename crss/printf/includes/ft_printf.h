@@ -30,7 +30,7 @@ int		ft_printf(char const *str, ...);
 
 //Number print functions
 size_t	ft_print_hexbyte(unsigned char byte, int is_big);
-size_t	ft_print_hex(void *hex, int is_big, char *flags);
+size_t	ft_print_hex(void *hex, int is_big, char *flags, int i);
 size_t	ft_print_int(int nbr);
 size_t	ft_print_uint(unsigned int u_int);
 

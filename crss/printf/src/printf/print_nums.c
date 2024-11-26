@@ -60,15 +60,11 @@ size_t	ft_print_hexbyte(unsigned char byte, int is_big)
 	return (len);
 }
 
-size_t	ft_print_hex(void *hex, int is_big, char *flags)
+size_t	ft_print_hex(void *hex, int is_big, char *flags, int i)
 {
 	unsigned char		*uchar_hex;
-	int		i;
 	size_t	result;
 
-	i = 7;
-//	if (sizeof(hex) == 8)
-//		write(1,"!",1);
 	if (hex == 0)
 		return (ft_print_string("0"));
 	uchar_hex = (unsigned char *)&hex;
