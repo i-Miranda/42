@@ -76,7 +76,7 @@ size_t	ft_print_hex(void *hex, int is_big, char *flags, int i)
 		else
 			result += ft_print_string("0X");
 	}
-	while (uchar_hex[i] == '\0')
+	while (uchar_hex[i] == '\0' && i > 0)
 		i--;
 	if (uchar_hex[i] <= 15)
 		result += ft_print_hexbyte(uchar_hex[i--], is_big);
