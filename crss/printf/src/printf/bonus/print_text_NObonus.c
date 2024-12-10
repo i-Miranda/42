@@ -6,11 +6,12 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:35 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/20 12:38:28 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/10 11:54:13 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
+#include <stdio.h>
 
 size_t	ft_print_char(int c)
 {
@@ -20,7 +21,7 @@ size_t	ft_print_char(int c)
 
 size_t	ft_print_string(char *str)
 {
-	size_t result;
+	size_t	result;
 
 	if (str == NULL)
 	{
@@ -30,8 +31,7 @@ size_t	ft_print_string(char *str)
 	else if (str[0] == '\0')
 	{
 		ft_putstr_fd("", 1);
-		result = 0;
-	}
+		result = 0; }
 	else
 	{
 		ft_putstr_fd(str, 1);
@@ -40,24 +40,16 @@ size_t	ft_print_string(char *str)
 	return (result);
 }
 
-size_t	ft_print_address(void *addr, int is_big)
+size_t	ft_print_address(void *addr)
 {
-	int				j;
-	unsigned char	*uchar_addr;
-	char			*output;
+	size_t				result;
 
-	j = 7;
-	output = ft_calloc(j + 1, sizeof(char));
-	uchar_addr = (unsigned char *)&addr;
-	while (j >= 0)
-	{
-		if (uchar_addr[j] != '\0')
-			ft_print_hex(uchar_addr[j], is_big);
-		else
-			write(1, "00", 2);
-		j--;
-	}
-	return (ft_print_string(output));
+	if (addr == NULL)
+		return (ft_print_string(NIL));
+	result = 0;
+	result += ft_print_string("0x");
+	result += ft_print_hex(addr, FALSE, flags, 7);
+	return (result);
 }
 
 size_t	ft_print_percent(void)

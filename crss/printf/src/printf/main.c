@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/20 20:00:18 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:39:46 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ int	main(int argc, char *argv[])
 	pfreturn = ft_printf("ft_printf s: %s ", "");
 	ft_printf("%d\n\n", pfreturn);
 
+	pfreturn = printf("rl_printf s: %.3s ", "hola");
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf s: %.3s ", "hola");
+	ft_printf("%d\n\n", pfreturn);
+
 	pfreturn = printf("rl_printf s: %s ", (char *)NULL);
 	printf("%d\n", pfreturn);
 	pfreturn = ft_printf("ft_printf s: %s ", (char *)NULL);
@@ -64,10 +69,59 @@ int	main(int argc, char *argv[])
 	ft_printf("%d\n\n", pfreturn);
 
 	pfreturn = -14;
-	pfreturn = printf("rl_printf d and u: %d %u ", pfreturn, pfreturn);
+	pfreturn = printf("rl_printf d, i and u: %d %i %u ", pfreturn, pfreturn, pfreturn);
 	printf("%d\n", pfreturn);
 	pfreturn = -14;
-	pfreturn = ft_printf("ft_printf d and u: %d %u ", pfreturn, pfreturn); 
+	pfreturn = ft_printf("ft_printf d, i and u: %d %i %u ", pfreturn, pfreturn, pfreturn); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = -14;
+	pfreturn = printf("rl_printf .d, .i and .u: %.d %.i %.u ", pfreturn, pfreturn, pfreturn);
+	printf("%d\n", pfreturn);
+	pfreturn = -14;
+	pfreturn = ft_printf("ft_printf .d, .i and .u: %.d %.i %.u ", pfreturn, pfreturn, pfreturn); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = 14;
+	pfreturn = printf("rl_printf +d and +i: %+d %+i", pfreturn, pfreturn);
+	printf("%d\n", pfreturn);
+	pfreturn = 14;
+	pfreturn = ft_printf("ft_printf +d and +i: %+d %+i ", pfreturn, pfreturn); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = -14;
+	pfreturn = printf("rl_printf +d and +i: %+d %+i ", pfreturn, pfreturn);
+	printf("%d\n", pfreturn);
+	pfreturn = -14;
+	pfreturn = ft_printf("ft_printf +d and +i: %+d %+i ", pfreturn, pfreturn); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = 14;
+	pfreturn = printf("rl_printf ' 'd and ' 'i: % d % i ", pfreturn, pfreturn);
+	printf("%d\n", pfreturn);
+	pfreturn = 14;
+	pfreturn = ft_printf("ft_printf ' 'd and ' 'i: % d % i ", pfreturn, pfreturn); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = 14;
+	pfreturn = printf("rl_printf +' 'd and +' 'i: %+ d %+ i ", pfreturn, pfreturn);
+	printf("%d\n", pfreturn);
+	pfreturn = 14;
+	pfreturn = ft_printf("ft_printf +' 'd and +' 'i: %+ d %+ i ", pfreturn, pfreturn); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = 14;
+	pfreturn = printf("rl_printf 05d 05i and 05u: %05d %05i %05u ", pfreturn, pfreturn, pfreturn);
+	printf("%d\n", pfreturn);
+	pfreturn = 14;
+	pfreturn = ft_printf("ft_printf 05d 05i and 05u: %05d %05i %05u ", pfreturn, pfreturn, pfreturn); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = 14;
+	pfreturn = printf("rl_printf -5d -5i and -5u: %-5d %-5i %-5u", pfreturn, pfreturn, pfreturn);
+	printf("%d\n", pfreturn);
+	pfreturn = 14;
+	pfreturn = ft_printf("ft_printf -5d -5i and -5u: %-5d %-5i %-5u", pfreturn, pfreturn, pfreturn); 
 	ft_printf("%d\n\n", pfreturn);
 
 	pfreturn = printf("rl_printf x: %x ", 15);
@@ -120,5 +174,9 @@ int	main(int argc, char *argv[])
 	pfreturn = ft_printf("ft_printf x: %x ", 0); 
 	ft_printf("%d\n\n", pfreturn);
 
+		
+	ft_printf("%%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%", 'A', "42", 42, 42 ,42 , 42, 42, 'B', "-42", -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0);
+	ft_printf("\n");
+	ft_printf(" %c %s %d %i %u %x %X    %c %s %d %i %u %x %X    %c %s %d %i %u %x %X   %c", 'A', "42", 42, 42 ,42 , 42, 42, 'B', "-42", -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0);
 	return (0);
 }

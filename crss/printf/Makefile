@@ -18,7 +18,6 @@ OBJ_O := $(SOURCES:.c=.o)
 
 BONUS_O := $(BONUS:.c=.o)
 
-
 DEBUG ?= 0
 
 ifeq ($(DEBUG), 1)
@@ -41,7 +40,7 @@ else
 endif
 
 %.o: src/printf/%.c $(HEADER)
-	mkdir -p output output/libft
+	mkdir -p output output/libft output/printf
 	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o output/printf/$@
 
 # -r replaces or adds a file if doesn't already exist in archive
@@ -79,6 +78,7 @@ run:
 
 re: fclean all
 
-# bonus: $(BONUS_O) $(HEADER)
+#bonus: $(BONUS_O) all
+#	ar $(ARFLAGS) $(NAME) output/*/*.o
 
 .PHONY: all clean fclean re bonus

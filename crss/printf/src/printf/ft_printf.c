@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/11/20 20:16:55 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/10 21:18:53 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 static size_t	ft_process_char(char *c, va_list ap, char *flags)
 {
-	size_t result;
+	size_t	result;
 
 	result = 0;
 	if (*c == 'c')
 		result = ft_print_char(va_arg(ap, int));
 	else if (*c == 's')
-		result = ft_print_string(va_arg(ap, char *));
+		result = ft_print_string(va_arg(ap, char *), NULL);
 	else if (*c == 'p')
 		result = ft_print_address(va_arg(ap, void *), flags);
 	else if (*c == 'd' || *c == 'i')
-		result = ft_print_int(va_arg(ap, int));
+		result = ft_print_int(va_arg(ap, int), flags);
 	else if (*c == 'u')
 		result = ft_print_uint(va_arg(ap, unsigned int));
 	else if (*c == 'x')
@@ -55,9 +55,7 @@ static char	*ft_find_flags(char *c)
 	if (!flags)
 		return (flags);
 	while (i-- > 0)
-	{
 		flags[i] = c[i];
-	}
 	return (flags);
 }
 
@@ -65,22 +63,29 @@ static char	*ft_remove_flags(char *c)
 {
 	char	*flags;
 	size_t	len;
-	size_t	new_len;
+	size_t	i;
+	size_t	j;
+	int		minus_zero;
+	int		plus_space;
 
 	len = ft_strlen(c);
-	new_len = len;
+	minus_zero = FALSE;
+	plus_space = FALSE;
+	i = 0;
+	j = 0;
 	if (ft_strchr(c, '-') && ft_strchr(c, '0'))
-		new_len--;
+		minus_zero = TRUE;
 	if (ft_strchr(c, '+') && ft_strchr(c, ' '))
-		new_len--;
-	if (new_len == len)
-		return (c);
-	flags = ft_calloc(len + 1, sizeof(char));
-	while (len >= 0)
+		plus_space = TRUE;
+	flags = ft_calloc(len, sizeof(char));
+	while (i < len)
 	{
-		if (c[len] != ' ' || c[len] != '0')
-			c[len] = flags[new_len--];
-		len--;
+		if (minus_zero == TRUE && c[i + j] == '0')
+			j++;
+		if (plus_space == TRUE && c[i + j] == ' ')
+			j++;
+		flags[i] = c[i + j];
+		i++;
 	}
 	free(c);
 	return (flags);
