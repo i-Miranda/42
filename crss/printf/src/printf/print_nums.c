@@ -44,17 +44,18 @@ static void	ft_base_16(unsigned char byte, int is_big, char *mod)
 size_t	ft_print_hexbyte(unsigned char byte, int is_big)
 {
 	char	*output;
-	int		j;
+	//int		j;
 	size_t	len;
 
 	len = 2;
 	output = ft_calloc(len + 1, sizeof(char));
-	j = 0;
-	ft_base_16(byte, is_big, &output[j]);
-	if (byte > 15)
-		j++;
-	j++;
-	output[j] = '\0';
+	//j = 0;
+	//ft_base_16(byte, is_big, &output[j]);
+	ft_base_16(byte, is_big, output);
+	//if (byte > 15)
+		//j++;
+	//j++;
+	//output[j] = '\0';
 	len = ft_print_string(output);
 	free(output);
 	return (len);
