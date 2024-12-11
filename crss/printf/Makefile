@@ -18,6 +18,10 @@ OBJ_O := $(SOURCES:.c=.o)
 
 BONUS_O := $(BONUS:.c=.o)
 
+PRINTF_OUTPUT := output/printf/
+
+LIBFT_OUTPUT := output/libft/
+
 DEBUG ?= 0
 
 ifeq ($(DEBUG), 1)
@@ -40,8 +44,8 @@ else
 endif
 
 %.o: src/printf/%.c $(HEADER)
-	mkdir -p output output/libft output/printf
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o output/printf/$@
+	mkdir -p output $(LIBFT_OUTPUT) $(PRINTF_OUTPUT)
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $(PRINTF_OUTPUT)$@
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently
@@ -52,12 +56,12 @@ $(NAME): $(OBJ_O) $(HEADER)
 	ar $(ARFLAGS) $(NAME) output/*/*.o
 
 all:
-	mkdir -p output output/libft output/printf
+	mkdir -p output $(LIBFT_OUTPUT) $(PRINTF_OUTPUT)
 	cd src/libft && make $(LIBFT)
 	@make $(NAME)
 
 clean:
-	rm -rf output/printf/*.o
+	rm -rf $(PRINTF_OUTPUT)*.o
 
 # -f ignores if file does not exist
 fclean: clean
