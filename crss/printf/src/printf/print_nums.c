@@ -112,8 +112,8 @@ size_t	ft_print_uint(unsigned int u_int)
 	}
 	overflow = u_int;
 	output = ft_calloc(i + 1, sizeof(char));
-	if (output == NULL)
-		return (-1);
+	//if (output == NULL)
+		//return (-1);
 	if (overflow == 0)
 		output[0] = '0';
 	while (i-- && overflow > 0)
