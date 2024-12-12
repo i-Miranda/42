@@ -31,7 +31,8 @@ size_t	ft_print_string(char *str)
 	else if (str[0] == '\0')
 	{
 		ft_putstr_fd("", 1);
-		result = 0; }
+		result = 0; 
+	}
 	else
 	{
 		ft_putstr_fd(str, 1);
@@ -42,7 +43,7 @@ size_t	ft_print_string(char *str)
 
 size_t	ft_print_address(void *addr)
 {
-	size_t				result;
+	size_t	result;
 
 	if (addr == NULL)
 		return (ft_print_string(NIL));

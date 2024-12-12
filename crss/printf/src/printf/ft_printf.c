@@ -12,9 +12,9 @@
 
 #include "../../includes/ft_printf.h"
 
-static size_t	ft_process_char(char *c, va_list ap)
+static int	ft_process_char(char *c, va_list ap)
 {
-	size_t result;
+	int result;
 
 	result = 0;
 	if (*c == 'c')
@@ -39,8 +39,8 @@ static size_t	ft_process_char(char *c, va_list ap)
 int	ft_printf(char const *str, ...)
 {
 	va_list	ap;
-	size_t	i;
-	size_t	arglen;
+	int		i;
+	int		arglen;
 
 	va_start(ap, str);
 	i = 0;
@@ -54,5 +54,5 @@ int	ft_printf(char const *str, ...)
 		i++;
 	}
 	va_end(ap);
-	return ((int)arglen);
+	return (arglen);
 }

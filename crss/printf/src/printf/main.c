@@ -26,6 +26,11 @@ static void normal_tests(int pfreturn, char *argv)
 	pfreturn = ft_printf("ft_printf c: %c ", '\0');
 	ft_printf("%d\n\n", pfreturn);
 
+	pfreturn = printf("rl_printf paco strict: \001\002\007\v\010\f\r\n ");
+	printf("%d\n", pfreturn); 
+	pfreturn = ft_printf("ft_printf paco strict: \001\002\007\v\010\f\r\n ");
+	ft_printf("%d\n\n", pfreturn);
+
 	pfreturn = printf("rl_printf s and %%: %s %% ", argv);
 	printf("%d\n", pfreturn);
 	pfreturn = ft_printf("ft_printf s and %%: %s %% ", argv);
@@ -46,6 +51,11 @@ static void normal_tests(int pfreturn, char *argv)
 	pfreturn = ft_printf("ft_printf p: %p ", &pfreturn); 
 	ft_printf("%d\n\n", pfreturn);
 
+	pfreturn = printf("rl_printf p -> -32000 casted to void pointer: %p ", (void *)-32000);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf p -> -32000 casted to void pointer: %p ", (void *)-32000); 
+	ft_printf("%d\n\n", pfreturn);
+
 	pfreturn = printf("rl_printf p: %p ", NULL);
 	printf("%d\n", pfreturn);
 	pfreturn = ft_printf("ft_printf p: %p ", NULL); 
@@ -61,11 +71,9 @@ static void normal_tests(int pfreturn, char *argv)
 	pfreturn = ft_printf("ft_printf p and p: %p %p ", LONG_MAX, LONG_MIN); 
 	ft_printf("%d\n\n", pfreturn);
 
-	pfreturn = -14;
-	pfreturn = printf("rl_printf d, i and u: %d %i %u ", pfreturn, pfreturn, pfreturn);
+	pfreturn = printf("rl_printf d, i and u: %d %i %u ", -14, -14, -14);
 	printf("%d\n", pfreturn);
-	pfreturn = -14;
-	pfreturn = ft_printf("ft_printf d, i and u: %d %i %u ", pfreturn, pfreturn, pfreturn); 
+	pfreturn = ft_printf("ft_printf d, i and u: %d %i %u ", -14, -14, -14); 
 	ft_printf("%d\n\n", pfreturn);
 
 	pfreturn = printf("rl_printf x: %x ", 15);
@@ -103,9 +111,14 @@ static void normal_tests(int pfreturn, char *argv)
 	pfreturn = ft_printf("ft_printf x: %x ", ULONG_MAX); 
 	ft_printf("%d\n\n", pfreturn);
 
-	pfreturn = printf("rl_printf x: %x ", 0);
+	pfreturn = printf("rl_printf x: %x ", 5873);
 	printf("%d\n", pfreturn);
-	pfreturn = ft_printf("ft_printf x: %x ", 0); 
+	pfreturn = ft_printf("ft_printf x: %x ", 5873); 
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = printf("rl_printf X: %X ", 5873);
+	printf("%d\n", pfreturn);
+	pfreturn = ft_printf("ft_printf X: %X ", 5873); 
 	ft_printf("%d\n\n", pfreturn);
 }
 
