@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2024/12/12 12:20:16 by ivmirand         ###   ########.fr        #
+#    Updated: 2024/12/12 13:01:09 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,12 +47,11 @@ SOURCES := ft_printf.c \
 	print_nums.c \
 	print_text.c 
 
-SOURCES_NO_PRINTF := print_nums.c \
-	print_text.c
-
 BONUS := ft_printf_bonus.c \
 	print_padding_bonus.c \
+	print_nums.c \
 	print_nums_bonus.c \
+	print_text.c \
 	print_text_bonus.c 
 
 OUTPUT := src/output
@@ -64,8 +63,6 @@ LIBFT_OUTPUT := $(OUTPUT)/libft
 $(shell mkdir -p $(OUTPUT) $(PRINTF_OUTPUT) $(LIBFT_OUTPUT))
 
 OBJ_O := $(patsubst %.c, $(PRINTF_OUTPUT)/%.o, $(SOURCES))
-
-OBJ_O_NPF := $(patsubst %.c, $(PRINTF_OUTPUT)/%.o, $(SOURCES_NO_PRINTF))
 
 BONUS_O := $(patsubst %.c, $(PRINTF_OUTPUT)/%.o, $(BONUS))
 
@@ -134,7 +131,7 @@ run:
 
 re: fclean all
 
-bonus: $(LIBFT_O) $(OBJ_O_NPF) $(BONUS_O)
-	ar $(ARFLAGS) $(NAME) $(LIBFT_O) $(OBJ_O_NPF) $(BONUS_O)
+bonus: $(LIBFT_O) $(BONUS_O)
+	ar $(ARFLAGS) $(NAME) $(LIBFT_O) $(BONUS_O)
 
 .PHONY: all clean fclean re bonus
