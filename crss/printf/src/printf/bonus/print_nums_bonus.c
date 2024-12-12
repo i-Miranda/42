@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/11 03:09:44 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:42:09 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,20 @@ static void	ft_base_16(unsigned char byte, int is_big, char *mod)
 	i = 0;
 	if (byte > 15)
 	{
-		mod[0] = byte / 16;
-		mod[1] = byte % 16;
+		mod[0] = (byte / 16) + '0';
+		mod[1] = (byte % 16) + '0';
 	}
 	else
-	{
-		mod[0] = byte % 16;
-		mod[1] = '\0';
-	}
+		mod[0] = (byte % 16) + '0';
 	while (i <= 1)
 	{
-		if (mod[i] >= 10 && mod[i] <= 15)
+		if (mod[i] >= 10 + '0' && mod[i] <= 15 + '0')
 		{
 			if (is_big == TRUE)
 				mod[i] += 7;
 			else
 				mod[i] += 39;
 		}
-		mod[i] += '0';
 		i++;
 	}
 }
@@ -44,17 +40,11 @@ static void	ft_base_16(unsigned char byte, int is_big, char *mod)
 size_t	ft_print_hexbyte(unsigned char byte, int is_big)
 {
 	char	*output;
-	int		j;
 	size_t	len;
 
 	len = 2;
 	output = ft_calloc(len + 1, sizeof(char));
-	j = 0;
-	ft_base_16(byte, is_big, &output[j]);
-	if (byte > 15)
-		j++;
-	j++;
-	output[j] = '\0';
+	ft_base_16(byte, is_big, output);
 	len = ft_print_string(output, NULL);
 	free(output);
 	return (len);
@@ -63,31 +53,30 @@ size_t	ft_print_hexbyte(unsigned char byte, int is_big)
 size_t	ft_print_hex(void *hex, int is_big, char *flags, int i)
 {
 	unsigned char	*uchar_hex;
-	size_t			result;
+	size_t			chars_printed;
 
 	if (hex == 0)
 		return (ft_print_string("0", NULL));
 	uchar_hex = (unsigned char *)&hex;
-	result = 0;
+	chars_printed = 0;
 	if (flags && ft_strchr(flags, '#'))
 	{
 		if (is_big == FALSE)
-			result += ft_print_string("0x", NULL);
+			chars_printed += ft_print_string("0x", NULL);
 		else
-			result += ft_print_string("0X", NULL);
+			chars_printed += ft_print_string("0X", NULL);
 	}
 	while (uchar_hex[i] == '\0' && i > 0)
 		i--;
 	if (uchar_hex[i] <= 15)
-		result += ft_print_hexbyte(uchar_hex[i--], is_big);
+		chars_printed += ft_print_hexbyte(uchar_hex[i--], is_big);
 	while (i >= 0)
 	{
 		if (uchar_hex[i] <= 15)
-			result += ft_print_string("0", NULL);
-		result += ft_print_hexbyte(uchar_hex[i], is_big);
-		i--;
+			chars_printed += ft_print_string("0", NULL);
+		chars_printed += ft_print_hexbyte(uchar_hex[i--], is_big);
 	}
-	return (result);
+	return (chars_printed);
 }
 
 size_t	ft_print_int(int nbr, char *flags)
@@ -104,12 +93,11 @@ size_t	ft_print_int(int nbr, char *flags)
 size_t	ft_print_uint(unsigned int u_int, char *flags)
 {
 	char			*output;
-	size_t			chars_printed;
 	unsigned int	overflow;
+	size_t			chars_printed;
 	int				i;
 
-	overflow = 0;
-	overflow += u_int;
+	overflow = u_int;
 	i = 0;
 	if (overflow == 0)
 		i++;
@@ -118,19 +106,15 @@ size_t	ft_print_uint(unsigned int u_int, char *flags)
 		overflow /= 10;
 		i++;
 	}
-	overflow = 0;
-	overflow += u_int;
 	output = ft_calloc(i + 1, sizeof(char));
-	if (output == NULL)
-		return (-1);
-	if (overflow == 0)
+	if (u_int == 0)
 		output[0] = '0';
-	while (i-- && overflow > 0)
+	while (i-- && u_int > 0)
 	{
-		output[i] = (overflow % 10) + '0';
-		overflow /= 10;
+		output[i] = (u_int % 10) + '0';
+		u_int /= 10;
 	}
-	chars_printed = ft_print_padding(output, flags);
+	chars_printed = ft_print_string(output, flags);
 	free(output);
 	return (chars_printed);
 }

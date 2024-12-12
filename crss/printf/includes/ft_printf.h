@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/11 01:22:24 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:20:24 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,5 @@ size_t	ft_print_uint(unsigned int u_int);
 size_t	ft_print_char(int c);
 size_t	ft_print_string(char *str);
 size_t	ft_print_address(void *addr);
-size_t	ft_print_percent(void);
 
 #endif

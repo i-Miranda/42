@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/10 11:53:53 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:13:56 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ size_t	ft_print_hexbyte(unsigned char byte, int is_big)
 size_t	ft_print_hex(void *hex, int is_big, int i)
 {
 	unsigned char	*uchar_hex;
-	int				chars_printed;
+	size_t			chars_printed;
 
 	if (hex == 0)
 		return (ft_print_string("0"));
@@ -72,7 +72,7 @@ size_t	ft_print_hex(void *hex, int is_big, int i)
 	return (chars_printed);
 }
 
-size_t ft_print_int(int nbr)
+size_t	ft_print_int(int nbr)
 {
 	char	*output;
 	size_t	chars_printed;
@@ -99,14 +99,13 @@ size_t	ft_print_uint(unsigned int u_int)
 		overflow /= 10;
 		i++;
 	}
-	overflow = u_int;
 	output = ft_calloc(i + 1, sizeof(char));
-	if (overflow == 0)
+	if (u_int == 0)
 		output[0] = '0';
-	while (i-- && overflow > 0)
+	while (i-- && u_int > 0)
 	{
-		output[i] = (overflow % 10) + '0';
-		overflow /= 10;
+		output[i] = (u_int % 10) + '0';
+		u_int /= 10;
 	}
 	chars_printed = ft_print_string(output);
 	free(output);

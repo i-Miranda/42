@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/11 03:09:44 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:21:55 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static size_t	ft_process_char(char *c, va_list ap, char *flags)
 	else if (*c == 'X')
 		result = ft_print_hex(va_arg(ap, void *), TRUE, flags, 3);
 	else if (*c == '%')
-		result = ft_print_percent();
+		result = ft_print_char('%');
 	if (flags)
 		free(flags);
 	return (result);

@@ -1,3 +1,14 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
+#    Updated: 2024/12/12 11:49:17 by ivmirand         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 NAME := libftprintf.a
 
@@ -37,16 +48,17 @@ SOURCES := ft_printf.c \
 	print_text.c 
 
 BONUS := ft_printf_bonus.c \
+	print_padding_bonus.c \
 	print_nums_bonus.c \
 	print_text_bonus.c 
 
-OUTPUT := output
+OUTPUT := src/output
 
 PRINTF_OUTPUT := $(OUTPUT)/printf
 
 LIBFT_OUTPUT := $(OUTPUT)/libft
 
-$(shell mkdir -p output $(PRINTF_OUTPUT) $(LIBFT_OUTPUT))
+$(shell mkdir -p $(OUTPUT) $(PRINTF_OUTPUT) $(LIBFT_OUTPUT))
 
 OBJ_O := $(patsubst %.c, $(PRINTF_OUTPUT)/%.o, $(SOURCES))
 
@@ -84,6 +96,7 @@ $(PRINTF_OUTPUT)/%.o: src/printf/bonus/%.c $(BONUS_HEADER)
 $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
 	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@
 
+
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently
 # -s writes object-files
@@ -97,6 +110,7 @@ all: $(NAME)
 clean:
 	rm -rf $(LIBFT_O) 
 	rm -rf $(OBJ_O) 
+	rm -rf $(BONUS_O)
 
 # -f ignores if file does not exist
 fclean: clean
@@ -115,8 +129,7 @@ run:
 
 re: fclean all
 
-$(PRINTF_OUTPUT): $(BONUS_O) $(LIBFT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) $(BONUS_O) $(LIBFT_O) -o $@
-	ar $(ARFLAGS) $(NAME) $(BONUS_O) 
+bonus: $(LIBFT_O) $(BONUS_O)
+	ar $(ARFLAGS) $(NAME) $(LIBFT_O) $(BONUS_O)
 
 .PHONY: all clean fclean re bonus

@@ -6,15 +6,15 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/11 01:40:03 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:21:42 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 
-static int	ft_process_char(char *c, va_list ap)
+static size_t	ft_process_char(char *c, va_list ap)
 {
-	int result;
+	size_t	result;
 
 	result = 0;
 	if (*c == 'c')
@@ -32,7 +32,7 @@ static int	ft_process_char(char *c, va_list ap)
 	else if (*c == 'X')
 		result = ft_print_hex(va_arg(ap, void *), TRUE, 3);
 	else if (*c == '%')
-		result = ft_print_percent();
+		result = ft_print_char('%');
 	return (result);
 }
 
@@ -40,7 +40,7 @@ int	ft_printf(char const *str, ...)
 {
 	va_list	ap;
 	int		i;
-	int		arglen;
+	size_t	arglen;
 
 	va_start(ap, str);
 	i = 0;
@@ -54,5 +54,5 @@ int	ft_printf(char const *str, ...)
 		i++;
 	}
 	va_end(ap);
-	return (arglen);
+	return ((int)arglen);
 }
