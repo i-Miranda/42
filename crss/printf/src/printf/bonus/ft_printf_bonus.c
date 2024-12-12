@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/12 11:21:55 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:17:23 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ static size_t	ft_process_char(char *c, va_list ap, char *flags)
 	if (*c == 'c')
 		result = ft_print_char(va_arg(ap, int));
 	else if (*c == 's')
-		result = ft_print_string(va_arg(ap, char *), flags);
+		result = ft_print_string_bonus(va_arg(ap, char *), flags);
 	else if (*c == 'p')
-		result = ft_print_address(va_arg(ap, void *), flags);
+		result = ft_print_address(va_arg(ap, void *));
 	else if (*c == 'd' || *c == 'i')
-		result = ft_print_int(va_arg(ap, int), flags);
+		result = ft_print_int_bonus(va_arg(ap, int), flags);
 	else if (*c == 'u')
-		result = ft_print_uint(va_arg(ap, unsigned int), flags);
+		result = ft_print_uint_bonus(va_arg(ap, unsigned int), flags);
 	else if (*c == 'x')
-		result = ft_print_hex(va_arg(ap, void *), FALSE, flags, 3);
+		result = ft_print_hex_bonus(va_arg(ap, void *), FALSE, flags, 3);
 	else if (*c == 'X')
-		result = ft_print_hex(va_arg(ap, void *), TRUE, flags, 3);
+		result = ft_print_hex_bonus(va_arg(ap, void *), TRUE, flags, 3);
 	else if (*c == '%')
 		result = ft_print_char('%');
 	if (flags)

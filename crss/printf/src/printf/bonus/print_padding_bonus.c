@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 21:30:14 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/12 11:06:46 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:14:58 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ size_t	ft_print_padding(char *output, char *flags)
 		while (padding-- > 0)
 			chars_printed += ft_print_char('0');
 	}
-	chars_printed += ft_print_string(output, NULL);
+	chars_printed += ft_print_string_bonus(output, NULL);
 	if (flags && ft_strchr(flags, '-'))
 	{
 		atoi_flags = ft_strchr(flags, '-');	
