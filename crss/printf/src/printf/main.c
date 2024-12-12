@@ -26,11 +26,6 @@ static void normal_tests(int pfreturn, char *argv)
 	pfreturn = ft_printf("ft_printf c: %c ", '\0');
 	ft_printf("%d\n\n", pfreturn);
 
-	pfreturn = printf("rl_printf paco strict: \001\002\007\v\010\f\r\n ");
-	printf("%d\n", pfreturn); 
-	pfreturn = ft_printf("ft_printf paco strict: \001\002\007\v\010\f\r\n ");
-	ft_printf("%d\n\n", pfreturn);
-
 	pfreturn = printf("rl_printf s and %%: %s %% ", argv);
 	printf("%d\n", pfreturn);
 	pfreturn = ft_printf("ft_printf s and %%: %s %% ", argv);

@@ -58,7 +58,6 @@ size_t	ft_print_hex(void *hex, int is_big, int i)
 	if (hex == 0)
 		return (ft_print_string("0"));
 	uchar_hex = (unsigned char *)&hex;
-	result = 0;
 	chars_printed = 0;
 	while (uchar_hex[i] == '\0' && i > 0)
 		i--;
