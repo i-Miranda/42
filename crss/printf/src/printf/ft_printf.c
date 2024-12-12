@@ -6,15 +6,15 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/12 11:21:42 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 18:02:19 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 
-static size_t	ft_process_char(char *c, va_list ap)
+static int	ft_process_char(char *c, va_list ap)
 {
-	size_t	result;
+	int	result;
 
 	result = 0;
 	if (*c == 'c')
@@ -33,13 +33,16 @@ static size_t	ft_process_char(char *c, va_list ap)
 		result = ft_print_hex(va_arg(ap, void *), TRUE, 3);
 	else if (*c == '%')
 		result = ft_print_char('%');
+	else
+		result = -1;
 	return (result);
 }
 
 int	ft_printf(char const *str, ...)
 {
 	va_list	ap;
-	int		i;
+	int		pcnt_check;
+	size_t	i;
 	size_t	arglen;
 
 	va_start(ap, str);
@@ -48,7 +51,12 @@ int	ft_printf(char const *str, ...)
 	while (str[i] != '\0')
 	{
 		if (str[i] == '%')
-			arglen += ft_process_char((char *)&str[++i], ap);
+		{
+			pcnt_check = ft_process_char((char *)&str[++i], ap);
+			if (pcnt_check == -1)
+				return (-1);
+			arglen += pcnt_check;
+		}
 		else
 			arglen += ft_print_char(str[i]);
 		i++;

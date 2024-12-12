@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/11 01:59:27 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:38:06 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ static void normal_tests(int pfreturn, char *argv)
 	pfreturn = printf("rl_printf c: %c ", '0');
 	printf("%d\n", pfreturn);
 	pfreturn = ft_printf("ft_printf c: %c ", '0');
+	ft_printf("%d\n\n", pfreturn);
+
+	pfreturn = printf("rl_printf %%%%%%: %");
+	printf("%d\n", pfreturn); 
+	pfreturn = ft_printf("ft_printf %%%%%%: %");
 	ft_printf("%d\n\n", pfreturn);
 
 	pfreturn = printf("rl_printf c: %c ", '\0');
@@ -217,7 +222,9 @@ int	main(int argc, char *argv[])
 
 	normal_tests(pfreturn, argv[1]);
 
-	//bonus_tests(pfreturn);
+	printf("BONUS TESTS\n\n");
+
+	bonus_tests(pfreturn);
 	
 	return (0);
 }

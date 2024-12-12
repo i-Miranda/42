@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/12 11:13:56 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 18:02:50 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ size_t	ft_print_hex(void *hex, int is_big, int i)
 	unsigned char	*uchar_hex;
 	size_t			chars_printed;
 
-	if (hex == 0)
-		return (ft_print_string("0"));
 	uchar_hex = (unsigned char *)&hex;
 	chars_printed = 0;
 	while (uchar_hex[i] == '\0' && i > 0)

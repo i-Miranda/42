@@ -6,13 +6,13 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/12 12:15:48 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:07:12 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_printf_bonus.h"
 
-size_t	ft_print_hex_bonus(void *hex, int is_big, char *flags, int i)
+size_t	ft_print_hex_bonus(void *hex, int is_big, int i, char *flags)
 {
 	size_t			chars_printed;
 
