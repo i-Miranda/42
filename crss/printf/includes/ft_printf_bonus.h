@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:00:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/12 19:30:10 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:58:15 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ size_t	check_flags_for_minus(char *output, char *flags);
 
 //Flag process functions
 char	*ft_find_flags(char *c);
-char	*ft_remove_flags(char *c);
+int		ft_remove_flags(char *c, char *flags);
 #endif

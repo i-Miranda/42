@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/12 19:30:44 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:56:39 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,7 @@ int	ft_printf(char const *str, ...)
 		if (str[i] == '%')
 		{
 			flags = ft_find_flags((char *)&str[++i]);
-			if (flags != NULL)
-			{
-				i += ft_strlen(flags);
-				flags = ft_remove_flags(flags);
-			}
+			i += ft_remove_flags((char *)&str[i], flags);
 			pcnt_check = ft_process_char((char *)&str[i++], ap, flags);
 			if (pcnt_check == -1)
 				return (-1);

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:02:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/12/12 19:29:02 by ivmirand         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:57:33 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,23 @@ char	*ft_find_flags(char *c)
 	return (flags);
 }
 
-char	*ft_remove_flags(char *c)
+int	ft_remove_flags(char *c, char *flags)
 {
-	char	*flags;
 	int		minus_zero;
 	int		plus_space;
+	int		i;
 
-	flags = NULL;
-	minus_zero = FALSE;
-	plus_space = FALSE;
-	if (ft_strchr(c, '-') && ft_strchr(c, '0'))
-		minus_zero = TRUE;
-	if (ft_strchr(c, '+') && ft_strchr(c, ' '))
-		plus_space = TRUE;
-	rebuild_flags(c, flags, &minus_zero, &plus_space);
-	return (flags);
+	i = 0;
+	if (flags != NULL)
+	{
+		i = ft_strlen(flags);
+		minus_zero = FALSE;
+		plus_space = FALSE;
+		if (ft_strchr(c, '-') && ft_strchr(c, '0'))
+			minus_zero = TRUE;
+		if (ft_strchr(c, '+') && ft_strchr(c, ' '))
+			plus_space = TRUE;
+		rebuild_flags(c, flags, &minus_zero, &plus_space);
+	}
+	return (i);
 }

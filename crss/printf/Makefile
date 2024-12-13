@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2024/12/12 19:31:51 by ivmirand         ###   ########.fr        #
+#    Updated: 2024/12/12 20:34:47 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,6 @@ PRINTF_OUTPUT := $(OUTPUT)/printf
 
 LIBFT_OUTPUT := $(OUTPUT)/libft
 
-$(shell mkdir -p $(OUTPUT) $(PRINTF_OUTPUT) $(LIBFT_OUTPUT))
 
 OBJ_O := $(patsubst %.c, $(PRINTF_OUTPUT)/%.o, $(SOURCES))
 
@@ -82,12 +81,15 @@ else
 endif
 
 $(PRINTF_OUTPUT)/%.o: src/printf/%.c $(HEADER)
+	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
 	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ 
 
 $(PRINTF_OUTPUT)/%.o: src/printf/bonus/%.c $(BONUS_HEADER)
+	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
 	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@
 
 $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
+	@mkdir -p $(OUTPUT) $(LIBFT_OUTPUT)
 	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@
 
 # -r replaces or adds a file if doesn't already exist in archive
@@ -95,7 +97,7 @@ $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
 # -s writes object-files
 ARFLAGS := -rcs
 
-$(NAME): $(LIBFT_O) $(OBJ_O)
+$(NAME): $(MKDIR) $(LIBFT_O) $(OBJ_O)
 	ar $(ARFLAGS) $(NAME) $(LIBFT_O) $(OBJ_O)
 
 all: $(NAME) 
@@ -108,6 +110,7 @@ clean:
 # -f ignores if file does not exist
 fclean: clean
 	rm -f $(NAME)
+	rm -rf $(OUTPUT)
 	rm -f test
 	rm -rf test.dSYM
 
