@@ -14,19 +14,23 @@ NAME := pipex
 
 INC := include
 
-MAIN := src/pipex/main.c
-
 COMPILER := cc
 
-SOURCES :=
+SRC := src/
 
-OUTPUT := src/output
+MAIN := $(SRC)/main.c
+
+BONUS := $(SRC)/bonus.c
+
+OUTPUT := $(SRC)/output
 
 LIBFT_OUTPUT := libft/$(OUTPUT)/
 
-OBJ_O := $(patsubst %.c, $(PIPEX_OUTPUT)/%.o, $(PIPEX_SOURCES))
+LIBFT := libft.a
 
-PRINTF_O := $(patsubst %.c, $(PRINTF_OUTPUT)/%.o, $(PRINTF_SOURCES))
+OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SRC))
+
+BONUS_O := $(patsubst %.c, $(LIBFT_OUTPUT)/%.o, $(LIBFT_SOURCES))
 
 ##############DEBUGGING  RULES#####################
 
@@ -53,10 +57,6 @@ endif
 
 ##############DEBUGGING  RULES#####################
 
-$(PRINTF_OUTPUT)/%.o: src/printf/%.c $(HEADER)
-	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I includes/
-
 $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
 	@mkdir -p $(OUTPUT) $(LIBFT_OUTPUT)
 	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I includes/
@@ -66,8 +66,8 @@ $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
 # -s writes object-files
 ARFLAGS := -rcs
 
-$(NAME): $(MKDIR) $(LIBFT_O) $(PRINTF_O)
-	ar $(ARFLAGS) $(NAME) $(LIBFT_O) $(OBJ_O)
+$(NAME): $(OBJ_O)
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -l$(LIBFT) -I includes/
 
 all: $(NAME) 
 
@@ -80,8 +80,6 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	rm -rf $(OUTPUT)
-	rm -f test
-	rm -rf test.dSYM
 
 re: fclean all
 
