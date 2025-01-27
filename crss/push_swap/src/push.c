@@ -1,33 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 09:22:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/27 12:34:53 by ivmirand         ###   ########.fr       */
+/*   Created: 2025/01/27 11:53:34 by ivmirand          #+#    #+#             */
+/*   Updated: 2025/01/27 12:39:18 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int argc, char *argv[])
+//get first element in from and puts on top of to
+t_list	*push(t_list *to, t_list *from)
 {
-	int		i;
-	t_list	*a;
-	t_list	*b;
+	t_list	*to_head;
 
-	if (argc <= 1)
-		return (1);
-	i = 0;
-	while (i < argc - 1)
+	if (ft_lstsize(from) > 0)
 	{
-		if (build_list(a, argv[i]) == 0)
-			i++;
-		else
-			return (1);
+		from->next = *to;
+		to_head = from;
 	}
-	push_swap(a, b);
-	return (0);
+	return (to_head);
+}
+
+t_list	*pa(t_list *a, t_list *b)
+{
+	t_list	*a_head;
+
+	a_head = push(a,b);
+	ft_printf("pa\n");
+	return (a_head);
+}
+
+t_list	*pb(t_list *b, t_list *a)
+{
+	t_list	*b_head;
+
+	b_head = push(b,a);
+	ft_printf("pb\n");
+	return (b_head);
 }

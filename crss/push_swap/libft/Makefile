@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/01/27 09:44:37 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/01/27 13:12:51 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,8 @@ PRINTF_O := $(patsubst %.c, $(PRINTF_OUTPUT)/%.o, $(PRINTF_SOURCES))
 
 LIBFT_O := $(patsubst %.c, $(LIBFT_OUTPUT)/%.o, $(LIBFT_SOURCES))
 
+##############DEBUGGING  RULES#####################
+
 DEBUG ?= 1
 
 ifeq ($(DEBUG), 1)
@@ -97,11 +99,9 @@ else
 	CCFLAGS := -Wall -Wextra -Werror
 endif
 
-$(PRINTF_OUTPUT)/%.o: src/printf/%.c $(HEADER)
-	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
+##################################################
 
-$(PRINTF_OUTPUT)/%.o: src/printf/bonus/%.c $(BONUS_HEADER)
+$(PRINTF_OUTPUT)/%.o: src/printf/%.c $(HEADER)
 	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
 	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
 
@@ -120,15 +120,11 @@ $(NAME): $(MKDIR) $(LIBFT_O) $(OBJ_O)
 all: $(NAME) 
 
 clean:
-	# rm -rf $(LIBFT_O) 
-	# rm -rf $(OBJ_O) 
+	rm -f $(NAME)
 
 # -f ignores if file does not exist
 fclean: clean
-	rm -f $(NAME)
 	rm -rf $(OUTPUT)
-	rm -f test
-	rm -rf test.dSYM
 
 re: fclean all
 
