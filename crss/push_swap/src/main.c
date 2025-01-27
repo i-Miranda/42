@@ -17,6 +17,7 @@ int	main(int argc, char *argv[])
 	int		i;
 	t_list	*a;
 	t_list	*b;
+	t_stacks *stacks;
 
 	if (argc <= 1)
 		return (1);

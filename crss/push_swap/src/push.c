@@ -25,20 +25,20 @@ t_list	*push(t_list *to, t_list *from)
 	return (to_head);
 }
 
-t_list	*pa(t_list *a, t_list *b)
+t_list	*pa(t_stacks *stacks)
 {
 	t_list	*a_head;
 
-	a_head = push(a,b);
+	a_head = push(stacks->a,stacks->b);
 	ft_printf("pa\n");
 	return (a_head);
 }
 
-t_list	*pb(t_list *b, t_list *a)
+t_list	*pb(t_stacks *stacks)
 {
 	t_list	*b_head;
 
-	b_head = push(b,a);
-	ft_printf("pb\n");
+	b_head = push(stacks->b, stacks->a);
+kft_printf("pb\n");
 	return (b_head);
 }

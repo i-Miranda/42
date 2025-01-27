@@ -43,9 +43,9 @@ t_list	*rrb(t_list *b)
 	return (b_head);
 }
 
-void	rrr(t_list *a, t_list *b)
+void	rrr(t_stacks *stacks)
 {
-	reverse_rotate(a);
-	reverse_rotate(b);
+	reverse_rotate(stacks->a);
+	reverse_rotate(stacks->b);
 	ft_printf("rrr\n");
 }

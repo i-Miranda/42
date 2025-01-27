@@ -13,6 +13,6 @@
 #include "push_swap.h"
 
 //the algorithm
-void	push_swap(t_list *a, t_list *b)
+void	push_swap(t_stacks *stacks)
 {
 }

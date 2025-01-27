@@ -63,9 +63,8 @@ endif
 
 ##################################################
 
-$(OUTPUT)/%.o: src/%.c $(HEADER)
-	@mkdir -p $(OUTPUT) 
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
+$(OUTPUT)/%.o: $(SRC)/%.c $(HEADER)
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ libft/$(LIBFT) -I $(INC)/
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently
@@ -74,7 +73,7 @@ ARFLAGS := -rcs
 
 $(NAME): $(MKDIR) $(OBJ_O)
 	cd libft && $(MAKE) all
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ libft/$(LIBFT) -I include/
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ libft/$(LIBFT) -I $(INC)/
 
 all: $(NAME) 
 
