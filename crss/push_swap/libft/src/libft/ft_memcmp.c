@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 09:22:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/27 09:32:11 by ivmirand         ###   ########.fr       */
+/*   Created: 2024/09/17 12:08:18 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/09/28 23:03:35 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int	i;
-	tStack *a;
-	tStack *b;
+	unsigned char	*str1;
+	unsigned char	*str2;
+	size_t			i;
 
-	if (argc <= 1)
-		return (1);
+	if (s1 == NULL && s2 == NULL)
+		return (0);
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
 	i = 0;
-	while (i < argc - 1)
+	while (i < n)
 	{
-		build_stack(a, argv[i]);		
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
 		i++;
 	}
+	return (0);
 }

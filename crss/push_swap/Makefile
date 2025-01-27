@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/01/09 12:03:42 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/01/27 09:21:15 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,13 @@ INC := include
 
 COMPILER := cc
 
-SRC := src/
+SRC := src
 
-MAIN := $(SRC)/main.c
+MAIN := $(SRC)/main.c 
 
 OUTPUT := $(SRC)/output
 
-LIBFT_OUTPUT := libft/$(OUTPUT)/
+LIBFT_OUTPUT := libft/$(OUTPUT)
 
 LIBFT := libft.a
 
@@ -69,7 +69,6 @@ all: $(NAME)
 
 clean:
 	rm -rf $(LIBFT_OUTPUT) 
-	rm -rf $(OBJ_O) 
 
 # -f ignores if file does not exist
 fclean: clean

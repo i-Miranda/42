@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 09:22:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/27 09:32:11 by ivmirand         ###   ########.fr       */
+/*   Created: 2024/09/17 12:08:28 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/09/28 23:03:35 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+void	*ft_memset(void *b, int c, size_t n)
 {
-	int	i;
-	tStack *a;
-	tStack *b;
+	size_t			i;
+	unsigned char	*ptr;
 
-	if (argc <= 1)
-		return (1);
 	i = 0;
-	while (i < argc - 1)
+	ptr = (unsigned char *)b;
+	while (i < n)
 	{
-		build_stack(a, argv[i]);		
+		ptr[i] = c;
 		i++;
 	}
+	return (b);
 }

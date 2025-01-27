@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 09:22:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/27 09:32:11 by ivmirand         ###   ########.fr       */
+/*   Created: 2024/09/17 12:09:13 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/09/28 23:03:36 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int	i;
-	tStack *a;
-	tStack *b;
+	unsigned int	i;
+	char			*str;
 
-	if (argc <= 1)
-		return (1);
+	if (s == NULL)
+		return (ft_strdup(""));
 	i = 0;
-	while (i < argc - 1)
+	str = ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	while (s[i] != '\0' && str != NULL)
 	{
-		build_stack(a, argv[i]);		
+		str[i] = f(i, s[i]);
 		i++;
 	}
+	return (str);
 }

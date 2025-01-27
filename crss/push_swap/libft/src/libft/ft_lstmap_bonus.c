@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 09:22:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/27 09:32:11 by ivmirand         ###   ########.fr       */
+/*   Created: 2024/09/17 12:05:51 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/10/04 14:38:07 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	int	i;
-	tStack *a;
-	tStack *b;
+	t_list	*newlist;
+	t_list	*node;
+	void	*content;
 
-	if (argc <= 1)
-		return (1);
-	i = 0;
-	while (i < argc - 1)
+	newlist = NULL;
+	while (lst != NULL)
 	{
-		build_stack(a, argv[i]);		
-		i++;
+		content = f(lst->content);
+		node = ft_lstnew(content);
+		if (node == NULL)
+		{
+			ft_lstclear(&newlist, del);
+			del(content);
+			return (NULL);
+		}
+		ft_lstadd_back(&newlist, node);
+		lst = lst->next;
 	}
+	return (newlist);
 }
