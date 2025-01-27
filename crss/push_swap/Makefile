@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/01/27 09:21:15 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/01/27 10:00:30 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ endif
 
 $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
 	@mkdir -p $(OUTPUT) $(LIBFT_OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I includes/
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently
@@ -63,17 +63,19 @@ $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
 ARFLAGS := -rcs
 
 $(NAME): $(OBJ_O)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -l$(LIBFT) -I includes/
+	$(MAKE) -C libft
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ libft/$(LIBFT) -I include/
 
 all: $(NAME) 
 
 clean:
-	rm -rf $(LIBFT_OUTPUT) 
+	rm -f $(NAME)
+	rm -rf $(OUTPUT)
 
 # -f ignores if file does not exist
 fclean: clean
-	rm -f $(NAME)
-	rm -rf $(OUTPUT)
+	rm -rf $(LIBFT_OUTPUT) 
+	rm -rf libft/$(LIBFT) 
 
 re: fclean all
 

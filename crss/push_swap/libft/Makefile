@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/01/27 09:34:04 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/01/27 09:44:37 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,15 +99,15 @@ endif
 
 $(PRINTF_OUTPUT)/%.o: src/printf/%.c $(HEADER)
 	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ 
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
 
 $(PRINTF_OUTPUT)/%.o: src/printf/bonus/%.c $(BONUS_HEADER)
 	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
 
 $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
 	@mkdir -p $(OUTPUT) $(LIBFT_OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently

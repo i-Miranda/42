@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:22:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/27 09:32:11 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/01/27 10:23:08 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 int	main(int argc, char *argv[])
 {
 	int	i;
-	tStack *a;
-	tStack *b;
+	t_list *a;
+	t_list *b;
 
 	if (argc <= 1)
 		return (1);
 	i = 0;
 	while (i < argc - 1)
 	{
-		build_stack(a, argv[i]);		
+		build_list(a, argv[i]);		
 		i++;
 	}
 }
