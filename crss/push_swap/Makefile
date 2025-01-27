@@ -35,6 +35,7 @@ SOURCES := main.c \
 	reverse_rotate.c \
 	rotate.c \
 	swap.c
+
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
 
 ##############DEBUGGING  RULES#####################
