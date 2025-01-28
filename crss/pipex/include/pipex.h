@@ -13,15 +13,20 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
+//read write access dup dup2 execve fork pipe unlink
 # include <unistd.h>
+//malloc free exit
 # include <stdlib.h>
+//perror strerror
 # include <stdio.h>
-# include <string.h>
+//open close
 # include <fcntl.h>
+//wait waitpid
+# include <sys/wait.h>
 
 # include "libft.h"
 
 //pipex functions
-void	pipex(char *infile, char *outfile);
+void	pipex(char *infile, char *cmd1, char *cmd2, char *outfile);
 
 #endif

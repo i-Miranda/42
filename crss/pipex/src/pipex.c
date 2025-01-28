@@ -1,6 +1,6 @@
 #include "pipex.h"
 
-void	pipex(char *infile, char *outfile)
+void	pipex(char *infile, char *cmd1, char *cmd2, char *outfile)
 {
 	int fd_infile;
 	int	fd_outfile;
