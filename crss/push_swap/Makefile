@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/01/28 13:38:30 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/01/28 15:38:31 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@ NAME := push_swap
 INC := include
 
 COMPILER := cc
-
 SRC := src
 
 HEADER := $(INC)/push_swap.h
@@ -26,7 +25,7 @@ OUTPUT := $(SRC)/output
 
 LIBFT_OUTPUT := libft/$(OUTPUT)
 
-LIBFT := libft.a
+LIBFT := libft/libft.a
 
 SOURCES := main.c \
 	push.c \
@@ -64,16 +63,15 @@ endif
 ##################################################
 
 $(OUTPUT)/%.o: $(SRC)/%.c $(HEADER)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I $(INC)/ -I libft/$(INC)/
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I$(INC) -Ilibft/$(INC)
 
-# -r replaces or adds a file if doesn't already exist in archive
+# -r replaces or adds a file if doesn't already exisj in archive
 # -c creates the archive silently
 # -s writes object-files
 ARFLAGS := -rcs
 
-$(NAME): 
-	make $(OBJ_O)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I $(INC)/
+$(NAME): $(OBJ_O)
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) $(OBJ_O) $(LIBFT)-o $(NAME)
 
 all: 
 	cd libft && make all

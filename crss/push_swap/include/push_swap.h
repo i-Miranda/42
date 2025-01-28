@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:41:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/28 13:43:53 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:18:53 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@
 # include "libft.h"
 # include "printf.h"
 
-typedef struct s_stacks{
+typedef struct s_stacks
+{
 	t_list	*a;
 	t_list	*b;
-	int		minVal;
-	int		midVal;
-	int		maxVal;
+	int		min_val;
+	int		mid_val;
+	int		max_val;
 }t_stacks;
 
 //push_swap
@@ -55,6 +56,8 @@ void	rrr(t_stacks *stacks);
 
 //push_swap utils
 int		init_stacks(t_stacks *stacks);
-int		build_list(t_stacks *stacks, char *arg);
+int		parse_arg(t_stacks *stacks, char *arg);
+int		atoi_args(t_stacks *stacks, char **args);
+void	free_split(char **split);
 
 #endif
