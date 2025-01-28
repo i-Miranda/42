@@ -114,8 +114,8 @@ $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
 # -s writes object-files
 ARFLAGS := -rcs
 
-$(NAME): $(MKDIR) $(LIBFT_O) $(OBJ_O)
-	ar $(ARFLAGS) $(NAME) $(LIBFT_O) $(OBJ_O)
+$(NAME): $(MKDIR) $(LIBFT_O) $(PRINTF_O)
+	ar $(ARFLAGS) $(NAME) $(LIBFT_O) $(PRINTF_O)
 
 all: $(NAME) 
 
