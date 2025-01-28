@@ -14,7 +14,7 @@
 
 void	swap(t_list *list)
 {
-	void	*temp;
+	t_list	*temp;
 
 	if (ft_lstsize(list) > 1)
 	{

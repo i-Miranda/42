@@ -14,39 +14,32 @@
 
 //moves all elements in stack a up one position so the first element is now
 //the last.
-t_list	*rotate(t_list *list)
+void	rotate(t_list *list)
 {
-	t_list	*head;
-	t_list	*last;
+	t_list	*temp;
 
-	head = list->next;
-	ft_lstadd_back(list, list);
-	last = ft_lstlast(list);
-	free(last->next);
-	return (head);
+	temp = list->next->next;
+	ft_lstadd_back(list, list->next);
+	list->next = temp;
+	temp = ft_lstlast(list);
+	free(temp->next);
 }
 
-t_list	*ra(t_list *a)
+void	ra(t_stacks *stacks)
 {
-	t_list	*a_head;
-
-	a_head = rotate(a);
+	rotate(stacks->a);
 	ft_printf("ra\n");
-	return (a_head);
 }
 
-t_list	*rb(t_list *b)
+void	rb(t_stacks *stacks)
 {
-	t_list	*b_head;
-
-	a_head = rotate(b);
+	rotate(stacks->b);
 	ft_printf("rb\n");
-	return (b_head);
 }
 
-void	rr(t_list *a, t_list *b)
+void	rr(t_stacks *stacks)
 {
-	rotate(a);
-	rotate(b);
+	rotate(stacks->a);
+	rotate(stacks->b);
 	ft_printf("rr\n");
 }

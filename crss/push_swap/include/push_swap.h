@@ -18,21 +18,21 @@ void	sb(t_list *b);
 void	ss(t_list *a, t_list *b);
 
 //push functions
-t_list	*push(t_list *to, t_list *from);
-t_list	*pa(t_list *a, t_list *b);
-t_list	*pb(t_list *b, t_list *a);
+void	push(t_list *to, t_list *from);
+void	pa(t_stacks *stacks);
+void	pb(t_stacks *stacks);
 
 //rotate functions
-t_list	*rotate(t_list *list);
-t_list	*ra(t_list *a);
-t_list	*rb(t_list *b);
-void	rr(t_list *a, t_list *b);
+void	rotate(t_list *list);
+void	ra(t_stacks *stacks);
+void	rb(t_stacks *stacks);
+void	rr(t_stacks *stacks);
 
 //reverse_rotate functions
-t_list	*reverse_rotate(t_list *list);
-t_list	*rra(t_list *a);
-t_list	*rrb(t_list *b);
-void	rrr(t_list *a, t_list *b);
+void	reverse_rotate(t_list *list);
+void	rra(t_stacks *stacks);
+void	rrb(t_stacks *stacks);
+void	rrr(t_stacks *stacks);
 
 //push_swap utils
 int	build_list(t_list *a, char *arg);

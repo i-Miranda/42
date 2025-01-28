@@ -14,33 +14,32 @@
 
 //moves all elements in stack a down one position so the last element is now
 //the first.
-t_list	*reverse_rotate(t_list *list)
+void	reverse_rotate(t_list *list)
 {
-	t_list	*head;
+	t_list	*temp;
 	t_list	*last;
 
-	head = ft_lstlast(list);
-	head->next = *list;
+	temp = list->next;
+	last = ft_lstlast(list);
+	list->next = last;
+	list->next->next = temp;
+	
+	//this isn't right since the second to last node will still point to new
+	//first node (the original last node)
 	last = ft_lstlast(head);
 	free(last->next);
 }
 
-t_list	*rra(t_list *a)
+void	rra(t_stacks *stacks)
 {
-	t_list	*a_head;
-
-	reverse_rotate(a);
+	reverse_rotate(stacks->a);
 	ft_printf("rra\n");
-	return (a_head);
 }
 
-t_list	*rrb(t_list *b)
+void	rrb(t_stacks *stacks)
 {
-	t_list	*b_head;
-
-	reverse_rotate(b);
+	reverse_rotate(stacks->b);
 	ft_printf("rrb\n");
-	return (b_head);
 }
 
 void	rrr(t_stacks *stacks)

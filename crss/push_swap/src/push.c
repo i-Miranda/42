@@ -13,32 +13,27 @@
 #include "push_swap.h"
 
 //get first element in from and puts on top of to
-t_list	*push(t_list *to, t_list *from)
+void	push(t_list *to, t_list *from)
 {
-	t_list	*to_head;
+	t_list	*temp;
 
 	if (ft_lstsize(from) > 0)
 	{
-		from->next = *to;
-		to_head = from;
+		temp = to->next;
+		to->next = from->next;
+		from->next = from->next->next;
+		to->next->next = temp;
 	}
-	return (to_head);
 }
 
-t_list	*pa(t_stacks *stacks)
+void	pa(t_stacks *stacks)
 {
-	t_list	*a_head;
-
-	a_head = push(stacks->a,stacks->b);
+	push(stacks->a,stacks->b);
 	ft_printf("pa\n");
-	return (a_head);
 }
 
-t_list	*pb(t_stacks *stacks)
+void	pb(t_stacks *stacks)
 {
-	t_list	*b_head;
-
-	b_head = push(stacks->b, stacks->a);
-kft_printf("pb\n");
-	return (b_head);
+	push(stacks->b, stacks->a);
+	ft_printf("pb\n");
 }
