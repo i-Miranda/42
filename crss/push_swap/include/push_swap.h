@@ -1,15 +1,34 @@
-#include <unistd.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/28 13:41:41 by ivmirand          #+#    #+#             */
+/*   Updated: 2025/01/28 13:43:53 by ivmirand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
+
+# include <unistd.h>
+# include <stdlib.h>
+
+# include "libft.h"
+# include "printf.h"
 
 typedef struct s_stacks{
 	t_list	*a;
 	t_list	*b;
-}t_stacks
+	int		minVal;
+	int		midVal;
+	int		maxVal;
+}t_stacks;
 
 //push_swap
-void	push_swap(t_list *a, t_list *b)
+void	push_swap(t_stacks *stacks);
 
 //swap functions
 void	swap(t_list *list);
@@ -35,4 +54,7 @@ void	rrb(t_stacks *stacks);
 void	rrr(t_stacks *stacks);
 
 //push_swap utils
-int	build_list(t_list *a, char *arg);
+int		init_stacks(t_stacks *stacks);
+int		build_list(t_stacks *stacks, char *arg);
+
+#endif

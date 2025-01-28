@@ -6,15 +6,15 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/01/27 13:12:51 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/01/28 11:01:38 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := libft.a
 
-HEADER := include/ft_printf.h
+PRINTF_H := include/ft_printf.h
 
-LIBFT_HEADER := include/libft.h
+LIBFT_H := include/libft.h
 
 COMPILER := cc
 
@@ -101,11 +101,11 @@ endif
 
 ##################################################
 
-$(PRINTF_OUTPUT)/%.o: src/printf/%.c $(HEADER)
+$(PRINTF_OUTPUT)/%.o: src/printf/%.c $(PRINTF_H)
 	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
 	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
 
-$(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
+$(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_H)
 	@mkdir -p $(OUTPUT) $(LIBFT_OUTPUT)
 	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
 

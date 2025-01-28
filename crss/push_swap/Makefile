@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/01/27 13:22:15 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/01/28 13:38:30 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SOURCES := main.c \
 	rotate.c \
 	swap.c
 
-OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SRC)/$(SOURCES))
+OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
 
 #############DEBUGGING  RULES#####################
 
@@ -64,28 +64,30 @@ endif
 ##################################################
 
 $(OUTPUT)/%.o: $(SRC)/%.c $(HEADER)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ libft/$(LIBFT) -I $(INC)/
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I $(INC)/ -I libft/$(INC)/
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently
 # -s writes object-files
 ARFLAGS := -rcs
 
-$(NAME):
-	cd libft && make all
-	cp libft/libft.a .
-	mkdir -p $(OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ $(LIBFT) -I $(INC)/
+$(NAME): 
+	make $(OBJ_O)
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I $(INC)/
 
-all: $(NAME) 
+all: 
+	cd libft && make all
+	mkdir -p $(OUTPUT)
+	make $(NAME)
 
 # -f ignores if file does not exist
 clean:
 	rm -f $(NAME)
 	rm -rf $(OUTPUT)
+	rm -f $(LIBFT)
 
 fclean: clean
-	cd libft && $(MAKE) fclean
+	cd libft && $(MAKE) $@
 
 re: fclean all
 
