@@ -15,6 +15,7 @@ NAME := push_swap
 INC := include
 
 COMPILER := cc
+
 SRC := src
 
 HEADER := $(INC)/push_swap.h
@@ -71,7 +72,7 @@ $(OUTPUT)/%.o: $(SRC)/%.c $(HEADER)
 ARFLAGS := -rcs
 
 $(NAME): $(OBJ_O)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) $(OBJ_O) $(LIBFT)-o $(NAME)
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) $(OBJ_O) $(LIBFT) -o $(NAME)
 
 all: 
 	cd libft && make all

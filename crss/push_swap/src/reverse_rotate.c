@@ -17,17 +17,17 @@
 void	reverse_rotate(t_list *list)
 {
 	t_list	*temp;
+	t_list	*prev;
 	t_list	*last;
 
 	temp = list->next;
+	prev = list->next;
 	last = ft_lstlast(list);
+	while (prev->next != last)
+		prev = prev->next;
+	prev->next = NULL;
 	list->next = last;
 	list->next->next = temp;
-	
-	//this isn't right since the second to last node will still point to new
-	//first node (the original last node)
-	last = ft_lstlast(head);
-	free(last->next);
 }
 
 void	rra(t_stacks *stacks)

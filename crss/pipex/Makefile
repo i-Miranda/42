@@ -16,19 +16,27 @@ INC := include
 
 COMPILER := cc
 
-SRC := src/
+SRC := src
+
+HEADER := $(INC)/pipex.h
 
 MAIN := $(SRC)/main.c
-
-BONUS := $(SRC)/bonus.c
 
 OUTPUT := $(SRC)/output
 
 LIBFT_OUTPUT := libft/$(OUTPUT)/
 
-LIBFT := libft.a
+LIBFT := libft/libft.a
 
-OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SRC))
+SOURCES := main.c \
+	push.c \
+	push_swap.c \
+	push_swap_utils.c \
+	reverse_rotate.c \
+	rotate.c \
+	swap.c
+
+OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
 
 BONUS_O := $(patsubst %.c, $(LIBFT_OUTPUT)/%.o, $(LIBFT_SOURCES))
 
@@ -55,11 +63,10 @@ else
 	CCFLAGS := -Wall -Wextra -Werror
 endif
 
-##############DEBUGGING  RULES#####################
+##################################################
 
-$(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
-	@mkdir -p $(OUTPUT) $(LIBFT_OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I includes/
+$(OUTPUT)/%.o: $(SRC)/%.c $(HEADER)
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I$(INC) -Ilibft/$(INC)
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently
@@ -67,23 +74,22 @@ $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
 ARFLAGS := -rcs
 
 $(NAME): $(OBJ_O)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -l$(LIBFT) -I includes/
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) $(OBJ_O) $(LIBFT) -o $(NAME)
 
-all: $(NAME) 
-
-clean:
-	rm -rf $(LIBFT_OUTPUT) 
-	rm -rf $(OBJ_O) 
-	rm -rf $(BONUS_O)
+all: 
+	cd libft && make all
+	mkdir -p $(OUTPUT)
+	make $(NAME)
 
 # -f ignores if file does not exist
-fclean: clean
+clean:
 	rm -f $(NAME)
 	rm -rf $(OUTPUT)
+	rm -f $(LIBFT)
+
+fclean: clean
+	cd libft && $(MAKE) $@
 
 re: fclean all
 
-bonus: $(LIBFT_O) $(BONUS_O)
-	ar $(ARFLAGS) $(NAME) $(LIBFT_O) $(BONUS_O)
-
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

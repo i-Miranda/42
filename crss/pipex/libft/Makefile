@@ -6,15 +6,15 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/01/27 09:15:52 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/01/28 11:01:38 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := libft.a
 
-HEADER := include/ft_printf.h
+PRINTF_H := include/ft_printf.h
 
-LIBFT_HEADER := include/libft.h
+LIBFT_H := include/libft.h
 
 COMPILER := cc
 
@@ -76,6 +76,8 @@ PRINTF_O := $(patsubst %.c, $(PRINTF_OUTPUT)/%.o, $(PRINTF_SOURCES))
 
 LIBFT_O := $(patsubst %.c, $(LIBFT_OUTPUT)/%.o, $(LIBFT_SOURCES))
 
+##############DEBUGGING  RULES#####################
+
 DEBUG ?= 1
 
 ifeq ($(DEBUG), 1)
@@ -97,38 +99,32 @@ else
 	CCFLAGS := -Wall -Wextra -Werror
 endif
 
-$(PRINTF_OUTPUT)/%.o: src/printf/%.c $(HEADER)
-	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ 
+##################################################
 
-$(PRINTF_OUTPUT)/%.o: src/printf/bonus/%.c $(BONUS_HEADER)
+$(PRINTF_OUTPUT)/%.o: src/printf/%.c $(PRINTF_H)
 	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
 
-$(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_HEADER)
+$(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_H)
 	@mkdir -p $(OUTPUT) $(LIBFT_OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently
 # -s writes object-files
 ARFLAGS := -rcs
 
-$(NAME): $(MKDIR) $(LIBFT_O) $(OBJ_O)
-	ar $(ARFLAGS) $(NAME) $(LIBFT_O) $(OBJ_O)
+$(NAME): $(MKDIR) $(LIBFT_O) $(PRINTF_O)
+	ar $(ARFLAGS) $(NAME) $(LIBFT_O) $(PRINTF_O)
 
 all: $(NAME) 
 
 clean:
-	rm -rf $(LIBFT_O) 
-	rm -rf $(OBJ_O) 
+	rm -f $(NAME)
 
 # -f ignores if file does not exist
 fclean: clean
-	rm -f $(NAME)
 	rm -rf $(OUTPUT)
-	rm -f test
-	rm -rf test.dSYM
 
 re: fclean all
 
