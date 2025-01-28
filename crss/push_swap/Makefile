@@ -38,7 +38,7 @@ SOURCES := main.c \
 
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
 
-##############DEBUGGING  RULES#####################
+#############DEBUGGING  RULES#####################
 
 DEBUG ?= 1
 
@@ -71,9 +71,11 @@ $(OUTPUT)/%.o: $(SRC)/%.c $(HEADER)
 # -s writes object-files
 ARFLAGS := -rcs
 
-$(NAME): $(MKDIR) $(OBJ_O)
-	cd libft && $(MAKE) all
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ libft/$(LIBFT) -I $(INC)/
+$(NAME):
+	cd libft && make all
+	cp libft/libft.a .
+	mkdir -p $(OUTPUT)
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ $(LIBFT) -I $(INC)/
 
 all: $(NAME) 
 
