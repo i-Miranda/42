@@ -10,8 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <fcntl.h>
+#ifndef PIPEX_H
+# define PIPEX_H
+
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
+# include <fcntl.h>
+
+# include "libft.h"
+
+//pipex functions
+void	pipex(char *infile, char *outfile);
+
+#endif

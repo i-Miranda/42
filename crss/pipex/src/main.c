@@ -11,3 +11,11 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	main(int argc, char *argv[])
+{
+	if (argc < 5)
+		return (1);
+	pipex(argv[1], argv[argc-1]); 
+	return (0);
+}

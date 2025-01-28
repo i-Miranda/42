@@ -29,12 +29,7 @@ LIBFT_OUTPUT := libft/$(OUTPUT)/
 LIBFT := libft/libft.a
 
 SOURCES := main.c \
-	push.c \
-	push_swap.c \
-	push_swap_utils.c \
-	reverse_rotate.c \
-	rotate.c \
-	swap.c
+	pipex.c
 
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
 
