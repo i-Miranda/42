@@ -103,11 +103,11 @@ endif
 
 $(PRINTF_OUTPUT)/%.o: src/printf/%.c $(PRINTF_H)
 	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/
 
 $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_H)
 	@mkdir -p $(OUTPUT) $(LIBFT_OUTPUT)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I include/
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently
