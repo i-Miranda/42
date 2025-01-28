@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:23:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/28 17:42:14 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:46:06 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void	push_swap(t_stacks *stacks)
 	
 
 		if (stacks->a->next->content == stacks->min_val)
-			isSorted == 1;
+			isSorted = 1;
 	}
 }
