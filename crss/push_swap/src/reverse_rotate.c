@@ -14,20 +14,25 @@
 
 //moves all elements in stack a down one position so the last element is now
 //the first.
-void	reverse_rotate(t_list *list)
-{
-	t_list	*temp;
-	t_list	*prev;
-	t_list	*last;
 
-	temp = list->next;
-	prev = list->next;
-	last = ft_lstlast(list);
-	while (prev->next != last)
-		prev = prev->next;
-	prev->next = NULL;
-	list->next = last;
-	list->next->next = temp;
+void	reverse_rotate(t_list **list)
+{
+	t_list *head;
+	t_list *tail;
+
+	head = *list;
+	tail = ft_lstlast(head);
+	while (head)
+	{
+		if (head->next->next == NULL)
+		{
+			head->next = NULL;
+			break;
+		}
+		head = head->next;
+	}
+	tail->next = *list;
+	*list = tail;
 }
 
 void	rra(t_stacks *stacks)

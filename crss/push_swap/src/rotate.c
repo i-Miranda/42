@@ -14,15 +14,17 @@
 
 //moves all elements in stack a up one position so the first element is now
 //the last.
-void	rotate(t_list *list)
+void	rotate(t_list **list)
 {
 	t_list	*temp;
+	t_list	*last;
 
-	temp = list->next->next;
-	ft_lstadd_back(list, list->next);
-	list->next = temp;
-	temp = ft_lstlast(list);
-	free(temp->next);
+
+	temp = *list;
+	ft_lstadd_back(temp, temp);
+	temp = temp->next;
+	free(ft_lstlast(temp)->next);
+	*list = temp;
 }
 
 void	ra(t_stacks *stacks)

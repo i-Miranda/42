@@ -49,7 +49,7 @@ void	rb(t_stacks *stacks);
 void	rr(t_stacks *stacks);
 
 //reverse_rotate functions
-void	reverse_rotate(t_list *list);
+void	reverse_rotate(t_list **list);
 void	rra(t_stacks *stacks);
 void	rrb(t_stacks *stacks);
 void	rrr(t_stacks *stacks);
