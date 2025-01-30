@@ -56,7 +56,7 @@ BONUS_O := $(BONUS:.c=.o)
 CCFLAGS := -Wall -Wextra -Werror
 
 %.o: %.c libft.h
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -l$(LIBFT) -I include/
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ 
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently 
