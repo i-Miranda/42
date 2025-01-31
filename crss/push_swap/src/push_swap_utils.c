@@ -51,7 +51,7 @@ int	parse_arg(t_stacks *stacks, char *arg)
 		}
 		i++;
 	}
-	split_array = ft_split(*arg, ' ');
+	split_array = ft_split(arg, ' ');
 	bl_result = atoi_args(stacks, split_array);
 	free_split(split_array);
 	if (bl_result != 0)
