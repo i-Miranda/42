@@ -23,14 +23,14 @@ int	init_stacks(t_stacks *stacks)
 	stacks->b = malloc(sizeof(t_list));
 	if (stacks->b == NULL)
 		return (3);
-	stacks->minVal = malloc(sizeof(int));
-	if (stacks->minVal == NULL)
+	stacks->min_val = malloc(sizeof(int));
+	if (stacks->min_val == NULL)
 		return (4);
-	stacks->midVal = malloc(sizeof(int));
-	if (stacks->midVal == NULL)
+	stacks->mid_val = malloc(sizeof(int));
+	if (stacks->mid_val == NULL)
 		return (5);
-	stacks->maxVal = malloc(sizeof(int));
-	if (stacks->maxVal == NULL)
+	stacks->max_val = malloc(sizeof(int));
+	if (stacks->max_val == NULL)
 		return (6);
 	return (0);
 }
@@ -52,7 +52,7 @@ int	parse_arg(t_stacks *stacks, char *arg)
 		i++;
 	}
 	split_array = ft_split(*arg, ' ');
-	bl_result = atoi_arg(stacks, split_array);
+	bl_result = atoi_args(stacks, split_array);
 	free_split(split_array);
 	if (bl_result != 0)
 		return (2);
@@ -68,12 +68,12 @@ int	atoi_args(t_stacks *stacks, char **args)
 	node = ft_lstnew(atoi);
 	if (node == NULL)
 		return (1);
-	if (stacks->min_val == NULL || *atoi < stacks->min_val)
+	if ((void *)&(stacks->min_val) == NULL || *atoi < stacks->min_val)
 		stacks->min_val = *atoi;
-	if (stacks->max_val == NULL || *atoi > stacks->max_val)
+	if ((void *)&(stacks->max_val) == NULL || *atoi > stacks->max_val)
 		stacks->max_val = *atoi;
 	stacks->mid_val = (stacks->min_val + stacks->max_val)/2;
-	ft_lstadd_front(stacks->a, node);
+	ft_lstadd_front(&(stacks->a), node);
 	return (0);
 }
 
@@ -82,12 +82,15 @@ void	free_split(char **split)
 	int	i;
 
 	i = 0;
-	while (split_array != NULL)
+	if (split)
 	{
-		if (split_array[i] != NULL)
-			free(split_array[i]);
-		else
-			free(split_array);
-		i++;
+		while (split[i])
+			i++;
+		while (i >= 0)
+		{
+			free(split[i]);
+			i--;
+		}
+		free(split);
 	}
 }

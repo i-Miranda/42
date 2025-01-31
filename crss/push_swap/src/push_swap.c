@@ -28,15 +28,15 @@ void	push_swap(t_stacks *stacks)
 	while (isSorted == 0)
 	{
 		if (ft_lstsize(stacks->b) <= 0 ||
-				*(stacks->a->next->content) < stacks->mid_val)
+				stacks->a->next->content < (void *)&(stacks->mid_val))
 			pb(stacks);
-		else if (*(stacks->a->next->content) > (*ft_lstlast(stacks->a)->content))
+		else if (stacks->a->next->content > ft_lstlast(stacks->a)->content)
 			ra(stacks);
-		if (*(stacks->b->next->content) > *(ft_lstlast(stacks->b)->content))
+		if (stacks->b->next->content > ft_lstlast(stacks->b)->content)
 			rb(stacks);
 	
 
-		if (stacks->a->next->content == stacks->min_val)
+		if (stacks->a->next->content == (void *)&(stacks->min_val))
 			isSorted = 1;
 	}
 }
