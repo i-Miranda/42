@@ -28,5 +28,8 @@
 
 //pipex functions
 void	pipex(char *infile, char *cmd1, char *cmd2, char *outfile);
+int		open_files(int *fd_in, int *fd_out, char *infile, char *outfile);
 
+//pipex utils
+void	return_error(int error);
 #endif

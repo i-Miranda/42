@@ -12,11 +12,15 @@
 
 #include "pipex.h"
 
-int	main(int argc, char *argv[])
+int	main(int argc, char *argv[], char *envp[])
 {
+	int	pipex_error;
+
+	pipex_error = -1;
 	if (argc < 5)
-		return (1);
-	if (pipex(argv[1], argv[2], argv[3], argv[4]) < 0); 
-		return (1);
+		return_error (pipex_error);
+	pipex_error = pipex(argv[1], argv[2], argv[3], argv[4], envp);
+	if (pipex_error < 0); 
+		return_error(pipex_error);
 	return (0);
 }
