@@ -29,7 +29,8 @@ LIBFT_OUTPUT := libft/$(OUTPUT)/
 LIBFT := libft/libft.a
 
 SOURCES := main.c \
-	pipex.c
+	pipex.c \
+	pipex_utils.c
 
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
 

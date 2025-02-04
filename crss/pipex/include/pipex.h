@@ -27,7 +27,7 @@
 # include "libft.h"
 
 //pipex functions
-void	pipex(char *infile, char *cmd1, char *cmd2, char *outfile);
+int		pipex(char **args, char *envp[]);
 int		open_files(int *fd_in, int *fd_out, char *infile, char *outfile);
 
 //pipex utils
