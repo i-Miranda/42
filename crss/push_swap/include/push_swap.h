@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:41:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/28 17:18:53 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:44:39 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	pa(t_stacks *stacks);
 void	pb(t_stacks *stacks);
 
 //rotate functions
-void	rotate(t_list *list);
+void	rotate(t_list **list);
 void	ra(t_stacks *stacks);
 void	rb(t_stacks *stacks);
 void	rr(t_stacks *stacks);
@@ -55,7 +55,7 @@ void	rrb(t_stacks *stacks);
 void	rrr(t_stacks *stacks);
 
 //push_swap utils
-int		init_stacks(t_stacks *stacks);
+int		init_stacks(t_stacks **stacks);
 int		parse_arg(t_stacks *stacks, char *arg);
 int		atoi_args(t_stacks *stacks, char **args);
 void	free_split(char **split);

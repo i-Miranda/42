@@ -6,31 +6,31 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:24:25 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/28 17:20:03 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:12:45 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	init_stacks(t_stacks *stacks)
+int	init_stacks(t_stacks **stacks)
 {
-	stacks = malloc(sizeof(t_stacks));
-	if (stacks == NULL)
+	*stacks = malloc(sizeof(t_stacks));
+	if (*stacks == NULL)
 		return (1);
-	stacks->a = malloc(sizeof(t_list));
-	if (stacks->a == NULL)
+	(*stacks)->a = malloc(sizeof(t_list));
+	if ((*stacks)->a == NULL)
 		return (2);
-	stacks->b = malloc(sizeof(t_list));
-	if (stacks->b == NULL)
+	(*stacks)->b = malloc(sizeof(t_list));
+	if ((*stacks)->b == NULL)
 		return (3);
-	stacks->min_val = (int *)malloc(sizeof(int));
-	if (stacks->min_val == NULL)
+	(*stacks)->min_val = (int *)malloc(sizeof(int));
+	if ((*stacks)->min_val == NULL)
 		return (4);
-	stacks->mid_val = (int *)malloc(sizeof(int));
-	if (stacks->mid_val == NULL)
+	(*stacks)->mid_val = (int *)malloc(sizeof(int));
+	if ((*stacks)->mid_val == NULL)
 		return (5);
-	stacks->max_val = (int *)malloc(sizeof(int));
-	if (stacks->max_val == NULL)
+	(*stacks)->max_val = (int *)malloc(sizeof(int));
+	if ((*stacks)->max_val == NULL)
 		return (6);
 	return (0);
 }
@@ -44,7 +44,7 @@ int	parse_arg(t_stacks *stacks, char *arg)
 	i = 0;
 	while (arg[i] != '\0')
 	{
-		if (ft_isdigit(arg[i]) == 1 && arg[i] != ' ')
+		if (ft_isdigit(arg[i]) == 0 && arg[i] != ' ')
 		{
 			ft_printf("Error\n");
 			return (1);
@@ -76,7 +76,7 @@ int	atoi_args(t_stacks *stacks, char **args)
 	if ((stacks->max_val) == NULL || *atoi > *(stacks->max_val))
 		stacks->max_val = atoi;
 	*(stacks->mid_val) = (*(stacks->min_val) + *(stacks->max_val)/2);
-	ft_lstadd_front(&(stacks->a), node);
+	ft_lstadd_front(&(stacks->a->next), node);
 	return (0);
 }
 
