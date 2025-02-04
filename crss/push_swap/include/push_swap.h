@@ -23,9 +23,9 @@ typedef struct s_stacks
 {
 	t_list	*a;
 	t_list	*b;
-	int		min_val;
-	int		mid_val;
-	int		max_val;
+	int		*min_val;
+	int		*mid_val;
+	int		*max_val;
 }t_stacks;
 
 //push_swap

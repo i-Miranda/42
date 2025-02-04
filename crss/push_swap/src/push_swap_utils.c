@@ -23,13 +23,13 @@ int	init_stacks(t_stacks *stacks)
 	stacks->b = malloc(sizeof(t_list));
 	if (stacks->b == NULL)
 		return (3);
-	stacks->min_val = malloc(sizeof(int));
+	stacks->min_val = (int *)malloc(sizeof(int));
 	if (stacks->min_val == NULL)
 		return (4);
-	stacks->mid_val = malloc(sizeof(int));
+	stacks->mid_val = (int *)malloc(sizeof(int));
 	if (stacks->mid_val == NULL)
 		return (5);
-	stacks->max_val = malloc(sizeof(int));
+	stacks->max_val = (int *)malloc(sizeof(int));
 	if (stacks->max_val == NULL)
 		return (6);
 	return (0);
@@ -64,15 +64,18 @@ int	atoi_args(t_stacks *stacks, char **args)
 	int		*atoi;
 	t_list	*node;
 
-	*atoi = ft_atoi(arg);
+	atoi = malloc(1 * sizeof(int));
+	if (atoi == NULL)
+		return (-1);
+	*atoi = ft_atoi(*args);
 	node = ft_lstnew(atoi);
 	if (node == NULL)
 		return (1);
-	if ((void *)&(stacks->min_val) == NULL || *atoi < stacks->min_val)
-		stacks->min_val = *atoi;
-	if ((void *)&(stacks->max_val) == NULL || *atoi > stacks->max_val)
-		stacks->max_val = *atoi;
-	stacks->mid_val = (stacks->min_val + stacks->max_val)/2;
+	if ((stacks->min_val) == NULL || *atoi < *(stacks->min_val))
+		stacks->min_val = atoi;
+	if ((stacks->max_val) == NULL || *atoi > *(stacks->max_val))
+		stacks->max_val = atoi;
+	*(stacks->mid_val) = (*(stacks->min_val) + *(stacks->max_val)/2);
 	ft_lstadd_front(&(stacks->a), node);
 	return (0);
 }
