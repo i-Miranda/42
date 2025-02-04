@@ -16,6 +16,7 @@ int	main(int argc, char *argv[])
 {
 	if (argc < 5)
 		return (1);
-	pipex(argv[1], argv[argc-1]); 
+	if (pipex(argv[1], argv[2], argv[3], argv[4]) < 0); 
+		return (1);
 	return (0);
 }
