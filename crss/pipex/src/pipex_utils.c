@@ -12,6 +12,25 @@
 
 #include "pipex.h"
 
+static char	*find_path(char *envp[])
+{
+	char	*path;
+	int		i;
+
+	i = 0;
+	if (!envp || !envp[i])
+		return (NULL);
+	path = NULL;
+	while (envp[i])
+	{
+		path = ft_strnstr(envp[i], "PATH=", 5);
+		if (path != NULL)
+			return(&path[5]);
+		i++;
+	}
+	return (NULL);
+}
+
 void	return_error(int error)
 {
 	if (error == ERR_INPT)
@@ -56,14 +75,11 @@ int		build_path(char *path, char *cmd, char *envp[])
 	char **path_array;
 	char *temp;
 	
-	i = 0;
-	if (!envp || !envp[i])
+	temp = find_path(envp);
+	if (temp == NULL)
 		return (ERR_ENVP);
-	while (envp[i] && !ft_strnstr(envp[i], "PATH=", 5))
-		i++;
-	if (!envp[i])
-		return (ERR_ENVP);
-	path_array = ft_split(envp[i], ':');	
+	path_array = ft_split(temp, ':');	
+	free(temp);
 	i = 0;
 	while (path_array[i])
 	{
@@ -89,7 +105,8 @@ int	parse_cmds(t_pipe **pipe_data, char **args)
 
 	i = 1;
 	j = 0;
-	while (i < (*pipe_data)->argc)
+	while (i < (*pipe_data)->argc &&
+			(*pipe_data)->cmds && (*pipe_data)->cmds[j])
 	{
 		(*pipe_data)->cmds[j] = ft_split(args[i], ' ');
 		j++;
@@ -99,14 +116,9 @@ int	parse_cmds(t_pipe **pipe_data, char **args)
 }
 
 
-int	parse_args(t_pipe **pipe_data, char **args)
+int	parse_args(t_pipe **pipe_data, char **args, int argc)
 {
-	int	i;
-
-	i = 0;
-	while (args[i])
-		i++;
-	(*pipe_data)->argc = i;
+	(*pipe_data)->argc = argc;
 	(*pipe_data)->if_path = args[0];
 	(*pipe_data)->of_path = args[(*pipe_data)->argc];
 	return (ERR_NONE);

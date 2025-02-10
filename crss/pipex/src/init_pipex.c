@@ -21,17 +21,15 @@ static int open_files(t_pipe *pipe_data)
 	return (ERR_NONE);
 }
 
-int	init_pipex(t_pipe **pipe_data, char **args)
+int	init_pipex(t_pipe **pipe_data, char **args, int argc)
 {
-	int	i;
 	(*pipe_data) = malloc(sizeof(t_pipe));
 	if ((*pipe_data) == NULL)
 		return (ERR_MLLC);
+	if (parse_args(pipe_data, args, argc) < ERR_NONE)
+		return (ERR_PRSA);
 	if (open_files(*pipe_data) == ERR_GNRL)
 		return (ERR_OPEN);
-	i = 1;
-	if (parse_args(pipe_data, args) < ERR_NONE)
-		return (ERR_PRSA);
 	if (parse_cmds(pipe_data, args) < ERR_NONE)
 		return (ERR_PRSC);
 	if (access((*pipe_data)->if_path, R_OK) != ERR_NONE 

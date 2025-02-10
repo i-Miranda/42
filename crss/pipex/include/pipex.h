@@ -49,18 +49,21 @@
 
 typedef struct s_pipe
 {
+	char	***cmds;
+	char	**args;
 	char	*if_path;
 	char	*of_path;
-	char	***cmds;
+	pid_t	pid;
 	int		fildes[2];
 	int		argc;
 } t_pipe;
 
 //pipex functions
-int		pipex(char **args, char *envp[]);
+int		pipex(int argc, char **args, char *envp[]);
+void	free_pipex(t_pipe *pipe_data);
 
 //init_pipex functions
-int		init_pipex(t_pipe **pipe_data, char **args);
+int		init_pipex(t_pipe **pipe_data, char **args, int argc);
 
 //run_process functions
 int		run_processes(t_pipe **pipe_data, char *envp[]);
@@ -70,6 +73,6 @@ void	return_error(int error);
 void	free_split(char **split);
 int		build_path(char *path, char *cmd, char *envp[]);
 int		parse_cmds(t_pipe **pipe_data, char **args);
-int		parse_args(t_pipe **pipe_data, char **args);
+int		parse_args(t_pipe **pipe_data, char **args, int argc);
 
 #endif

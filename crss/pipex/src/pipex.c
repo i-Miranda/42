@@ -12,18 +12,45 @@
 
 #include "pipex.h"
 
-int	pipex(char **args, char *envp[])
+void	free_pipex(t_pipe *pipe_data)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	while (pipe_data->cmds && pipe_data->cmds[i])
+	{
+		j = 0;
+		while (pipe_data->cmds[i][j])
+		{
+			free(pipe_data->cmds[i][j]);
+			j++;
+		}
+		free(pipe_data->cmds[i]);
+		i++;
+	}
+	free(pipe_data->cmds);
+	i = 0;
+	while (pipe_data->args && pipe_data->args[i])
+	{
+		free(pipe_data->args[i]);
+		i++;
+	}
+	free(pipe_data->args);
+}
+
+int	pipex(int argc, char **args, char *envp[])
 {
 	t_pipe	*pipe_data;
 	int		error;
 		
-	error = init_pipex(&pipe_data, args);
+	error = init_pipex(&pipe_data, args, argc);
+	if (error != ERR_NONE)
+		return (error);
+	error = parse_args(&pipe_data, args, argc);
 	if (error != ERR_NONE)
 		return (error);
 	error = parse_cmds(&pipe_data, args);
-	if (error != ERR_NONE)
-		return (error);
-	error = parse_args(&pipe_data, args);
 	if (error != ERR_NONE)
 		return (error);
 	if (pipe(pipe_data->fildes) == ERR_GNRL)

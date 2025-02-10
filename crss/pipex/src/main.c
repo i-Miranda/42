@@ -19,7 +19,7 @@ int	main(int argc, char *argv[], char *envp[])
 	pipex_error = ERR_INPT;
 	if (argc < ARGC)
 		return_error(pipex_error);
-	pipex_error = pipex(&argv[1], envp);
+	pipex_error = pipex(argc - 1, &argv[1], envp);
 	if (pipex_error < ERR_NONE)
 		return_error(pipex_error);
 	return (ERR_NONE);
