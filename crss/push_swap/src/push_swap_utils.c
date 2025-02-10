@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:24:25 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/04 11:12:45 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:06:49 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	atoi_args(t_stacks *stacks, char **args)
 	if ((stacks->max_val) == NULL || *atoi > *(stacks->max_val))
 		stacks->max_val = atoi;
 	*(stacks->mid_val) = (*(stacks->min_val) + *(stacks->max_val)/2);
-	ft_lstadd_front(&(stacks->a->next), node);
+	ft_lstadd_back(&(stacks->a->next), node);
 	return (0);
 }
 

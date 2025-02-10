@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:41:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/04 10:44:39 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:36:44 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	sb(t_list *b);
 void	ss(t_list *a, t_list *b);
 
 //push functions
-void	push(t_list *to, t_list *from);
+void	push(t_list **to, t_list **from);
 void	pa(t_stacks *stacks);
 void	pb(t_stacks *stacks);
 

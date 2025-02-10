@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:09:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/10 12:33:59 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:52:50 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define ERR_WTPD -9
 # define ERR_ENVP -10
 # define ERR_MLLC -11
+# define ERR_PRSA -12
+# define ERR_PRSC -13
 
 //desired argc
 # define ARGC 5
@@ -47,28 +49,27 @@
 
 typedef struct s_pipe
 {
-	char	*infile;
-	char	*outfile;
-	char	*left_cmd;
-	char	*right_cmd;
+	char	*if_path;
+	char	*of_path;
+	char	***cmds;
 	int		fildes[2];
-	int		fd_if;
-	int		fd_of;
-	pid_t	child_pid;
-	pid_t	parent_pid;
+	int		argc;
 } t_pipe;
 
 //pipex functions
 int		pipex(char **args, char *envp[]);
 
 //init_pipex functions
-int		init_pipex(t_pipe *pipe_data, char **args);
+int		init_pipex(t_pipe **pipe_data, char **args);
 
 //run_process functions
-int		run_processes(t_pipe *pipe_data, char *envp[]);
+int		run_processes(t_pipe **pipe_data, char *envp[]);
 
 //pipex utils
 void	return_error(int error);
-int		build_path(char *path, char *cmd, char **envp);
 void	free_split(char **split);
+int		build_path(char *path, char *cmd, char *envp[]);
+int		parse_cmds(t_pipe **pipe_data, char **args);
+int		parse_args(t_pipe **pipe_data, char **args);
+
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 14:36:59 by ivmirand          #+#    #+#             */
+/*   Updated: 2025/02/10 16:50:14 by ivmirand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	return_error(int error)
@@ -25,7 +37,20 @@ void	return_error(int error)
 	exit(EXIT_FAILURE);
 }
 
-int		build_path(char *path, char *cmd, char **envp)
+void	free_split(char **split)
+{
+	int	i;
+	
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}
+
+int		build_path(char *path, char *cmd, char *envp[])
 {
 	int	i;
 	char **path_array;
@@ -57,15 +82,32 @@ int		build_path(char *path, char *cmd, char **envp)
 	return (ERR_GNRL);
 }
 
-void	free_split(char **split)
+int	parse_cmds(t_pipe **pipe_data, char **args)
 {
 	int	i;
-	
-	i = 0;
-	while (split[i])
+	int	j;
+
+	i = 1;
+	j = 0;
+	while (i < (*pipe_data)->argc)
 	{
-		free(split[i]);
+		(*pipe_data)->cmds[j] = ft_split(args[i], ' ');
+		j++;
 		i++;
 	}
-	free(split);
+	return (ERR_NONE);
+}
+
+
+int	parse_args(t_pipe **pipe_data, char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+		i++;
+	(*pipe_data)->argc = i;
+	(*pipe_data)->if_path = args[0];
+	(*pipe_data)->of_path = args[(*pipe_data)->argc];
+	return (ERR_NONE);
 }
