@@ -2,24 +2,24 @@
 
 void	return_error(int error)
 {
-	if (error == -1)
+	if (error == ERR_INPT)
 		perror("Pipex: infile command1 command2 outfile");
-	else if (error == -2)
-		perror("pipe failed");
-	else if (error == -3)
-		perror("open failed");
-	else if (error == -4)
-		perror("fork failed");
-	else if (error == -5)
-		perror("access failed");
-	else if (error == -6)
-		perror("dup2 failed");
-	else if (error == -7)
-		perror("execve failed");
-	else if (error == -8)
-		perror("waitpid failed");
-	else if (error == -9)
-		perror("environment not set");
+	else if (error == ERR_PIPE)
+		perror("Pipe failed");
+	else if (error == ERR_OPEN)
+		perror("Open failed");
+	else if (error == ERR_FORK)
+		perror("Fork failed");
+	else if (error == ERR_ACS)
+		perror("Access failed");
+	else if (error == ERR_DUP2)
+		perror("Dup2 failed");
+	else if (error == ERR_XCV)
+		perror("Execve failed");
+	else if (error == ERR_WTPD)
+		perror("Waitpid failed");
+	else if (error == ERR_ENVP)
+		perror("Environment not set");
 	exit(EXIT_FAILURE);
 }
 
@@ -27,16 +27,32 @@ int		build_path(char *path, char *cmd, char **envp)
 {
 	int	i;
 	char **path_array;
+	char *temp;
 	
 	i = 0;
 	if (!envp || !envp[i])
-		return (-9);
+		return (ERR_ENVP);
 	while (envp[i] && !ft_strnstr(envp[i], "PATH=", 5))
 		i++;
 	if (!envp[i])
-		return (-9);
-	else
-		path_array = ft_split(envp[i], ':');	
+		return (ERR_ENVP);
+	path_array = ft_split(envp[i], ':');	
+	i = 0;
+	while (path_array[i])
+	{
+		temp = ft_strjoin(path_array[i], "/");
+		path = ft_strjoin(temp, cmd);
+		free(temp);
+		if (access(path, X_OK) != ERR_NONE)
+		{
+			free_split(path_array);
+			return (ERR_GNRL);
+		}
+		free(path);
+		i++;
+	}
+	free_split(path_array);
+	return (ERR_NONE);
 }
 
 void	free_split(char **split)

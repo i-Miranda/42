@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:09:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/09 12:09:50 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/10 10:49:05 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@
 # include <sys/wait.h>
 
 # include "libft.h"
+
+//error constants
+# define ERR_NONE 0
+# define ERR_GNRL -1
+# define ERR_INPT -2
+# define ERR_PIPE -3
+# define ERR_OPEN -4
+# define ERR_FORK -5
+# define ERR_ACS -6
+# define ERR_DUP2 -7
+# define ERR_XCV -8
+# define ERR_WTPD -9
+# define ERR_ENVP -10
+
+//desired argc
+# define ARGC 5
 
 //pipex functions
 int		pipex(char **args, char *envp[]);

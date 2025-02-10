@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:08:42 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/09 12:09:10 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:34:02 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	int	pipex_error;
 
-	pipex_error = -1;
-	if (argc < 5)
-		return_error (pipex_error);
-	pipex_error = pipex(&argv[1], envp);
-	if (pipex_error < 0)
+	pipex_error = ERR_INPT;
+	if (argc < ARGC)
 		return_error(pipex_error);
-	return (0);
+	pipex_error = pipex(&argv[1], envp);
+	if (pipex_error < ERR_NONE)
+		return_error(pipex_error);
+	return (ERR_NONE);
 }
