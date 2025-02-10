@@ -2,24 +2,16 @@
 
 int	pipex(char **args, char *envp[])
 {
-	int		fildes[2];
-	int		fd_infile;
-	int		fd_outfile;
-	pid_t	child_pid;
-	pid_t	parent_pid;
-
-	if (pipe(fildes) == ERR_GNRL)
-		return (ERR_PIPE);
-	if (open_files(&fd_infile, &fd_outfile, args[0], args[3]) == ERR_GNRL)
-		return (ERR_OPEN);
-	parent_pid = fork();	
-	child_pid = fork();	
-	if (parent_pid == ERR_GNRL || child_pid == ERR_GNRL)
-		return (ERR_FORK);
-	if (parent_pid == ERR_NONE)
-		run_parent_process(fildes, fd_infile, args, envp);
-	if (child_pid == ERR_NONE)
-		run_child_process(fildes, fd_outfile, args, envp);
+	t_pipe	*pipe_data;
+	int		error;
+		
+	error = init_pipex(pipe_data, args, envp) 
+	if (error != ERR_NONE)
+		return (error);
+	if (pipe_data->child_pid == ERR_NONE)
+		run_child_process(pipe_data, envp);
+	if (pipe_data->parent_pid == ERR_NONE)
+		run_parent_process(pipe_data, envp);
 	if (access(args[0], R_OK) != ERR_NONE || access(args[3], W_OK) != ERR_NONE)
 		return (ERR_ACS);	
 	if (waitpid(child_pid, NULL, 0) == ERR_GNRL ||
@@ -28,37 +20,29 @@ int	pipex(char **args, char *envp[])
 	return (ERR_NONE);
 }
 
-int open_files(int *fd_in, int *fd_out, char *infile, char *outfile)
-{
-	*fd_in = open(infile, O_RDONLY | O_CREAT);
-	*fd_out = open(outfile, O_RDWR | O_CREAT, 0644);
-	if (*fd_in == ERR_GNRL || *fd_out == ERR_GNRL)
-		return (ERR_GNRL);
-	return (ERR_NONE);
-}
 
-int	run_parent_process(int fildes[2], int infile_fd, char **args, char **envp)
+int	run_child_process(t_pipe *pipe_data, char *envp[])
 {
-	if (dup2(infile_fd, 0) == ERR_GNRL)
+	if (dup2(pipe_data->fd_if, 0) == ERR_GNRL)
 		return (ERR_DUP2);
-	close(infile_fd);
-	if (dup2(fildes[0], 1) == ERR_GNRL)
+	close(pipe_data->fd_if);
+	if (dup2(pipe_data->fildes[0], 1) == ERR_GNRL)
 		return (ERR_DUP2);
-	close(fildes[0]);
-	if (exec_cmd(args[3], envp) < ERR_NONE)
+	close(pipe_data->fildes[0]);
+	if (exec_cmd(pipe_data->left_cmd, envp) < ERR_NONE)
 		return (ERR_XCV);
 	return (ERR_NONE);
 }
 
-int	run_child_process(int fildes[2], int outfile_fd, char **args, char **envp)
+int	run_parent_process(t_pipe *pipe_data, char *envp[])
 {
-	if (dup2(fildes[1], 0) == ERR_GNRL)
+	if (dup2(pipe_data->fildes[1], 0) == ERR_GNRL)
 		return (ERR_DUP2);
-	close(fildes[1]);
-	if (dup2(outfile_fd, 1) == ERR_GNRL)
+	close(pipe_data->fildes[1]);
+	if (dup2(pipe_data->fd_of, 1) == ERR_GNRL)
 		return (ERR_DUP2);
-	close(outfile_fd);
-	if (exec_cmd(args[2], envp) == ERR_GNRL)
+	close(fd_of);
+	if (exec_cmd(pipe_data->right_cmd, envp) == ERR_GNRL)
 		return (ERR_XCV);
 	return (ERR_NONE);
 }

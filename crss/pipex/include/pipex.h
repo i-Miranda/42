@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:09:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/10 10:49:05 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:33:59 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,32 @@
 # define ERR_XCV -8
 # define ERR_WTPD -9
 # define ERR_ENVP -10
+# define ERR_MLLC -11
 
 //desired argc
 # define ARGC 5
+//chmod permissions
+# define CHMOD_RWRR 0644
+
+typedef struct s_pipe
+{
+	char	*left_cmd;
+	char	*right_cmd;
+	int		fildes[2];
+	int		fd_if;
+	int		fd_of;
+	pid_t	child_pid;
+	pid_t	parent_pid;
+} t_pipe;
 
 //pipex functions
 int		pipex(char **args, char *envp[]);
-int		open_files(int *fd_in, int *fd_out, char *infile, char *outfile);
-int		run_parent_process(int fildes[2], int infile_fd, char **args, char **envp);
-int		run_child_process(int fildes[2], int outfile_fd, char **args, char **envp);
+int		run_child_process(t_pipe *pipe_data, char *envp[]);
+int		run_parent_process(t_pipe *pipe_data, char *envp[]);
 int		exec_cmd(char *cmd, char **envp);
+
+//init_pipex functions
+t_pipe	*init_pipex(t_pipe *pipe_data, char **args, char *envp[]);
 
 //pipex utils
 void	return_error(int error);

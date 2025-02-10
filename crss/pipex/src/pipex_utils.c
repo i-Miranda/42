@@ -20,6 +20,8 @@ void	return_error(int error)
 		perror("Waitpid failed");
 	else if (error == ERR_ENVP)
 		perror("Environment not set");
+	else if (error == ERR_MLLC)
+		perror("Malloc failed, returning NULL");
 	exit(EXIT_FAILURE);
 }
 
@@ -43,16 +45,16 @@ int		build_path(char *path, char *cmd, char **envp)
 		temp = ft_strjoin(path_array[i], "/");
 		path = ft_strjoin(temp, cmd);
 		free(temp);
-		if (access(path, X_OK) != ERR_NONE)
+		if (access(path, X_OK) != ERR_GNRL)
 		{
 			free_split(path_array);
-			return (ERR_GNRL);
+			return (ERR_NONE);
 		}
 		free(path);
 		i++;
 	}
 	free_split(path_array);
-	return (ERR_NONE);
+	return (ERR_GNRL);
 }
 
 void	free_split(char **split)

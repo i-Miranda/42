@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/01/09 12:03:42 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/02/10 12:32:01 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ LIBFT := libft/libft.a
 
 SOURCES := main.c \
 	pipex.c \
-	pipex_utils.c
+	pipex_utils.c \
+	init_pipex.c
 
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
 
