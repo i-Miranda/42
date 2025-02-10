@@ -47,6 +47,8 @@
 
 typedef struct s_pipe
 {
+	char	*infile;
+	char	*outfile;
 	char	*left_cmd;
 	char	*right_cmd;
 	int		fildes[2];
@@ -58,12 +60,12 @@ typedef struct s_pipe
 
 //pipex functions
 int		pipex(char **args, char *envp[]);
-int		run_child_process(t_pipe *pipe_data, char *envp[]);
-int		run_parent_process(t_pipe *pipe_data, char *envp[]);
-int		exec_cmd(char *cmd, char **envp);
 
 //init_pipex functions
-t_pipe	*init_pipex(t_pipe *pipe_data, char **args, char *envp[]);
+int		init_pipex(t_pipe *pipe_data, char **args);
+
+//run_process functions
+int		run_processes(t_pipe *pipe_data, char *envp[]);
 
 //pipex utils
 void	return_error(int error);
