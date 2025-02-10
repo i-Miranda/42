@@ -29,7 +29,12 @@
 //pipex functions
 int		pipex(char **args, char *envp[]);
 int		open_files(int *fd_in, int *fd_out, char *infile, char *outfile);
+int		run_parent_process(int fildes[2], int infile_fd, char **args, char **envp);
+int		run_child_process(int fildes[2], int outfile_fd, char **args, char **envp);
+int		exec_cmd(char *cmd, char **envp);
 
 //pipex utils
 void	return_error(int error);
+int		build_path(char *path, char *cmd, char **envp);
+void	free_split(char **split);
 #endif
