@@ -36,43 +36,36 @@
 # define ERR_ACS -6
 # define ERR_DUP2 -7
 # define ERR_XCV -8
-# define ERR_WTPD -9
-# define ERR_ENVP -10
-# define ERR_MLLC -11
-# define ERR_PRSA -12
-# define ERR_PRSC -13
+# define ERR_ENVP -9
+# define ERR_MLLC -10
+# define ERR_SPLT -11
 
 //desired argc
 # define ARGC 5
 //chmod permissions
 # define CHMOD_RWRR 0644
 
-typedef struct s_pipe
+typedef struct s_pipex
 {
 	char	***cmds;
-	char	**args;
-	char	*if_arg;
-	char	*of_arg;
+	char	**path_split;
+	char	*path;
+	int		pipe_fd[2];
 	pid_t	pid;
-	int		fildes[2];
+	int		in_fd;
+	int		of_fd;
 	int		argc;
-} t_pipe;
+}t_pipex;
 
 //pipex functions
-int		pipex(int argc, char **args, char *envp[]);
-void	free_pipex(t_pipe *pipe_data);
+void	pipex(int argc, char **argv, char **env);
 
-//init_pipex functions
-int		init_pipex(t_pipe **pipe_data, char **args, int argc);
+//pipex_utils functions
+void	return_error(int error, t_pipex *pipex);
+void	fd_close_wait(t_pipex *pipex, int argc);
+char	***split_cmds(int argc, char **argv);
+char	*find_path(char **env);
+char	*build_path(char **path_split, char *command);
 
-//run_process functions
-int		run_processes(t_pipe **pipe_data, char *envp[]);
-
-//pipex utils
-void	return_error(int error);
-void	free_split(char **split);
-int		build_path(char *path, char *cmd, char *envp[]);
-int		parse_cmds(t_pipe **pipe_data, char **args);
-int		parse_args(t_pipe **pipe_data, char **args, int argc);
-
+void	free_pipex(t_pipex *pipex);
 #endif

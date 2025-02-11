@@ -35,7 +35,7 @@ static int	exec_cmd(char *cmd, char *envp[])
 
 static int	run_child_process(t_pipe **pipe_data, char *envp[], int cmdcount)
 {
-	if (dup2((*pipe_data)->fildes[0], 1) == ERR_GNRL)
+	if (dup2((*pipe_data)->fildes[0], STDIN_FILENO) == ERR_GNRL)
 		return (ERR_DUP2);
 	close((*pipe_data)->fildes[0]);
 	if (exec_cmd(*(*pipe_data)->cmds[cmdcount], envp) < ERR_NONE)

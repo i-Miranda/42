@@ -31,7 +31,7 @@ static char	*find_path(char *envp[])
 	return (NULL);
 }
 
-void	return_error(int error)
+void	return_error(int error, t_pipex *pipex)
 {
 	if (error == ERR_INPT)
 		perror("Pipex: infile command1 command2 outfile");
@@ -53,6 +53,7 @@ void	return_error(int error)
 		perror("Environment not set");
 	else if (error == ERR_MLLC)
 		perror("Malloc failed, returning NULL");
+	free_all(pipex);
 	exit(EXIT_FAILURE);
 }
 
