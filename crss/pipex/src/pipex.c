@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:12 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/11 12:25:21 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:55:08 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	exec_cmd(t_pipex *pipex, int i, char **env)
 {
+	if (pipex->in_fd == ERR_GNRL)
+		return ;
 	pipex->path = build_path(pipex->path_split, pipex->cmds[i][0]);
 	if (!pipex->path)
 		return_error(ERR_ENVP, pipex);
@@ -34,9 +36,10 @@ static void	init_pipex(t_pipex **pipex, int argc, char **argv, char **env)
 	if ((*pipex)->in_fd < ERR_NONE)
 	{
 		return_error(ERR_OPEN, *pipex);
-		(*pipex)->in_fd = open ("/dev/null", O_RDONLY);
+		(*pipex)->in_fd = open("/dev/null", O_RDONLY);
 	}
-	(*pipex)->of_fd = open(argv[ARG_OF], O_RDWR | O_CREAT, CHMOD_RWRR);
+	(*pipex)->of_fd = open(argv[ARG_OF],
+			O_RDWR | O_CREAT | O_TRUNC, CHMOD_RWRR);
 }
 
 static void	child_process(t_pipex *pipex, int i, char **env)
@@ -45,7 +48,7 @@ static void	child_process(t_pipex *pipex, int i, char **env)
 	if (i == ARG_LCMD)
 	{
 		if (pipex->of_fd < ERR_NONE)
-			return_error(ERR_DUP2, pipex);
+			return_error(ERR_CHMD, pipex);
 		dup2(pipex->of_fd, STDOUT_FILENO);
 		close(pipex->of_fd);
 	}

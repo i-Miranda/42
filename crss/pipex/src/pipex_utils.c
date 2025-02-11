@@ -1,40 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/11 12:25:40 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:39:28 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	return_error(int error, t_pipex *pipex)
+void	free_pipex(t_pipex *pipex)
 {
-	if (error == ERR_INPT)
-		perror("Pipex: infile command1 command2 outfile");
-	else if (error == ERR_PIPE)
-		perror("Pipe failed");
-	else if (error == ERR_OPEN)
-		perror("Open failed");
-	else if (error == ERR_FORK)
-		perror("Fork failed");
-	else if (error == ERR_DUP2)
-		perror("Dup2 failed");
-	else if (error == ERR_EXCV)
-		perror("Execve failed");
-	else if (error == ERR_ENVP)
-		perror("Environment not set");
-	else if (error == ERR_MLLC)
-		perror("Malloc failed, returning NULL");
-	else if (error == ERR_SPLT)
-		perror("Split failed");
-	if (pipex != NULL)
-		free_pipex(pipex);
-	exit(EXIT_FAILURE);
+	int	i;
+	int	j;
+
+	i = 0;
+	if (pipex->cmds)
+	{
+		while (pipex->cmds[i])
+		{
+			j = 0;
+			while (pipex->cmds[i][j])
+				free(pipex->cmds[i][j++]);
+			free(pipex->cmds[i++]);
+		}
+	}
+	free(pipex->cmds);
+	i = 0;
+	while (pipex->path_split && pipex->path_split[i])
+		free(pipex->path_split[i++]);
+	free(pipex->path_split);
+	free(pipex);
 }
 
 void	fd_close_wait(t_pipex *pipex)

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:09:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/11 12:28:41 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:39:05 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define ERR_PIPE -3
 # define ERR_OPEN -4
 # define ERR_FORK -5
-# define ERR_DUP2 -6
+# define ERR_CHMD -6
 # define ERR_EXCV -7
 # define ERR_ENVP -8
 # define ERR_MLLC -9
@@ -65,11 +65,12 @@ typedef struct s_pipex
 void	pipex(int argc, char **argv, char **env);
 
 //pipex_utils functions
-void	return_error(int error, t_pipex *pipex);
+void	free_pipex(t_pipex *pipex);
 void	fd_close_wait(t_pipex *pipex);
 char	***split_cmds(int argc, char **argv);
 char	*find_path(char **env);
 char	*build_path(char **path_split, char *command);
 
-void	free_pipex(t_pipex *pipex);
+//pipex_errors functions
+void	return_error(int error, t_pipex *pipex);
 #endif
