@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:23:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/04 10:27:23 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:44:35 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,19 @@
 
 //moves all elements in stack a down one position so the last element is now
 //the first.
-
 void	reverse_rotate(t_list **list)
 {
-	t_list *head;
-	t_list *tail;
+	t_list	*last;
+	t_list	*seclast;
 
-	head = *list;
-	tail = ft_lstlast(head);
-	while (head)
+	last = (*list)->next;
+	while (last->next)
 	{
-		if (head->next->next == NULL)
-		{
-			head->next = NULL;
-			break;
-		}
-		head = head->next;
+		seclast = last;
+		last = last->next;
 	}
-	tail->next = *list;
-	*list = tail;
+	seclast->next = NULL;
+	last->next = (*list)->next;
 }
 
 void	rra(t_stacks *stacks)
