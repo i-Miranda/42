@@ -28,14 +28,17 @@ void	push_swap(t_stacks *stacks)
 
 	while (isSorted == 0)
 	{
-		if (ft_lstsize(stacks->b) <= 0 ||
-				*(int *)(stacks->a->next->content) < *(stacks->mid_val))
+		if (ft_lstsize(stacks->b) <= 0
+				|| *(int *)stacks->a->next->content < *stacks->mid_val)
 			pb(stacks);
-		else if (stacks->a->next->content > ft_lstlast(stacks->a)->content)
+		else if (*(int *)stacks->a->next->content 
+				> *(int *)(ft_lstlast(stacks->a)->content))
 			ra(stacks);
-		if (stacks->b->next->content > ft_lstlast(stacks->b)->content)
+		else if (*(int *)stacks->b->next->content 
+				> *(int *)(ft_lstlast(stacks->b)->content))
 			rb(stacks);
-		if (stacks->a->next->content == (void *)(stacks->min_val))
+		else if (*(int *)stacks->a->next->content == *stacks->min_val
+				|| *(int *)stacks->b->next->content == *stacks->min_val)
 			isSorted = 1;
 	}
 }

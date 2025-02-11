@@ -6,13 +6,13 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>  	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:52:54 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/01/27 11:59:13 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/11 18:44:25 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap(t_list *list)
+void	swap(t_list **list)
 {
 	t_list	*temp;
 
@@ -24,21 +24,21 @@ void	swap(t_list *list)
 	}
 }
 
-void	sa(t_list *a)
+void	sa(t_stacks *stacks)
 {
-	swap(a);
+	swap(&(stacks->a));
 	ft_printf("sa\n");
 }
 
-void	sb(t_list *b)
+void	sb(t_stacks *stacks)
 {
-	swap(b);
+	swap(&(stacks->b));
 	ft_printf("sb\n");
 }
 
-void	ss(t_list *a, t_list *b)
+void	ss(t_stacks *stacks)
 {
-	swap(a);
-	swap(b);
+	swap(&(stacks->a));
+	swap(&(stacks->b));
 	ft_printf("ss\n");
 }
