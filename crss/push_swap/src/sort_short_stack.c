@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   created: 2025/02/11 18:33:20 by ivan              #+#    #+#             */
-/*   Updated: 2025/02/11 20:00:54 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/11 23:45:27 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	sort_short_stack(t_stacks **stacks)
 {
 	t_list **shrt;
 
-	shrt = find_short_stack(stacks);
+	shrt = find_short_stack(*stacks);
 	if (shrt == NULL)
 		return ;
 	if (*(int *)shrt->content > *(int *)shrt->next->content)

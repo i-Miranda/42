@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:23:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/10 15:32:15 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/11 23:34:58 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@ void	push_swap(t_stacks *stacks)
 	//Send two numbers to and place larger number on top
 	pb(stacks);
 	pb(stacks);
+
+	while (ft_lstsize(stacks->a) > 3)
+	{
+		//set target nodes in stack b for the nodes in stack a
+		//calculate the lowest possible move to push
+		//push the lowest
+	}
+	if (ft_lstsize(stacks->a) == 3)
+		sort_short_stack(&stacks);
+	while (ft_lstsize(stacks->b) > 3)
+	{
+		//set target nodes in stack a for the nodes in stack b
+		//calculate the lowest possible move to push
+		//push the lowest
+	}
 	if (*(int *)(stacks->b->next->content) < 
 			*(int *)(stacks->b->next->next->content))
 		rb(stacks);

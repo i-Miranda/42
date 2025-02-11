@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/01/28 15:38:31 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/02/11 23:40:00 by ivan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,13 +34,14 @@ SOURCES := main.c \
 	push_swap_utils.c \
 	reverse_rotate.c \
 	rotate.c \
-	swap.c
+	swap.c \
+	sort_short_stack.c 
 
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
 
 #############DEBUGGING  RULES#####################
 
-DEBUG ?= 1
+DEBUG ?= 0
 
 ifeq ($(DEBUG), 1)
 	DBFLAGS := -g

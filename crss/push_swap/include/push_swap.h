@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:41:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/10 15:36:44 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/11 23:38:22 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ typedef struct s_stacks
 void	push_swap(t_stacks *stacks);
 
 //swap functions
-void	swap(t_list *list);
-void	sa(t_list *a);
-void	sb(t_list *b);
-void	ss(t_list *a, t_list *b);
+void	swap(t_list **list);
+void	sa(t_stacks *stacks);
+void	sb(t_stacks *stacks);
+void	ss(t_stacks *stacks);
 
 //push functions
 void	push(t_list **to, t_list **from);
@@ -54,10 +54,12 @@ void	rra(t_stacks *stacks);
 void	rrb(t_stacks *stacks);
 void	rrr(t_stacks *stacks);
 
-//push_swap utils
+//push_swap_utils functions
 int		init_stacks(t_stacks **stacks);
 int		parse_arg(t_stacks *stacks, char *arg);
 int		atoi_args(t_stacks *stacks, char **args);
 void	free_split(char **split);
 
+//sort_short_stack functions
+void	sort_short_stack(t_stacks **stacks);
 #endif
