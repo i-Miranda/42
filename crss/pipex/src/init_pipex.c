@@ -14,8 +14,8 @@
 
 static int open_files(t_pipe *pipe_data)
 {
-	pipe_data->fildes[0] = open(pipe_data->if_path, O_RDONLY | O_CREAT);
-	pipe_data->fildes[1] = open(pipe_data->of_path, O_RDWR | O_CREAT, CHMOD_RWRR);
+	pipe_data->fildes[0] = open(pipe_data->if_arg, O_RDONLY | O_CREAT);
+	pipe_data->fildes[1] = open(pipe_data->of_arg, O_RDWR | O_CREAT, CHMOD_RWRR);
 	if (pipe_data->fildes[0] == ERR_GNRL || pipe_data->fildes[1] == ERR_GNRL)
 		return (ERR_GNRL);
 	return (ERR_NONE);

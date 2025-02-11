@@ -51,8 +51,8 @@ typedef struct s_pipe
 {
 	char	***cmds;
 	char	**args;
-	char	*if_path;
-	char	*of_path;
+	char	*if_arg;
+	char	*of_arg;
 	pid_t	pid;
 	int		fildes[2];
 	int		argc;

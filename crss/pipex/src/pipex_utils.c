@@ -119,6 +119,7 @@ int	parse_cmds(t_pipe **pipe_data, char **args)
 int	parse_args(t_pipe **pipe_data, char **args, int argc)
 {
 	(*pipe_data)->argc = argc;
+	(*pipe_data)->args = malloc((*pipe_data)->argc * sizeof(char *));
 	(*pipe_data)->if_path = args[0];
 	(*pipe_data)->of_path = args[(*pipe_data)->argc];
 	return (ERR_NONE);
