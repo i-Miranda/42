@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_utils_bonus.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/11 11:34:27 by ivmirand          #+#    #+#             */
+/*   Updated: 2025/02/11 12:25:40 by ivmirand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	return_error(int error, t_pipex *pipex)
@@ -10,29 +22,29 @@ void	return_error(int error, t_pipex *pipex)
 		perror("Open failed");
 	else if (error == ERR_FORK)
 		perror("Fork failed");
-	else if (error == ERR_ACS)
-		perror("Access failed");
 	else if (error == ERR_DUP2)
 		perror("Dup2 failed");
-	else if (error == ERR_XCV)
+	else if (error == ERR_EXCV)
 		perror("Execve failed");
 	else if (error == ERR_ENVP)
 		perror("Environment not set");
 	else if (error == ERR_MLLC)
 		perror("Malloc failed, returning NULL");
+	else if (error == ERR_SPLT)
+		perror("Split failed");
 	if (pipex != NULL)
 		free_pipex(pipex);
 	exit(EXIT_FAILURE);
 }
 
-void	fd_close_wait(t_pipex *pipex, int argc)
+void	fd_close_wait(t_pipex *pipex)
 {
 	int	i;
 
 	close(pipex->in_fd);
 	close(pipex->of_fd);
 	i = 0;
-	while (i < argc - 2)
+	while (i < ARG_RCMD)
 	{
 		wait(NULL);
 		i++;
@@ -44,9 +56,9 @@ char	***split_cmds(int argc, char **argv)
 	char	***cmds;
 	int		i;
 
-	i = 1;
-	cmds = malloc(sizeof(char **) * argc);
-	while (i < (argc))
+	i = ARG_LCMD;
+	cmds = malloc(argc * sizeof(char **));
+	while (i < argc)
 	{
 		cmds[i - 1] = ft_split(argv[i], ' ');
 		i++;
@@ -80,7 +92,7 @@ char	*build_path(char **path_split, char *command)
 	char	*path;
 	int		i;
 
-	if (ft_strchr(command, '/') && (access(command, X_OK) == 0))
+	if (ft_strchr(command, '/') && (access(command, X_OK) == ERR_NONE))
 		return (ft_strdup(command));
 	i = 0;
 	if (path_split)
@@ -90,7 +102,7 @@ char	*build_path(char **path_split, char *command)
 			temp = ft_strjoin(path_split[i], "/");
 			path = ft_strjoin(temp, command);
 			free(temp);
-			if (access(path, X_OK) == 0)
+			if (access(path, X_OK) == ERR_NONE)
 				return (path);
 			free(path);
 			i++;
