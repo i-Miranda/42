@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:09:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 20:01:52 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/12 22:28:52 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdio.h>
 //strerror
 # include <string.h>
+# include <errno.h>
 //open close
 # include <fcntl.h>
 //wait waitpid

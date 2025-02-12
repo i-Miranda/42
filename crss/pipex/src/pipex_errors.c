@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:36:06 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 20:02:56 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:02:23 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static int	exit_pipex(t_pipex *pipex, int exit_code)
 
 int	return_error(int error, t_pipex *pipex)
 {
+	char *str;
+
 	if (error == ERR_INPT)
 	{
 		ft_printf("Pipex: infile command1 command2 outfile\n");
@@ -34,27 +36,31 @@ int	return_error(int error, t_pipex *pipex)
 	}
 	else if (error == ERR_CHMI || error == ERR_CHMO)
 	{
+		str = ft_strdup("Pipex: permission denied: ");
 		if (pipex->no_such_file != NULL)
-			ft_printf("Pipex: permission denied: %s\n", pipex->no_such_file);
-		else	
-			ft_printf("Pipex: permission denied:\n");
+			ft_strjoin(str, pipex->no_such_file);
+		str = ft_strjoin(str, strerror(ERR_CHMD));
+		perror(str);
+		free(str);
 		if (error == ERR_CHMI)
 			return (error);
-		return (exit_pipex(pipex, ERR_EXCV));
+		return (exit_pipex(pipex, ERR_CHMD));
 	}
 	else if (error == ERR_NCMD)
 	{
-		//char *str;
-
-		//str = ft_strjoin("Pipex: command not found: ", pipex->no_such_cmd);
-		perror("Pipex: command not found: ");
-		strerror(ERR_EXCV);
-		//free(str);
+		str = ft_strjoin("Pipex: command not found: ", strerror(errno));
+		perror(str);
+		free(str);
 		return (ERR_EXCV);
 	}
 	else if (error == ERR_NULL)
 	{
-		ft_printf("Pipex: permission denied:\n");
+		str = ft_strdup("Pipex: permission denied: ");
+		if (pipex->no_such_file != NULL)
+			ft_strjoin(str, pipex->no_such_file);
+		str = ft_strjoin(str, strerror(ERR_CHMD));
+		perror(str);
+		free(str);
 		return (exit_pipex(pipex, ERR_EXCV));
 	}
 	return (exit_pipex(pipex, error));

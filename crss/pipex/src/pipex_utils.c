@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 19:11:21 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/12 22:54:10 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char	***split_cmds(int argc, char **argv)
 		cmds[i - 1] = ft_split(argv[i], ' ');
 		i++;
 	}
-	cmds[i - 1] = NULL;
 	return (cmds);
 }
 

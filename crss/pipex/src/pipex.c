@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:12 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 20:01:56 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/12 22:59:27 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,16 @@ int	pipex(int argc, char **argv, char **env)
 	int		i;
 
 	pipex = NULL;
-	init_pipex(&pipex, argc, argv, env);
+	init_pipex(&pipex, argc, argv, env); 
 	i = 0;
 	while (i < ARG_RCMD)
 	{
 		if (i < ARG_LCMD)
 			if (pipe(pipex->pipe_fd) == ERR_GNRL)
-				return_error(EXIT_FAILURE, pipex);
+				return (return_error(EXIT_FAILURE, pipex));
 		pipex->pid = fork();
 		if (pipex->pid < ERR_NONE)
-			return_error(EXIT_FAILURE, pipex);
+			return (return_error(EXIT_FAILURE, pipex));
 		else if (pipex->pid == ERR_NONE)
 			child_process(pipex, i, env);
 		else
@@ -110,5 +110,5 @@ int	pipex(int argc, char **argv, char **env)
 		i++;
 	}
 	fd_close_wait(pipex);
-	return (return_error(ERR_EXCV, pipex));
+	return (return_error(EXIT_SUCCESS, pipex));
 }
