@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:09:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/11 14:39:05 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/12 18:35:11 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 # include <unistd.h>
 //malloc free exit
 # include <stdlib.h>
-//perror strerror
+//perror 
 # include <stdio.h>
+//strerror
+# include <string.h>
 //open close
 # include <fcntl.h>
 //wait waitpid
@@ -33,11 +35,12 @@
 # define ERR_PIPE -3
 # define ERR_OPEN -4
 # define ERR_FORK -5
-# define ERR_CHMD -6
-# define ERR_EXCV -7
-# define ERR_ENVP -8
-# define ERR_MLLC -9
-# define ERR_SPLT -10
+# define ERR_INFL -6
+# define ERR_CHMD 1 
+# define ERR_CHMI -7 
+# define ERR_CHMO -8 
+# define ERR_NCMD 128
+# define ERR_EXCV 127
 
 //desired argc
 # define ARGC 4
@@ -55,6 +58,8 @@ typedef struct s_pipex
 	char	***cmds;
 	char	**path_split;
 	char	*path;
+	char	*no_such_file;
+	char	*no_such_cmd;
 	int		pipe_fd[2];
 	pid_t	pid;
 	int		in_fd;
@@ -69,7 +74,7 @@ void	free_pipex(t_pipex *pipex);
 void	fd_close_wait(t_pipex *pipex);
 char	***split_cmds(int argc, char **argv);
 char	*find_path(char **env);
-char	*build_path(char **path_split, char *command);
+char	*build_path(char **path_split, char *cmd);
 
 //pipex_errors functions
 void	return_error(int error, t_pipex *pipex);

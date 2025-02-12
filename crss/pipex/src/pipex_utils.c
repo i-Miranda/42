@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/11 14:39:28 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/12 18:47:53 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	fd_close_wait(t_pipex *pipex)
 {
 	int	i;
 
+	i = 0;
 	close(pipex->in_fd);
 	close(pipex->of_fd);
-	i = 0;
 	while (i < ARG_RCMD)
 	{
 		wait(NULL);
@@ -56,7 +56,7 @@ char	***split_cmds(int argc, char **argv)
 	int		i;
 
 	i = ARG_LCMD;
-	cmds = malloc(argc * sizeof(char **));
+	cmds = ft_calloc(argc, sizeof(char **));
 	while (i < argc)
 	{
 		cmds[i - 1] = ft_split(argv[i], ' ');
@@ -85,21 +85,23 @@ char	*find_path(char **env)
 	return (NULL);
 }
 
-char	*build_path(char **path_split, char *command)
+char	*build_path(char **path_split, char *cmd)
 {
 	char	*temp;
 	char	*path;
 	int		i;
 
-	if (ft_strchr(command, '/') && (access(command, X_OK) == ERR_NONE))
-		return (ft_strdup(command));
+	if (!cmd)
+		return (NULL);
+	if (ft_strchr(cmd, '/') && (access(cmd, F_OK) == ERR_NONE))
+		return (ft_strdup(cmd));
 	i = 0;
 	if (path_split)
 	{
 		while (path_split[i])
 		{
 			temp = ft_strjoin(path_split[i], "/");
-			path = ft_strjoin(temp, command);
+			path = ft_strjoin(temp, cmd);
 			free(temp);
 			if (access(path, X_OK) == ERR_NONE)
 				return (path);
