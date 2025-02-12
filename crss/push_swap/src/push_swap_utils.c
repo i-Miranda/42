@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:24:25 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/10 15:06:49 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/12 08:37:52 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,51 +32,6 @@ int	init_stacks(t_stacks **stacks)
 	(*stacks)->max_val = (int *)malloc(sizeof(int));
 	if ((*stacks)->max_val == NULL)
 		return (6);
-	return (0);
-}
-
-int	parse_arg(t_stacks *stacks, char *arg)
-{
-	int		i;
-	int		bl_result;
-	char	**split_array;
-
-	i = 0;
-	while (arg[i] != '\0')
-	{
-		if (ft_isdigit(arg[i]) == 0 && arg[i] != ' ')
-		{
-			ft_printf("Error\n");
-			return (1);
-		}
-		i++;
-	}
-	split_array = ft_split(arg, ' ');
-	bl_result = atoi_args(stacks, split_array);
-	free_split(split_array);
-	if (bl_result != 0)
-		return (2);
-	return (0);
-}
-
-int	atoi_args(t_stacks *stacks, char **args)
-{
-	int		*atoi;
-	t_list	*node;
-
-	atoi = malloc(1 * sizeof(int));
-	if (atoi == NULL)
-		return (-1);
-	*atoi = ft_atoi(*args);
-	node = ft_lstnew(atoi);
-	if (node == NULL)
-		return (1);
-	if ((stacks->min_val) == NULL || *atoi < *(stacks->min_val))
-		stacks->min_val = atoi;
-	if ((stacks->max_val) == NULL || *atoi > *(stacks->max_val))
-		stacks->max_val = atoi;
-	*(stacks->mid_val) = (*(stacks->min_val) + *(stacks->max_val)/2);
-	ft_lstadd_back(&(stacks->a->next), node);
 	return (0);
 }
 

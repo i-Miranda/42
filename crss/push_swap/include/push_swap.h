@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:41:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/11 23:38:22 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/12 08:23:45 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 
 # include "libft.h"
 # include "printf.h"
+
+# define INT_MIN -2147483648
+# define INT_MAX 2147483647
 
 typedef struct s_stacks
 {
@@ -56,9 +59,10 @@ void	rrr(t_stacks *stacks);
 
 //push_swap_utils functions
 int		init_stacks(t_stacks **stacks);
-int		parse_arg(t_stacks *stacks, char *arg);
-int		atoi_args(t_stacks *stacks, char **args);
 void	free_split(char **split);
+
+//parse functions
+int		parse_arg(t_stacks *stacks, char *arg);
 
 //sort_short_stack functions
 void	sort_short_stack(t_stacks **stacks);

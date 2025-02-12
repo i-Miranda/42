@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/02/11 23:40:00 by ivan             ###   ########.fr        #
+#    Updated: 2025/02/12 08:16:52 by ivan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,13 +29,14 @@ LIBFT_OUTPUT := libft/$(OUTPUT)
 LIBFT := libft/libft.a
 
 SOURCES := main.c \
+	parse.c \
 	push.c \
 	push_swap.c \
 	push_swap_utils.c \
 	reverse_rotate.c \
 	rotate.c \
-	swap.c \
-	sort_short_stack.c 
+	sort_short_stack.c \
+	swap.c 
 
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
 
