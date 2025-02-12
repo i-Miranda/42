@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:12 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 18:33:31 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:01:56 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@ static void	exec_cmd(t_pipex *pipex, int i, char **env)
 		return ;
 	pipex->path = build_path(pipex->path_split, pipex->cmds[i][0]);
 	if (!pipex->path)
-		return_error(ERR_NCMD, pipex);
+	{
+		pipex->no_such_cmd = pipex->cmds[i][0];
+		if (pipex->no_such_cmd == NULL)
+			return_error(ERR_NULL, pipex);
+		else
+			return_error(ERR_NCMD, pipex);
+	}
 	execve(pipex->path, pipex->cmds[i], env);
-	pipex->no_such_cmd = pipex->cmds[i][0];
 	return_error(ERR_EXCV, pipex);
 }
 
@@ -29,7 +34,7 @@ static void	init_pipex(t_pipex **pipex, int argc, char **argv, char **env)
 	*pipex = ft_calloc(1, sizeof(t_pipex));
 	if (*pipex == NULL)
 		return_error(EXIT_FAILURE, *pipex);
-	(*pipex)->path_split = ft_split(find_path(env), ':');
+	(*pipex)->path_split = ft_split(get_path(env), ':');
 	(*pipex)->cmds = split_cmds(argc, argv);
 	if (!(*pipex)->cmds)
 		return_error(12, *pipex);
@@ -82,7 +87,7 @@ static void	parent_process(t_pipex *pipex, int i)
 		pipex->in_fd = open("/dev/null", O_RDONLY);
 }
 
-void	pipex(int argc, char **argv, char **env)
+int	pipex(int argc, char **argv, char **env)
 {
 	t_pipex	*pipex;
 	int		i;
@@ -105,5 +110,5 @@ void	pipex(int argc, char **argv, char **env)
 		i++;
 	}
 	fd_close_wait(pipex);
-	free_pipex(pipex);
+	return (return_error(ERR_EXCV, pipex));
 }

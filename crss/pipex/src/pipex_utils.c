@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 18:50:24 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:11:21 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	***split_cmds(int argc, char **argv)
 	return (cmds);
 }
 
-char	*find_path(char **env)
+char	*get_path(char **env)
 {
 	char	*path;
 	int		i;
@@ -93,7 +93,7 @@ char	*build_path(char **path_split, char *cmd)
 
 	if (!cmd)
 		return (NULL);
-	if (ft_strchr(cmd, '/') && (access(cmd, X_OK) == ERR_NONE))
+	if (ft_strchr(cmd, '/') && access(cmd, X_OK) == ERR_NONE)
 		return (ft_strdup(cmd));
 	i = 0;
 	if (path_split)

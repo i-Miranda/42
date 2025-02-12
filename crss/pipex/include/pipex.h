@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:09:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 18:35:11 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:01:52 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@
 # define ERR_OPEN -4
 # define ERR_FORK -5
 # define ERR_INFL -6
-# define ERR_CHMD 1 
 # define ERR_CHMI -7 
 # define ERR_CHMO -8 
+# define ERR_CHMD -9 
 # define ERR_NCMD 128
+# define ERR_NULL 129
 # define ERR_EXCV 127
 
 //desired argc
@@ -67,15 +68,15 @@ typedef struct s_pipex
 }	t_pipex;
 
 //pipex functions
-void	pipex(int argc, char **argv, char **env);
+int		pipex(int argc, char **argv, char **env);
 
 //pipex_utils functions
 void	free_pipex(t_pipex *pipex);
 void	fd_close_wait(t_pipex *pipex);
 char	***split_cmds(int argc, char **argv);
-char	*find_path(char **env);
+char	*get_path(char **env);
 char	*build_path(char **path_split, char *cmd);
 
 //pipex_errors functions
-void	return_error(int error, t_pipex *pipex);
+int		return_error(int error, t_pipex *pipex);
 #endif

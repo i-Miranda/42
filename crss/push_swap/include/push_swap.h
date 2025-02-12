@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:41:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 08:23:45 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/12 20:20:14 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ void	free_split(char **split);
 int		parse_arg(t_stacks *stacks, char *arg);
 
 //sort_short_stack functions
-void	sort_short_stack(t_stacks **stacks);
+//void	sort_short_stack(t_stacks **stacks);
 #endif

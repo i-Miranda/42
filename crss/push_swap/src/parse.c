@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 07:52:33 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 08:37:52 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/12 20:19:06 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ static long	ft_atol(char *str)
 	nbr = 0;
 	sign = 1;
 	i = 0;
-	while (str[i] && (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
+	while (str[i] && (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r')))
 			i++;
-	if (str[i] && (str[i] == '-' || str[i] == '+')
+	if (str[i] && (str[i] == '-' || str[i] == '+'))
 	{
 		if (str[i] == '-')
 			sign *= -1;
 		i++;
 	}
-	while (str[i] && (str[i] >= '0' && str[i] <= '9')
+	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
 		nbr *= 10;
 		nbr += str[i] - '0';
@@ -47,7 +47,7 @@ static int	atol_args(t_stacks *stacks, char **args)
 	if (atol == NULL)
 		return (-1);
 	*atol = ft_atol(*args);
-	if (atol < INT_MIN || atol > INT_MAX)
+	if (*atol < INT_MIN || *atol > INT_MAX)
 	{
 		free(atol);
 		return (-2);
