@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:12 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 22:59:27 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/13 23:04:58 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,38 @@ static void	exec_cmd(t_pipex *pipex, int i, char **env)
 	return_error(ERR_EXCV, pipex);
 }
 
-static void	init_pipex(t_pipex **pipex, int argc, char **argv, char **env)
+static int	init_pipex(t_pipex **pipex, int argc, char **argv, char **env)
 {
+	int error;
+
+	error = 0;
 	*pipex = ft_calloc(1, sizeof(t_pipex));
 	if (*pipex == NULL)
-		return_error(EXIT_FAILURE, *pipex);
+		error = return_error(12, *pipex);
 	(*pipex)->path_split = ft_split(get_path(env), ':');
 	(*pipex)->cmds = split_cmds(argc, argv);
 	if (!(*pipex)->cmds)
-		return_error(12, *pipex);
+		error = return_error(12, *pipex);
 	(*pipex)->in_fd = open(argv[ARG_IF], O_RDONLY);
 	if ((*pipex)->in_fd < ERR_NONE)
 	{
 		(*pipex)->no_such_file = argv[ARG_IF];
 		if (access(argv[ARG_IF], F_OK) == ERR_NONE)
-			return_error(ERR_CHMI, *pipex);
+			error = return_error(ERR_CHMI, *pipex);
 		else
-			return_error(ERR_OPEN, *pipex);
+			error = return_error(ERR_OPNI, *pipex);
 	}
 	(*pipex)->of_fd = open(argv[ARG_OF],
 			O_RDWR | O_CREAT | O_TRUNC, CHMOD_RWRR);
 	if ((*pipex)->of_fd < ERR_NONE)
 	{
 		(*pipex)->no_such_file = argv[ARG_OF];
-		return_error(ERR_CHMO, *pipex);
+		if (access(argv[ARG_OF], F_OK) == ERR_NONE)
+			error = return_error(ERR_CHMO, *pipex);
+		else
+			error = return_error(ERR_OPNO, *pipex);
 	}
+	return (error);
 }
 
 static void	child_process(t_pipex *pipex, int i, char **env)
@@ -91,18 +98,19 @@ int	pipex(int argc, char **argv, char **env)
 {
 	t_pipex	*pipex;
 	int		i;
+	int		error;
 
 	pipex = NULL;
-	init_pipex(&pipex, argc, argv, env); 
+	error = init_pipex(&pipex, argc, argv, env); 
 	i = 0;
 	while (i < ARG_RCMD)
 	{
 		if (i < ARG_LCMD)
 			if (pipe(pipex->pipe_fd) == ERR_GNRL)
-				return (return_error(EXIT_FAILURE, pipex));
+				return (error = return_error(EXIT_FAILURE, pipex));
 		pipex->pid = fork();
 		if (pipex->pid < ERR_NONE)
-			return (return_error(EXIT_FAILURE, pipex));
+			return (error = return_error(EXIT_FAILURE, pipex));
 		else if (pipex->pid == ERR_NONE)
 			child_process(pipex, i, env);
 		else
@@ -110,5 +118,5 @@ int	pipex(int argc, char **argv, char **env)
 		i++;
 	}
 	fd_close_wait(pipex);
-	return (return_error(EXIT_SUCCESS, pipex));
+	return (error);
 }

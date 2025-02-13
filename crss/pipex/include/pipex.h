@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:09:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 22:28:52 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/13 13:16:54 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@
 # define ERR_GNRL -1
 # define ERR_INPT -2
 # define ERR_PIPE -3
-# define ERR_OPEN -4
-# define ERR_FORK -5
-# define ERR_INFL -6
-# define ERR_CHMI -7 
-# define ERR_CHMO -8 
-# define ERR_CHMD -9 
+# define ERR_OPNI -4
+# define ERR_OPNO -5
+# define ERR_FORK -6
+# define ERR_INFL -7
+# define ERR_CHMI -8 
+# define ERR_CHMO -9 
+# define ERR_CHMD -10 
 # define ERR_NCMD 128
 # define ERR_NULL 129
 # define ERR_EXCV 127
