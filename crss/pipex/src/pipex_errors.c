@@ -6,11 +6,19 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:36:06 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/13 23:05:29 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/14 11:15:09 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+static void	join_perror_str(char *str, char *append_str)
+{
+	if (append_str != NULL)
+		str = ft_strjoin(str, append_str);
+	perror(str);
+	free(str);
+}
 
 static int	exit_pipex(t_pipex *pipex, int exit_code)
 {
@@ -20,50 +28,39 @@ static int	exit_pipex(t_pipex *pipex, int exit_code)
 	return (exit_code);
 }
 
-int	return_error(int error, t_pipex *pipex)
+static int	handle_error(int error, char *str, t_pipex *pipex)
 {
-	char *str;
-
 	if (error == ERR_INPT)
 	{
-		perror("Pipex: infile command1 command2 outfile");
-		return (exit_pipex(pipex, EXIT_FAILURE));
+		join_perror_str(str, "infile command1 command2 outfile");
+		error = EXIT_FAILURE;
 	}
 	else if (error == ERR_OPNI || error == ERR_OPNO)
 	{
-		str = ft_strdup("Pipex: ");
-		if (pipex->no_such_file != NULL)
-			str = ft_strjoin(str, pipex->no_such_file);
-		perror(str);
-		free(str);
+		join_perror_str(str, pipex->no_such_file);
 		if (error == ERR_OPNI)
 			return (EXIT_SUCCESS);
 		return (EXIT_FAILURE);
 	}
 	else if (error == ERR_CHMI || error == ERR_CHMO)
 	{
-		str = ft_strdup("Pipex: ");
-		if (pipex->no_such_file != NULL)
-			str = ft_strjoin(str, pipex->no_such_file);
-		perror(str);
-		free(str);
-		if (error == ERR_CHMI)
-			return (error);
-		return (exit_pipex(pipex, EXIT_FAILURE));
+		join_perror_str(str, pipex->no_such_file);
+		if (error != ERR_CHMI)
+			error = EXIT_FAILURE;
 	}
-	else if (error == ERR_NCMD)
+	else if (error == ERR_NCMD || error == ERR_NULL)
 	{
-		str = ft_strdup("Pipex: ");
-		perror(str);
-		free(str);
-		return (ERR_EXCV);
+		join_perror_str(str, NULL);
+		error = ERR_NCMD;
 	}
-	else if (error == ERR_NULL)
-	{
-		str = ft_strdup("Pipex: ");
-		perror(str);
-		free(str);
-		return (exit_pipex(pipex, ERR_EXCV));
-	}
+	return (error);
+}
+
+int	return_error(int error, t_pipex *pipex)
+{
+	char	*str;
+
+	str = ft_strdup("Pipex: ");
+	error = handle_error(error, str, pipex);
 	return (exit_pipex(pipex, error));
 }

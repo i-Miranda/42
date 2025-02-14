@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:12 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/13 23:04:58 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/14 11:05:00 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	exec_cmd(t_pipex *pipex, int i, char **env)
 			return_error(ERR_NCMD, pipex);
 	}
 	execve(pipex->path, pipex->cmds[i], env);
-	return_error(ERR_EXCV, pipex);
+	return_error(ERR_NCMD, pipex);
 }
 
 static int	init_pipex(t_pipex **pipex, int argc, char **argv, char **env)
@@ -40,7 +40,7 @@ static int	init_pipex(t_pipex **pipex, int argc, char **argv, char **env)
 	(*pipex)->path_split = ft_split(get_path(env), ':');
 	(*pipex)->cmds = split_cmds(argc, argv);
 	if (!(*pipex)->cmds)
-		error = return_error(12, *pipex);
+		error = return_error(ERR_NCMD, *pipex);
 	(*pipex)->in_fd = open(argv[ARG_IF], O_RDONLY);
 	if ((*pipex)->in_fd < ERR_NONE)
 	{
@@ -90,8 +90,10 @@ static void	parent_process(t_pipex *pipex, int i)
 		pipex->in_fd = pipex->pipe_fd[0];
 	else
 		close (pipex->pipe_fd[0]);
+	# ifdef __unix__
 	if (pipex->in_fd < ERR_NONE)
 		pipex->in_fd = open("/dev/null", O_RDONLY);
+	# endif
 }
 
 int	pipex(int argc, char **argv, char **env)
