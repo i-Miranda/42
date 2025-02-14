@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:12 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/14 11:05:00 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/14 11:19:54 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,9 @@ static void	parent_process(t_pipex *pipex, int i)
 		pipex->in_fd = pipex->pipe_fd[0];
 	else
 		close (pipex->pipe_fd[0]);
-	# ifdef __unix__
+	//this doesnt work in mac
 	if (pipex->in_fd < ERR_NONE)
 		pipex->in_fd = open("/dev/null", O_RDONLY);
-	# endif
 }
 
 int	pipex(int argc, char **argv, char **env)
