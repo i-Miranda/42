@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:09:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/14 10:56:50 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/14 19:52:32 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@
 //perror 
 # include <stdio.h>
 //strerror
-# include <string.h>
 # include <errno.h>
+# include <string.h>
 //open close
 # include <fcntl.h>
 //wait waitpid
 # include <sys/wait.h>
 
 # include "libft.h"
+
+//true or false constants
+# define TRUE 1
+# define FALSE 0
 
 //error constants
 # define ERR_NONE 0
@@ -39,10 +43,11 @@
 # define ERR_FORK -6
 # define ERR_INFL -7
 # define ERR_CHMI -8 
-# define ERR_CHMO -9 
-# define ERR_CHMD -10 
+# define ERR_CHMO 2 
+# define ERR_CHMD -9 
+# define ERR_MLLC 12
 # define ERR_NCMD 127
-# define ERR_NULL 129
+# define ERR_NULL 255
 
 //desired argc
 # define ARGC 4
@@ -53,7 +58,7 @@
 # define ARG_OF 3
 
 //chmod permissions
-# define CHMOD_RWRR 0644
+# define CHMOD_URR 0644
 
 typedef struct s_pipex
 {
@@ -79,5 +84,5 @@ char	*get_path(char **env);
 char	*build_path(char **path_split, char *cmd);
 
 //pipex_errors functions
-int		return_error(int error, t_pipex *pipex);
+int		return_error(int error, t_pipex *pipex, int exit);
 #endif

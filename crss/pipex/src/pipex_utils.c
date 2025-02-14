@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 22:54:10 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/14 19:16:57 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,12 @@ void	free_pipex(t_pipex *pipex)
 		{
 			j = 0;
 			while (pipex->cmds[i][j])
-				free(pipex->cmds[i][j++]);
-			free(pipex->cmds[i++]);
+			{
+				free(pipex->cmds[i][j]);
+				j++;
+			}
+			free(pipex->cmds[i]);
+			i++;
 		}
 	}
 	free(pipex->cmds);
@@ -57,10 +61,13 @@ char	***split_cmds(int argc, char **argv)
 
 	i = ARG_LCMD;
 	cmds = ft_calloc(argc, sizeof(char **));
-	while (i < argc)
+	if (cmds != NULL)
 	{
-		cmds[i - 1] = ft_split(argv[i], ' ');
-		i++;
+		while (i < argc)
+		{
+			cmds[i - 1] = ft_split(argv[i], ' ');
+			i++;
+		}
 	}
 	return (cmds);
 }
