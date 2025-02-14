@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:12 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/14 20:29:14 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/14 20:56:21 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	init_pipex(t_pipex **pipex, int argc, char **argv, char **env)
 	{
 		(*pipex)->no_such_file = argv[ARG_IF];
 		if (access(argv[ARG_IF], F_OK) == ERR_NONE)
-			error = return_error(ERR_CHMI, *pipex, FALSE);
+			error = return_error(ERR_CHMI, *pipex, TRUE);
 		else
 			error = return_error(ERR_OPNI, *pipex, FALSE);
 	}
@@ -59,8 +59,8 @@ static int	init_pipex(t_pipex **pipex, int argc, char **argv, char **env)
 		(*pipex)->no_such_file = argv[ARG_OF];
 		if (access(argv[ARG_OF], F_OK) == ERR_NONE)
 			error = return_error(ERR_CHMO, *pipex, TRUE);
-		else
-			error = return_error(ERR_OPNO, *pipex, FALSE);
+	//	else
+	//		error = return_error(ERR_OPNO, *pipex, FALSE);
 	}
 	return (error);
 }
@@ -89,11 +89,13 @@ static void	parent_process(t_pipex *pipex, int i)
 	if (i > ARG_LCMD)
 		close (pipex->in_fd);
 	if (i < ARG_LCMD)
+	{
+		if (pipex->in_fd < ERR_NONE)
+			pipex->in_fd = open("/dev/null", O_RDONLY);
 		pipex->in_fd = pipex->pipe_fd[0];
+	}
 	else
 		close (pipex->pipe_fd[0]);
-	if (pipex->in_fd < ERR_NONE)
-		pipex->in_fd = open("/dev/null", O_RDONLY);
 }
 
 int	pipex(int argc, char **argv, char **env)
