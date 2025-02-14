@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:12 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/14 11:19:54 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/14 11:21:27 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	exec_cmd(t_pipex *pipex, int i, char **env)
 
 static int	init_pipex(t_pipex **pipex, int argc, char **argv, char **env)
 {
-	int error;
+	int	error;
 
 	error = 0;
 	*pipex = ft_calloc(1, sizeof(t_pipex));
@@ -102,7 +102,7 @@ int	pipex(int argc, char **argv, char **env)
 	int		error;
 
 	pipex = NULL;
-	error = init_pipex(&pipex, argc, argv, env); 
+	error = init_pipex(&pipex, argc, argv, env);
 	i = 0;
 	while (i < ARG_RCMD)
 	{
