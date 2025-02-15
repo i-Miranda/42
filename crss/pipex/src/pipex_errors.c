@@ -6,52 +6,47 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:36:06 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/14 20:19:22 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/15 12:46:21 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*build_perror_prefix(t_pipex *pipex)
+static void	build_prefix(t_pipex *pipex)
 {
-	char	*itoa;
-	char	*new_str;
-	char	*temp_str;
-
-	itoa = NULL;
-	temp_str = NULL;
-	new_str = ft_strdup("Pipex: ");
+	ft_putstr_fd("Pipex: ", STDERR_FILENO);
 	if (pipex != NULL)
-	{
-		itoa = ft_itoa(pipex->pid);
-		temp_str = ft_strjoin(new_str, itoa);
-		free(new_str);
-		new_str = ft_strjoin(temp_str, ": ");
-		free(temp_str);
-		free(itoa);
-	}
-	return (new_str);
+		ft_putnbr_fd(pipex->pid, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
 }
 
-static void join_perror_str(char **str, char *append_str)
+static int	handle_error(int error, t_pipex *pipex)
 {
-	char *new_str;
-
-	new_str = NULL;
-	if (append_str != NULL)
+	if (error == ERR_INPT)
 	{
-		new_str = ft_strjoin(*str, append_str);
-		free(append_str);
-		free(*str);
+		ft_putstr_fd("infile command1 command2 outfile\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
 	}
-	if (new_str != NULL)
+	else if (error == ERR_OPNI || error == ERR_CHMI || error == ERR_CHMO)
 	{
-		perror(new_str);
-		*str = ft_strdup(new_str);
+		if (error == ERR_OPNI || error == ERR_CHMI)
+			ft_putstr_fd("cannot open :", STDERR_FILENO);
+		else
+			ft_putstr_fd("cannot create :", STDERR_FILENO);
+		ft_putstr_fd(pipex->no_such_file, STDERR_FILENO);
+		ft_putchar_fd('\n', STDERR_FILENO);
+		if (error == ERR_CHMO)
+			return (EXIT_SUCCESS);
+		return (EXIT_FAILURE);
 	}
-	else
-		perror(*str);
-	free(new_str);
+	else if (error == ERR_NCMD || error == ERR_NULL)
+	{
+		if (pipex->no_such_cmd != NULL)
+			ft_putstr_fd(pipex->no_such_cmd, STDERR_FILENO);
+		ft_putstr_fd(": not found\n", STDERR_FILENO);
+		error = ERR_NCMD;
+	}
+	return (error);
 }
 
 static int	exit_pipex(t_pipex *pipex, int exit_code)
@@ -62,43 +57,12 @@ static int	exit_pipex(t_pipex *pipex, int exit_code)
 	return (exit_code);
 }
 
-static int	handle_error(int error, char **str, t_pipex *pipex)
-{
-	if (error == ERR_INPT)
-	{
-		ft_printf("%sinfile command1 command2 outfile\n", *str);
-		return(EXIT_FAILURE);
-	}
-	else if (error == ERR_OPNI || error == ERR_CHMI)
-	{
-		join_perror_str(str, ft_strjoin("cannot open ", pipex->no_such_file));
-		return(EXIT_SUCCESS);
-	}
-	else if (error == ERR_OPNO || error == ERR_CHMO)
-	{
-		join_perror_str(str, ft_strjoin("cannot create ", pipex->no_such_file));
-		if (error != ERR_CHMO)
-			return (EXIT_FAILURE);
-	}
-	else if (error == ERR_NCMD)
-		join_perror_str(str, pipex->no_such_cmd);
-	else if (error == ERR_NULL)
-		join_perror_str(str, pipex->no_such_cmd);
-	else if (error == ERR_MLLC)
-		join_perror_str(str, NULL);
-	return (error);
-}
-
 int	return_error(int error, t_pipex *pipex, int exit)
 {
-	char	*str;
-	int		error_code;
-
-	str = build_perror_prefix(pipex);
-	error_code = handle_error(error, &str, pipex);
-	free(str);
+	if (error == EXIT_SUCCESS || error == EXIT_FAILURE)
+		return (exit_pipex(pipex, error));
+	build_prefix(pipex);
 	if (exit == TRUE)
-		return (exit_pipex(pipex, error_code));
-	else
-		return (error_code);
+		return (exit_pipex(pipex, handle_error(error, pipex)));
+	return (handle_error(error, pipex));
 }

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:09:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/14 19:52:32 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/15 13:10:16 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define ERR_CHMD -9 
 # define ERR_MLLC 12
 # define ERR_NCMD 127
-# define ERR_NULL 255
+# define ERR_NULL 126
 
 //desired argc
 # define ARGC 4
