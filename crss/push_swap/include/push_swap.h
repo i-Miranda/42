@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:41:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 02:31:53 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 03:40:45 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	rrr(t_stacks *stacks);
 //push_swap_utils functions
 int		init_stacks(t_stacks **stacks);
 void	free_split(char **split);
+void	free_stacks(t_stacks *stacks);
+int		find_duplicate_values(t_stacks *stacks);
 
 //parse functions
 int		parse_arg(t_stacks *stacks, char *arg);

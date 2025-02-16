@@ -17,7 +17,7 @@ void	rotate(t_list **list)
 {
 	t_list	*temp;
 
-	if (*list == NULL || *list->next == NULL)
+	if (*list == NULL || (*list)->next == NULL)
 		return ;
 	temp = *list;
 	(*list) = temp->next;

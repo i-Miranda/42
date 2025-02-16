@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:22:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 02:18:23 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 03:35:17 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ int	main(int argc, char *argv[])
 			i++;
 		else
 			return (ERR_GNRL);
+	}
+	if (find_duplicate_values(stacks) == ERR_GNRL)
+	{
+		free_stacks(stacks);
+		return (ERR_GNRL);
 	}
 	push_swap(stacks);
 	return (ERR_NONE);

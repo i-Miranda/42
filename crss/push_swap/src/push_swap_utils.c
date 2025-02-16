@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:24:25 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 02:20:06 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 03:46:29 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,32 @@ void	free_split(char **split)
 		}
 		free(split);
 	}
+}
+
+void	free_stacks(t_stacks *stacks)
+{
+	ft_lstclear(&stacks->a, free);	
+	ft_lstclear(&stacks->b, free);	
+	free(stacks);
+}
+
+int	find_duplicate_values(t_stacks *stacks)
+{
+	t_list *ref;
+	t_list *comp;
+
+	ref = stacks->a;
+	comp = stacks->a->next;
+	stacks->a_size = ft_lstsize(stacks->a);
+	while (ref->next != NULL)
+	{
+		while(comp->next != NULL)
+		{
+			if (*(int *)comp->content == *(int *)ref->content)
+				return (ERR_GNRL);
+			comp = comp->next;
+		}
+		ref = ref->next;
+	}
+	return (ERR_NONE);
 }

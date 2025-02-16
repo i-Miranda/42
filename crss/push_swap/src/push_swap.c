@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:23:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 20:21:24 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 03:44:25 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	push_swap(t_stacks *stacks)
 	while (isSorted == 0)
 	{
 		if (ft_lstsize(stacks->b) <= 0
-				|| *(int *)stacks->a->next->content < *stacks->mid_val)
+				|| *(int *)stacks->a->next->content < stacks->mid_val)
 			pb(stacks);
 		else if (*(int *)stacks->a->next->content 
 				> *(int *)(ft_lstlast(stacks->a)->content))
@@ -69,8 +69,8 @@ void	push_swap(t_stacks *stacks)
 		else if (*(int *)stacks->b->next->content 
 				> *(int *)(ft_lstlast(stacks->b)->content))
 			rb(stacks);
-		else if (*(int *)stacks->a->next->content == *stacks->min_val
-				|| *(int *)stacks->b->next->content == *stacks->min_val)
+		else if (*(int *)stacks->a->next->content == stacks->min_val
+				|| *(int *)stacks->b->next->content == stacks->min_val)
 			isSorted = 1;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 07:52:33 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 02:15:54 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 03:41:54 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ static int	atol_args(t_stacks *stacks, char **args)
 	node = ft_lstnew((int *)atol);
 	if (node == NULL)
 		return (-3);
-	if (*atol->content < stacks->min_val)
-		stacks->min_val = *atol->content;
-	if (*atol->content > stacks->max_val)
-		stacks->max_val = *atol->content;
+	if (*atol < stacks->min_val)
+		stacks->min_val = *atol;
+	if (*atol > stacks->max_val)
+		stacks->max_val = *atol;
 	stacks->mid_val = stacks->min_val + (stacks->max_val/2);
 	ft_lstadd_back(&(stacks->a->next), node);
 	return (ERR_NONE);
