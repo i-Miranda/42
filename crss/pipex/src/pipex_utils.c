@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 09:04:50 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/16 20:36:10 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,15 @@ void	free_pipex(t_pipex *pipex)
 	int	j;
 
 	i = 0;
+	close_fds(pipex);
 	if (pipex->cmds)
 	{
 		while (pipex->cmds[i])
 		{
 			j = 0;
 			while (pipex->cmds[i][j])
-			{
-				free(pipex->cmds[i][j]);
-				j++;
-			}
-			free(pipex->cmds[i]);
-			i++;
+				free(pipex->cmds[i][j++]);
+			free(pipex->cmds[i++]);
 		}
 	}
 	free(pipex->cmds);
@@ -39,22 +36,6 @@ void	free_pipex(t_pipex *pipex)
 	free(pipex->path_split);
 	free(pipex->path);
 	free(pipex);
-}
-
-void	wait_and_close(t_pipex *pipex)
-{
-	pipex->pid_status = 0;
-	pipex->pid2_status = 0;
-	if (pipex->pid != ERR_GNRL)
-		waitpid(pipex->pid2, &pipex->pid2_status, 0);
-	if (pipex->pid2 != ERR_GNRL)
-		wait(NULL);
-	close(pipex->in_fd);
-	close(pipex->of_fd);
-	if (WIFEXITED(pipex->pid_status))
-		pipex->pid_status = WEXITSTATUS(pipex->pid_status);
-	if (WIFEXITED(pipex->pid2_status))
-		pipex->pid2_status = WEXITSTATUS(pipex->pid2_status);
 }
 
 char	***split_cmds(int argc, char **argv)
@@ -102,7 +83,8 @@ char	*build_cmd_path(char **path_split, char *cmd)
 
 	if (!cmd)
 		return (NULL);
-	if (ft_strchr(cmd, '/') && access(cmd, X_OK) == ERR_NONE)
+	if (cmd[0] == '\0' || (ft_strchr(cmd, '/')
+			&& access(cmd, X_OK) == ERR_NONE))
 		return (ft_strdup(cmd));
 	i = 0;
 	if (path_split)

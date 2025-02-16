@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:36:06 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 00:12:48 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:21:40 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static void	build_file_suffix(t_pipex *pipex)
 {
 	ft_putstr_fd(pipex->no_such_file, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(strerror(errno), STDERR_FILENO);
-	ft_putchar_fd('\n', STDERR_FILENO);
+	ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
 static int	handle_error(int error, t_pipex *pipex)
@@ -43,16 +42,18 @@ static int	handle_error(int error, t_pipex *pipex)
 			ft_putstr_fd("cannot create ", STDERR_FILENO);
 		build_file_suffix(pipex);
 		if (error == ERR_CHMO)
-			error = EXIT_SUCCESS;
-		else
 			error = EXIT_FAILURE;
+		else
+			error = EXIT_SUCCESS;
 	}
 	else if (error == ERR_NCMD || error == ERR_NULL)
 	{
 		if (pipex->no_such_cmd != NULL)
 			ft_putstr_fd(pipex->no_such_cmd, STDERR_FILENO);
-		ft_putstr_fd(": not found\n", STDERR_FILENO);
-		error = ERR_NCMD;
+		if (error == ERR_NCMD)
+			ft_putendl_fd(": not found", STDERR_FILENO);
+		else if (error == ERR_NULL)
+			ft_putendl_fd(": permission denied", STDERR_FILENO);
 	}
 	return (error);
 }

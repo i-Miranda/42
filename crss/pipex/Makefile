@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/02/11 14:39:28 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/02/16 20:26:52 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ LIBFT := libft/libft.a
 SOURCES := main.c \
 	pipex.c \
 	pipex_utils.c \
-	pipex_errors.c
+	pipex_errors.c \
+	pipex_fds.c
 
 #BONUS_SOURCES := main_bonus.c \
 #	pipex_bonus.c \
