@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:12 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 20:42:54 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 20:50:53 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	exec_cmd(t_pipex *pipex, int cmd, char **envp)
 {
-	char *path
+	char	*path;
 
 	path = build_cmd_path(pipex->path_split, pipex->cmds[cmd][0]);
 	if (path)

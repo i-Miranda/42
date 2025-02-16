@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 20:36:10 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 20:51:33 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	free_pipex(t_pipex *pipex)
 	while (pipex->path_split && pipex->path_split[i])
 		free(pipex->path_split[i++]);
 	free(pipex->path_split);
-	free(pipex->path);
 	free(pipex);
 }
 

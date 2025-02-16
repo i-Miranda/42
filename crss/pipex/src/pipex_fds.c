@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 20:11:04 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 20:22:13 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 20:54:24 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,12 @@ int	wait_and_close(t_pipex *pipex, pid_t pid1, pid_t pid2)
 
 void	close_fds(t_pipex *pipex)
 {
-	close(pipex->in_fd);
-	close(pipex->of_fd);
-	close(pipex->pipe_fd[0]);
-	close(pipex->pipe_fd[1]);
+	if (pipex->in_fd != ERR_GNRL)
+		close(pipex->in_fd);
+	if (pipex->in_fd != ERR_GNRL)
+		close(pipex->in_fd);
+	if (pipex->pipe_fd[0] != ERR_GNRL)
+		close(pipex->pipe_fd[0]);
+	if (pipex->pipe_fd[1] != ERR_GNRL)
+		close(pipex->pipe_fd[1]);
 }
