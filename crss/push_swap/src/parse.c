@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 07:52:33 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 20:19:06 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 02:15:54 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,19 @@ static int	atol_args(t_stacks *stacks, char **args)
 	node = ft_lstnew((int *)atol);
 	if (node == NULL)
 		return (-3);
-	if ((stacks->min_val) == NULL || *atol < *(stacks->min_val))
-		stacks->min_val = (int *)atol;
-	if ((stacks->max_val) == NULL || *atol > *(stacks->max_val))
-		stacks->max_val = (int *)atol;
-	*(stacks->mid_val) = (*(stacks->min_val) + *(stacks->max_val)/2);
+	if (*atol->content < stacks->min_val)
+		stacks->min_val = *atol->content;
+	if (*atol->content > stacks->max_val)
+		stacks->max_val = *atol->content;
+	stacks->mid_val = stacks->min_val + (stacks->max_val/2);
 	ft_lstadd_back(&(stacks->a->next), node);
-	return (0);
+	return (ERR_NONE);
 }
 
 int	parse_arg(t_stacks *stacks, char *arg)
 {
 	int		i;
-	int		bl_result;
+	int		atol_args_err;
 	char	**split_array;
 
 	i = 0;
@@ -81,9 +81,7 @@ int	parse_arg(t_stacks *stacks, char *arg)
 		i++;
 	}
 	split_array = ft_split(arg, ' ');
-	bl_result = atol_args(stacks, split_array);
+	atol_args_err = atol_args(stacks, split_array);
 	free_split(split_array);
-	if (bl_result != 0)
-		return (2);
-	return (0);
+	return (atol_args_err);
 }

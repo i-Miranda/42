@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:41:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 20:20:14 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 02:31:53 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,18 @@
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
 
+# define ERR_NONE 0
+# define ERR_GNRL 1
+
 typedef struct s_stacks
 {
 	t_list	*a;
 	t_list	*b;
-	int		*min_val;
-	int		*mid_val;
-	int		*max_val;
+	int		a_size;
+	int		b_size;
+	int		min_val;
+	int		mid_val;
+	int		max_val;
 }t_stacks;
 
 //push_swap

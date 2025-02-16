@@ -6,21 +6,23 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>  	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:52:54 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/11 23:37:17 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/16 02:32:30 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap(t_list **list)
+void	swap(t_list **head)
 {
 	t_list	*temp;
 
+	if (*list == NULL || *list->next == NULL)
 	if (ft_lstsize(*list) > 1)
 	{
-		temp = (*list)->next->next;
-		(*list)->next->next = (*list)->next;
-		(*list)->next = temp;
+		temp = *head;
+		*head = temp->next;
+		temp->next = (*head)->next->next;
+		(*head)->next->next = temp;
 	}
 }
 

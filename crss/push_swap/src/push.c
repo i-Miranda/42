@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:53:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/10 15:35:58 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 02:47:13 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ void	push(t_list **to, t_list **from)
 {
 	t_list	*temp;
 
+	if (*from == NULL || *to == NULL)
+		return ;
 	if (ft_lstsize(*from) > 0)
 	{
-		temp = (*to)->next;
-		(*to)->next = (*from)->next;
-		(*from)->next = (*from)->next->next;
-		(*to)->next->next = temp;
+		temp = *from;
+		(*temp)->next = *to;
+		*from = (*from)->next;
+		*to = temp;
 	}
 }
 

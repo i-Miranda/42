@@ -16,13 +16,13 @@
 void	rotate(t_list **list)
 {
 	t_list	*temp;
-	t_list	*new;
 
-	temp = (*list)->next;
-	new = (*list)->next->next;
+	if (*list == NULL || *list->next == NULL)
+		return ;
+	temp = *list;
+	(*list) = temp->next;
 	temp->next = NULL;
 	ft_lstadd_back(list, temp);
-	(*list)->next = new;
 }
 
 void	ra(t_stacks *stacks)

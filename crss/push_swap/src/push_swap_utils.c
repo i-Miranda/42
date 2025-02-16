@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:24:25 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/12 08:37:52 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/16 02:20:06 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,11 @@ int	init_stacks(t_stacks **stacks)
 	(*stacks)->b = malloc(sizeof(t_list));
 	if ((*stacks)->b == NULL)
 		return (3);
-	(*stacks)->min_val = (int *)malloc(sizeof(int));
-	if ((*stacks)->min_val == NULL)
-		return (4);
-	(*stacks)->mid_val = (int *)malloc(sizeof(int));
-	if ((*stacks)->mid_val == NULL)
-		return (5);
-	(*stacks)->max_val = (int *)malloc(sizeof(int));
-	if ((*stacks)->max_val == NULL)
-		return (6);
-	return (0);
+	(*stacks)->min_val = INT_MIN;
+	(*stacks)->max_val = INT_MAX;
+	(*stacks)->a_size = 0;
+	(*stacks)->b_size = 0;
+	return (ERR_NONE);
 }
 
 void	free_split(char **split)
