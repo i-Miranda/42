@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:36:06 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 00:12:48 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 08:47:22 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static int	handle_error(int error, t_pipex *pipex)
 		ft_putstr_fd(": not found\n", STDERR_FILENO);
 		error = ERR_NCMD;
 	}
+	else
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 	return (error);
 }
 

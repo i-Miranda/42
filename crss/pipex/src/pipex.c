@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:12 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 01:51:41 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 08:53:14 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	parent_process(t_pipex *pipex, char **envp)
 	if (pipex->in_fd > ERR_NONE)
 		dup2(pipex->in_fd, STDIN_FILENO);
 	dup2(pipex->pipe_fd[1], STDOUT_FILENO);
-	exec_cmd(pipex, ARG_LCMD, envp);
+	exec_cmd(pipex, ARG_IF, envp);
 }
 
 int	pipex(int argc, char **argv, char **envp)
