@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 11:57:02 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/15 21:25:59 by ivmirand         ###   ########.fr       */
+/*   Created: 2024/09/17 12:03:30 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/09/28 23:03:35 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **env)
+void	*ft_calloc(size_t count, size_t size)
 {
-	if (argc != ARGC + 1)
-		return_error(ERR_INPT, NULL, TRUE);
-	return (pipex(ARGC, &argv[1], env));
+	void	*voidptr;
+
+	voidptr = malloc(count * size);
+	if (voidptr == NULL)
+		return (NULL);
+	ft_bzero(voidptr, count * size);
+	return (voidptr);
 }

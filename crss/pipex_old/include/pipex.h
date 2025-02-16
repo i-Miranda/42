@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:09:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 01:27:25 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 01:05:00 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ typedef struct s_pipex
 	pid_t	pid;
 	pid_t	pid2;
 	int		pid_status;
-	int		pid2_status;
 	int		in_fd;
 	int		of_fd;
 }	t_pipex;
@@ -91,7 +90,7 @@ int		pipex(int argc, char **argv, char **envp);
 
 //pipex_utils functions
 void	free_pipex(t_pipex *pipex);
-void	wait_and_close(t_pipex *pipex);
+void	fd_close_wait(t_pipex *pipex);
 char	***split_cmds(int argc, char **argv);
 char	*get_path(char **envp);
 char	*build_cmd_path(char **path_split, char *cmd);

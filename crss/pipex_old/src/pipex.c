@@ -6,18 +6,21 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:12 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 01:51:41 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/16 01:08:00 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	exec_cmd(t_pipex *pipex, int cmd, char **envp)
+static void	exec_cmd(t_pipex *pipex, int i, char **envp)
 {
-	pipex->path = build_cmd_path(pipex->path_split, pipex->cmds[cmd][0]);
-	if (!pipex->path && (*pipex->cmds[cmd])[0] != '\0')
-		pipex->no_such_cmd = ft_strdup(pipex->cmds[cmd][0]);
-	if (execve(pipex->path, pipex->cmds[cmd], envp) == ERR_GNRL)
+	pipex->path = build_cmd_path(pipex->path_split, pipex->cmds[i][0]);
+	if (!pipex->path)
+	{
+		if (ft_strncmp(pipex->cmds[i][0], "", 1) == 0)
+			pipex->no_such_cmd = ft_strdup(pipex->cmds[i][0]);
+	}
+	if (execve(pipex->path, pipex->cmds[i], envp) == ERR_GNRL)
 		return_error(ERR_NCMD, pipex, TRUE);
 }
 
@@ -47,40 +50,58 @@ static void	init_pipex(t_pipex **pipex, int argc, char **argv, char **envp)
 	}
 }
 
-static void	child_process(t_pipex *pipex, char **envp)
+static void	child_process(t_pipex *pipex, int i, char **envp)
 {
-	pipex->pid2 = fork();
-	if (pipex->pid2 == CHILD_PID)
+	dup2(pipex->in_fd, STDIN_FILENO);
+	if (i == ARG_LCMD)
 	{
-		close (pipex->pipe_fd[1]);
-		if (pipex->of_fd > ERR_NONE)
-			dup2(pipex->of_fd, STDOUT_FILENO);
-		dup2(pipex->pipe_fd[0], STDIN_FILENO);
-		exec_cmd(pipex, ARG_RCMD, envp);
+		if (pipex->of_fd < ERR_NONE)
+			return_error(EXIT_FAILURE, pipex, TRUE);
+		dup2(pipex->of_fd, STDOUT_FILENO);
+		close(pipex->of_fd);
 	}
+	else
+	{
+		dup2(pipex->pipe_fd[1], STDOUT_FILENO);
+		close(pipex->pipe_fd[1]);
+	}
+	exec_cmd(pipex, i, envp);
 }
 
-static void	parent_process(t_pipex *pipex, char **envp)
+static void	parent_process(t_pipex *pipex, int i)
 {
-	pipex->pid = fork();
-	close (pipex->pipe_fd[0]);
-	if (pipex->in_fd > ERR_NONE)
-		dup2(pipex->in_fd, STDIN_FILENO);
-	dup2(pipex->pipe_fd[1], STDOUT_FILENO);
-	exec_cmd(pipex, ARG_LCMD, envp);
+	close (pipex->pipe_fd[1]);
+	if (i >= ARG_IF)
+		close (pipex->in_fd);
+	if (i < ARG_LCMD)
+		pipex->in_fd = pipex->pipe_fd[0];
+	else
+		close (pipex->pipe_fd[0]);
 }
 
 int	pipex(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
+	int		i;
 
 	pipex = NULL;
 	init_pipex(&pipex, argc, argv, envp);
-	if (pipe(pipex->pipe_fd) == ERR_GNRL)
-		return_error(EXIT_FAILURE, pipex, TRUE);
-	parent_process(pipex, envp);
-	child_process(pipex, envp);
-	wait_and_close(pipex);
-	return_error(errno, pipex, TRUE);
-	return (errno);
+	i = 0;
+	while (i < ARG_RCMD)
+	{
+		if (i < ARG_LCMD)
+			if (pipe(pipex->pipe_fd) == ERR_GNRL)
+				return_error(EXIT_FAILURE, pipex, TRUE);
+		pipex->pid = fork();
+		if (pipex->pid < CHILD_PID)
+			return_error(EXIT_FAILURE, pipex, TRUE);
+		if (pipex->pid == CHILD_PID)
+			child_process(pipex, i, envp);
+		else
+			parent_process(pipex, i);
+		i++;
+	}
+	fd_close_wait(pipex);
+	free_pipex(pipex);
+	return (EXIT_SUCCESS);
 }

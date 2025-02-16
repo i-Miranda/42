@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 11:57:02 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/15 21:25:59 by ivmirand         ###   ########.fr       */
+/*   Created: 2024/09/17 12:05:48 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/09/28 23:03:35 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **env)
+t_list	*ft_lstlast(t_list *lst)
 {
-	if (argc != ARGC + 1)
-		return_error(ERR_INPT, NULL, TRUE);
-	return (pipex(ARGC, &argv[1], env));
+	if (lst == NULL)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
 }

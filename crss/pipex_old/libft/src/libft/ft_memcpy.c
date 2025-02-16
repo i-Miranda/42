@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 11:57:02 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/15 21:25:59 by ivmirand         ###   ########.fr       */
+/*   Created: 2024/09/17 12:08:21 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/09/28 23:03:35 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **env)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	if (argc != ARGC + 1)
-		return_error(ERR_INPT, NULL, TRUE);
-	return (pipex(ARGC, &argv[1], env));
+	size_t				i;
+	unsigned char		*dptr;
+	const unsigned char	*sptr;
+
+	if (dst == NULL && src == NULL)
+		return (NULL);
+	dptr = (unsigned char *)dst;
+	sptr = (const unsigned char *)src;
+	i = 0;
+	while (i < n)
+	{
+		dptr[i] = sptr[i];
+		i++;
+	}
+	return (dst);
 }

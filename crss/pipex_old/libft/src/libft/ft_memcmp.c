@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 11:57:02 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/15 21:25:59 by ivmirand         ###   ########.fr       */
+/*   Created: 2024/09/17 12:08:18 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/09/28 23:03:35 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **env)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	if (argc != ARGC + 1)
-		return_error(ERR_INPT, NULL, TRUE);
-	return (pipex(ARGC, &argv[1], env));
+	unsigned char	*str1;
+	unsigned char	*str2;
+	size_t			i;
+
+	if (s1 == NULL && s2 == NULL)
+		return (0);
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	i = 0;
+	while (i < n)
+	{
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+		i++;
+	}
+	return (0);
 }

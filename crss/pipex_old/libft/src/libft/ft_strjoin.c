@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 11:57:02 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/15 21:25:59 by ivmirand         ###   ########.fr       */
+/*   Created: 2024/09/17 12:08:59 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/09/28 23:03:36 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **env)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	if (argc != ARGC + 1)
-		return_error(ERR_INPT, NULL, TRUE);
-	return (pipex(ARGC, &argv[1], env));
+	char	*str;
+	size_t	s1_len;
+	size_t	s2_len;
+
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	str = ft_calloc((s1_len + s2_len + 1), sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	ft_memmove(str, s1, s1_len);
+	ft_memmove(&str[s1_len], s2, s2_len);
+	return (str);
 }

@@ -1,20 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 11:57:02 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/15 21:25:59 by ivmirand         ###   ########.fr       */
+/*   Created: 2024/09/17 12:05:51 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/10/04 14:38:07 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **env)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	if (argc != ARGC + 1)
-		return_error(ERR_INPT, NULL, TRUE);
-	return (pipex(ARGC, &argv[1], env));
+	t_list	*newlist;
+	t_list	*node;
+	void	*content;
+
+	newlist = NULL;
+	while (lst != NULL)
+	{
+		content = f(lst->content);
+		node = ft_lstnew(content);
+		if (node == NULL)
+		{
+			ft_lstclear(&newlist, del);
+			del(content);
+			return (NULL);
+		}
+		ft_lstadd_back(&newlist, node);
+		lst = lst->next;
+	}
+	return (newlist);
 }

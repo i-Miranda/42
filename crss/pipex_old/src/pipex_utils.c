@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:34:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 01:37:31 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/15 23:29:36 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,18 @@ void	free_pipex(t_pipex *pipex)
 	free(pipex);
 }
 
-void	wait_and_close(t_pipex *pipex)
+void	fd_close_wait(t_pipex *pipex)
 {
-	pipex->pid_status = 0;
-	pipex->pid2_status = 0;
-	if (pipex->pid != ERR_GNRL)
-		waitpid(pipex->pid2, &pipex->pid2_status, 0);
-	if (pipex->pid2 != ERR_GNRL)
-		wait(NULL);
+	int	i;
+
+	i = 0;
 	close(pipex->in_fd);
 	close(pipex->of_fd);
-	if (WIFEXITED(pipex->pid_status))
-		pipex->pid_status = WEXITSTATUS(pipex->pid_status);
-	if (WIFEXITED(pipex->pid2_status))
-		pipex->pid2_status = WEXITSTATUS(pipex->pid2_status);
+	while (i < ARG_RCMD)
+	{
+		wait(NULL);
+		i++;
+	}
 }
 
 char	***split_cmds(int argc, char **argv)
