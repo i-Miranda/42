@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 07:52:33 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 03:41:54 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/21 17:46:58 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static long	ft_atol(char *str)
 	return (nbr * sign);
 }
 
-static int	atol_args(t_stacks *stacks, char **args)
+static int	atol_args(t_stacks **stacks, char **args)
 {
 	long	*atol;
 	t_list	*node;
@@ -52,19 +52,19 @@ static int	atol_args(t_stacks *stacks, char **args)
 		free(atol);
 		return (-2);
 	}
-	node = ft_lstnew((int *)atol);
+	node = ft_lstnew((void *)atol);
 	if (node == NULL)
 		return (-3);
-	if (*atol < stacks->min_val)
-		stacks->min_val = *atol;
-	if (*atol > stacks->max_val)
-		stacks->max_val = *atol;
-	stacks->mid_val = stacks->min_val + (stacks->max_val/2);
-	ft_lstadd_back(&(stacks->a->next), node);
+	if (*atol < (*stacks)->min_val)
+		(*stacks)->min_val = *atol;
+	if (*atol > (*stacks)->max_val)
+		(*stacks)->max_val = *atol;
+	(*stacks)->mid_val = (*stacks)->min_val + ((*stacks)->max_val/2);
+	ft_lstadd_back(&(*stacks)->a, node);
 	return (ERR_NONE);
 }
 
-int	parse_arg(t_stacks *stacks, char *arg)
+int	parse_arg(t_stacks **stacks, char *arg)
 {
 	int		i;
 	int		atol_args_err;

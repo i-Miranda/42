@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:22:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/21 11:16:55 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/21 14:48:52 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char *argv[])
 	i = 1;
 	while (i < argc)
 	{
-		if (parse_arg(stacks, argv[i]) == ERR_NONE)
+		if (parse_arg(&stacks, argv[i]) == ERR_NONE)
 			i++;
 		else
 			return (ERR_GNRL);

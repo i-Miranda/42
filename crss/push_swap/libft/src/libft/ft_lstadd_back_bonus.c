@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:05:32 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/10/02 16:56:50 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:43:52 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	}
 	last = ft_lstlast(*lst);
 	last->next = new;
+	last->next->next = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:41:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/21 11:19:46 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/21 14:47:50 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	free_stacks(t_stacks *stacks);
 int		find_duplicate_values(t_stacks *stacks);
 
 //parse functions
-int		parse_arg(t_stacks *stacks, char *arg);
+int		parse_arg(t_stacks **stacks, char *arg);
 
 //sort functions
 int		check_list_sort(t_stacks **stacks);
