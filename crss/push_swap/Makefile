@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/02/12 20:22:27 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/02/21 11:21:49 by ivan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SOURCES := main.c \
 	push_swap_utils.c \
 	reverse_rotate.c \
 	rotate.c \
+	sort.c \
 	swap.c 
 	#sort_short_stack.c \
 

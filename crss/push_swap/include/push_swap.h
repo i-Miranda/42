@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:41:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 03:40:45 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/21 11:19:46 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
+# include <stdbool.h>
 
 # include "libft.h"
 # include "printf.h"
-
-# define INT_MIN -2147483648
-# define INT_MAX 2147483647
 
 # define ERR_NONE 0
 # define ERR_GNRL 1
@@ -37,7 +36,7 @@ typedef struct s_stacks
 }t_stacks;
 
 //push_swap
-void	push_swap(t_stacks *stacks);
+void	push_swap(t_stacks **stacks);
 
 //swap functions
 void	swap(t_list **list);
@@ -71,6 +70,6 @@ int		find_duplicate_values(t_stacks *stacks);
 //parse functions
 int		parse_arg(t_stacks *stacks, char *arg);
 
-//sort_short_stack functions
-//void	sort_short_stack(t_stacks **stacks);
+//sort functions
+int		check_list_sort(t_stacks **stacks);
 #endif

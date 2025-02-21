@@ -6,17 +6,20 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:08:46 by ivmirand          #+#    #+#             */
-/*   Updated: 2024/09/28 23:03:36 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:07:36 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_initialize(size_t *s_i, int *arr_i, int *start)
+static int	ft_initialize(const char *str, size_t *s_i, int *arr_i, int *start)
 {
+	if (str == NULL)
+		return (-1);
 	*s_i = 0;
 	*arr_i = 0;
 	*start = -1;
+	return (0);
 }
 
 static char	*build_word(const char *str, int start, int end)
@@ -73,7 +76,8 @@ char	**ft_split(const char *s, char c)
 	int		arr_i;
 	int		start;
 
-	ft_initialize(&s_i, &arr_i, &start);
+	if (ft_initialize(s, &s_i, &arr_i, &start) == -1)
+		return (NULL);
 	strarray = ft_calloc((ft_word_count(s, c) + 1), sizeof(char *));
 	if (!strarray)
 		return (NULL);

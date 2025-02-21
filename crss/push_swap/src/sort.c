@@ -1,22 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
+/*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 12:05:44 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/18 10:28:41 by ivan             ###   ########.fr       */
+/*   Created: 2025/02/17 22:45:34 by ivan              #+#    #+#             */
+/*   Updated: 2025/02/21 11:02:45 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+static int	check_next_value(t_list *list)
 {
-	if (lst == NULL || f == NULL)
-		return ;
-	if (lst->next != NULL)
-		ft_lstiter(lst->next, f);
-	f(lst->content);
+	t_list *temp;
+
+	temp = list;
+	return (*(int *)temp->content < *(int *)temp->next->content);
+}
+
+int	check_list_sort(t_stacks **stacks)
+{
+	t_list *temp;
+
+	temp = (*stacks)->a;
+	while (temp->next != NULL)
+	{
+		if (check_next_value(temp) != ERR_NONE)
+			return (ERR_GNRL);
+		temp = temp->next;
+	}
+	free_stacks(*stacks);	
+	return (ERR_NONE);
 }
