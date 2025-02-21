@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:24:25 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/21 11:03:31 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/21 19:44:08 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,15 @@ int	init_stacks(t_stacks **stacks)
 	(*stacks)->a = malloc(sizeof(t_list));
 	if ((*stacks)->a == NULL)
 		return (2);
+	(*stacks)->a->content = NULL;
+	(*stacks)->a->next = NULL;
 	(*stacks)->b = malloc(sizeof(t_list));
 	if ((*stacks)->b == NULL)
 		return (3);
-	(*stacks)->min_val = INT_MIN;
-	(*stacks)->max_val = INT_MAX;
+	(*stacks)->b->content = NULL;
+	(*stacks)->b->next = NULL;
+	(*stacks)->min_val = 0;
+	(*stacks)->max_val = 0;
 	(*stacks)->a_size = 0;
 	(*stacks)->b_size = 0;
 	return (ERR_NONE);
@@ -60,8 +64,8 @@ int	find_duplicate_values(t_stacks *stacks)
 	t_list *ref;
 	t_list *comp;
 
-	ref = stacks->a;
-	comp = stacks->a->next;
+	ref = stacks->a->next;
+	comp = stacks->a->next->next;
 	stacks->a_size = ft_lstsize(stacks->a);
 	while (ref->next != NULL)
 	{

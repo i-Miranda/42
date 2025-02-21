@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:53:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 03:43:21 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/21 20:08:50 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ void	push(t_list **to, t_list **from)
 	if (ft_lstsize(*from) > 0)
 	{
 		temp = *from;
-		temp->next = *to;
-		*from = (*from)->next;
+		temp->next = (*to)->next;
+		(*from)->next = (*from)->next->next;
 		*to = temp;
 	}
 }
 
-void	pa(t_stacks *stacks)
+void	pa(t_stacks **stacks)
 {
-	push(&(stacks->a),&(stacks->b));
+	push(&((*stacks)->a),&((*stacks)->b));
 	ft_printf("pa\n");
 }
 
-void	pb(t_stacks *stacks)
+void	pb(t_stacks **stacks)
 {
-	push(&(stacks->b), &(stacks->a));
+	push(&((*stacks)->b), &((*stacks)->a));
 	ft_printf("pb\n");
 }

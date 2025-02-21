@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/02/21 11:21:49 by ivan             ###   ########.fr        #
+#    Updated: 2025/02/21 20:09:27 by ivan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,13 +74,13 @@ $(OUTPUT)/%.o: $(SRC)/%.c $(HEADER)
 # -s writes object-files
 ARFLAGS := -rcs
 
-$(NAME): $(OBJ_O)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) $(OBJ_O) $(LIBFT) -o $(NAME)
-
 all: 
 	cd libft && make all
 	mkdir -p $(OUTPUT)
 	make $(NAME)
+
+$(NAME): $(OBJ_O)
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) $(OBJ_O) $(LIBFT) -o $(NAME)
 
 # -f ignores if file does not exist
 clean:
