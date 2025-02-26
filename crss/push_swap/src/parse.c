@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 07:52:33 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/21 19:39:48 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/26 08:28:11 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static long	ft_atol(char *str)
 	long	nbr;
 	long	sign;
 	int		i;
-	
+
 	nbr = 0;
 	sign = 1;
 	i = 0;
 	while (str[i] && (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r')))
-			i++;
+		i++;
 	if (str[i] && (str[i] == '-' || str[i] == '+'))
 	{
 		if (str[i] == '-')
@@ -42,6 +42,7 @@ static int	atol_args(t_stacks **stacks, char **args)
 {
 	long	*atol;
 	t_list	*node;
+	t_list	*temp;
 
 	atol = malloc(1 * sizeof(long));
 	if (atol == NULL)
@@ -59,8 +60,8 @@ static int	atol_args(t_stacks **stacks, char **args)
 		(*stacks)->min_val = *atol;
 	if (*atol > (*stacks)->max_val)
 		(*stacks)->max_val = *atol;
-	(*stacks)->mid_val = ((*stacks)->min_val + (*stacks)->max_val)/2;
-	t_list *temp = (*stacks)->a;
+	(*stacks)->mid_val = ((*stacks)->min_val + (*stacks)->max_val) / 2;
+	temp = (*stacks)->a;
 	ft_lstadd_back(&temp, node);
 	return (ERR_NONE);
 }

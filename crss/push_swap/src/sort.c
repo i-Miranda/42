@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 22:45:34 by ivan              #+#    #+#             */
-/*   Updated: 2025/02/21 11:02:45 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/26 07:54:20 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ int	check_list_sort(t_stacks **stacks)
 			return (ERR_GNRL);
 		temp = temp->next;
 	}
-	free_stacks(*stacks);	
 	return (ERR_NONE);
 }
