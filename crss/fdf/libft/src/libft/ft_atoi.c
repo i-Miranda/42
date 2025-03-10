@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   FDF.h                                              :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 09:05:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/03/09 16:44:54 by ivan             ###   ########.fr       */
+/*   Created: 2024/09/17 11:50:35 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/10/28 00:20:04 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
 #include "libft.h"
-#include "MLX42.h"
 
-#define SCRN_WDTH 640;
-#define SCRN_HGHT 480;
-#define CHAR_DIMS 64;
+int	ft_atoi(const char *str)
+{
+	int	i;
+	int	result;
+	int	neg;
 
-// Render functions
-int	get_rgba(int r, int g, int b, int a);
-
-// Input functions
-void	input_hook(void *mlx_param);
-
-// Error functions
-void	ft_error(void);
+	i = 0;
+	result = 0;
+	neg = 1;
+	while ((str[i] == ' ' || str[i] == '\n'
+			|| str[i] == '\t' || str[i] == '\v' || str[i] == '\r'
+			|| str[i] == '\f'))
+		i++;
+	if ((str[i] == '-' || str[i] == '+'))
+	{
+		if (str[i] == '-')
+			neg *= -1;
+		i++;
+	}
+	while (ft_isdigit(str[i]))
+	{
+		result = (result * 10) + (str[i] - '0');
+		i++;
+	}
+	return (result * neg);
+}

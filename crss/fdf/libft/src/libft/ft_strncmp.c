@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   FDF.h                                              :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 09:05:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/03/09 16:44:54 by ivan             ###   ########.fr       */
+/*   Created: 2024/09/17 12:09:15 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/09/28 23:03:36 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
 #include "libft.h"
-#include "MLX42.h"
 
-#define SCRN_WDTH 640;
-#define SCRN_HGHT 480;
-#define CHAR_DIMS 64;
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
 
-// Render functions
-int	get_rgba(int r, int g, int b, int a);
-
-// Input functions
-void	input_hook(void *mlx_param);
-
-// Error functions
-void	ft_error(void);
+	i = 0;
+	while (i < n)
+	{
+		if (s1[i] == '\0' || s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}

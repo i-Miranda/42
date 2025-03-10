@@ -6,36 +6,91 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 08:58:47 by ivmirand          #+#    #+#              #
-#    Updated: 2025/03/08 08:59:33 by ivan             ###   ########.fr        #
+#    Updated: 2025/03/10 10:39:48 by ivan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:= FDF
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
-LIBMLX	:= MLX42
+NAME := FDF
 
-HEADERS	:= -I ./include -I $(LIBMLX)/include/$(LIBMLX)
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
-SRCS	:= $(shell find ./src -iname "*.c")
-OBJS	:= ${SRCS:.c=.o}
+INC := include
 
-all: libmlx $(NAME)
+LIBFT := libft
+
+LIBFT_A := $(LIBFT)/$(LIBFT).a
+
+LIBMLX := MLX42
+
+LIBMLX_A := $(LIBMLX)/build/libmlx42.a
+
+SRC := src
+
+HEADERS	:= -I ./$(INC) -I $(LIBMLX)/$(INC)/$(LIBMLX) -I $(LIBFT)/$(INC)
+
+OUTPUT := $(SRC)/output
+
+# LIBS := $(LIBMLX_A) -ldl -lglfw -pthread -lm 
+LIBS := $(LIBMLX_A) $(LIBFT_A) -lglfw -framework Cocoa -framework OpenGL -framework IOKit
+
+SOURCES	:= main.c \
+	input.c \
+	render.c \
+	error.c
+
+OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
+#OBJS := ${SRCS:.c=.o}
+
+#############DEBUGGING  RULES#####################
+
+DEBUG ?= 0
+
+ifeq ($(DEBUG), 1)
+	DBFLAGS := -g
+else ifeq ($(DEBUG), 2)
+	DBFLAGS := -fsanitize=address
+else ifeq ($(DEBUG), 3)
+	DBFLAGS := -fsanitize=address -g
+else 
+	DBFLAGS :=
+endif
+
+NOFLAGS ?= 0
+
+ifeq ($(NOFLAGS), 1)
+	CCFLAGS :=
+	DBFLAGS :=
+else 
+	CCFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
+endif
+
+##################################################
+
+$(OUTPUT)/%.o: $(SRC)/%.c
+	@$(CC) $(CCFLAGS) -c $< -o $@ $(HEADERS) && printf "Compiling: $(notdir $<)\n"
+
+all:
+	@printf "Compiling: $(NAME) dependencies\n"
+	@cd $(LIBFT) && make all
+	@mkdir -p $(OUTPUT)
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+	@make $(NAME)
 
 libmlx:
-		@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-%.o: %.c
-		@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
-
-$(NAME): $(OBJS)
-		@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+$(NAME): $(OBJ_O)
+	@printf "Compiling: $(NAME)\n"
+	@$(CC) $(CCFLAGS) $(DBFLAGS) $(OBJ_O) $(LIBS) $(HEADERS) -o $(NAME) && printf "Compilation complete: $(NAME)\n"
 
 clean:
-		@rm -rf $(OBJS)
-			@rm -rf $(LIBMLX)/build
+	@printf "Wiping static libraries and their respective objs: $(LIBFT).a and libmlx42.a\n"
+	@rm -rf $(OBJ_O)
+	@rm -rf $(LIBMLX)/build
+	@rm -rf $(LIBFT)/src/output
+	@rm -rf $(LIBFT_A)
 
 fclean: clean
-		@rm -rf $(NAME)
+	@printf "Deleting binary: $(NAME)\n"
+	@rm -rf $(NAME)
 
 re: clean all
 

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:53:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/21 20:08:50 by ivan             ###   ########.fr       */
+/*   Updated: 2025/03/09 14:00:56 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	push(t_list **to, t_list **from)
 
 void	pa(t_stacks **stacks)
 {
-	push(&((*stacks)->a),&((*stacks)->b));
+	push(&(*stacks)->a, &(*stacks)->b);
 	ft_printf("pa\n");
 }
 
 void	pb(t_stacks **stacks)
 {
-	push(&((*stacks)->b), &((*stacks)->a));
+	push(&(*stacks)->b, &(*stacks)->a);
 	ft_printf("pb\n");
 }

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:24:25 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/21 19:44:08 by ivan             ###   ########.fr       */
+/*   Updated: 2025/03/09 13:45:08 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ void	free_split(char **split)
 
 void	free_stacks(t_stacks *stacks)
 {
-	ft_lstclear(&stacks->a, free);	
-	ft_lstclear(&stacks->b, free);	
+	ft_lstclear(&stacks->a, free);
+	ft_lstclear(&stacks->b, free);
 	free(stacks);
 }
 
 int	find_duplicate_values(t_stacks *stacks)
 {
-	t_list *ref;
-	t_list *comp;
+	t_list	*ref;
+	t_list	*comp;
 
 	ref = stacks->a->next;
 	comp = stacks->a->next->next;

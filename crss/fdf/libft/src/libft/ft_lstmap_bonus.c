@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   FDF.h                                              :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 09:05:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/03/09 16:44:54 by ivan             ###   ########.fr       */
+/*   Created: 2024/09/17 12:05:51 by ivmirand          #+#    #+#             */
+/*   Updated: 2024/10/04 14:38:07 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
 #include "libft.h"
-#include "MLX42.h"
 
-#define SCRN_WDTH 640;
-#define SCRN_HGHT 480;
-#define CHAR_DIMS 64;
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+{
+	t_list	*newlist;
+	t_list	*node;
+	void	*content;
 
-// Render functions
-int	get_rgba(int r, int g, int b, int a);
-
-// Input functions
-void	input_hook(void *mlx_param);
-
-// Error functions
-void	ft_error(void);
+	newlist = NULL;
+	while (lst != NULL)
+	{
+		content = f(lst->content);
+		node = ft_lstnew(content);
+		if (node == NULL)
+		{
+			ft_lstclear(&newlist, del);
+			del(content);
+			return (NULL);
+		}
+		ft_lstadd_back(&newlist, node);
+		lst = lst->next;
+	}
+	return (newlist);
+}

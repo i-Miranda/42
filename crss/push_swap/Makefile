@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/02/21 20:09:27 by ivan             ###   ########.fr        #
+#    Updated: 2025/03/10 10:43:39 by ivan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,19 +14,15 @@ NAME := push_swap
 
 INC := include
 
-COMPILER := cc
+LIBFT := libft
+
+LIBFT_A := $(LIBFT)/$(LIBFT).a
 
 SRC := src
 
-HEADER := $(INC)/push_swap.h
-
-MAIN := $(SRC)/main.c 
+HEADERS := -I$(INC) -Ilibft/$(INC)
 
 OUTPUT := $(SRC)/output
-
-LIBFT_OUTPUT := libft/$(OUTPUT)
-
-LIBFT := libft/libft.a
 
 SOURCES := main.c \
 	parse.c \
@@ -66,30 +62,26 @@ endif
 
 ##################################################
 
-$(OUTPUT)/%.o: $(SRC)/%.c $(HEADER)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -I$(INC) -Ilibft/$(INC)
-
-# -r replaces or adds a file if doesn't already exisj in archive
-# -c creates the archive silently
-# -s writes object-files
-ARFLAGS := -rcs
+$(OUTPUT)/%.o: $(SRC)/%.c 
+	@$(CC) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ $(HEADERS) && printf "Compiling: $(notdir $<)\n"
 
 all: 
-	cd libft && make all
-	mkdir -p $(OUTPUT)
-	make $(NAME)
+	@cd libft && make all
+	@mkdir -p $(OUTPUT)
+	@make $(NAME)
 
 $(NAME): $(OBJ_O)
-	$(COMPILER) $(CCFLAGS) $(DBFLAGS) $(OBJ_O) $(LIBFT) -o $(NAME)
+	@$(CC) $(CCFLAGS) $(DBFLAGS) $(OBJ_O) $(LIBFT_A) -o $(NAME)
 
 # -f ignores if file does not exist
 clean:
-	rm -f $(NAME)
-	rm -rf $(OUTPUT)
-	rm -f $(LIBFT)
+	@printf "Wiping static libraries and their respective objs: $(LIBFT).a\n"
+	@cd libft && $(MAKE) fclean
+	@rm -rf $(OUTPUT)
 
 fclean: clean
-	cd libft && $(MAKE) $@
+	@printf "Deleting binary: $(NAME)\n"
+	@rm -f $(NAME)
 
 re: fclean all
 

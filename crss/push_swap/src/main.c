@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:22:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/21 14:48:52 by ivan             ###   ########.fr       */
+/*   Updated: 2025/02/26 17:11:28 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	main(int argc, char *argv[])
 {
-	int		i;
-	t_stacks *stacks;
+	int			i;
+	t_stacks	*stacks;
 
 	if (argc <= 1)
 		return (ERR_GNRL);
