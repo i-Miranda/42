@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 08:58:47 by ivmirand          #+#    #+#              #
-#    Updated: 2025/03/10 10:39:48 by ivan             ###   ########.fr        #
+#    Updated: 2025/03/10 11:10:36 by ivan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OUTPUT := $(SRC)/output
 # LIBS := $(LIBMLX_A) -ldl -lglfw -pthread -lm 
 LIBS := $(LIBMLX_A) $(LIBFT_A) -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
-SOURCES	:= main.c \
+SOURCES	:= fdf.c \
 	input.c \
 	render.c \
 	error.c
