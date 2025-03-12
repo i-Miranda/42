@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 08:58:47 by ivmirand          #+#    #+#              #
-#    Updated: 2025/03/10 11:10:36 by ivan             ###   ########.fr        #
+#    Updated: 2025/03/10 18:29:41 by ivan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ LIBS := $(LIBMLX_A) $(LIBFT_A) -lglfw -framework Cocoa -framework OpenGL -framew
 SOURCES	:= fdf.c \
 	input.c \
 	render.c \
+	parse.c \
 	error.c
 
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
@@ -59,13 +60,13 @@ ifeq ($(NOFLAGS), 1)
 	CCFLAGS :=
 	DBFLAGS :=
 else 
-	CCFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
+	CCFLAGS	:= -Wextra -Wall -Werror # -Wunreachable-code -Ofast
 endif
 
 ##################################################
 
 $(OUTPUT)/%.o: $(SRC)/%.c
-	@$(CC) $(CCFLAGS) -c $< -o $@ $(HEADERS) && printf "Compiling: $(notdir $<)\n"
+	@$(CC) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ $(HEADERS) && printf "Compiling: $(notdir $<)\n"
 
 all:
 	@printf "Compiling: $(NAME) dependencies\n"
