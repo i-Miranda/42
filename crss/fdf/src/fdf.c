@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:02:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/03/11 12:11:39 by ivan             ###   ########.fr       */
+/*   Updated: 2025/03/19 13:22:12 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	close_hook(void *param)
 	printf("%s", (char *)param);
 }
 
-static void	end_fdf(mlx_t **mlx, mlx_image_t **img, xpm_t **xpm, int ***fdf, int err_code)
+static void	end_fdf(mlx_t **mlx, mlx_image_t **img, xpm_t **xpm, t_fdf **fdf, int err_code)
 {
 	if (mlx == NULL)
 		exit(EXIT_FAILURE);
@@ -28,7 +28,7 @@ static void	end_fdf(mlx_t **mlx, mlx_image_t **img, xpm_t **xpm, int ***fdf, int
 	if (fdf)
 		free(*fdf);
 	mlx_terminate(*mlx);
-	exit(err_code)
+	exit(err_code);
 }
 
 int	main(int argc, char *argv[])
@@ -36,7 +36,7 @@ int	main(int argc, char *argv[])
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	xpm_t		*xpm;
-	int			**fdf;
+	t_fdf		*fdf;
 
 	if (argc != 2)
 		exit(EXIT_FAILURE);
@@ -47,6 +47,7 @@ int	main(int argc, char *argv[])
 	if (!img || mlx_image_to_window(mlx, img, 0, 0) < 0)
 		ft_error();
 	fdf = parse_fdf(argv[1]);
+	//print zero vertex	
 	if (fdf == NULL)
 		end_fdf(&mlx, &img, &xpm, &fdf, EXIT_FAILURE);
 	mlx_loop_hook(mlx, input_hook, mlx);
