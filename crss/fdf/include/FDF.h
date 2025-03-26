@@ -67,7 +67,7 @@ void	input_hook(void *mlx_param);
 void	ft_error(void);
 
 // Parse functions
-t_fdf	*parse_fdf(char *fdf_path);
+void	parse_fdf(char *fdf_path, t_fdf **fdf);
 
 // Vertex functions
 t_vector3	*init_vector3(int x, int y, int z);

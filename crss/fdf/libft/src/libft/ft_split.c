@@ -71,7 +71,7 @@ void	*ft_free_split(char **strarray)
 	while (strarray[count])
 		count++;
 	count--;
-	while (strarray[count])
+	while (count >= 0)
 	{
 		free(strarray[count]);
 		count--;

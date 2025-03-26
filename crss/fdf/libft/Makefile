@@ -65,7 +65,7 @@ LIBFT_SOURCES := ft_atoi.c \
 	ft_toupper.c
 
 GNL_SOURCES := get_next_line.c \
-			   get_next_line_utils.c
+	get_next_line_utils.c
 
 PRINTF_SOURCES := ft_printf.c \
 	print_nums.c \

@@ -28,8 +28,8 @@ HEADERS	:= -I ./$(INC) -I $(LIBMLX)/$(INC)/$(LIBMLX) -I $(LIBFT)/$(INC)
 
 OUTPUT := $(SRC)/output
 
-# LIBS := $(LIBMLX_A) -ldl -lglfw -pthread -lm 
-LIBS := $(LIBMLX_A) $(LIBFT_A) -lglfw -framework Cocoa -framework OpenGL -framework IOKit
+LIBS := $(LIBMLX_A) $(LIBFT_A) -ldl -lglfw -pthread -lm 
+# LIBS := $(LIBMLX_A) $(LIBFT_A) -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
 SOURCES	:= fdf.c \
 	input.c \

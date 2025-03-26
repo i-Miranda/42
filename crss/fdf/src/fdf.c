@@ -19,13 +19,13 @@ static void	close_hook(void *param)
 
 static void	end_fdf(mlx_t **mlx, mlx_image_t **img, xpm_t **xpm, t_fdf **fdf, int err_code)
 {
-	if (mlx == NULL)
+	if (*mlx == NULL)
 		exit(EXIT_FAILURE);
-	if (img)
+	if (*img)
 		mlx_delete_image(*mlx, *img);
-	if (xpm)
+	if (*xpm)
 		mlx_delete_xpm42(*xpm);
-	if (fdf)
+	if (*fdf)
 		free(*fdf);
 	mlx_terminate(*mlx);
 	exit(err_code);
@@ -46,7 +46,7 @@ int	main(int argc, char *argv[])
 	img = mlx_texture_to_image(mlx, &xpm->texture);
 	if (!img || mlx_image_to_window(mlx, img, 0, 0) < 0)
 		ft_error();
-	fdf = parse_fdf(argv[1]);
+	parse_fdf(argv[1], &fdf);
 	//print zero vertex	
 	if (fdf == NULL)
 		end_fdf(&mlx, &img, &xpm, &fdf, EXIT_FAILURE);

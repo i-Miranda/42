@@ -49,11 +49,29 @@ static int	*parse_row (char **row_text)
 	return (row);
 }
 
-t_fdf	*parse_fdf(char *fdf_path)
+static int	parse_columns(int row_count, int *row, int height)
 {
-	t_fdf	*fdf;
+	int	col_count;
+	t_vertex
+
+	col_count = 0;
+	(*fdf)->zero_vertex = parse_vertex(row_count, col_count, row[col_count], color);	
+	while (row[col_count])
+	{
+		if ((*fdf)->zero_vertex == NULL)
+		{
+			free(*fdf);
+			free(row);
+			return ;
+		}
+		col_count++;
+	}
+}
+
+void	parse_fdf(char *fdf_path, t_fdf **fdf)
+{
 	char	**nl_split;
-	int		*fdf_columns;	
+	int		*fdf_row;	
 	char 	*next_line; 
 	int		row_count;
 	int		col_count;
@@ -62,46 +80,34 @@ t_fdf	*parse_fdf(char *fdf_path)
 	fd = open(fdf_path, O_RDONLY);
 	next_line = get_next_line(fd);
 	if (!next_line)
-		return (NULL);	
-	fdf = ft_calloc(1, sizeof(t_fdf));
-	if (fdf == NULL)
-		return (NULL);
+		return ;	
+	*fdf = ft_calloc(1 + 1, sizeof(t_fdf));
+	if (*fdf == NULL)
+		return ;
 	row_count = 0;
 	while (next_line)
 	{
 		nl_split = ft_split(next_line, ' ');
 		if (nl_split == NULL)
 		{
-			free(fdf);
-			return (NULL);
+			free(*fdf);
+			return ;
 		}
 		free(next_line);
-		fdf_columns = parse_row(nl_split);
+		fdf_row = parse_row(nl_split);
 		ft_free_split(nl_split);
-		if (fdf_columns == NULL)
+		if (fdf_row == NULL)
 		{
-			free(fdf);
-			return (NULL);
+			free(*fdf);
+			return ;
 		}
-		col_count = 0;
-		while (fdf_columns[col_count])
-		{
-			fdf->zero_vertex = parse_vertex(row_count, col_count, fdf_columns[col_count], -1);	
-			if (fdf->zero_vertex == NULL)
-			{
-				free(fdf);
-				free(fdf_columns);
-				return (NULL);
-			}
-			col_count++;
-		}
-		free(fdf_columns);
+		parse_columns(row_count,)
+		free(fdf_row);
 		next_line = get_next_line(fd);
 		row_count++;
 	}
 	close(fd);
-	fdf->dimensions = init_vector3(row_count, col_count, 0);
-	fdf->origin = init_vector3(0, 0, 0);
-	fdf->scale = init_vector3(100, 100, 100);
-	return (fdf);
+	(*fdf)->dimensions = init_vector3(row_count, col_count, 0);
+	(*fdf)->origin = init_vector3(0, 0, 0);
+	(*fdf)->scale = init_vector3(100, 100, 100);
 }
