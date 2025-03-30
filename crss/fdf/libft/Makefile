@@ -112,15 +112,15 @@ endif
 
 $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_H)
 	@mkdir -p $(OUTPUT) $(LIBFT_OUTPUT)
-	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)\r"
+	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)                                                         \r"
 
 $(GNL_OUTPUT)/%.o: src/gnl/%.c $(GNL_H)
 	@mkdir -p $(OUTPUT) $(GNL_OUTPUT)
-	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)\r"
+	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)                                                         \r"
 
 $(PRINTF_OUTPUT)/%.o: src/printf/%.c $(PRINTF_H)
 	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
-	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)\r"
+	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)                                                         \r"
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently

@@ -14,24 +14,25 @@
 
 void	input_hook(void *mlx_param)
 {
-	mlx_t *mlx;
+	mlx_t	*mlx;
+
 	if (mlx_param == NULL)
 	{
 		ft_printf("input_hook param is null\n");
 		return ;
 	}
-		mlx = (mlx_t *)mlx_param; 
+	mlx = (mlx_t *)mlx_param;
 	if (mlx_is_key_down(mlx, MLX_KEY_W) || mlx_is_key_down(mlx, MLX_KEY_UP)
-			|| mlx_is_key_down(mlx, MLX_KEY_K))
+		|| mlx_is_key_down(mlx, MLX_KEY_K))
 		ft_printf("PRESSING UP\n");
 	if (mlx_is_key_down(mlx, MLX_KEY_S) || mlx_is_key_down(mlx, MLX_KEY_DOWN)
-			|| mlx_is_key_down(mlx, MLX_KEY_J))
+		|| mlx_is_key_down(mlx, MLX_KEY_J))
 		ft_printf("PRESSING DOWN\n");
 	if (mlx_is_key_down(mlx, MLX_KEY_A) || mlx_is_key_down(mlx, MLX_KEY_LEFT)
-			|| mlx_is_key_down(mlx, MLX_KEY_H))
+		|| mlx_is_key_down(mlx, MLX_KEY_H))
 		ft_printf("PRESSING LEFT\n");
 	if (mlx_is_key_down(mlx, MLX_KEY_D) || mlx_is_key_down(mlx, MLX_KEY_RIGHT)
-			|| mlx_is_key_down(mlx, MLX_KEY_L))
+		|| mlx_is_key_down(mlx, MLX_KEY_L))
 		ft_printf("PRESSING RIGHT\n");
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 	{

@@ -6,55 +6,75 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 14:56:23 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/03/19 13:16:07 by ivan             ###   ########.fr       */
+/*   Updated: 2025/03/30 17:26:33 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FDF.h"
 
-t_vector3	*init_vector3(int x, int y, int z)
-{
-	t_vector3	*vector3;
+//scale should probably be a float.  If i do this maybe i should just use the
+//mlx vector
+//void	vertex_slope(vertex_t *start, vertex_t *end)
+//{
+//	if (start == NULL || end == NULL)
+//		return ;
+//	if (start->x == end->x)
+//		//get slope between y and z
+//		return ;
+//	else if (start->y == end->y)
+//		//get slope between x and z
+//		return ;
+//	else
+//		//get slope between x and y
+//		return ;
+//}
 
-	vector3 = ft_calloc(1, sizeof(t_vector3));
-	if (vector3 == NULL)
+vertex_t	*init_vertex(float x, float y, float z)
+{
+	vertex_t	*vertex;
+
+	vertex = ft_calloc(1, sizeof(vertex_t));
+	if (vertex == NULL)
 		return (NULL);
-	vector3->x = x;
-	vector3->y = y;
-	vector3->z = z;
-	return (vector3);
+	vertex->x = x;
+	vertex->y = y;
+	vertex->z = z;
+	return (vertex);
 }
 
-void	free_vertex(t_vertex *vertex)
+void	free_coord(t_coord *coord)
 {
-	if (vertex == NULL)
+	if (coord == NULL)
 		return ;
-	if (vertex->coord != NULL)
-		free(vertex->coord);
-	if (vertex->pos != NULL)
-		free(vertex->pos);
-	free(vertex);
+	if (coord->local != NULL)
+		free(coord->local);
+	if (coord->world != NULL)
+		free(coord->world);
+	free(coord);
 }
 
-t_vertex	*init_vertex(int x, int y, int z, int color_hex)
+t_coord	*init_coord(int x, int y, char *z_str)
 {
-	t_vertex	*vertex;
+	char 	**color_split;
+	t_coord	*coord;
 
-	vertex = ft_calloc(1, sizeof(t_vertex));
-	if (vertex == NULL)
+	color_split = ft_split(z_str, ',');
+	coord = ft_calloc(1, sizeof(t_coord));
+	if (coord == NULL || color_split == NULL)
 		return (NULL);
-	vertex->coord = init_vector3(x, y, z);
-	vertex->pos = init_vector3(-1, -1, -1);
-	if (vertex->coord == NULL || vertex->pos == NULL)
+	coord->local = init_vertex(x, y, (int)ft_atol(color_split[0]));
+	ft_free_split(color_split);
+	coord->world = init_vertex(-1, -1, -1);
+	if (coord->local == NULL || coord->world == NULL)
 	{
-		free_vertex(vertex);
+		free_coord(coord);
 		return (NULL);
 	}
-	if (color_hex < 0)	
-		vertex->color_hex = color_hex;
+	if (color_split[1] != NULL)
+		coord->color_hex = 0x000000;
 	else
-		vertex->color_hex = 0x00000000;
-	vertex->next_x = NULL;
-	vertex->next_y = NULL;
-	return (vertex);
+		coord->color_hex = 0xFFFFFF;
+	coord->next_x = NULL;
+	coord->next_y = NULL;
+	return (coord);
 }

@@ -16,3 +16,26 @@ int	get_rgba(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
+
+//static	void paint_line(mlx_image_t *img, t_coord *start, t_coord *end)
+//{
+//	if (end != NULL)
+//	{
+//		//calculate distance between start->world and end->world
+//		//paint with bresenham into img
+//	}
+//}
+//
+//void	crdpnt_rcsv(mlx_image_t *img, t_coord *coord)
+//{
+//	if (coord->next_x != NULL)
+//	{
+//		crdpnt_rcsv(img, coord->next_x);
+//		paint_line(img, coord, coord->next_x);
+//	}
+//	if (coord->next_x != NULL)
+//	{
+//		crdpnt_rcsv(img, coord->next_y);
+//		paint_line(img, coord, coord->next_y);
+//	}
+//}

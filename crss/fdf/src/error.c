@@ -17,4 +17,3 @@ void	ft_error(void)
 	fprintf(stderr, "%s\n", mlx_strerror(mlx_errno));
 	exit(EXIT_FAILURE);
 }
-

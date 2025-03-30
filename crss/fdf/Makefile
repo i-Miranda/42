@@ -24,14 +24,15 @@ LIBMLX_A := $(LIBMLX)/build/libmlx42.a
 
 SRC := src
 
-HEADERS	:= -I ./$(INC) -I $(LIBMLX)/$(INC)/$(LIBMLX) -I $(LIBFT)/$(INC)
+HEADERS	:= -I ./$(INC) -I $(LIBMLX)/$(INC) -I $(LIBMLX)/$(INC)/$(LIBMLX) -I $(LIBFT)/$(INC)
 
 OUTPUT := $(SRC)/output
 
 LIBS := $(LIBMLX_A) $(LIBFT_A) -ldl -lglfw -pthread -lm 
 # LIBS := $(LIBMLX_A) $(LIBFT_A) -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
-SOURCES	:= fdf.c \
+SOURCES	:= main.c \
+	fdf.c \
 	input.c \
 	render.c \
 	parse.c \
