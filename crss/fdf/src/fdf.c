@@ -6,19 +6,31 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:23 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/03/30 13:29:34 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/03/31 02:35:29 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "FDF.h"
 
-static void free_coords_rcsv(t_coord *start)
+static void free_coords(t_coord *start)
 {
-	if (start->next_x != NULL)
-		free_coords_rcsv(start->next_x);
-	if (start->next_y != NULL)
-		free_coords_rcsv(start->next_y);
-	free_coord(start);
+	t_coord *row;
+	t_coord *col;
+
+	if (start == NULL)
+		return;
+	while (start != NULL)
+	{
+		row = start;
+		while (row != NULL)
+		{
+			col = row->next_x;
+			free_coord(row);
+			row = col;
+		}
+		col = start->next_y;
+		start = col;
+	}
 }
 
 t_fdf	*init_fdf(int origin_x, int origin_y, char *z_str)
@@ -69,7 +81,7 @@ void	free_fdf(t_fdf *fdf)
 	if (fdf == NULL)
 		return ;
 	if (fdf->zero_coord != NULL)
-		free_coords_rcsv(fdf->zero_coord);
+		free_coords(fdf->zero_coord);
 	if (fdf->dimensions != NULL)
 		free(fdf->dimensions);
 	if (fdf->origin != NULL)
@@ -77,4 +89,5 @@ void	free_fdf(t_fdf *fdf)
 	if (fdf->scale != NULL)
 		free(fdf->scale);
 	free(fdf);
+	fdf = NULL;
 }

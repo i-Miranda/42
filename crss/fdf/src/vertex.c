@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 14:56:23 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/03/30 17:26:33 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/03/31 02:12:21 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,19 @@ void	free_coord(t_coord *coord)
 {
 	if (coord == NULL)
 		return ;
+	ft_printf("Freeing coord: %d,%d\n", (int)coord->local->x, (int)coord->local->y);
 	if (coord->local != NULL)
+	{
 		free(coord->local);
+		coord->local = NULL;
+	}
 	if (coord->world != NULL)
+	{
 		free(coord->world);
+		coord->world = NULL;
+	}
 	free(coord);
+	coord = NULL;
 }
 
 t_coord	*init_coord(int x, int y, char *z_str)
@@ -63,7 +71,6 @@ t_coord	*init_coord(int x, int y, char *z_str)
 	if (coord == NULL || color_split == NULL)
 		return (NULL);
 	coord->local = init_vertex(x, y, (int)ft_atol(color_split[0]));
-	ft_free_split(color_split);
 	coord->world = init_vertex(-1, -1, -1);
 	if (coord->local == NULL || coord->world == NULL)
 	{
@@ -74,6 +81,7 @@ t_coord	*init_coord(int x, int y, char *z_str)
 		coord->color_hex = 0x000000;
 	else
 		coord->color_hex = 0xFFFFFF;
+	ft_free_split(color_split);
 	coord->next_x = NULL;
 	coord->next_y = NULL;
 	return (coord);
