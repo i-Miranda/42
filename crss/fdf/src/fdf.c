@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:23 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/02 22:27:03 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:37:34 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,16 @@ t_fdf	*init_fdf(int origin_x, int origin_y, char *z_str)
 	return (fdf);
 }
 
-void	update_fdf(t_fdf **fdf)
+void	update_fdf(void *fdf_param)
 {
+	t_fdf **fdf;
 	t_coord *zero_coord;
 	t_coord *next_y;
 	t_coord *next_x;
 	
-	if (fdf == NULL)
+	if (fdf_param == NULL)
 		return ;
+	fdf = (t_fdf **)fdf_param;
 	zero_coord = (*fdf)->zero_coord;
 	while ((*fdf)->zero_coord)
 	{
@@ -107,8 +109,8 @@ void	free_fdf(t_fdf *fdf)
 		free_coords(&fdf->zero_coord);
 	if (fdf->dimensions != NULL)
 		free(fdf->dimensions);
-	if (fdf->origin != NULL)
-		free(fdf->origin);
+	if (fdf->position != NULL)
+		free(fdf->position);
 	if (fdf->scale != NULL)
 		free(fdf->scale);
 	free(fdf);

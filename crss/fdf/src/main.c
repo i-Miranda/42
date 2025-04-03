@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:02:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/03 11:13:30 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:37:31 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char *argv[])
 
 	if (argc != 2)
 		exit(EXIT_FAILURE);
-	mlx_set_setting(MLX_MAXIMIZED, true);	
+	mlx_set_setting(MLX_MAXIMIZED, false);	
 	if (!(mlx = mlx_init(SCRN_WDTH, SCRN_HGHT, "FDF", true)))
 	{
 		puts(mlx_strerror(mlx_errno));
@@ -43,19 +43,21 @@ int	main(int argc, char *argv[])
 		puts(mlx_strerror(mlx_errno));
 		return(EXIT_FAILURE);
 	}
-	parse_fdf(argv[1], &fdf);
+	parse_fdf(argv[1], &fdf, &mlx, &img);
 	if (fdf == NULL)
 		end_fdf(&mlx, &img, &fdf, EXIT_FAILURE);
 	ft_printf("FDF DIMENSIONS: %d,%d,%d\n", (int)fdf->dimensions->x, (int)fdf->dimensions->y, (int)fdf->dimensions->z);
-	fdf->scale->x = 10;
-	fdf->scale->y = 10;
-	fdf->scale->z = 10;
+	fdf->scale->x = 20;
+	fdf->scale->y = 20;
+	fdf->scale->z = 20;
 	update_fdf(&fdf);
 	print_fdf(&fdf);
-	render_fdf(img, &fdf);
+	render_fdf(&fdf);
 	if (!img || mlx_image_to_window(mlx, img, 0, 0) < 0)
 		ft_error();
-	mlx_loop_hook(mlx, input_hook, mlx);
+	mlx_loop_hook(mlx, input_hook, fdf);
+	mlx_loop_hook(mlx, update_fdf, &fdf);
+	mlx_loop_hook(mlx, render_fdf, &fdf);
 	mlx_loop(mlx);
 	end_fdf(&mlx, &img, &fdf, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:19:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/02 22:27:30 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:41:43 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void	parse_fd(int fd, t_fdf **fdf)
 	}
 }
 
-void	parse_fdf(char *fdf_path, t_fdf **fdf)
+void	parse_fdf(char *fdf_path, t_fdf **fdf, mlx_t **mlx, mlx_image_t **img)
 {
 	t_coord *coord;
 	int		fd;	
@@ -116,8 +116,10 @@ void	parse_fdf(char *fdf_path, t_fdf **fdf)
 		coord = coord->next_x;
 		col_count++;
 	}
+	(*fdf)->mlx = mlx;
+	(*fdf)->img = img;
 	(*fdf)->dimensions = init_vertex(col_count, row_count, 0);
-	(*fdf)->origin = init_vertex(0, 0, 0);
+	(*fdf)->position = init_vertex(0, 0, 0);
 	(*fdf)->scale = init_vertex(1.0, 1.0, 1.0);
 	close(fd);
 }
