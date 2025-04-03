@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:05:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/03/30 09:26:45 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:13:59 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,16 @@
 # include <stdbool.h>
 # include <math.h>
 
+
 # include "MLX42.h"
 # include "MLX42_Int.h"
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
 
-# define SCRN_WDTH 640;
-# define SCRN_HGHT 480;
-# define CHAR_DIMS 64;
+# define SCRN_WDTH 640
+# define SCRN_HGHT 480
+# define CHAR_DIMS 64
 
 typedef struct s_coord
 {
@@ -52,7 +53,8 @@ typedef struct s_fdf
 
 // Render functions
 int		get_rgba(int r, int g, int b, int a);
-void	vtxpnt_rcsv(mlx_image_t *img, t_coord *coord);
+void	crdpnt_rcsv(mlx_image_t *img, t_coord *coord);
+void	render_fdf(mlx_image_t *img, t_fdf **fdf);
 
 // Input functions
 void	input_hook(void *mlx_param);
@@ -65,13 +67,14 @@ void	parse_fdf(char *fdf_path, t_fdf **fdf);
 
 // fdf	functions
 t_fdf	*init_fdf(int origin_x, int origin_y, char *z_str);
-void	print_fdf(t_fdf *fdf);
+void	update_fdf(t_fdf **fdf);
+void	print_fdf(t_fdf **fdf);
 void	free_fdf(t_fdf *fdf);
 
 // Vertex functions
 void		vector_slope(vertex_t *start, vertex_t *end, int scale);
 vertex_t	*init_vertex(float x, float y, float z);
-void		free_coord(t_coord *coord);
+void		free_coord(t_coord **coord);
 t_coord		*init_coord(int x, int y, char *z_str);
 
 #endif

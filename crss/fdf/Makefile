@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 08:58:47 by ivmirand          #+#    #+#              #
-#    Updated: 2025/03/31 12:41:34 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/04/02 00:31:56 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ ifeq ($(NOFLAGS), 1)
 	CCFLAGS :=
 	DBFLAGS :=
 else 
-	CCFLAGS	:= -Wextra -Wall -Werror # -Wunreachable-code -Ofast
+	CCFLAGS	:= -Wextra -Wall -Werror #-Wunreachable-code -Ofast
 endif
 
 ##################################################

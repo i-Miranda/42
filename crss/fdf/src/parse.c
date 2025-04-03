@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:19:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/03/31 02:34:05 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/02 22:27:30 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,8 @@ static int parse_row(int row_count, char **split, t_fdf **fdf)
 
 static void	parse_fd(int fd, t_fdf **fdf)
 {
-	char	**nnl_split;
+	char	**nl_split;
 	char 	*next_line; 
-	char 	*no_next_line; 
 	int		row_count;
 
 	next_line = get_next_line(fd);
@@ -84,12 +83,10 @@ static void	parse_fd(int fd, t_fdf **fdf)
 	row_count = 0;
 	while (next_line)
 	{
-		no_next_line = ft_substr(next_line, 0, ft_strlen(next_line) - 1);
+		nl_split = ft_split(next_line, ' ');
 		free(next_line);
-		nnl_split = ft_split(no_next_line, ' ');
-		free(no_next_line);
-		parse_row(row_count, nnl_split, fdf);
-		ft_free_split(nnl_split);
+		parse_row(row_count, nl_split, fdf);
+		ft_free_split(nl_split);
 		if (row_count > 0)
 			link_rows(row_count, fdf);
 		next_line = get_next_line(fd);
@@ -107,8 +104,8 @@ void	parse_fdf(char *fdf_path, t_fdf **fdf)
 	fd = open(fdf_path, O_RDONLY);
 	parse_fd(fd, fdf);
 	coord = (*fdf)->zero_coord;
-	row_count = 0;
-	col_count = 0;
+	row_count = 1;
+	col_count = 1;
 	while (coord->next_y != NULL)
 	{
 		coord = coord->next_y;

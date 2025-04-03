@@ -6,31 +6,33 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:23 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/03/31 02:35:29 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/02 22:27:03 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "FDF.h"
 
-static void free_coords(t_coord *start)
+static void free_coords(t_coord **start)
 {
-	t_coord *row;
-	t_coord *col;
+	t_coord *next_y;
+	t_coord *next_x;
 
 	if (start == NULL)
 		return;
-	while (start != NULL)
+	while (start)
 	{
-		row = start;
-		while (row != NULL)
+		if (*start == NULL)
+			break;
+		next_y = (*start)->next_y;
+		while (*start)
 		{
-			col = row->next_x;
-			free_coord(row);
-			row = col;
+			next_x = (*start)->next_x;
+			free_coord(start);
+			*start = next_x;	
 		}
-		col = start->next_y;
-		start = col;
+		*start = next_y;	
 	}
+	free(*start);
 }
 
 t_fdf	*init_fdf(int origin_x, int origin_y, char *z_str)
@@ -44,36 +46,57 @@ t_fdf	*init_fdf(int origin_x, int origin_y, char *z_str)
 	return (fdf);
 }
 
-void	print_fdf(t_fdf *fdf)
+void	update_fdf(t_fdf **fdf)
 {
-	t_coord *temp;
-	int	x;
-	int y;
-	int y_times;
+	t_coord *zero_coord;
+	t_coord *next_y;
+	t_coord *next_x;
 	
 	if (fdf == NULL)
 		return ;
-	temp = fdf->zero_coord;
-	y = 0;
-	while (y < fdf->dimensions->y)
+	zero_coord = (*fdf)->zero_coord;
+	while ((*fdf)->zero_coord)
 	{
-		y_times = 0;
-		while (y_times < y)
+		if ((*fdf)->zero_coord == NULL)
+			break;
+		next_y = (*fdf)->zero_coord->next_y;
+		while ((*fdf)->zero_coord)
 		{
-			temp = temp->next_y;
-			y_times++;
+			next_x = (*fdf)->zero_coord->next_x;
+			(*fdf)->zero_coord->world->x = (*fdf)->zero_coord->local->x * (*fdf)->scale->x;
+			(*fdf)->zero_coord->world->y = (*fdf)->zero_coord->local->y * (*fdf)->scale->y;
+			(*fdf)->zero_coord->world->z = (*fdf)->zero_coord->local->z * (*fdf)->scale->z;
+			(*fdf)->zero_coord = next_x;
 		}
-		x = 0;
-		while (x < fdf->dimensions->x)
-		{
-			ft_printf("%d ", (int)temp->local->z);
-			temp = temp->next_x;
-			x++;
-		}
-		ft_printf("%c", '\n');
-		temp = fdf->zero_coord;
-		y++;
+		(*fdf)->zero_coord = next_y;
 	}
+	(*fdf)->zero_coord = zero_coord;
+}
+
+void	print_fdf(t_fdf **fdf)
+{
+	t_coord *zero_coord;
+	t_coord *next_y;
+	t_coord *next_x;
+	
+	if (fdf == NULL)
+		return ;
+	zero_coord = (*fdf)->zero_coord;
+	while ((*fdf)->zero_coord)
+	{
+		if ((*fdf)->zero_coord == NULL)
+			break;
+		next_y = (*fdf)->zero_coord->next_y;
+		while ((*fdf)->zero_coord)
+		{
+			next_x = (*fdf)->zero_coord->next_x;
+			ft_printf("%d ", (int)(*fdf)->zero_coord->world->z);
+			(*fdf)->zero_coord = next_x;
+		}
+		ft_printf("\n");
+		(*fdf)->zero_coord = next_y;
+	}
+	(*fdf)->zero_coord = zero_coord;
 }
 
 void	free_fdf(t_fdf *fdf)
@@ -81,7 +104,7 @@ void	free_fdf(t_fdf *fdf)
 	if (fdf == NULL)
 		return ;
 	if (fdf->zero_coord != NULL)
-		free_coords(fdf->zero_coord);
+		free_coords(&fdf->zero_coord);
 	if (fdf->dimensions != NULL)
 		free(fdf->dimensions);
 	if (fdf->origin != NULL)
