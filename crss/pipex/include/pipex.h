@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:09:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/16 01:05:00 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:15:37 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,13 @@
 # define ERR_NONE 0
 # define ERR_GNRL -1
 # define ERR_INPT -2
-# define ERR_PIPE -3
-# define ERR_OPNI -4
-# define ERR_OPNO -5
-# define ERR_FORK -6
-# define ERR_INFL -7
-# define ERR_CHMI -8 
-# define ERR_CHMO -10 
-# define ERR_CHMD -9 
+# define ERR_OPNI -3
+# define ERR_CHMD -4 
+# define ERR_CHMI -5 
+# define ERR_CHMO -6 
 # define ERR_MLLC 12
+# define ERR_OPNO 126 
 # define ERR_NCMD 127
-# define ERR_NULL 126
 
 //desired argc
 # define ARGC 4
@@ -74,13 +70,9 @@ typedef struct s_pipex
 {
 	char	***cmds;
 	char	**path_split;
-	char	*path;
 	char	*no_such_file;
 	char	*no_such_cmd;
 	int		pipe_fd[2];
-	pid_t	pid;
-	pid_t	pid2;
-	int		pid_status;
 	int		in_fd;
 	int		of_fd;
 }	t_pipex;
@@ -88,13 +80,18 @@ typedef struct s_pipex
 //pipex functions
 int		pipex(int argc, char **argv, char **envp);
 
+//pipex functions
+void	init_pipex(t_pipex **pipex, int argc, char **argv, char **envp);
+void	close_fds(t_pipex *pipex);
+int		wait_and_close(t_pipex *pipex, pid_t pid1, pid_t pid2);
+
+//pipex_errors functions
+void	return_error(int error, t_pipex *pipex, int exitbool);
+
 //pipex_utils functions
 void	free_pipex(t_pipex *pipex);
-void	fd_close_wait(t_pipex *pipex);
 char	***split_cmds(int argc, char **argv);
 char	*get_path(char **envp);
 char	*build_cmd_path(char **path_split, char *cmd);
 
-//pipex_errors functions
-void	return_error(int error, t_pipex *pipex, int exitbool);
 #endif
