@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:19:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/03 15:41:43 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:19:57 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static int parse_row(int row_count, char **split, t_fdf **fdf)
 {
 	t_coord *coord;
 
-	if (row_count == 0)
-		*fdf = init_fdf(0, row_count, split[0]);
+	if ((*fdf)->zero_coord == NULL)
+		(*fdf)->zero_coord = init_coord(0, 0, split[0]);
 	coord = (*fdf)->zero_coord;
 	while (coord->next_y != NULL)
 		coord = coord->next_y;
@@ -71,7 +71,7 @@ static int parse_row(int row_count, char **split, t_fdf **fdf)
 	return (parse_columns(row_count, split, fdf));
 }
 
-static void	parse_fd(int fd, t_fdf **fdf)
+void	parse_fd(int fd, t_fdf **fdf)
 {
 	char	**nl_split;
 	char 	*next_line; 
@@ -92,34 +92,4 @@ static void	parse_fd(int fd, t_fdf **fdf)
 		next_line = get_next_line(fd);
 		row_count++;
 	}
-}
-
-void	parse_fdf(char *fdf_path, t_fdf **fdf, mlx_t **mlx, mlx_image_t **img)
-{
-	t_coord *coord;
-	int		fd;	
-	int		col_count;	
-	int		row_count;	
-
-	fd = open(fdf_path, O_RDONLY);
-	parse_fd(fd, fdf);
-	coord = (*fdf)->zero_coord;
-	row_count = 1;
-	col_count = 1;
-	while (coord->next_y != NULL)
-	{
-		coord = coord->next_y;
-		row_count++;
-	}
-	while (coord->next_x != NULL)
-	{
-		coord = coord->next_x;
-		col_count++;
-	}
-	(*fdf)->mlx = mlx;
-	(*fdf)->img = img;
-	(*fdf)->dimensions = init_vertex(col_count, row_count, 0);
-	(*fdf)->position = init_vertex(0, 0, 0);
-	(*fdf)->scale = init_vertex(1.0, 1.0, 1.0);
-	close(fd);
 }

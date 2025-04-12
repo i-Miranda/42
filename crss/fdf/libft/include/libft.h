@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:36:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/03/18 16:03:50 by ivan             ###   ########.fr       */
+/*   Updated: 2025/04/08 12:26:22 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 // Custom
 
 // ft_atoi.c
+int		ft_atoi_base(const char *str, int base);
 long	ft_atol(const char *str);
 // ft_split.c
 void	*ft_free_split(char **strarray);

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:01:16 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/03 16:37:54 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:25:14 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,63 +17,55 @@ int	get_rgba(int r, int g, int b, int a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-static	void paint_line(mlx_image_t *img, t_coord *start, t_coord *end)
+int	rgb_to_rgba(int rgb, int a)
 {
-	vertex_t distance;
+	return (rgb << 8 | a);
+}
 
-	distance.x = start->world->x;	
-	distance.y = start->world->y;
-	if (end != NULL && start->world->z != 0 && end->world->z != 0)
+int		lerp(int start, int current, int end)
+{
+	int	full;
+	int	partial;
+	int	percent;
+
+	full = start - end;
+	partial = current - end;
+	percent = (partial / full) * 100;
+
+	return (percent);
+}
+
+void	render_bg(t_fdf *fdf)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while ((unsigned int)y < (*fdf->img)->height)
 	{
-		ft_printf("paint_line: %d,%d to %d,%d\n", (int)start->world->x, (int)start->world->y,
-				(int)end->world->x, (int)end->world->y);
-		while (distance.x != end->world->x || distance.y != end->world->y)
+		x = 0;
+		while ((unsigned int)x < (*fdf->img)->width)
 		{
-			mlx_put_pixel(img, distance.x, distance.y,
-				get_rgba(0, 0, 255, 255));
-			if (distance.x != end->world->x)
-				distance.x++;
-			if (distance.y != end->world->y)
-				distance.y++;
-		}	
-	}
-	else
-	{
-		mlx_put_pixel(img, distance.x, distance.y,
-			get_rgba(255, 0, 0, 255));
+			mlx_put_pixel(*fdf->img, (unsigned int)x, (unsigned int)y, 0x000000FF);
+			x++;
+		}
+		y++;
 	}
 }
 
 void	render_fdf(void *fdf_param)
 {
 	t_fdf	**fdf;
-	t_coord *zero_coord;
-	t_coord *next_y;
-	t_coord *next_x;
-	
-	if (fdf_param == NULL)
-		return ;
+
 	fdf = (t_fdf **)fdf_param;
-	zero_coord = (*fdf)->zero_coord;
-	//mlx_delete_image(*(*fdf)->mlx, *(*fdf)->img);
-	//if (!(*(*fdf)->img = mlx_new_image(*(*fdf)->mlx, 640, 480)))
-	//{
-	//	puts(mlx_strerror(mlx_errno));
-	//	return ;
-	//}
-	while ((*fdf)->zero_coord)
-	{
-		if ((*fdf)->zero_coord == NULL)
-			break;
-		next_y = (*fdf)->zero_coord->next_y;
-		while ((*fdf)->zero_coord)
-		{
-			next_x = (*fdf)->zero_coord->next_x;
-			paint_line(*(*fdf)->img, (*fdf)->zero_coord, (*fdf)->zero_coord->next_x);
-			paint_line(*(*fdf)->img, (*fdf)->zero_coord, (*fdf)->zero_coord->next_y);
-			(*fdf)->zero_coord = next_x;
-		}
-		(*fdf)->zero_coord = next_y;
-	}
-	(*fdf)->zero_coord = zero_coord;
+//	if (((unsigned int)(*fdf)->zero_coord->world->x <= (*(*fdf)->img)->width && (int)(*fdf)->zero_coord->world->x >= 0) 
+//		&& ((unsigned int)(*fdf)->zero_coord->world->y <= (*(*fdf)->img)->height && (int)(*fdf)->zero_coord->world->y >= 0))
+//	{
+//		if (((unsigned int)(*fdf)->zero_coord->next_x->world->x <= (*(*fdf)->img)->width && (int)(*fdf)->zero_coord->next_x->world->x >= 0) 
+//			&& ((unsigned int)(*fdf)->zero_coord->next_x->world->y <= (*(*fdf)->img)->height && (int)(*fdf)->zero_coord->next_x->world->y >= 0))
+		bresenham((*fdf)->zero_coord, (*fdf)->zero_coord->next_x, (*fdf)->img);
+//		if (((unsigned int)(*fdf)->zero_coord->next_x->world->x <= (*(*fdf)->img)->width && (int)(*fdf)->zero_coord->next_x->world->x >= 0) 
+//			&& ((unsigned int)(*fdf)->zero_coord->next_x->world->y <= (*(*fdf)->img)->height && (int)(*fdf)->zero_coord->next_x->world->y >= 0))
+		bresenham((*fdf)->zero_coord, (*fdf)->zero_coord->next_y, (*fdf)->img);
+//	}
 }

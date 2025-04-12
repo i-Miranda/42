@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:05:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/03 15:45:49 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:25:44 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 
-# define SCRN_WDTH 640
-# define SCRN_HGHT 480
+# define SCRN_WDTH 960
+# define SCRN_HGHT 540
 # define CHAR_DIMS 64
 
 typedef struct s_coord
@@ -44,7 +44,8 @@ typedef struct s_coord
 typedef struct s_fdf
 {
 	mlx_t		**mlx;
-	mlx_image_t **img;
+	mlx_image_t	**img;
+	mlx_image_t	**bg;
 	t_coord		*zero_coord;
 	vertex_t	*dimensions;
 	vertex_t	*position;
@@ -53,29 +54,38 @@ typedef struct s_fdf
 }	t_fdf;
 
 // Render functions
-int		get_rgba(int r, int g, int b, int a);
-void	crdpnt_rcsv(mlx_image_t *img, t_coord *coord);
-void	render_fdf(void *fdf_param);
+int			get_rgba(int r, int g, int b, int a);
+int			rgb_to_rgba(int rgb, int a);
+int			lerp(int start, int current, int end);
+void		render_bg(t_fdf *fdf);
+void		render_fdf(void *fdf_param);
+
+// Bresenham functions
+void		bresenham(t_coord *start, t_coord *end, mlx_image_t **img);
 
 // Input functions
-void	input_hook(void *fdf_param);
+void		input_hook(void *fdf_param);
 
 // Error functions
-void	ft_error(void);
+void		ft_error(void);
 
 // Parse functions
-void	parse_fdf(char *fdf_path, t_fdf **fdf, mlx_t **mlx, mlx_image_t **img);
+void		parse_fd(int fd, t_fdf **fdf);
 
 // fdf	functions
-t_fdf	*init_fdf(int origin_x, int origin_y, char *z_str);
-void	update_fdf(void *fdf_param);
-void	print_fdf(t_fdf **fdf);
-void	free_fdf(t_fdf *fdf);
+void		init_fdf(t_fdf **fdf, mlx_t **mlx, mlx_image_t **img, mlx_image_t **bg);
+void		update_fdf(void *fdf_param);
+//void		print_fdf(void *fdf_param);
+void		parse_fdf(char *fdf_path, t_fdf **fdf);
+void		free_fdf(t_fdf *fdf);
 
 // Vertex functions
-void		vector_slope(vertex_t *start, vertex_t *end, int scale);
 vertex_t	*init_vertex(float x, float y, float z);
 void		free_coord(t_coord **coord);
 t_coord		*init_coord(int x, int y, char *z_str);
 
+// Hook functions
+void		iterate_fdf(t_fdf **fdf, void (*f)(void *));
+void		update_hook(void *fdf_param);
+void		render_hook(void *fdf_param);
 #endif
