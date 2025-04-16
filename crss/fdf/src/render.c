@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:01:16 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/09 22:25:14 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:53:06 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,26 @@ int		lerp(int start, int current, int end)
 	int	partial;
 	int	percent;
 
+	if (start == end)
+		return (start);
 	full = start - end;
 	partial = current - end;
 	percent = (partial / full) * 100;
-
 	return (percent);
 }
 
 void	render_bg(t_fdf *fdf)
 {
-	int	x;
-	int	y;
+	unsigned int	x;
+	unsigned int	y;
 
 	y = 0;
-	while ((unsigned int)y < (*fdf->img)->height)
+	while (y < (*fdf->img)->height)
 	{
 		x = 0;
-		while ((unsigned int)x < (*fdf->img)->width)
+		while (x < (*fdf->img)->width)
 		{
-			mlx_put_pixel(*fdf->img, (unsigned int)x, (unsigned int)y, 0x000000FF);
+			mlx_put_pixel(*fdf->img, x, y, 0x000000FF);
 			x++;
 		}
 		y++;
@@ -56,16 +57,19 @@ void	render_bg(t_fdf *fdf)
 void	render_fdf(void *fdf_param)
 {
 	t_fdf	**fdf;
+	vertex_t	bb;
 
 	fdf = (t_fdf **)fdf_param;
-//	if (((unsigned int)(*fdf)->zero_coord->world->x <= (*(*fdf)->img)->width && (int)(*fdf)->zero_coord->world->x >= 0) 
-//		&& ((unsigned int)(*fdf)->zero_coord->world->y <= (*(*fdf)->img)->height && (int)(*fdf)->zero_coord->world->y >= 0))
-//	{
-//		if (((unsigned int)(*fdf)->zero_coord->next_x->world->x <= (*(*fdf)->img)->width && (int)(*fdf)->zero_coord->next_x->world->x >= 0) 
-//			&& ((unsigned int)(*fdf)->zero_coord->next_x->world->y <= (*(*fdf)->img)->height && (int)(*fdf)->zero_coord->next_x->world->y >= 0))
-		bresenham((*fdf)->zero_coord, (*fdf)->zero_coord->next_x, (*fdf)->img);
-//		if (((unsigned int)(*fdf)->zero_coord->next_x->world->x <= (*(*fdf)->img)->width && (int)(*fdf)->zero_coord->next_x->world->x >= 0) 
-//			&& ((unsigned int)(*fdf)->zero_coord->next_x->world->y <= (*(*fdf)->img)->height && (int)(*fdf)->zero_coord->next_x->world->y >= 0))
-		bresenham((*fdf)->zero_coord, (*fdf)->zero_coord->next_y, (*fdf)->img);
-//	}
+	if ((*fdf)->zero_coord->next_x != NULL)
+	{
+		get_bounding_box((*fdf)->zero_coord->world, (*fdf)->zero_coord->next_x->world, &bb);
+		if (!(bb.u < 0 || bb.x >= SCRN_WDTH || bb.v < 0 || bb.y >= SCRN_HGHT))
+			bresenham((*fdf)->zero_coord, (*fdf)->zero_coord->next_x, (*fdf)->img);
+	}
+	if ((*fdf)->zero_coord->next_y != NULL)
+	{
+		get_bounding_box((*fdf)->zero_coord->world, (*fdf)->zero_coord->next_y->world, &bb);
+		if (!(bb.u < 0 || bb.x >= SCRN_WDTH || bb.v < 0 || bb.y >= SCRN_HGHT))
+			bresenham((*fdf)->zero_coord, (*fdf)->zero_coord->next_y, (*fdf)->img);
+	}
 }

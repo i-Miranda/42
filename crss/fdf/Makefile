@@ -6,11 +6,11 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 08:58:47 by ivmirand          #+#    #+#              #
-#    Updated: 2025/04/06 21:02:31 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/04/16 19:08:48 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := FDF
+NAME := fdf
 
 INC := include
 
@@ -39,6 +39,7 @@ SOURCES	:= main.c \
 	vertex.c \
 	hooks.c \
 	bresenham.c \
+	collision.c \
 	error.c
 
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
@@ -88,7 +89,7 @@ $(NAME): $(OBJ_O)
 
 clean:
 	@printf "Wiping static libraries and their respective objs: $(LIBFT).a and libmlx42.a\n"
-	@rm -rf $(OBJ_O)
+	@rm -rf $(OUTPUT)
 	@rm -rf $(LIBMLX)/build
 	@rm -rf $(LIBFT)/src/output
 	@rm -rf $(LIBFT_A)

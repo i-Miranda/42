@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:05:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/09 22:25:44 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/16 19:07:56 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,10 @@ typedef struct s_fdf
 {
 	mlx_t		**mlx;
 	mlx_image_t	**img;
-	mlx_image_t	**bg;
 	t_coord		*zero_coord;
 	vertex_t	*dimensions;
 	vertex_t	*position;
 	vertex_t	*scale;
-	float		angle;
 }	t_fdf;
 
 // Render functions
@@ -71,17 +69,19 @@ void		ft_error(void);
 
 // Parse functions
 void		parse_fd(int fd, t_fdf **fdf);
+int			parse_fdf(char *fdf_path, t_fdf **fdf);
+
+// Collision functions
+void		get_bounding_box(vertex_t *start, vertex_t *end, vertex_t *bb);
 
 // fdf	functions
-void		init_fdf(t_fdf **fdf, mlx_t **mlx, mlx_image_t **img, mlx_image_t **bg);
+void		init_fdf(t_fdf **fdf, mlx_t **mlx, mlx_image_t **img);
 void		update_fdf(void *fdf_param);
-//void		print_fdf(void *fdf_param);
-void		parse_fdf(char *fdf_path, t_fdf **fdf);
 void		free_fdf(t_fdf *fdf);
 
 // Vertex functions
 vertex_t	*init_vertex(float x, float y, float z);
-void		free_coord(t_coord **coord);
+void		free_coord(t_coord *coord);
 t_coord		*init_coord(int x, int y, char *z_str);
 
 // Hook functions
