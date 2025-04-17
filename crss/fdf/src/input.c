@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:09:36 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 12:51:12 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 21:10:04 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ static void	update_height(t_fdf *fdf, int *key_down)
 {
 	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_K))
 	{
-		transform_vertex(fdf->scale, -1, -1, "PRESSING UP");
+		transform_vertex(fdf->scale, -1, 1, "PRESSING UP");
 		*key_down = 1;
 	}
 	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_J))
 	{
-		transform_vertex(fdf->scale, -1, 1, "PRESSING DOWN");
+		transform_vertex(fdf->scale, -1, -1, "PRESSING DOWN");
 		*key_down = 1;
 	}
 }
@@ -91,6 +91,7 @@ void	input_hook(void *fdf_param)
 	int		key_down;
 
 	fdf = (t_fdf *)fdf_param;
+	key_down = 0;
 	update_position(fdf, &key_down);
 	update_scale(fdf, &key_down);
 	update_height(fdf, &key_down);

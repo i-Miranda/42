@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 14:56:23 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 12:51:30 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:12:39 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ t_coord	*init_coord(int x, int y, char *z_str)
 	}
 	if (color_split[1] != NULL)
 		coord->color_hex = rgb_to_rgba(ft_atoi_base(color_split[1], 16), 0xFF);
+	else if (coord->local->z != 0)
+		coord->color_hex = get_rgba((char)coord->local->x * 10,
+				(char)coord->local->y * 10, (char)coord->local->z * 10, 255);
 	else
 		coord->color_hex = 0xFFFFFFFF;
 	ft_free_split(color_split);

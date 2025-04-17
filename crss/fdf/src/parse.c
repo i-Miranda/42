@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:19:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 12:51:05 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:40:24 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,13 @@ static int	parse_row(int row_count, char **split, t_fdf **fdf)
 	t_coord	*coord;
 
 	if ((*fdf)->zero_coord == NULL)
-	{
 		(*fdf)->zero_coord = init_coord(0, 0, split[0]);
-		if ((*fdf)->zero_coord->local->z > (*fdf)->dimensions->z)
-			(*fdf)->dimensions->z = (*fdf)->zero_coord->local->z;
-	}
 	coord = (*fdf)->zero_coord;
 	while (coord->next_y != NULL)
 		coord = coord->next_y;
 	if (row_count != 0)
 	{
 		coord->next_y = init_coord(0, row_count, split[0]);
-		if ((*fdf)->zero_coord->local->z > (*fdf)->dimensions->z)
-			(*fdf)->dimensions->z = (*fdf)->zero_coord->local->z;
 		coord = coord->next_y;
 	}
 	return (parse_columns(row_count, split, fdf));
@@ -103,7 +97,7 @@ void	parse_fd(int fd, t_fdf **fdf)
 
 int	parse_fdf(char *fdf_path, t_fdf **fdf)
 {
-	t_coord *coord;
+	t_coord	*coord;
 	int		fd;
 	int		col_count;
 	int		row_count;
@@ -125,8 +119,5 @@ int	parse_fdf(char *fdf_path, t_fdf **fdf)
 		coord = coord->next_x;
 		col_count++;
 	}
-	(*fdf)->dimensions->x = col_count;
-	(*fdf)->dimensions->y = row_count;
-	close(fd);
-	return (0);
+	return (close(fd));
 }

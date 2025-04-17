@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:23 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 12:51:24 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 20:06:45 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	update_fdf(void *fdf_param)
 	(*fdf)->zero_coord->world->y = (*fdf)->position->y
 		+ ((*fdf)->zero_coord->local->x + (*fdf)->zero_coord->local->y)
 		* (*fdf)->scale->y;
-	(*fdf)->zero_coord->world->z = (*fdf)->zero_coord->local->z * (*fdf)->scale->z;
+	(*fdf)->zero_coord->world->z = (*fdf)->zero_coord->local->z
+		* (*fdf)->scale->z;
 	(*fdf)->zero_coord->world->y -= (*fdf)->zero_coord->world->z;
 }
 
@@ -41,8 +42,6 @@ void	free_fdf(t_fdf *fdf)
 		return ;
 	if (fdf->zero_coord != NULL)
 		iterate_fdf(&fdf, free_coords);
-	if (fdf->dimensions != NULL)
-		free(fdf->dimensions);
 	if (fdf->position != NULL)
 		free(fdf->position);
 	if (fdf->scale != NULL)
@@ -59,7 +58,6 @@ void	init_fdf(t_fdf **fdf, mlx_t **mlx, mlx_image_t **img)
 	(*fdf)->mlx = mlx;
 	(*fdf)->img = img;
 	(*fdf)->zero_coord = NULL;
-	(*fdf)->dimensions = init_vertex(0, 0, 0);
-	(*fdf)->position = init_vertex(SCRN_WDTH / 2, SCRN_HGHT / 2, 0);
-	(*fdf)->scale = init_vertex(10, 1, 4);
+	(*fdf)->position = init_vertex(SCRN_WDTH / 2, 0, 0);
+	(*fdf)->scale = init_vertex(1, 1, 1);
 }

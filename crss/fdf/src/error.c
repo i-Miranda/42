@@ -6,14 +6,14 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:23:33 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 12:51:26 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 20:08:15 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_error(void)
+void	ft_error(char *msg)
 {
-	fprintf(stderr, "%s\n", mlx_strerror(mlx_errno));
+	ft_printf("%s\n", msg);
 	exit(EXIT_FAILURE);
 }

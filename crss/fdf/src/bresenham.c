@@ -6,98 +6,101 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:29:18 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 12:51:35 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 21:09:37 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	safe_put_pixel(vertex_t vtx, mlx_image_t **img, int color)
+static int	calc_distance(int *d_x, int *d_y, vertex_t start, vertex_t end)
 {
-	if (((unsigned int)vtx.x < (*img)->width && (int)vtx.x >= 0)
-		&& ((unsigned int)vtx.y < (*img)->height && (int)vtx.y >= 0))
-		mlx_put_pixel(*img, vtx.x, vtx.y, color);
+	*d_x = end.x - start.x;
+	*d_y = end.y - start.y;
+	return (1);
 }
 
-static void	paint_low(vertex_t start, vertex_t end, mlx_image_t **img, int clr)
+static void	paint_low(t_coord start, t_coord end, mlx_image_t **img)
 {
-	int	distance_x;
-	int	distance_y;
-	int	yi;
-	int	bresenham;
+	int			distance_x;
+	int			distance_y;
+	int			yi;
+	int			bresenham;
+	vertex_t	vtx;
 
-	distance_x = end.x - start.x;
-	distance_y = end.y - start.y;
-	yi = 1;
+	yi = calc_distance(&distance_x, &distance_y, *start.world, *end.world);
+	vtx = *start.world;
 	if (distance_y < 0)
 	{
 		yi = -1;
 		distance_y *= -1;
 	}
 	bresenham = (2 * distance_y) - distance_x;
-	while (start.x != end.x)
+	vtx.v = fabsf(end.world->x - start.world->x);
+	while (vtx.x != end.world->x)
 	{
-		safe_put_pixel(start, img, clr);
+		vtx.u = fabsf(vtx.x++ - start.world->x) / vtx.v;
+		safe_put_pixel(vtx, img, start.color_hex, end.color_hex);
 		if (bresenham > 0)
 		{
-			start.y += yi;
+			vtx.y += yi;
 			bresenham += 2 * (distance_y - distance_x);
 		}
 		else
 			bresenham += 2 * distance_y;
-		start.x++;
 	}
 }
 
-static void	paint_high(vertex_t start, vertex_t end, mlx_image_t **img, int clr)
+static void	paint_high(t_coord start, t_coord end, mlx_image_t **img)
 {
-	int	distance_x;
-	int	distance_y;
-	int	xi;
-	int	bresenham;
+	int			distance_x;
+	int			distance_y;
+	int			xi;
+	int			bresenham;
+	vertex_t	vtx;
 
-	distance_x = end.x - start.x;
-	distance_y = end.y - start.y;
-	xi = 1;
+	xi = calc_distance(&distance_x, &distance_y, *start.world, *end.world);
+	vtx = *start.world;
 	if (distance_x < 0)
 	{
 		xi = -1;
 		distance_x *= -1;
 	}
 	bresenham = (2 * distance_x) - distance_y;
-	while (start.y != end.y)
+	vtx.v = fabsf(end.world->y - start.world->y);
+	while (vtx.y != end.world->y)
 	{
-		safe_put_pixel(start, img, clr);
+		vtx.u = fabsf(vtx.y++ - start.world->y) / vtx.v;
+		safe_put_pixel(vtx, img, start.color_hex, end.color_hex);
 		if (bresenham > 0)
 		{
-			start.x += xi;
+			vtx.x += xi;
 			bresenham += 2 * (distance_x - distance_y);
 		}
 		else
 			bresenham += 2 * distance_x;
-		start.y++;
 	}
 }
 
-void bresenham(t_coord *start, t_coord *end, mlx_image_t **img)
+void	bresenham(t_coord *start, t_coord *end, mlx_image_t **img)
 {
 	if (end == NULL)
-		safe_put_pixel(*start->world, img, start->color_hex);
+		safe_put_pixel(*start->world, img, start->color_hex, start->color_hex);
 	else
 	{
-		if (fabsf(end->world->y - start->world->y) < fabsf(end->world->x - start->world->x))
+		if (fabsf(end->world->y - start->world->y)
+			< fabsf(end->world->x - start->world->x))
 		{
 			if (start->world->x > end->world->x)
-				paint_low(*(end->world), *(start->world), img, start->color_hex); 	
+				paint_low(*end, *start, img);
 			else
-				paint_low(*(start->world), *(end->world), img, start->color_hex); 	
+				paint_low(*start, *end, img);
 		}
 		else
 		{
 			if (start->world->y > end->world->y)
-				paint_high(*(end->world), *(start->world), img, start->color_hex); 	
+				paint_high(*end, *start, img);
 			else
-				paint_high(*(start->world), *(end->world), img, start->color_hex); 	
+				paint_high(*start, *end, img);
 		}
 	}
 }

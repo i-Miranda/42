@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:05:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 12:31:59 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 21:09:22 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,19 @@ typedef struct s_fdf
 	mlx_t		**mlx;
 	mlx_image_t	**img;
 	t_coord		*zero_coord;
-	vertex_t	*dimensions;
 	vertex_t	*position;
 	vertex_t	*scale;
 }	t_fdf;
 
 // Render functions
-int			get_rgba(int r, int g, int b, int a);
-int			rgb_to_rgba(int rgb, int a);
-int			lerp(int start, int current, int end);
 void		render_bg(t_fdf *fdf, int color);
 void		render_fdf(void *fdf_param);
+
+// color functions
+void	safe_put_pixel(vertex_t vtx, mlx_image_t **img, int clr, int clr2);
+int		lerp_rgba(int start, int end, float percent);
+int		rgb_to_rgba(int rgb, int a);
+int		get_rgba(int r, int g, int b, int a);
 
 // bresenham functions
 void		bresenham(t_coord *start, t_coord *end, mlx_image_t **img);
@@ -65,7 +67,7 @@ void		bresenham(t_coord *start, t_coord *end, mlx_image_t **img);
 void		input_hook(void *fdf_param);
 
 // error functions
-void		ft_error(void);
+void		ft_error(char *msg);
 
 // parse functions
 void		parse_fd(int fd, t_fdf **fdf);

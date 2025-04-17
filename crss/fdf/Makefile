@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 08:58:47 by ivmirand          #+#    #+#              #
-#    Updated: 2025/04/17 12:47:42 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/04/17 20:14:09 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,10 +41,10 @@ SOURCES	:= main.c \
 	bresenham.c \
 	collision.c \
 	loading.c \
+	color.c \
 	error.c
 
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
-#OBJS := ${SRCS:.c=.o}
 
 #############DEBUGGING  RULES#####################
 
