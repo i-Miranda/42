@@ -6,11 +6,11 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 22:25:46 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 10:22:07 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:51:10 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FDF.h"
+#include "fdf.h"
 
 void	loading_fdf(int tick)
 {

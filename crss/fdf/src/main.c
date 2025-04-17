@@ -6,11 +6,11 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:02:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 12:21:28 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:51:41 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FDF.h"
+#include "fdf.h"
 
 static void	end_fdf(void *fdf_param)
 {

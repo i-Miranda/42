@@ -6,11 +6,11 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:01:16 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 11:57:48 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:51:02 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FDF.h"
+#include "fdf.h"
 
 int	get_rgba(int r, int g, int b, int a)
 {

@@ -6,11 +6,11 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:23:24 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 09:47:45 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:51:32 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FDF.h"
+#include "fdf.h"
 
 void	get_bounding_box(vertex_t *start, vertex_t *end, vertex_t *bb)
 {

@@ -6,11 +6,11 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 14:56:23 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 10:04:38 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:51:30 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FDF.h"
+#include "fdf.h"
 
 vertex_t	*init_vertex(float x, float y, float z)
 {

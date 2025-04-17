@@ -6,11 +6,11 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:29:18 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 12:00:21 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:51:35 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FDF.h"
+#include "fdf.h"
 
 static void	safe_put_pixel(vertex_t vtx, mlx_image_t **img, int color)
 {

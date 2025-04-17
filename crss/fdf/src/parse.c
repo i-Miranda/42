@@ -6,11 +6,11 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:19:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 12:29:35 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:51:05 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FDF.h"
+#include "fdf.h"
 
 static void	link_rows(int next_row, t_fdf **fdf)
 {

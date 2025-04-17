@@ -6,11 +6,11 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:09:36 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 11:54:49 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:51:12 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FDF.h"
+#include "fdf.h"
 
 static void	transform_vertex(vertex_t *vertex, int is_x, int amount, char *msg)
 {

@@ -6,11 +6,11 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:23 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 12:23:36 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:51:24 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FDF.h"
+#include "fdf.h"
 
 static void	free_coords(void *fdf_param)
 {
