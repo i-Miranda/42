@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   collision.c                                        :+:      :+:    :+:   */
+/*   loading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 10:23:24 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 09:47:45 by ivmirand         ###   ########.fr       */
+/*   Created: 2025/04/16 22:25:46 by ivmirand          #+#    #+#             */
+/*   Updated: 2025/04/17 10:22:07 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FDF.h"
 
-void	get_bounding_box(vertex_t *start, vertex_t *end, vertex_t *bb)
+void	loading_fdf(int tick)
 {
-	if (end != NULL)
-	{
-		if (start->x < end->x)
-			bb->x = start->x;
-		else
-			bb->x = end->x;
-		if (start->x > end->x)
-			bb->u = start->x;
-		else
-			bb->u = end->x;
-		if (start->y < end->y)
-			bb->y = start->y;
-		else
-			bb->y = end->y;
-		if (start->y > end->y)
-			bb->v = start->y;
-		else
-			bb->v = end->y;
-	}
+	if (tick % 4 == 0)
+		ft_printf("Loading            \r");
+	else if (tick % 4 == 1)
+		ft_printf("Loading.           \r");
+	else if (tick % 4 == 2)
+		ft_printf("Loading..          \r");
+	else if (tick % 4 == 3)
+		ft_printf("Loading...         \r");
 }

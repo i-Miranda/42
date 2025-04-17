@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 08:58:47 by ivmirand          #+#    #+#              #
-#    Updated: 2025/04/16 19:08:48 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/04/17 12:39:32 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,10 +36,11 @@ SOURCES	:= main.c \
 	input.c \
 	render.c \
 	parse.c \
-	vertex.c \
+	coord.c \
 	hooks.c \
 	bresenham.c \
 	collision.c \
+	loading.c \
 	error.c
 
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
@@ -81,6 +82,7 @@ all:
 	@make $(NAME)
 
 libmlx:
+	git clone git@github:codam-coding-college/MLX42.git
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 $(NAME): $(OBJ_O)
@@ -95,8 +97,8 @@ clean:
 	@rm -rf $(LIBFT_A)
 
 fclean: clean
-	@printf "Deleting binary: $(NAME)\n"
-	@rm -rf $(NAME)
+	rm -rf $(NAME)
+	rm -rf $(LIBMLX)
 
 re: clean all
 

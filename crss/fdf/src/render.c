@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:01:16 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/16 18:53:06 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:57:48 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	rgb_to_rgba(int rgb, int a)
 	return (rgb << 8 | a);
 }
 
-int		lerp(int start, int current, int end)
+int	lerp(int start, int current, int end)
 {
 	int	full;
 	int	partial;
@@ -36,7 +36,7 @@ int		lerp(int start, int current, int end)
 	return (percent);
 }
 
-void	render_bg(t_fdf *fdf)
+void	render_bg(t_fdf *fdf, int color)
 {
 	unsigned int	x;
 	unsigned int	y;
@@ -47,7 +47,7 @@ void	render_bg(t_fdf *fdf)
 		x = 0;
 		while (x < (*fdf->img)->width)
 		{
-			mlx_put_pixel(*fdf->img, x, y, 0x000000FF);
+			mlx_put_pixel(*fdf->img, x, y, color);
 			x++;
 		}
 		y++;
@@ -56,7 +56,7 @@ void	render_bg(t_fdf *fdf)
 
 void	render_fdf(void *fdf_param)
 {
-	t_fdf	**fdf;
+	t_fdf		**fdf;
 	vertex_t	bb;
 
 	fdf = (t_fdf **)fdf_param;

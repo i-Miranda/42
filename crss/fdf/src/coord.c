@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vertex.c                                           :+:      :+:    :+:   */
+/*   coord.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 14:56:23 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/16 18:37:11 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:04:38 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ vertex_t	*init_vertex(float x, float y, float z)
 void	free_coord(t_coord *coord)
 {
 	if (coord == NULL)
-	{
-		ft_printf("Coord is NULL: %d,%d\n", (int)coord->local->x, (int)coord->local->y);
 		return ;
-	}
-	ft_printf("Freeing coord: %d,%d\n", (int)coord->local->x, (int)coord->local->y);
+	ft_printf("Freeing coord: %d,%d\n",
+		(int)coord->local->x, (int)coord->local->y);
 	if (coord->local != NULL)
 	{
 		free(coord->local);
@@ -49,7 +47,7 @@ void	free_coord(t_coord *coord)
 
 t_coord	*init_coord(int x, int y, char *z_str)
 {
-	char 	**color_split;
+	char	**color_split;
 	t_coord	*coord;
 
 	color_split = ft_split(z_str, ',');

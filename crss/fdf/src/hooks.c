@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:48:29 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/09 18:45:53 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:14:08 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 
 void	update_hook(void *fdf_param)
 {
-	t_fdf **fdf;
+	t_fdf	**fdf;
 
 	fdf = (t_fdf **)fdf_param;
 	iterate_fdf(fdf, update_fdf);
-	render_bg(*fdf);
+	render_bg(*fdf, 0x000000FF);
 	iterate_fdf(fdf, render_fdf);
-	ft_printf("Position FDF: %d,%d\n", (int)(*fdf)->position->x, (int)(*fdf)->position->y);
+	ft_printf("Position FDF: %d,%d\n",
+		(int)(*fdf)->position->x, (int)(*fdf)->position->y);
 }
 
 void	render_hook(void *fdf_param)
 {
-	t_fdf **fdf;
+	t_fdf	**fdf;
 
 	fdf = (t_fdf **)fdf_param;
-	render_bg(*fdf);
+	render_bg(*fdf, 0x000000FF);
 	iterate_fdf(fdf, render_fdf);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:29:18 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/16 16:18:14 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:00:21 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	safe_put_pixel(vertex_t vtx, mlx_image_t **img, int color)
 {
 	if (((unsigned int)vtx.x < (*img)->width && (int)vtx.x >= 0)
-			&& ((unsigned int)vtx.y < (*img)->height && (int)vtx.y >= 0))
+		&& ((unsigned int)vtx.y < (*img)->height && (int)vtx.y >= 0))
 		mlx_put_pixel(*img, vtx.x, vtx.y, color);
 }
 
@@ -24,7 +24,7 @@ static void	paint_low(vertex_t start, vertex_t end, mlx_image_t **img, int clr)
 	int	distance_x;
 	int	distance_y;
 	int	yi;
-	int	D;
+	int	bresenham;
 
 	distance_x = end.x - start.x;
 	distance_y = end.y - start.y;
@@ -34,17 +34,17 @@ static void	paint_low(vertex_t start, vertex_t end, mlx_image_t **img, int clr)
 		yi = -1;
 		distance_y *= -1;
 	}
-	D = (2 * distance_y) - distance_x;
+	bresenham = (2 * distance_y) - distance_x;
 	while (start.x != end.x)
 	{
 		safe_put_pixel(start, img, clr);
-		if (D > 0)
+		if (bresenham > 0)
 		{
 			start.y += yi;
-			D += 2 * (distance_y - distance_x);
+			bresenham += 2 * (distance_y - distance_x);
 		}
 		else
-			D += 2 * distance_y;
+			bresenham += 2 * distance_y;
 		start.x++;
 	}
 }
@@ -54,7 +54,7 @@ static void	paint_high(vertex_t start, vertex_t end, mlx_image_t **img, int clr)
 	int	distance_x;
 	int	distance_y;
 	int	xi;
-	int	D;
+	int	bresenham;
 
 	distance_x = end.x - start.x;
 	distance_y = end.y - start.y;
@@ -64,17 +64,17 @@ static void	paint_high(vertex_t start, vertex_t end, mlx_image_t **img, int clr)
 		xi = -1;
 		distance_x *= -1;
 	}
-	D = (2 * distance_x) - distance_y;
+	bresenham = (2 * distance_x) - distance_y;
 	while (start.y != end.y)
 	{
 		safe_put_pixel(start, img, clr);
-		if (D > 0)
+		if (bresenham > 0)
 		{
 			start.x += xi;
-			D += 2 * (distance_x - distance_y);
+			bresenham += 2 * (distance_x - distance_y);
 		}
 		else
-			D += 2 * distance_x;
+			bresenham += 2 * distance_x;
 		start.y++;
 	}
 }
