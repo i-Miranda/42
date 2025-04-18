@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:05:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 21:09:22 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/18 02:16:59 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 
-# define SCRN_WDTH 960
-# define SCRN_HGHT 540
+# define SCRN_WDTH 400
+# define SCRN_HGHT 400
 # define CHAR_DIMS 64
 
 typedef struct s_coord
@@ -45,6 +45,7 @@ typedef struct s_fdf
 {
 	mlx_t		**mlx;
 	mlx_image_t	**img;
+	mlx_image_t	**nxt_img;
 	t_coord		*zero_coord;
 	vertex_t	*position;
 	vertex_t	*scale;

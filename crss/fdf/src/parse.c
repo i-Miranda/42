@@ -6,13 +6,13 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:19:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 15:40:24 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/18 01:09:10 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	link_rows(int next_row, t_fdf **fdf)
+static void	link_rows(int row_count, t_fdf **fdf)
 {
 	t_coord	*prev_coord;
 	t_coord	*coord;
@@ -20,7 +20,7 @@ static void	link_rows(int next_row, t_fdf **fdf)
 
 	i = 0;
 	prev_coord = (*fdf)->zero_coord;
-	while (i < next_row - 1)
+	while (i < row_count - 1)
 	{
 		prev_coord = prev_coord->next_y;
 		i++;
@@ -97,27 +97,11 @@ void	parse_fd(int fd, t_fdf **fdf)
 
 int	parse_fdf(char *fdf_path, t_fdf **fdf)
 {
-	t_coord	*coord;
 	int		fd;
-	int		col_count;
-	int		row_count;
 
 	fd = open(fdf_path, O_RDONLY);
 	if (fd == -1)
 		return (-1);
 	parse_fd(fd, fdf);
-	coord = (*fdf)->zero_coord;
-	row_count = 1;
-	col_count = 1;
-	while (coord->next_y != NULL)
-	{
-		coord = coord->next_y;
-		row_count++;
-	}
-	while (coord->next_x != NULL)
-	{
-		coord = coord->next_x;
-		col_count++;
-	}
 	return (close(fd));
 }

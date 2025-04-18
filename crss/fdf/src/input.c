@@ -6,15 +6,16 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:09:36 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 21:10:04 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/18 02:13:58 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	transform_vertex(vertex_t *vertex, int is_x, int amount, char *msg)
+static void	transform_vertex(vertex_t *vertex, int is_x, float amount, char *msg)
 {
-	ft_printf("%s\n", msg);
+	if (msg != NULL)
+		ft_printf("%s\n", msg);
 	if (is_x == 0)
 		vertex->x += amount;
 	else if (is_x < 0)
@@ -75,12 +76,24 @@ static void	update_height(t_fdf *fdf, int *key_down)
 {
 	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_K))
 	{
-		transform_vertex(fdf->scale, -1, 1, "PRESSING UP");
+		transform_vertex(fdf->scale, -1, 1, "LOWER Z");
 		*key_down = 1;
 	}
 	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_J))
 	{
-		transform_vertex(fdf->scale, -1, -1, "PRESSING DOWN");
+		transform_vertex(fdf->scale, -1, -1, "RAISE Z");
+		*key_down = 1;
+	}
+	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_H))
+	{
+		transform_vertex(fdf->scale, 1, -1, "ZOOM OUT");
+		transform_vertex(fdf->scale, 0, -1, NULL);
+		*key_down = 1;
+	}
+	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_L))
+	{
+		transform_vertex(fdf->scale, 1, 1, "ZOOM IN");
+		transform_vertex(fdf->scale, 0, 1, NULL);
 		*key_down = 1;
 	}
 }
@@ -89,6 +102,7 @@ void	input_hook(void *fdf_param)
 {
 	t_fdf	*fdf;
 	int		key_down;
+	mlx_image_t	*tmp;
 
 	fdf = (t_fdf *)fdf_param;
 	key_down = 0;
@@ -105,7 +119,13 @@ void	input_hook(void *fdf_param)
 		iterate_fdf(&fdf, update_fdf);
 		render_bg(fdf, 0x000000FF);
 		iterate_fdf(&fdf, render_fdf);
+		tmp = *fdf->nxt_img;
+		*fdf->nxt_img = *fdf->img;
+		*fdf->img = tmp;
+		mlx_image_to_window(*fdf->mlx, *fdf->nxt_img, 0, 0);
 		ft_printf("Position FDF: %d,%d\n",
 			(int)fdf->position->x, (int)fdf->position->y);
+		ft_printf("Scale FDF: %d,%d,%d\n",
+			(int)fdf->scale->x, (int)fdf->scale->y, (int)fdf->scale->z);
 	}
 }
