@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:02:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/18 02:31:07 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/19 00:45:22 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,19 @@ static int	init_mlx(mlx_t **mlx, mlx_image_t **img, t_fdf **fdf, char *path)
 
 	scrn_wdth = 0;
 	scrn_hght = 0;
-	*mlx = mlx_init(SCRN_WDTH * 2, SCRN_HGHT * 2, "FDF", true);
+	*mlx = mlx_init(SCRN_WDTH, SCRN_HGHT, "FDF", true);
 	if (!(*mlx))
 		return (EXIT_FAILURE);
 	mlx_get_monitor_size(0, &scrn_wdth, &scrn_hght);
 	mlx_set_window_size(*mlx, SCRN_WDTH, SCRN_HGHT);
 	mlx_set_window_pos(*mlx, scrn_wdth / 4, scrn_hght / 4);
-	*img = mlx_new_image(*mlx, SCRN_WDTH, SCRN_HGHT);
+	*img = mlx_new_image(*mlx, SCRN_WDTH / 4, SCRN_HGHT / 4);
 	if (!(*img))
 	{
 		mlx_terminate(*mlx);
 		return (EXIT_FAILURE);
 	}
-	init_fdf(fdf, mlx, img);
-	if (parse_fdf(path, fdf) == -1)
-	{
-		end_fdf(fdf);
-		return (EXIT_FAILURE);
-	}
+	init_fdf(fdf, mlx, img, path);
 	return (0);
 }
 
@@ -65,11 +60,12 @@ int	main(int argc, char *argv[])
 		ft_error("Error: incorrect argument count (2)");
 	if (init_mlx(&mlx, &img, &fdf, argv[1]) != 0)
 		ft_error("Error: incorrect filetype (.fdf)");
-	nxt_img = mlx_new_image(*fdf->mlx, SCRN_WDTH, SCRN_HGHT);
+	nxt_img = mlx_new_image(*fdf->mlx, SCRN_WDTH / 4, SCRN_HGHT / 4);
 	fdf->nxt_img = &nxt_img;
 	iterate_fdf(&fdf, update_fdf);
 	render_bg(fdf, 0x000000FF);
 	iterate_fdf(&fdf, render_fdf);
+	mlx_resize_image(img, SCRN_WDTH, SCRN_HGHT);
 	if (!img || mlx_image_to_window(mlx, img, 0, 0) < 0)
 		ft_error((char *)mlx_strerror(mlx_errno));
 	mlx_loop_hook(mlx, input_hook, fdf);

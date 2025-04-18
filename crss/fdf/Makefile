@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 08:58:47 by ivmirand          #+#    #+#              #
-#    Updated: 2025/04/17 20:14:09 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/04/19 00:37:27 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,9 +40,8 @@ SOURCES	:= main.c \
 	hooks.c \
 	bresenham.c \
 	collision.c \
-	loading.c \
 	color.c \
-	error.c
+	terminal.c
 
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
 

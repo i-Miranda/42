@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:01:16 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/18 01:18:46 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/19 01:12:00 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,18 @@ void	render_fdf(void *fdf_param)
 			bresenham((*fdf)->zero_coord, (*fdf)->zero_coord->next_y,
 				(*fdf)->img);
 	}
+}
+
+void	fdf_draw_call(t_fdf *fdf)
+{
+	mlx_image_t	*tmp;
+
+	mlx_resize_image(*fdf->img, SCRN_WDTH / fdf->res, SCRN_HGHT / fdf->res);
+	render_bg(fdf, 0x000000FF);
+	iterate_fdf(&fdf, render_fdf);
+	mlx_resize_image(*fdf->img, SCRN_WDTH, SCRN_HGHT);
+	tmp = *fdf->nxt_img;
+	*fdf->nxt_img = *fdf->img;
+	*fdf->img = tmp;
+	mlx_image_to_window(*fdf->mlx, *fdf->nxt_img, 0, 0);
 }

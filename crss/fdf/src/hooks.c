@@ -6,32 +6,11 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:48:29 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/17 12:51:15 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/19 00:38:10 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	update_hook(void *fdf_param)
-{
-	t_fdf	**fdf;
-
-	fdf = (t_fdf **)fdf_param;
-	iterate_fdf(fdf, update_fdf);
-	render_bg(*fdf, 0x000000FF);
-	iterate_fdf(fdf, render_fdf);
-	ft_printf("Position FDF: %d,%d\n",
-		(int)(*fdf)->position->x, (int)(*fdf)->position->y);
-}
-
-void	render_hook(void *fdf_param)
-{
-	t_fdf	**fdf;
-
-	fdf = (t_fdf **)fdf_param;
-	render_bg(*fdf, 0x000000FF);
-	iterate_fdf(fdf, render_fdf);
-}
 
 void	iterate_fdf(t_fdf **fdf, void (*f)(void *))
 {
