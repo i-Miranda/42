@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:02:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/18 01:50:46 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/18 02:31:07 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	init_mlx(mlx_t **mlx, mlx_image_t **img, t_fdf **fdf, char *path)
 
 	scrn_wdth = 0;
 	scrn_hght = 0;
-	*mlx = mlx_init(SCRN_WDTH, SCRN_HGHT, "FDF", true);
+	*mlx = mlx_init(SCRN_WDTH * 2, SCRN_HGHT * 2, "FDF", true);
 	if (!(*mlx))
 		return (EXIT_FAILURE);
 	mlx_get_monitor_size(0, &scrn_wdth, &scrn_hght);

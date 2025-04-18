@@ -6,22 +6,22 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:09:36 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/18 02:13:58 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/18 02:38:19 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	transform_vertex(vertex_t *vertex, int is_x, float amount, char *msg)
+static void	transform_vertex(vertex_t *vtx, int is_x, float amnt, char *msg)
 {
 	if (msg != NULL)
 		ft_printf("%s\n", msg);
 	if (is_x == 0)
-		vertex->x += amount;
+		vtx->x += amnt;
 	else if (is_x < 0)
-		vertex->z += amount;
+		vtx->z += amnt;
 	else
-		vertex->y += amount;
+		vtx->y += amnt;
 }
 
 static void	update_position(t_fdf *fdf, int *key_down)
@@ -100,8 +100,8 @@ static void	update_height(t_fdf *fdf, int *key_down)
 
 void	input_hook(void *fdf_param)
 {
-	t_fdf	*fdf;
-	int		key_down;
+	t_fdf		*fdf;
+	int			key_down;
 	mlx_image_t	*tmp;
 
 	fdf = (t_fdf *)fdf_param;
