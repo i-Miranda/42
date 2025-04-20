@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:19:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/20 01:25:39 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/20 10:50:03 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,24 @@
 
 static void	parse_coord(int y, int x, char *c_split, t_fdf *fdf)
 {
-	char	**clr_split;
+	char	*comma;
 	t_coord	*current;
 
-	clr_split = ft_split(c_split, ',');
+	comma = ft_strchr(c_split, ',');
 	current = &fdf->coords[y * fdf->width + x];
-	current->local = init_vertex(x, y, ft_atoi(clr_split[0]));
+	current->local = init_vertex(x, y, ft_atoi(c_split));
 	current->world = init_vertex(-1, -1, -1);
 	current->color_hex = WHITE;
-	if (clr_split[1] != NULL)
-		current->color_hex = rgb_to_rgba(ft_atoi_base(clr_split[1], 16), 0xFF);
+	if (comma != NULL)
+	{
+		*comma = '\0';
+		current->color_hex = rgb_to_rgba(ft_atoi_base(comma + 1, 16), 0xFF);
+	}
 	else if (current->local.z != 0)
-		current->color_hex = get_rgba((char)current->local.x * 10,
-				(char)current->local.y * 10, (char)current->local.z * 10, 255);
-	ft_free_split(clr_split);
+		current->color_hex = get_rgba(
+				(unsigned int)(current->local.x * 255) / fdf->width,
+				(unsigned int)(current->local.y * 255) / fdf->height,
+				(unsigned int)(current->local.z * 255) / fdf->height, 0xFF);
 }
 
 static void	parse_row(int y, char **split, t_fdf **fdf)
@@ -37,11 +41,9 @@ static void	parse_row(int y, char **split, t_fdf **fdf)
 	x = 0;
 	while (x < (*fdf)->width)
 	{
-		loading_fdf(x, "Parsing coord");
 		parse_coord(y, x, split[x], *fdf);
 		x++;
 	}
-	ft_printf("\n");
 }
 
 static int	parse_fd(char *fdf_path, t_fdf **fdf)
@@ -58,7 +60,7 @@ static int	parse_fd(char *fdf_path, t_fdf **fdf)
 	row_count = 0;
 	while (next_line)
 	{
-		loading_fdf(row_count, "Parsing row");
+		loading_fdf(row_count, NULL);
 		nl_split = ft_split(next_line, ' ');
 		free(next_line);
 		parse_row(row_count, nl_split, fdf);
@@ -66,7 +68,7 @@ static int	parse_fd(char *fdf_path, t_fdf **fdf)
 		next_line = get_next_line(fd);
 		row_count++;
 	}
-	ft_printf("Fdf parse complete\n");
+	ft_printf("Fdf parse complete         \n");
 	return (close(fd));
 }
 
@@ -93,7 +95,7 @@ static	int	set_fdf_dmns(char *fdf_path, t_fdf **fdf)
 		next_line = get_next_line(fd);
 		(*fdf)->height++;
 	}
-	ft_printf("\n");
+	ft_printf("Dimensions set\n");
 	return (close(fd));
 }
 
