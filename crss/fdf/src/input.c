@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:09:36 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/19 01:16:48 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/20 01:01:54 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,96 +14,96 @@
 
 static void	update_position(t_fdf *fdf, int *key_down)
 {
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_W))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_W))
 	{
-		transform_vertex(fdf->position, 1, -5);
+		transform_vertex(&fdf->position, 1, -5);
 		*key_down = 1;
 	}
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_S))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_S))
 	{
-		transform_vertex(fdf->position, 1, 5);
+		transform_vertex(&fdf->position, 1, 5);
 		*key_down = 1;
 	}
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_A))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_A))
 	{
-		transform_vertex(fdf->position, 0, -5);
+		transform_vertex(&fdf->position, 0, -5);
 		*key_down = 1;
 	}
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_D))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_D))
 	{
-		transform_vertex(fdf->position, 0, 5);
+		transform_vertex(&fdf->position, 0, 5);
 		*key_down = 1;
 	}
 }
 
 static void	update_scale(t_fdf *fdf, int *key_down)
 {
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_UP))
 	{
-		transform_vertex(fdf->scale, 1, -1);
+		transform_vertex(&fdf->scale, 1, -1);
 		*key_down = 1;
 	}
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_DOWN))
 	{
-		transform_vertex(fdf->scale, 1, 1);
+		transform_vertex(&fdf->scale, 1, 1);
 		*key_down = 1;
 	}
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_LEFT))
 	{
-		transform_vertex(fdf->scale, 0, -1);
+		transform_vertex(&fdf->scale, 0, -1);
 		*key_down = 1;
 	}
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_RIGHT))
 	{
-		transform_vertex(fdf->scale, 0, 1);
+		transform_vertex(&fdf->scale, 0, 1);
 		*key_down = 1;
 	}
 }
 
 static void	update_height(t_fdf *fdf, int *key_down)
 {
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_K))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_K))
 	{
-		transform_vertex(fdf->scale, -1, 1);
+		transform_vertex(&fdf->scale, -1, 1);
 		*key_down = 1;
 	}
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_J))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_J))
 	{
-		transform_vertex(fdf->scale, -1, -1);
+		transform_vertex(&fdf->scale, -1, -1);
 		*key_down = 1;
 	}
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_H))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_H))
 	{
-		transform_vertex(fdf->scale, 1, -1);
-		transform_vertex(fdf->scale, 0, -1);
+		transform_vertex(&fdf->scale, 1, -1);
+		transform_vertex(&fdf->scale, 0, -1);
 		*key_down = 1;
 	}
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_L))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_L))
 	{
-		transform_vertex(fdf->scale, 1, 1);
-		transform_vertex(fdf->scale, 0, 1);
+		transform_vertex(&fdf->scale, 1, 1);
+		transform_vertex(&fdf->scale, 0, 1);
 		*key_down = 1;
 	}
 }
 
 static void	update_resolution(t_fdf *fdf, int *key_down)
 {
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_1))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_1))
 	{
 		fdf->res = 1;
 		*key_down = 1;
 	}
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_2))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_2))
 	{
 		fdf->res = 2;
 		*key_down = 1;
 	}
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_3))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_3))
 	{
 		fdf->res = 4;
 		*key_down = 1;
 	}
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_4))
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_4))
 	{
 		fdf->res = 8;
 		*key_down = 1;
@@ -121,11 +121,8 @@ void	input_hook(void *fdf_param)
 	update_scale(fdf, &key_down);
 	update_height(fdf, &key_down);
 	update_resolution(fdf, &key_down);
-	if (mlx_is_key_down(*fdf->mlx, MLX_KEY_ESCAPE))
-	{
-		ft_printf("EXITING FDF\n");
-		mlx_close_window(*fdf->mlx);
-	}
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(fdf->mlx);
 	if (key_down == 1)
 	{
 		iterate_fdf(&fdf, update_fdf);

@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 08:58:47 by ivmirand          #+#    #+#              #
-#    Updated: 2025/04/19 00:37:27 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/04/20 11:46:02 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ SOURCES	:= main.c \
 	render.c \
 	parse.c \
 	coord.c \
-	hooks.c \
 	bresenham.c \
 	collision.c \
 	color.c \
@@ -81,7 +80,6 @@ all:
 	@make $(NAME)
 
 libmlx:
-	git clone git@github.com:codam-coding-college/MLX42.git
 	cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 $(NAME): $(OBJ_O)
@@ -95,7 +93,6 @@ clean:
 
 fclean: clean
 	rm -rf $(NAME)
-	rm -rf $(LIBMLX)
 	rm -rf $(LIBFT_A)
 
 re: fclean all

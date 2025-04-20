@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 19:05:48 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/18 01:07:07 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/19 17:30:22 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	*get_rgb_values(int rgba)
 	return (rgba_vals);
 }
 
-void	safe_put_pixel(vertex_t vtx, mlx_image_t **img, int clr, int clr2)
+void	safe_put_pixel(vertex_t vtx, mlx_image_t *img, int clr, int clr2)
 {
 	int	color;
 
@@ -32,9 +32,9 @@ void	safe_put_pixel(vertex_t vtx, mlx_image_t **img, int clr, int clr2)
 		color = lerp_rgba(clr, clr2, vtx.u);
 	else
 		color = clr;
-	if (((unsigned int)vtx.x < (*img)->width && (int)vtx.x >= 0)
-		&& ((unsigned int)vtx.y < (*img)->height && (int)vtx.y >= 0))
-		mlx_put_pixel(*img, vtx.x, vtx.y, color);
+	if (((unsigned int)vtx.x < img->width && (int)vtx.x >= 0)
+		&& ((unsigned int)vtx.y < img->height && (int)vtx.y >= 0))
+		mlx_put_pixel(img, vtx.x, vtx.y, color);
 }
 
 int	get_rgba(int r, int g, int b, int a)
