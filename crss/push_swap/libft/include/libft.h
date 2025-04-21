@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:36:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/21 11:05:42 by ivan             ###   ########.fr       */
+/*   Updated: 2025/04/08 12:26:22 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-
-# include "ft_printf.h"
 
 // Part 1
 int		ft_isalpha(int c);
@@ -61,7 +59,7 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
-}					t_list;
+}	t_list;
 
 t_list	*ft_lstnew(void	*content);
 void	ft_lstadd_front(t_list **lst, t_list *new);
@@ -73,4 +71,11 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
+// Custom
+
+// ft_atoi.c
+int		ft_atoi_base(const char *str, int base);
+long	ft_atol(const char *str);
+// ft_split.c
+void	*ft_free_split(char **strarray);
 #endif

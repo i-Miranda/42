@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/03/10 11:01:17 by ivan             ###   ########.fr        #
+#    Updated: 2025/03/10 18:26:39 by ivan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ LIBFT_SOURCES := ft_atoi.c \
 	ft_toupper.c
 
 GNL_SOURCES := get_next_line.c \
-			   get_next_line_utils.c
+	get_next_line_utils.c
 
 PRINTF_SOURCES := ft_printf.c \
 	print_nums.c \
@@ -112,15 +112,15 @@ endif
 
 $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_H)
 	@mkdir -p $(OUTPUT) $(LIBFT_OUTPUT)
-	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)\n"
+	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)                                                         \r"
 
 $(GNL_OUTPUT)/%.o: src/gnl/%.c $(GNL_H)
 	@mkdir -p $(OUTPUT) $(GNL_OUTPUT)
-	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)\n"
+	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)                                                         \r"
 
 $(PRINTF_OUTPUT)/%.o: src/printf/%.c $(PRINTF_H)
 	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
-	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)\n"
+	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)                                                         \r"
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently

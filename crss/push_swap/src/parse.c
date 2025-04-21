@@ -6,70 +6,61 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 07:52:33 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/26 08:28:11 by ivan             ###   ########.fr       */
+/*   Updated: 2025/04/20 23:45:59 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static long	ft_atol(char *str)
+int	find_duplicate_values(t_stacks *stacks)
 {
-	long	nbr;
-	long	sign;
-	int		i;
+	t_node	*ref;
+	t_node	*comp;
 
-	nbr = 0;
-	sign = 1;
-	i = 0;
-	while (str[i] && (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r')))
-		i++;
-	if (str[i] && (str[i] == '-' || str[i] == '+'))
+	ref = stacks->a->first;
+	comp = stacks->a->first->next;
+	while (ref->next != NULL)
 	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
+		while(comp->next != NULL)
+		{
+			if (comp->value == ref->value)
+				return (1);
+			comp = comp->next;
+		}
+		ref = ref->next;
 	}
-	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
-	{
-		nbr *= 10;
-		nbr += str[i] - '0';
-		i++;
-	}
-	return (nbr * sign);
+	return (0);
 }
 
 static int	atol_args(t_stacks **stacks, char **args)
 {
-	long	*atol;
-	t_list	*node;
-	t_list	*temp;
+	long	atol;
+	t_node	*node;
+	int		i;
 
-	atol = malloc(1 * sizeof(long));
-	if (atol == NULL)
-		return (-1);
-	*atol = ft_atol(*args);
-	if (*atol < INT_MIN || *atol > INT_MAX)
+	i = 0;
+	while (args[i] != NULL)
 	{
-		free(atol);
-		return (-2);
+		atol = ft_atol(args[i]);
+		if (atol < INT_MIN || atol > INT_MAX)
+			return (-1);
+		node = init_node((int)atol, (*stacks)->a);
+		if (node == NULL)
+			return (-2);
+		if (atol < (*stacks)->min_val)
+			(*stacks)->min_val = (int)atol;
+		if (atol > (*stacks)->max_val)
+			(*stacks)->max_val = (int)atol;
+		i++;
 	}
-	node = ft_lstnew((int *)atol);
-	if (node == NULL)
-		return (-3);
-	if (*atol < (*stacks)->min_val)
-		(*stacks)->min_val = *atol;
-	if (*atol > (*stacks)->max_val)
-		(*stacks)->max_val = *atol;
 	(*stacks)->mid_val = ((*stacks)->min_val + (*stacks)->max_val) / 2;
-	temp = (*stacks)->a;
-	ft_lstadd_back(&temp, node);
-	return (ERR_NONE);
+	return (0);
 }
 
 int	parse_arg(t_stacks **stacks, char *arg)
 {
 	int		i;
-	int		atol_args_err;
+	int		error;
 	char	**split_array;
 
 	i = 0;
@@ -83,7 +74,7 @@ int	parse_arg(t_stacks **stacks, char *arg)
 		i++;
 	}
 	split_array = ft_split(arg, ' ');
-	atol_args_err = atol_args(stacks, split_array);
-	free_split(split_array);
-	return (atol_args_err);
+	error = atol_args(stacks, split_array);
+	ft_free_split(split_array);
+	return (error);
 }

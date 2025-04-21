@@ -6,36 +6,42 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:53:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/03/09 14:00:56 by ivan             ###   ########.fr       */
+/*   Updated: 2025/04/21 10:29:43 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//get first element in from and puts on top of to
-void	push(t_list **to, t_list **from)
+void	push(t_stack **to, t_stack **from)
 {
 	t_list	*temp;
 
 	if (*from == NULL || *to == NULL)
 		return ;
-	if (ft_lstsize(*from) > 0)
+	if ((*from)->size > 0)
 	{
-		temp = *from;
-		temp->next = (*to)->next;
-		(*from)->next = (*from)->next->next;
-		*to = temp;
+		temp = (*from)->first->next;
+		node_to_top((*from)->first, *to);
+		(*to)->size++;
+		temp->prev = NULL;
+		(*from)->first = temp;	
+		while (temp->next != NULL)
+		{
+			temp->index--;
+			temp = temp->next;
+		}
+		(*from)->size--;
 	}
 }
 
-void	pa(t_stacks **stacks)
+void	pa(t_stacks *stacks)
 {
-	push(&(*stacks)->a, &(*stacks)->b);
+	push(&stacks->a, &stacks->b);
 	ft_printf("pa\n");
 }
 
-void	pb(t_stacks **stacks)
+void	pb(t_stacks *stacks)
 {
-	push(&(*stacks)->b, &(*stacks)->a);
+	push(&stacks->b, &stacks->a);
 	ft_printf("pb\n");
 }

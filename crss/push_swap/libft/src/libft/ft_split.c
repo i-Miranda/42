@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:08:46 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/21 11:07:36 by ivan             ###   ########.fr       */
+/*   Updated: 2025/03/19 13:20:58 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,21 @@ static int	ft_word_count(const char *str, char c)
 	return (count);
 }
 
-static void	*ft_freeptr(char **strarray, int count)
+void	*ft_free_split(char **strarray)
 {
-	while (count--)
+	int	count;
+
+	if (strarray == NULL)
+		return (NULL);
+	count = 0;
+	while (strarray[count])
+		count++;
+	count--;
+	while (count >= 0)
+	{
 		free(strarray[count]);
+		count--;
+	}
 	free(strarray);
 	return (NULL);
 }
@@ -89,7 +100,7 @@ char	**ft_split(const char *s, char c)
 		{
 			strarray[arr_i] = build_word(s, start, s_i);
 			if (!(strarray[arr_i]))
-				return (ft_freeptr(strarray, arr_i));
+				return (ft_free_split(strarray));
 			start = -1;
 			arr_i++;
 		}

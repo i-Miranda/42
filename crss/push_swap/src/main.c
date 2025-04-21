@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:22:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/02/26 17:11:28 by ivan             ###   ########.fr       */
+/*   Updated: 2025/04/20 23:42:55 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,20 @@ int	main(int argc, char *argv[])
 	t_stacks	*stacks;
 
 	if (argc <= 1)
-		return (ERR_GNRL);
+		return (1);
 	stacks = NULL;
-	if (init_stacks(&stacks) != ERR_NONE)
-		return (ERR_GNRL);
+	if (init_stacks(&stacks) != 0)
+		return (1);
 	i = 1;
 	while (i < argc)
 	{
-		if (parse_arg(&stacks, argv[i]) == ERR_NONE)
+		if (parse_arg(&stacks, argv[i]) == 0)
 			i++;
 		else
-			return (ERR_GNRL);
+			return (free_stacks(stacks, 1));
 	}
-	if (find_duplicate_values(stacks) == ERR_GNRL)
-	{
-		free_stacks(stacks);
-		return (ERR_GNRL);
-	}
+	if (find_duplicate_values(stacks) != 1)
+		return (free_stacks(stacks, 1));
 	push_swap(&stacks);
-	return (ERR_NONE);
+	return (0);
 }
