@@ -6,42 +6,44 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:23:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/21 11:48:33 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:41:15 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//moves all elements in stack a down one position so the last element is now
-//the first.
-void	reverse_rotate(t_stack **stack)
+static void	reverse_rotate(t_stack **stack, char *cmd)
 {
-	t_node	*temp;
+	t_node	*tmp;
 
-	if (*stack == NULL || (*stack)->last == NULL)
+	if (stack == NULL || *stack == NULL || (*stack)->first == NULL
+		|| (*stack)->size < 2)
 		return ;
-	temp = (*stack)->last;
-	(*stack)->last = temp->prev;
+	tmp = (*stack)->last;
+	(*stack)->last = tmp->prev;
 	(*stack)->last->next = NULL;
-	node_to_top(temp, *stack);
-	temp = (*stack)->first;
+	tmp->prev = NULL;
+	tmp->next = (*stack)->first;
+	if ((*stack)->first != NULL)
+		(*stack)->first->prev = tmp;
+	(*stack)->first = tmp;
+	if (cmd != NULL)
+		ft_printf("%s\n", cmd);
 }
 
-void	rra(t_stacks *stacks)
+void	rra(t_stacks **stacks)
 {
-	reverse_rotate(&(stacks->a));
-	ft_printf("rra\n");
+	reverse_rotate(&(*stacks)->a, "rra");
 }
 
-void	rrb(t_stacks *stacks)
+void	rrb(t_stacks **stacks)
 {
-	reverse_rotate(&(stacks->b));
-	ft_printf("rrb\n");
+	reverse_rotate(&(*stacks)->b, "rrb");
 }
 
-void	rrr(t_stacks *stacks)
+void	rrr(t_stacks **stacks)
 {
-	reverse_rotate(&(stacks->a));
-	reverse_rotate(&(stacks->b));
+	reverse_rotate(&(*stacks)->a, NULL);
+	reverse_rotate(&(*stacks)->b, NULL);
 	ft_printf("rrr\n");
 }

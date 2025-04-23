@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/03/10 10:43:39 by ivan             ###   ########.fr        #
+#    Updated: 2025/04/23 17:17:11 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,13 @@ OUTPUT := $(SRC)/output
 SOURCES := main.c \
 	parse.c \
 	push.c \
-	push_swap.c \
-	push_swap_utils.c \
-	reverse_rotate.c \
+	swap.c \
 	rotate.c \
+	reverse_rotate.c \
+	stack.c \
+	index.c \
 	sort.c \
-	swap.c 
-	#sort_short_stack.c \
+	k_sort.c 
 
 OBJ_O := $(patsubst %.c, $(OUTPUT)/%.o, $(SOURCES))
 

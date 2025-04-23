@@ -6,47 +6,60 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:54:09 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/21 11:45:25 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:27:24 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//moves all elements in stack a up one position so the first element is now
-//the last.
-void	rotate(t_stack **stack)
+static int	rotate(t_stack **stack, char *cmd)
 {
-	t_node	*temp;
+	t_node	*tmp;
 
-	if (*stack == NULL || (*stack)->first == NULL)
-		return ;
-	temp = (*stack)->first;
-	(*stack)->first = temp->next;
-	(*stack)->first->prev = NULL;
-	node_to_bottom(temp, *stack);
-	temp = (*stack)->first;
-	while (temp != (*stack)->last)
-	{
-		temp->index--;
-		temp = temp->next;
-	}
+	if (stack == NULL || *stack == NULL || (*stack)->first == NULL
+		|| (*stack)->size < 2)
+		return (1);
+	tmp = (*stack)->first;
+	(*stack)->first = tmp->next;
+	if ((*stack)->first != NULL)
+		(*stack)->first->prev = NULL;
+	tmp->next = NULL;
+	tmp->prev = (*stack)->last;
+	(*stack)->last->next = tmp;
+	(*stack)->last = tmp;
+	if (cmd != NULL)
+		ft_printf("%s\n", cmd);
+	return (0);
 }
 
-void	ra(t_stacks *stacks)
+void	ra(t_stacks **stacks)
 {
-	rotate(&stacks->a);
-	ft_printf("ra\n");
+	int	error;
+
+	error = rotate(&(*stacks)->a, "ra");
+	if (error != 0)
+		exit(EXIT_FAILURE);
 }
 
-void	rb(t_stacks *stacks)
+void	rb(t_stacks **stacks)
 {
-	rotate(&stacks->b);
-	ft_printf("rb\n");
+	int	error;
+
+	error = rotate(&(*stacks)->b, "rb");
+	if (error != 0)
+		exit(EXIT_FAILURE);
 }
 
-void	rr(t_stacks *stacks)
+void	rr(t_stacks **stacks)
 {
-	rotate(&stacks->a);
-	rotate(&stacks->b);
+	int	error_a;
+	int	error_b;
+
+	error_a = rotate(&(*stacks)->a, NULL);
+	error_b = rotate(&(*stacks)->b, NULL);
 	ft_printf("rr\n");
+	if (error_a != 0 && error_b != 0)
+		exit(EXIT_FAILURE);
+	else if (error_a != 0 || error_b != 0)
+		exit(EXIT_FAILURE);
 }

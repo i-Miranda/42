@@ -6,47 +6,48 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>  	+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:52:54 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/21 10:43:00 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:40:56 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap(t_stack **stack)
+static void	swap(t_stack **stack, char *cmd)
 {
-	t_node	*temp;
+	t_node	*first;
+	t_node	*second;
 
-	if (*stack == NULL || (*stack)->first == NULL)
+	if (stack == NULL || *stack == NULL || (*stack)->first == NULL
+		|| (*stack)->size < 2)
 		return ;
-	if ((*stack->size > 1)
-	{
-		temp = (*stack)->first;
-		(*stack)->first = temp->next;
-		(*stack)->first->prev = NULL;
-		temp->prev = (*stack)->first;
-		temp->next = (*stack)->first->next;
-		(*stack)->first->next = temp->next->next;
-		(*stack)->first->index--;
-		temp->next->index++;
-		(*head)->next->next = temp;
-	}
+	first = (*stack)->first;
+	second = first->next;
+	first->next = second->next;
+	if (second->next != NULL)
+		second->next->prev = first;
+	else
+		(*stack)->last = first;
+	second->prev = NULL;
+	second->next = first;
+	first->prev = second;
+	(*stack)->first = second;
+	if (cmd != NULL)
+		ft_printf("%s\n", cmd);
 }
 
-void	sa(t_stacks *stacks)
+void	sa(t_stacks **stacks)
 {
-	swap(&stacks->a);
-	ft_printf("sa\n");
+	swap(&(*stacks)->a, "sa");
 }
 
-void	sb(t_stacks *stacks)
+void	sb(t_stacks **stacks)
 {
-	swap(&stacks->b);
-	ft_printf("sb\n");
+	swap(&(*stacks)->b, "sb");
 }
 
-void	ss(t_stacks *stacks)
+void	ss(t_stacks **stacks)
 {
-	swap(&stacks->a);
-	swap(&stacks->b);
+	swap(&(*stacks)->a, NULL);
+	swap(&(*stacks)->b, NULL);
 	ft_printf("ss\n");
 }

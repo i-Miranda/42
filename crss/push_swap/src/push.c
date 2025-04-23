@@ -6,42 +6,52 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:53:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/21 10:29:43 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:28:47 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push(t_stack **to, t_stack **from)
+static int	push(t_stack **to, t_stack **from)
 {
-	t_list	*temp;
+	t_node	*tmp;
 
-	if (*from == NULL || *to == NULL)
-		return ;
-	if ((*from)->size > 0)
-	{
-		temp = (*from)->first->next;
-		node_to_top((*from)->first, *to);
-		(*to)->size++;
-		temp->prev = NULL;
-		(*from)->first = temp;	
-		while (temp->next != NULL)
-		{
-			temp->index--;
-			temp = temp->next;
-		}
-		(*from)->size--;
-	}
+	if (from == NULL || *from == NULL || (*from)->first == NULL)
+		return (1);
+	tmp = (*from)->first;
+	(*from)->first = (*from)->first->next;
+	if ((*from)->first != NULL)
+		(*from)->first->prev = NULL;
+	else
+		(*from)->last = NULL;
+	(*from)->size--;
+	tmp->prev = NULL;
+	tmp->next = (*to)->first;
+	if ((*to)->first != NULL)
+		(*to)->first->prev = tmp;
+	else
+		(*to)->last = tmp;
+	(*to)->first = tmp;
+	(*to)->size++;
+	return (0);
 }
 
-void	pa(t_stacks *stacks)
+void	pa(t_stacks **stacks)
 {
-	push(&stacks->a, &stacks->b);
+	int	error;
+
+	error = push(&(*stacks)->a, &(*stacks)->b);
 	ft_printf("pa\n");
+	if (error != 0)
+		exit(EXIT_FAILURE);
 }
 
-void	pb(t_stacks *stacks)
+void	pb(t_stacks **stacks)
 {
-	push(&stacks->b, &stacks->a);
+	int	error;
+
+	error = push(&(*stacks)->b, &(*stacks)->a);
 	ft_printf("pb\n");
+	if (error != 0)
+		exit(EXIT_FAILURE);
 }
