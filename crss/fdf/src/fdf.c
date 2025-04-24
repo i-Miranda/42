@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:23 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/20 01:21:51 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/20 12:53:46 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	free_fdf(t_fdf *fdf)
 	if (fdf == NULL)
 		return ;
 	if (fdf->coords != NULL)
+	{
 		free(fdf->coords);
+		fdf->coords = NULL;
+	}
 	free(fdf);
 	fdf = NULL;
 }
@@ -42,7 +45,10 @@ int	init_fdf(t_fdf **fdf, char *fd_pth)
 		return (-1);
 	(*fdf)->coords = NULL;
 	if (parse_fdf(fd_pth, fdf) == -1)
+	{
+		free_fdf(*fdf);
 		return (-1);
+	}
 	(*fdf)->position = init_vertex(SCRN_WDTH / 4 + 10, 10, 0);
 	(*fdf)->scale = init_vertex(SCRN_WDTH / ((*fdf)->width * 2),
 			SCRN_HGHT / ((*fdf)->height * 3), 1);

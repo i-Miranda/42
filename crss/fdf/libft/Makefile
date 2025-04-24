@@ -6,11 +6,11 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 11:48:08 by ivmirand          #+#    #+#              #
-#    Updated: 2025/03/10 18:26:39 by ivan             ###   ########.fr        #
+#    Updated: 2025/04/20 13:51:41 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := libft
+NAME := libft.a
 
 COMPILER := cc
 
@@ -112,33 +112,28 @@ endif
 
 $(LIBFT_OUTPUT)/%.o: src/libft/%.c $(LIBFT_H)
 	@mkdir -p $(OUTPUT) $(LIBFT_OUTPUT)
-	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)                                                         \r"
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/
 
 $(GNL_OUTPUT)/%.o: src/gnl/%.c $(GNL_H)
 	@mkdir -p $(OUTPUT) $(GNL_OUTPUT)
-	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)                                                         \r"
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/
 
 $(PRINTF_OUTPUT)/%.o: src/printf/%.c $(PRINTF_H)
 	@mkdir -p $(OUTPUT) $(PRINTF_OUTPUT)
-	@$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/ && printf "Compiling: $(notdir $<)                                                         \r"
+	$(COMPILER) $(CCFLAGS) $(DBFLAGS) -c $< -o $@ -Iinclude/
 
 # -r replaces or adds a file if doesn't already exist in archive
 # -c creates the archive silently
 # -s writes object-files
 ARFLAGS := -rcs
 
-$(NAME): $(MKDIR) $(LIBFT_O) $(GNL_O) $(PRINTF_O)
-	@printf "Compilation successful: libft.a base objs\n"
-	@printf "Compilation successful: libft.a gnl objs\n"
-	@printf "Compilation successful: libft.a printf objs\n"
-	@printf "Linking static library: $(NAME).a\n"
-	@ar $(ARFLAGS) $(NAME).a $(LIBFT_O) $(GNL_O) $(PRINTF_O)
-	@printf "Static library build successful: $(NAME).a\n"
+$(NAME): $(LIBFT_O) $(GNL_O) $(PRINTF_O)
+	ar $(ARFLAGS) $(NAME) $(LIBFT_O) $(GNL_O) $(PRINTF_O)
 
 all: $(NAME) 
 
 clean:
-	@printf "Wiping objs: $(NAME).a\n"
+	@printf "Wiping objs: $(NAME)\n"
 	@rm -rf $(OUTPUT)
 
 # -f ignores if file does not exist

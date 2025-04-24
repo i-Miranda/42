@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 09:02:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/20 12:55:56 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/20 12:15:08 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ static int	init_mlx(mlx_t **mlx, t_fdf **fdf, char *path)
 		return (init);
 	*mlx = mlx_init(SCRN_WDTH, SCRN_HGHT, "FDF", true);
 	if (!(*mlx))
-	{
-		end_fdf(*fdf);
 		return (EXIT_FAILURE);
-	}
 	mlx_get_monitor_size(0, &scrn_wdth, &scrn_hght);
 	mlx_set_window_size(*mlx, SCRN_WDTH, SCRN_HGHT);
 	mlx_set_window_pos(*mlx, scrn_wdth / 4, scrn_hght / 4);
