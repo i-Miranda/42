@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 18:38:24 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/24 01:11:47 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/24 06:45:01 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	free_stacks(t_stacks **stacks, int error)
 	free(*stacks);
 	*stacks = NULL;
 	if (error != 0)
-		ft_printf("Error\n");
+		ft_putstr_fd("Error\n", 2);
 	return (error);
 }
 

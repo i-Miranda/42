@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:21:53 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/24 01:13:02 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/24 07:35:51 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	assign_indices(int *values, t_stack **stack)
 	}
 }
 
-static void	sort_values(int *values, int size)
+void	sort_values(int *values, int size)
 {
 	int	i;
 	int	sorted_index;

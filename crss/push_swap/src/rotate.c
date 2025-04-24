@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:54:09 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/23 19:27:24 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/24 07:17:14 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ void	rb(t_stacks **stacks)
 
 	error = rotate(&(*stacks)->b, "rb");
 	if (error != 0)
+	{
+		free_stacks(stacks, 1);
 		exit(EXIT_FAILURE);
+	}
 }
 
 void	rr(t_stacks **stacks)
@@ -58,8 +61,9 @@ void	rr(t_stacks **stacks)
 	error_a = rotate(&(*stacks)->a, NULL);
 	error_b = rotate(&(*stacks)->b, NULL);
 	ft_printf("rr\n");
-	if (error_a != 0 && error_b != 0)
+	if (error_a != 0 || error_b != 0)
+	{
+		free_stacks(stacks, 1);
 		exit(EXIT_FAILURE);
-	else if (error_a != 0 || error_b != 0)
-		exit(EXIT_FAILURE);
+	}
 }

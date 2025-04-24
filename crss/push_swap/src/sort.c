@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 22:45:34 by ivan              #+#    #+#             */
-/*   Updated: 2025/04/22 18:16:29 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/24 07:50:28 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ static int	find_min_i(t_stack *stack)
 
 	if (stack == NULL || stack->first == NULL)
 		return (-1);
-	min_val = stack->first->value;
+	min_val = stack->first->index;
 	current = stack->first;
 	min_index = 0;
 	i = 0;
 	while (current != NULL)
 	{
-		if (current->value < min_val)
+		if (current->index < min_val)
 		{
-			min_val = current->value;
+			min_val = current->index;
 			min_index = i;
 		}
 		current = current->next;
@@ -91,5 +91,6 @@ void	ps_sort_5(t_stacks **stacks)
 	}
 	pb(stacks);
 	ps_sort_4(stacks);
+	pa(stacks);
 	pa(stacks);
 }

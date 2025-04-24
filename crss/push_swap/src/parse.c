@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 07:52:33 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/24 01:13:45 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/24 07:30:39 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ static int	find_invalid_split(char **split)
 		j = 0;
 		while (split[i][j] != '\0')
 		{
-			if (j > 0 && (split[i][j] == '+' || split[i][j] == '-'))
+			if ((j == 0 && (split[i][j] == '+' || split[i][j] == '-')
+				&& !ft_isdigit(split[i][j + 1]))
+				|| (j > 0 && (split[i][j] == '+' || split[i][j] == '-')))
 			{
 				ft_free_split(split);
 				return (1);
@@ -82,6 +84,8 @@ int	parse_arg(t_stacks **stacks, char *arg)
 	char	**split_array;
 
 	i = 0;
+	if (arg == NULL || arg[0] == '\0')
+		return (1);
 	while (arg[i] != '\0')
 	{
 		if (ft_isdigit(arg[i]) == 0 && arg[i] != ' ' && arg[i] != '-'

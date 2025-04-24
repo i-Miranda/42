@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:22:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/23 19:28:35 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/24 07:25:53 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static int	check_sort(t_stacks **stacks)
 	t_node	*current;
 
 	if ((*stacks)->b->size != 0)
-		return (ft_printf("stack b not empty\n"), 1);
+		return (1);
 	if ((*stacks)->a->size <= 1)
-		return (ft_printf("stack a is 1 or less\n"), 0);
+		return (0);
 	current = (*stacks)->a->first;
 	while (current->next != NULL)
 	{
@@ -58,10 +58,7 @@ int	main(int argc, char *argv[])
 	stacks = NULL;
 	i = 1;
 	if (argc <= 1 || init_stacks(&stacks) != 0)
-	{
-		ft_printf("Error\n");
 		return (1);
-	}
 	while (i < argc)
 	{
 		if (parse_arg(&stacks, argv[i]) == 0)
