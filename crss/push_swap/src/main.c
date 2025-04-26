@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:22:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/04/24 11:33:37 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/04/24 20:16:00 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int argc, char *argv[])
 	if (argc <= 1 || init_stacks(&stacks) != 0)
 		return (1);
 	if (argc == 2 && ft_strlen(argv[1]) == 0)
-		return (free_stacks(&stacks, 0));
+		return (free_stacks(&stacks, 1));
 	while (i < argc)
 	{
 		if (parse_arg(&stacks, argv[i]) == 0)
