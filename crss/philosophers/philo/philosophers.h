@@ -33,13 +33,15 @@ typedef enum e_philo_state
 
 typedef struct s_fork
 {
+	pthread_mutex_t	lock;
 	struct s_philo	*holder;
 	bool			is_held;		
 }	t_fork;
 
 typedef struct s_philo
 {
-	t_fork			*target_fork;
+	t_fork			*prev_fork;
+	t_fork			*next_fork;
 	struct s_philo	*prev_philo;
 	struct s_philo	*next_philo;
 	philo_state		state;

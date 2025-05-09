@@ -61,3 +61,22 @@ void	*philo_free(t_philo *philo)
 	philo = NULL;
 	return (philo);
 }
+
+void	*fork_init(t_fork *fork, t_philo *holder)
+{
+	fork = malloc(1 * sizeof(t_fork);
+	if (fork == NULL)
+		return (NULL);
+	pthread_mutex_init(&fork->lock, NULL);
+	fork->holder = holder;	
+	fork->is_held = false;
+	return ((void *)fork);
+}
+
+void	*fork_free(t_fork *fork)
+{
+	pthread_mutex_destroy(&fork->lock);
+	free(fork);
+	fork = NULL;
+	return (fork);
+}
