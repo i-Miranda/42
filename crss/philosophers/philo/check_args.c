@@ -27,16 +27,26 @@ static int	set_philo_count(t_table *table, int	amount)
 		if (i == amount - 1)
 		{
 			if(philo_init(temp, i, prev, table->first_philo) == false)
-				return (/*abort and free table*/);
+			{
+				// not right return value yet
+				return (table_free(table));
+			}
 			table->first_philo->prev_philo = temp;
 		}
 		else if(philo_init(temp, i, prev, NULL) == false)
-				return (/*abort and free table*/);
+		{
+				// not right return value yet
+				return (table_free(table));
+		}
 		prev = temp;
 		temp = temp->next_philo;
 		i++;
 	}
 	return (0);
+}
+
+static int	set_time_to_die(t_philo *philo, int philo_count, int ttd)
+{
 }
 
 int	check_args(int argc, char **argv, t_table *table)
@@ -51,9 +61,9 @@ int	check_args(int argc, char **argv, t_table *table)
 		if (i == 1)
 			error = set_philo_count(table, atoi(argv[i]));	
 		else if (i == 2)	
-			error = set_time_to_die(atoi(argv[i]));	
+			error = set_time_to_die(&table->first_philo, table->count, atoi(argv[i]));	
 		else if (i == 3)	
-			error = set_time_to_die(atoi(argv[i]));	
+			error = set_time_to_die(&table->first_philo, table->count, atoi(argv[i]));	
 		i++;
 	}
 	return (error);
