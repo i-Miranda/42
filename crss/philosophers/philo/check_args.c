@@ -45,8 +45,16 @@ static int	set_philo_count(t_table *table, int	amount)
 	return (0);
 }
 
-static int	set_time_to_die(t_philo *philo, int philo_count, int ttd)
+ktatic int	set_time_to_die(t_philo *philo, int philo_count, int ttd)
 {
+	t_philo *temp;
+	
+	temp = philo;
+	while (temp !_ NULL)
+	{
+		philo->time_to_die = ttd;
+		temp = temp->next;
+	}
 }
 
 int	check_args(int argc, char **argv, t_table *table)
