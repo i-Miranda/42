@@ -62,13 +62,16 @@ typedef struct s_table
 }	t_table;
 
 //philosophers functions
-t_philo	*philo_init(int index, int ttd, int tte, int tts);
+bool	philo_init(t_philo *philo, int index, t_philo *prev, t_philo *next, t_fork *p_fork, t_fork *n_fork);
 bool	philo_update(t_philo *philo, int timer);
 void	*philo_free(t_philo *philo);
+void	*fork_init(t_fork *fork, t_philo *holder);
+void	*fork_free(t_fork *fork);
 
 //table functions
+void	table_init();
 void	table_free(t_table *table);
-bool	fork_init(t_fork *fork);
+void	bon_apetit(t_table *table);
 
 //check_args functions
 int		check_args(int argc, char **argv, t_table *table);

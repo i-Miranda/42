@@ -12,7 +12,7 @@
 
 #include "philosophers.h"
 
-bool	philo_init(t_philo *philo, int index, t_philo *prev, t_philo *next)
+bool	philo_init(t_philo *philo, int index, t_philo *prev, t_philo *next, t_fork *p_fork, t_fork *n_fork)
 {
 	philo = malloc(1 * sizeof(t_philosopher));
 	if (philo == NULL)
@@ -26,6 +26,8 @@ bool	philo_init(t_philo *philo, int index, t_philo *prev, t_philo *next)
 	philo->index = index;
 	philo->prev_philo = prev;
 	philo->next_philo = next;
+	philo->prev_fork = p_fork;
+	philo->next_fork = n_fork;
 	return (true);
 }
 

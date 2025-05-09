@@ -12,6 +12,14 @@
 
 #include "philosophers.h"
 
+void	table_init(t_table *table)
+{
+	philo_init(table->first_philo, 1, NULL, table->first_fork);
+	table->philo_count = 1;
+	fork_init(table->first_fork, table->first_philo);
+	table->fork_count = 1;
+}
+
 void	table_free(t_table *table)
 {
 	t_philo	*current_philo;
@@ -39,12 +47,6 @@ void	table_free(t_table *table)
 	table->first_fork = NULL;
 }
 
-bool	fork_init(t_fork *fork)
+void	bon_apetit(t_table *table)
 {
-	fork = malloc(1 * sizeof(fork));
-	if (fork == NULL)
-		return (false);
-	fork->holder = NULL;
-	fork->is_held = false;
-	return (true);
 }
