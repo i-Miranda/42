@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 08:58:47 by ivmirand          #+#    #+#              #
-#    Updated: 2025/04/20 14:32:34 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/08/08 12:06:49 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,4 +112,4 @@ re: fclean all
 bonus: $(BONUS_O) all
 	$(CC) $(CCFLAGS) $(DBFLAGS) $(BONUS_O) $(LIBS) $(HEADERS) -o $(NAME)
 
-.PHOY: all, clean, fclean, re, bonus
+.PHONY: all, clean, fclean, re, bonus

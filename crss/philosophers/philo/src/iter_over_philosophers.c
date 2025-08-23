@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   iter_over_philosophers.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 20:27:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/05/03 19:55:18 by ivan             ###   ########.fr       */
+/*   Created: 2025/08/23 12:04:15 by ivmirand          #+#    #+#             */
+/*   Updated: 2025/08/23 13:25:33 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char *argv[])
+void	iter_func_over_philosophers(void (*func)(t_philo *, void *, void *),
+		t_philo **philo, void *param_first, void *param_second)
 {
-	int		error;
-	t_table	table;
+	t_philo	*current;
 
-	if (argc != 6)
-		return (1);
-	error = check_args(argc, argv, &table);
-	return (0);
+	current = *philo;
+	while (current)
+	{
+		func(current, param_first, param_second);
+		current = current->next_philo;
+	}
 }

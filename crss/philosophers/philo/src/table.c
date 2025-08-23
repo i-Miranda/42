@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:59:57 by ivan              #+#    #+#             */
-/*   Updated: 2025/05/04 13:47:08 by ivan             ###   ########.fr       */
+/*   Updated: 2025/08/23 13:26:59 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ void	table_free(t_table *table)
 	table->first_fork = NULL;
 }
 
-void	bon_apetit(t_table *table)
+int	table_bon_apetit(t_table *table)
 {
+	int	error;
+
+	return (error);
 }
