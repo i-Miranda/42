@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:28:17 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/23 13:52:25 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/24 02:55:29 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,70 +23,76 @@
 						//pthread_mutex_unlock
 #include <stdbool.h>
 
-#define	MAX_LEN	10
+#define	MAX_LEN 10
+#define	ARGC_ERROR 1
+
+typedef enum e_error
+{
+	ENONE = 0,
+	EARGC = 1,
+	ETABLE_INIT = 2,
+	
+}	t_error;
 
 typedef enum e_philo_state 
 {
-	is_thinking,
-	is_eating, 
-	is_sleeping 
+	THINKING,
+	EATING, 
+	SLEEPING,
+	DEAD
 }	t_philo_state;
 
-typedef enum e_timer_type 
-{
-	DIE,
-	EAT, 
-	SLEEP, 
-	MUST_EAT 
-}	t_timer_type;
 
 typedef struct s_fork
 {
 	pthread_mutex_t	mutex;
-	struct s_philo	*holder;
 }	t_fork;
 
 typedef struct s_philo
 {
-	pthread			thread;
-	t_fork			*prev_fork;
-	t_fork			*fork;
+	unsigned int	index;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
+	pthread_t		thread;
+	pthread_mutex_t	mutex;
+	unsigned long	last_meal_ms;
+	unsigned int	meals_eaten;
 	struct s_philo	*prev_philo;
 	struct s_philo	*next_philo;
-	t_philo_state		state;
-	bool			is_alive;
-	unsigned int	time_to_eat;		
-	unsigned int	time_to_sleep;		
-	unsigned int	time_to_die;		
-	unsigned int	times_must_eat;
-	unsigned int	index;
+	t_philo_state	state;
 }	t_philo;
 
 typedef struct s_table
 {
-	t_philo	*first_philo;
-	t_philo	*last_philo;
-	t_fork	*first_fork;
-	t_fork	*last_fork;
-	int		philo_count;
-	int		fork_count;
+	unsigned long	start_time_ms;
+	unsigned int	philo_count;
+	unsigned int	time_to_eat;		
+	unsigned int	time_to_sleep;		
+	unsigned int	time_to_die;		
+	unsigned int	times_must_eat;
+	t_philo			*philos;
+	t_fork			*forks;
+	pthread_mutex_t	mutex;
 }	t_table;
 
 //philosophers functions
-bool	philo_init(t_philo *philo, int index, t_philo *prev, t_fork *fork);
-bool	philo_update(t_philo *philo, unsigned int timer);
-void	*philo_free(t_philo *philo);
-void	*fork_init(t_fork *fork, t_philo *holder);
-void	*fork_free(t_fork *fork);
+bool			philo_init(t_philo *philo, int index, t_table *table);
+bool			philo_update(t_philo *philo, t_table *table, unsigned int timer);
+void			*philo_free(t_philo *philo);
+t_fork			*fork_init(t_fork *fork);
+void			*fork_free(t_fork *fork);
 
 //table functions
-void	table_init();
-void	table_free(t_table *table);
-int		table_bon_apetit(t_table *table);
+t_error			table_init(t_table *table, int argc, char **argv);
+void			table_free(t_table *table);
+t_error			table_bon_apetit(t_table *table);
 
 //check_args functions
-int		check_args(int argc, char **argv, t_table *table);
+unsigned int	ft_atoui(char *str);
+int				check_args(int argc, char **argv, t_table *table);
 
 //timers functions
-void	set_all_philos_timers(t_philo **philos, void *timer_type, void *limit);
+unsigned long	timestamp_ms(void);
+unsigned long	print_timestamp_msg(t_table *table, int philo_id,
+				const char *msg);
 #endif

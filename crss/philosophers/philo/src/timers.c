@@ -6,44 +6,61 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 12:18:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/23 12:38:31 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/24 02:13:55 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.c"
 
-static void	set_philo_timer(t_philo *philo, void *timer_type, void *limit)
+static	ssize_t	print_string_fd(const char *str, int fd)
 {
-	t_timer_type	timer;
-	unsigned int	time_limit;
+	size_t	i;
 
-	time_limit = *(unsigned int *)limit;
-	if (!timer_type)
-	{
-		philo->time_to_die = time_limit;
-		philo->time_to_eat = time_limit;
-		philo->time_to_sleep = time_limit;
-		return ;
-	}
-	else
-		timer = *(t_timer_type *)timer_type;
-	if (timer == DIE)
-		philo->time_to_die = time_limit;
-	else if (timer == EAT)
-		philo->time_to_eat = time_limit;
-	else if (timer == SLEEP)
-		philo->time_to_sleep = time_limit;
-	else if (timer == MUST_EAT)
-		philo->times_must_eat = time_limit;
+	i = 0;
+	while (str[i])
+		i++;
+	return (write(fd, str, i);
 }
 
-void	set_all_philos_timers(t_philo **philos, void *timer_type, void *limit)
+static	ssize_t	print_uint_fd(unsigned long n, int fd)
 {
-	unsigned int	time_limit;
+	char	buf[21];
+	int		i;
+	
+	i = 20;
+	buf[i] = '\0';
+	if (n == 0)
+		write(fd, "0", 1);
+	while (n > 0)
+	{
+		buf[--i] = '0' + (n % 10);
+		n /= 10;
+	}
+	write(fd, buf + i, 20 - i);
+}
 
-	if (!limit)
-		time_limit = 0;
-	else
-		time_limit = *(unsigned int *)limit;
-	iter_over_philosophers(set_philo_timer, philos, timer_type, 0);
+unsigned long	timestamp_ms(void)
+{
+	struct timeval	tv;
+	gettimeofday(&timeval, NULL);
+	return (tv.tv_sec * 1000UL + tv.tv_usec / 1000UL);
+}
+
+unsigned long	print_timestamp_msg(t_table *table, int philo_id,
+	const char *msg)
+{
+	unsigned long	timestamp;
+
+	pthread_mutex_lock(&table->mutex);
+	if (!table->stop)
+	{
+		timestamp = timestamp_ms() - table->start_time_ms;	
+		print_uint_fd(timestamp, STDOUT_FILENO);
+		write(STDOUT_FILENO, " ", 1);
+		print_uint_fd(philo_id, STDOUT_FILENO);
+		write(STDOUT_FILENO, " ", 1);
+		print_string_fd(msg, STDOUT_FILENO);
+		write(STDOUT_FILENO, "\n", 1);
+	}
+	pthread_mutex_unlock(&table->mutex);
 }

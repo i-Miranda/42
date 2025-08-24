@@ -6,51 +6,47 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:27:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/23 13:52:45 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/24 02:46:28 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-bool	philo_init(t_philo *philo, int index, t_philo *prev, t_fork *fork)
+bool	philo_init(t_philo *philo, int index, t_table *table)
 {
-	philo = malloc(1 * sizeof(t_philo));
-	if (philo == NULL)
-		return (false);
-	philo->is_alive = true;
-	philo->thread = pthread_create();
-	philo->state = is_thinking;
 	philo->index = index;
-	philo->prev_philo = prev;
-	philo->next_philo = NULL;
-	philo->prev_fork = prev->fork;
-	philo->fork = fork_init(fork, philo);
+	philo->left_fork = &table->forks[index];
+	philo->right_fork = &table->forks[(index + 1) % table->philo_count];
+	pthread_mutex_init(&philo->mutex, NULL);
+	philo->prev_philo = &table->philos[(index + 1) % table->philo_count];
+	philo->next_philo = &table->philos[(index + table->philo_count - 1) 
+		% table->philo_count];
 	return (true);
 }
 
-bool	philo_update(t_philo *philo, unsigned int timer)
+//true means alive false means dead
+bool	philo_update(t_philo *philo, t_table *table, unsigned int timer)
 {
-	if (!philo->is_alive || timer > philo->time_to_die)
-		philo->is_alive = false;
+	if (timer > table->time_to_die)
+		pthread_detach(philo->thread);
 	else
 	{
-		if (philo->state == is_thinking && timer > philo->time_to_die)
-			philo->is_alive = false;
-		if (philo->state == is_thinking && philo->prev_fork->mutex)
+		if (philo->state == THINKING)
 		{
-			philo->prev_fork->holder = philo;
-			if (philo->state == is_thinking && philo->next_fork->mutex)
-				philo->state = is_eating;
+			if (pthread_mutex_lock(&philo->left_fork->mutex)
+				&& pthread_mutex_lock(&philo->right_fork->mutex))
+				philo->state = EATING;
 		}
-		if (philo->state == is_eating && timer > time_to_eat)
+		if (philo->state == EATING && timer > table->time_to_eat)
 		{
-			philo->target_fork->holder = NULL;
-			philo->state = is_sleeping;
+			pthread_mutex_unlock(&philo->left_fork->mutex);
+			pthread_mutex_unlock(&philo->right_fork->mutex);
+			philo->state = SLEEPING;
 		}
-		if (philo->state == is_sleeping && time > time_to_sleep)
-			philo->state = is_thinking;
+		if (philo->state == SLEEPING && timer > table->time_to_sleep)
+			philo->state = THINKING;
 	}
-	return (philo->is_alive);
+	return (true);
 }
 
 void	*philo_free(t_philo *philo)
@@ -60,19 +56,15 @@ void	*philo_free(t_philo *philo)
 	return (philo);
 }
 
-void	*fork_init(t_fork *fork, t_philo *holder)
+t_fork	*fork_init(t_fork *fork)
 {
-	fork = malloc(1 * sizeof(t_fork);
-	if (fork == NULL)
-		return (NULL);
 	pthread_mutex_init(&fork->mutex, NULL);
-	fork->holder = holder;	
-	return ((void *)fork);
+	return (fork);
 }
 
 void	*fork_free(t_fork *fork)
 {
-	pthread_mutex_destroy(&fork->lock);
+	pthread_mutex_destroy(&fork->mutex);
 	free(fork);
 	fork = NULL;
 	return (fork);
