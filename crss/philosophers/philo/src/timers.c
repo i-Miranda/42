@@ -6,23 +6,43 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 12:18:07 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/24 02:13:55 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/24 18:36:33 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.c"
+#include "philosophers.h"
 
-static	ssize_t	print_string_fd(const char *str, int fd)
+void	usleep_until_stop(t_table *table, unsigned long ms)
+{
+	unsigned long end;
+	unsigned long now;
+	unsigned long time_left;
+
+	end = timestamp_ms() + ms;
+	while (!table->stop)
+	{
+		now = timestamp_ms();
+		if (now >= end)
+			break ;
+		time_left = end - now;
+		if (time_left > 2)
+			usleep(1000);
+		else
+			usleep(100);
+	}
+}
+
+ssize_t	print_string_fd(const char *str, int fd)
 {
 	size_t	i;
 
 	i = 0;
 	while (str[i])
 		i++;
-	return (write(fd, str, i);
+	return (write(fd, str, i));
 }
 
-static	ssize_t	print_uint_fd(unsigned long n, int fd)
+ssize_t	print_uint_fd(unsigned long n, int fd)
 {
 	char	buf[21];
 	int		i;
@@ -36,17 +56,17 @@ static	ssize_t	print_uint_fd(unsigned long n, int fd)
 		buf[--i] = '0' + (n % 10);
 		n /= 10;
 	}
-	write(fd, buf + i, 20 - i);
+	return (write(fd, buf + i, 20 - i));
 }
 
 unsigned long	timestamp_ms(void)
 {
 	struct timeval	tv;
-	gettimeofday(&timeval, NULL);
+	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000UL + tv.tv_usec / 1000UL);
 }
 
-unsigned long	print_timestamp_msg(t_table *table, int philo_id,
+void	print_timestamp_msg(t_table *table, int philo_id,
 	const char *msg)
 {
 	unsigned long	timestamp;

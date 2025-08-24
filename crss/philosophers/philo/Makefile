@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/23 12:44:04 by ivmirand          #+#    #+#              #
-#    Updated: 2025/08/23 12:47:06 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/08/24 18:31:29 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,15 @@ SHELL		:= /bin/bash
 
 NAME		:=	philosophers
 
-DIR_PHILO	:=	philo
-DIR_OBJS	:=	$(DIR_PHILO)/objs
-DIR_SRCS	:=	$(DIR_PHILO)/src
-DIR_INC		:=	$(DIR_PHILO)/inc
+DIR_OBJS	:=	objs
+DIR_SRCS	:=	src
+DIR_INC		:=	inc
 
 SRC_FILES	:=	check_args.c \
 			iter_over_philosophers.c \
 			main.c \
 			philosophers.c \
+			forks.c \
 			table.c \
 			timers.c
 
@@ -30,7 +30,7 @@ SRCS		:=	$(addprefix $(DIR_SRCS)/, $(SRC_FILES))
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SRC_FILES:.c=.o))
 
 CC			:=	cc
-INCLUDE		:=	-I $(DIR_INC) -I $(LIBFT)/$(DIR_INC)
+INCLUDE		:=	-I $(DIR_INC)
 MKDIR		:=	mkdir -p
 RM			:=	rm -rf 
 

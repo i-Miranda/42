@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:28:17 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/24 02:55:29 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/24 19:24:59 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 						//pthread_mutex_destroy, pthread_mutex_lock,
 						//pthread_mutex_unlock
 #include <stdbool.h>
+#include <limits.h>
 
 #define	MAX_LEN 10
 #define	ARGC_ERROR 1
@@ -64,7 +65,9 @@ typedef struct s_philo
 
 typedef struct s_table
 {
+	pthread_t		thread;
 	unsigned long	start_time_ms;
+	bool			stop;
 	unsigned int	philo_count;
 	unsigned int	time_to_eat;		
 	unsigned int	time_to_sleep;		
@@ -77,13 +80,18 @@ typedef struct s_table
 
 //philosophers functions
 bool			philo_init(t_philo *philo, int index, t_table *table);
-bool			philo_update(t_philo *philo, t_table *table, unsigned int timer);
-void			*philo_free(t_philo *philo);
+void			*philo_update(void *table_param);
+void			philo_free(t_philo *philo);
+
+//forks functions
+void			take_forks(t_philo *philo);
+void			drop_forks(t_philo *philo);
 t_fork			*fork_init(t_fork *fork);
-void			*fork_free(t_fork *fork);
+void			fork_free(t_fork *fork);
 
 //table functions
 t_error			table_init(t_table *table, int argc, char **argv);
+void			*table_update(void *table_param);
 void			table_free(t_table *table);
 t_error			table_bon_apetit(t_table *table);
 
@@ -92,7 +100,10 @@ unsigned int	ft_atoui(char *str);
 int				check_args(int argc, char **argv, t_table *table);
 
 //timers functions
+void			usleep_until_stop(t_table *table, unsigned long ms);
+ssize_t			print_string_fd(const char *str, int fd);
+ssize_t			print_uint_fd(unsigned long n, int fd);
 unsigned long	timestamp_ms(void);
-unsigned long	print_timestamp_msg(t_table *table, int philo_id,
+void 			print_timestamp_msg(t_table *table, int philo_id,
 				const char *msg);
 #endif
