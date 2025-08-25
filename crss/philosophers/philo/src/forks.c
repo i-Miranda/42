@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 14:18:43 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/25 23:43:12 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/26 01:05:33 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ bool	take_forks(t_philo *philo)
 		pthread_mutex_unlock(first_fork);
 		return (false);
 	}
-	print_philo_state(philo, "has taken a fork");
 	pthread_mutex_lock(second_fork);
 	if (get_stop(philo->table))
 	{
@@ -47,6 +46,7 @@ bool	take_forks(t_philo *philo)
 		pthread_mutex_unlock(first_fork);
 		return (false);
 	}
+	print_philo_state(philo, "has taken a fork");
 	print_philo_state(philo, "has taken a fork");
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:28:17 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/26 00:11:41 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/26 00:53:32 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ typedef struct s_philo
 	pthread_mutex_t	*left_fork;
 	struct s_philo	*prev_philo;
 	struct s_philo	*next_philo;
-	pthread_mutex_t	right_fork;
 	pthread_t		thread;
+	pthread_mutex_t	right_fork;
 	pthread_mutex_t	mutex;
 	unsigned long	last_meal_ms;
 	unsigned int	meals_eaten;
 	unsigned int	index;
+	bool			done;
 }	t_philo;
 
 typedef struct s_table

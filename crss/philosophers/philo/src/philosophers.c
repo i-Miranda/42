@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:27:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/26 00:11:53 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/26 01:20:11 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void philo_wait_to_start(t_philo *philo)
 {
 	bool	start;
-	unsigned long	start_time;
 
 	start = false;
 	pthread_mutex_lock(&philo->table->start_mutex);
@@ -26,15 +25,9 @@ static void philo_wait_to_start(t_philo *philo)
 		pthread_mutex_lock(&philo->table->start_mutex);
 		if (philo->table->started > 0)
 			start = true;
-		start_time = philo->table->start_time_ms;
 		pthread_mutex_unlock(&philo->table->start_mutex);
 		if (start)
-		{
-			pthread_mutex_lock(&philo->mutex);
-			philo->last_meal_ms = start_time;
-			pthread_mutex_unlock(&philo->mutex);
 			break ;
-		}
 		usleep(100);
 	}
 }
@@ -75,7 +68,7 @@ void	*philo_update(void *philo_param)
 		pthread_mutex_unlock(&philo->right_fork);
 		return (NULL);
 	}
-	if (philo->index % 1 == 0)
+	if (philo->index % 2 == 0)
 		usleep(2000);
 	while (!get_stop(philo->table))
 	{
@@ -115,5 +108,6 @@ bool	philo_init(t_philo **philo, t_philo **prev_philo, int index,
 	//(*philo)->last_meal_ms = table->start_time_ms;
 	(*philo)->meals_eaten = 0;
 	(*philo)->table = table;
+	(*philo)->done = false;
 	return (true);
 }

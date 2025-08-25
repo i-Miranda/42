@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:59:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/26 00:10:33 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/26 01:22:20 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,23 @@ static bool	check_for_philo_death(t_philo *philo, unsigned int *philos_done)
 	pthread_mutex_lock(&philo->mutex);
 	philo_last_meal_ms = philo->last_meal_ms;
 	philo_meals_eaten = philo->meals_eaten;
-	pthread_mutex_unlock(&philo->mutex);
 	if (timestamp_ms() - philo_last_meal_ms > philo->table->time_to_die)
 	{
 		if (!get_stop(philo->table))
 		{
 			print_timestamp_msg(philo, "has died");
 			set_stop(philo->table, true);
+			pthread_mutex_unlock(&philo->mutex);
 		}
 		return (true);
 	}
 	if (philo->table->times_must_eat > 0
-		&& philo_meals_eaten >= philo->table->times_must_eat)
+		&& philo_meals_eaten >= philo->table->times_must_eat && !philo->done)
+	{
 		(*philos_done)++;
+		philo->done = true;
+	}
+	pthread_mutex_unlock(&philo->mutex);
 	return (false);
 }
 
@@ -93,7 +97,7 @@ void	*table_update(void *table_param)
 				break ;
 		philo = philo->next_philo;
 		if (!get_stop(table)
-			&& table->times_must_eat > 0 && philos_done >= table->philo_count)
+			&& table->times_must_eat > 0 && philos_done == table->philo_count)
 		{
 			set_stop(table, true);
 			break ;
@@ -114,6 +118,8 @@ void	table_free(t_table *table)
 		temp_philo = current_philo->next_philo;
 		philo_free(current_philo);
 		current_philo = temp_philo;
+		if (current_philo == table->philos)
+			break ;
 	}
 	table->philo_count = 0;
 	table->philos = NULL;
