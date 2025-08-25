@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:28:17 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/25 12:48:25 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/26 00:11:41 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,33 +35,19 @@ typedef enum e_error
 	ETABLE_INIT = 2,
 }	t_error;
 
-typedef enum e_philo_state
-{
-	THINKING,
-	EATING,
-	SLEEPING,
-	DEAD
-}	t_philo_state;
-
 /*-------STRUCTS-------*/
-typedef struct s_fork
-{
-	pthread_mutex_t	mutex;
-}	t_fork;
-
 typedef struct s_philo
 {
 	struct s_table	*table;
-	unsigned int	index;
-	t_fork			*left_fork;
-	t_fork			*right_fork;
+	pthread_mutex_t	*left_fork;
+	struct s_philo	*prev_philo;
+	struct s_philo	*next_philo;
+	pthread_mutex_t	right_fork;
 	pthread_t		thread;
 	pthread_mutex_t	mutex;
 	unsigned long	last_meal_ms;
 	unsigned int	meals_eaten;
-	struct s_philo	*prev_philo;
-	struct s_philo	*next_philo;
-	t_philo_state	state;
+	unsigned int	index;
 }	t_philo;
 
 typedef struct s_table
@@ -77,6 +63,9 @@ typedef struct s_table
 	t_philo			*philos;
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	stop_mutex;
+	pthread_mutex_t	start_mutex;
+	unsigned int	ready;
+	unsigned int	started;
 }	t_table;
 
 //philosophers functions
@@ -88,8 +77,6 @@ void			philo_free(t_philo *philo);
 //forks functions
 bool			take_forks(t_philo *philo);
 void			drop_forks(t_philo *philo);
-void			fork_init(t_fork *fork);
-void			fork_free(t_fork *fork);
 
 //table functions
 t_error			table_init(t_table *table);
