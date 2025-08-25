@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/23 12:44:04 by ivmirand          #+#    #+#              #
-#    Updated: 2025/08/24 18:31:29 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/08/25 11:36:55 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,11 @@ DIR_SRCS	:=	src
 DIR_INC		:=	inc
 
 SRC_FILES	:=	check_args.c \
+			forks.c \
 			iter_over_philosophers.c \
 			main.c \
 			philosophers.c \
-			forks.c \
+			print.c \
 			table.c \
 			timers.c
 
@@ -73,7 +74,7 @@ ifeq ($(NOFLAGS), 1)
 	CCFLAGS :=
 	DBFLAGS :=
 else 
-	CCFLAGS := -Wall -Wextra -Werror
+	CCFLAGS := -Wall -Wextra -Werror -std=c99
 endif
 
 ##################################################
@@ -92,7 +93,19 @@ SUPPRESSIONS	:=	valgrind.supp
 TEMP			:=	.$(SUPPRESSIONS).temp
 KEEP			:=	.$(SUPPRESSIONS).keep
 
-valgrind	:	all
+valgrind	:	all 
+		valgrind -s \
+			--tool=memcheck \
+			--track-fds=yes \
+			--leak-check=full \
+			--track-origins=yes \
+			--show-leak-kinds=all \
+			--trace-children=no \
+			--log-file=$(VALGRIND_LOG) \
+			--gen-suppressions=no \
+			./$(NAME) $(ARGS)
+
+valgrind_supp	:	all
 		valgrind -s \
 			--tool=memcheck \
 			--track-fds=yes \
@@ -102,7 +115,7 @@ valgrind	:	all
 			--trace-children=no \
 			--log-file=$(VALGRIND_LOG) \
 			--gen-suppressions=all \
-			./$(NAME)
+			./$(NAME) $(ARGS)
 			(cat $(VALGRIND_LOG) | grep -v "==" | tr -d "\n" | \
 				sed 's/}/}\n/g' | sort -u > $(SUPPRESSIONS)); touch $(KEEP); \
 			while [ "$$(head -n1 $(SUPPRESSIONS))" != "" ] ; do \
@@ -124,4 +137,30 @@ valclean	:
 			@rm -f $(TEMP)
 			@rm -f $(KEEP)
 
-.PHONY	: all clean fclean re valgrind
+helgrind	:	all 
+		valgrind -s \
+			--tool=helgrind \
+			./$(NAME) $(ARGS)
+
+helgrind_fast	:	all 
+		valgrind -s \
+			--tool=helgrind \
+			--history-level=approx \
+			./$(NAME) $(ARGS)
+
+helgrind_faster	:	all 
+		valgrind -s \
+			--tool=helgrind \
+			--history-level=none \
+			./$(NAME) $(ARGS)
+
+.PHONY	: all \
+	clean \
+	fclean \
+	re \
+	valgrind \
+	valgrind_supp \
+	valclean \
+	helgrind \
+	helgrind_fast \
+	helgrind_faster

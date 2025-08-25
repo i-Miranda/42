@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:27:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/24 18:54:24 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:57:21 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@ int	check_args(int argc, char **argv, t_table *table)
 	t_error	error;
 
 	error = ENONE;
-	error = table_init(table, argc, argv);
+	table->philo_count = ft_atoui(argv[1]);
+	table->time_to_die = ft_atoui(argv[2]);
+	table->time_to_eat = ft_atoui(argv[3]);
+	table->time_to_sleep = ft_atoui(argv[4]);
+	if (argc == 6)
+		table->times_must_eat = ft_atoui(argv[5]);
+	else
+		table->times_must_eat = 0;
+	table->stop = false;
+	error = table_init(table);
 	return (error);
 }

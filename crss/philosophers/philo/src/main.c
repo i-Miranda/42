@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:27:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/24 02:37:50 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:40:50 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int	main(int argc, char *argv[])
 
 	error = ENONE;
 	if (argc < 5 || argc > 6)
-		return (ARGC_ERROR);
+		return (EARGC);
 	error = check_args(argc, argv, &table);
 	error = table_bon_apetit(&table);
+	table_free(&table);
 	return ((int)error);
 }
