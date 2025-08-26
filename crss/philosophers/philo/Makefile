@@ -6,13 +6,13 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/23 12:44:04 by ivmirand          #+#    #+#              #
-#    Updated: 2025/08/26 02:17:12 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/08/26 13:50:39 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SHELL		:= /bin/bash
 
-NAME		:=	philosophers
+NAME		:=	philo
 
 DIR_OBJS	:=	objs
 DIR_SRCS	:=	src
@@ -75,7 +75,7 @@ ifeq ($(NOFLAGS), 1)
 	CCFLAGS :=
 	DBFLAGS :=
 else 
-	CCFLAGS := -Wall -Wextra -Werror -std=c99
+	CCFLAGS := -Wall -Wextra -Werror
 endif
 
 ##################################################
