@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:28:17 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/26 00:53:32 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/26 02:19:13 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,13 @@ bool			take_forks(t_philo *philo);
 void			drop_forks(t_philo *philo);
 
 //table functions
-t_error			table_init(t_table *table);
-void			*table_update(void *table_param);
+t_error			table_init(int argc, char **argv, t_table *table);
 void			table_free(t_table *table);
+
+//table_update functions
+void			*table_update(void *table_param);
+
+//bon_apetit functions
 t_error			table_bon_apetit(t_table *table);
 
 //check_args functions
@@ -94,6 +98,7 @@ bool			get_stop(t_table *table);
 void			set_stop(t_table *table, bool stop);
 void			usleep_until_stop(t_table *table, unsigned long ms);
 unsigned long	timestamp_ms(void);
+
 //print functions
 ssize_t			print_string_fd(const char *str, int fd);
 ssize_t			print_uint_fd(unsigned long n, int fd);

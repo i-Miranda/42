@@ -6,13 +6,13 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:27:27 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/26 01:20:11 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/26 01:38:36 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void philo_wait_to_start(t_philo *philo)
+static void	philo_wait_to_start(t_philo *philo)
 {
 	bool	start;
 
@@ -31,7 +31,7 @@ static void philo_wait_to_start(t_philo *philo)
 		usleep(100);
 	}
 }
- 
+
 static bool	philo_update_loop(t_philo *philo)
 {
 	if (!take_forks(philo))
@@ -59,7 +59,7 @@ void	*philo_update(void *philo_param)
 	t_philo	*philo;	
 
 	philo = (t_philo *)philo_param;
-	philo_wait_to_start(philo);	
+	philo_wait_to_start(philo);
 	if (philo->table->philo_count == 1)
 	{
 		pthread_mutex_lock(&philo->right_fork);
@@ -105,7 +105,6 @@ bool	philo_init(t_philo **philo, t_philo **prev_philo, int index,
 	}
 	pthread_mutex_init(&(*philo)->right_fork, NULL);
 	pthread_mutex_init(&(*philo)->mutex, NULL);
-	//(*philo)->last_meal_ms = table->start_time_ms;
 	(*philo)->meals_eaten = 0;
 	(*philo)->table = table;
 	(*philo)->done = false;

@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/23 12:44:04 by ivmirand          #+#    #+#              #
-#    Updated: 2025/08/25 11:36:55 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/08/26 02:17:12 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,14 @@ DIR_OBJS	:=	objs
 DIR_SRCS	:=	src
 DIR_INC		:=	inc
 
-SRC_FILES	:=	check_args.c \
+SRC_FILES	:=	bon_apetit.c \
+			check_args.c \
 			forks.c \
-			iter_over_philosophers.c \
 			main.c \
 			philosophers.c \
 			print.c \
 			table.c \
+			table_update.c \
 			timers.c
 
 SRCS		:=	$(addprefix $(DIR_SRCS)/, $(SRC_FILES))
