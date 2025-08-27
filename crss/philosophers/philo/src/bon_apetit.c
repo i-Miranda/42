@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:59:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/26 02:00:05 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:23:27 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	check_all_philos_for_ready(t_table *table)
 		pthread_mutex_lock(&table->start_mutex);
 		all_ready = table->ready;
 		pthread_mutex_unlock(&table->start_mutex);
-		if (all_ready == table->philo_count)
+		if (all_ready == (unsigned int)table->philo_count)
 			break ;
 		usleep(100);
 	}

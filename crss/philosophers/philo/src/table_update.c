@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:59:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/26 02:23:58 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:52:43 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static bool	check_for_philo_death(t_philo *philo, unsigned int *philos_done)
 	pthread_mutex_lock(&philo->mutex);
 	philo_last_meal_ms = philo->last_meal_ms;
 	philo_meals_eaten = philo->meals_eaten;
-	if (timestamp_ms() - philo_last_meal_ms > philo->table->time_to_die)
+	if (timestamp_ms() - philo_last_meal_ms
+		> (unsigned long)(philo->table->time_to_die))
 	{
 		if (!get_stop(philo->table))
 		{
@@ -43,8 +44,8 @@ static bool	check_for_philo_death(t_philo *philo, unsigned int *philos_done)
 		}
 		return (true);
 	}
-	if (philo->table->times_must_eat > 0
-		&& philo_meals_eaten >= philo->table->times_must_eat && !philo->done)
+	if (philo->table->times_must_eat > 0 && !philo->done
+		&& philo_meals_eaten >= (unsigned long)philo->table->times_must_eat)
 	{
 		(*philos_done)++;
 		philo->done = true;
@@ -63,14 +64,17 @@ static void	check_for_table_done(t_table *table)
 	{
 		philo = table->philos;
 		while (philo && !get_stop(table))
+		{
 			if (check_for_philo_death(philo, &philos_done))
 				break ;
-		philo = philo->next_philo;
-		if (!get_stop(table)
-			&& table->times_must_eat > 0 && philos_done == table->philo_count)
-		{
-			set_stop(table, true);
-			break ;
+			if (!get_stop(table)
+				&& table->times_must_eat > 0
+				&& philos_done == (unsigned int)table->philo_count)
+			{
+				set_stop(table, true);
+				break ;
+			}
+			philo = philo->next_philo;
 		}
 		usleep(1000);
 	}

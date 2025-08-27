@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:28:17 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/26 02:19:13 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:35:34 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ typedef enum e_error
 {
 	ENONE = 0,
 	EARGC = 1,
-	ETABLE_INIT = 2,
+	EARGV = 2,
+	ETABLE_INIT = 3,
 }	t_error;
 
 /*-------STRUCTS-------*/
@@ -56,11 +57,11 @@ typedef struct s_table
 	pthread_t		thread;
 	unsigned long	start_time_ms;
 	bool			stop;
-	unsigned int	philo_count;
-	unsigned int	time_to_eat;		
-	unsigned int	time_to_sleep;		
-	unsigned int	time_to_die;		
-	unsigned int	times_must_eat;
+	int				philo_count;
+	int				time_to_eat;		
+	int				time_to_sleep;		
+	int				time_to_die;		
+	int				times_must_eat;
 	t_philo			*philos;
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	stop_mutex;
@@ -80,7 +81,7 @@ bool			take_forks(t_philo *philo);
 void			drop_forks(t_philo *philo);
 
 //table functions
-t_error			table_init(int argc, char **argv, t_table *table);
+t_error			table_init(t_table *table);
 void			table_free(t_table *table);
 
 //table_update functions
@@ -90,7 +91,6 @@ void			*table_update(void *table_param);
 t_error			table_bon_apetit(t_table *table);
 
 //check_args functions
-unsigned int	ft_atoui(char *str);
 int				check_args(int argc, char **argv, t_table *table);
 
 //timers functions

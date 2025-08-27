@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:59:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/08/26 02:18:53 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:28:09 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,22 @@ static void	init_all_philos(t_table *table)
 	table->philos = NULL;
 	head = table->philos;
 	prev = NULL;
-	while (i < table->philo_count)
+	while (i < (unsigned int)table->philo_count)
 	{
 		current = NULL;
 		philo_init(&current, &prev, i, table);
 		if (!head)
 			head = current;
 		prev = current;
-		if (i == table->philo_count - 1)
+		if (i == (unsigned int)(table->philo_count - 1))
 			head->left_fork = &current->right_fork;
 		i++;
 	}
 	table->philos = head;
 }
 
-t_error	table_init(int argc, char **argv, t_table *table)
+t_error	table_init(t_table *table)
 {
-	table->philo_count = ft_atoui(argv[1]);
-	table->time_to_die = ft_atoui(argv[2]);
-	table->time_to_eat = ft_atoui(argv[3]);
-	table->time_to_sleep = ft_atoui(argv[4]);
-	if (argc == 6)
-		table->times_must_eat = ft_atoui(argv[5]);
-	else
-		table->times_must_eat = 0;
 	table->stop = false;
 	init_all_philos(table);
 	pthread_mutex_init(&table->mutex, NULL);
