@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/23 12:44:04 by ivmirand          #+#    #+#              #
-#    Updated: 2025/08/26 13:50:39 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/08/27 13:13:02 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,23 +97,26 @@ KEEP			:=	.$(SUPPRESSIONS).keep
 valgrind	:	all 
 		valgrind -s \
 			--tool=memcheck \
-			--track-fds=yes \
 			--leak-check=full \
 			--track-origins=yes \
 			--show-leak-kinds=all \
-			--trace-children=no \
+			./$(NAME) $(ARGS)
+
+valgrind_log	:	all 
+		valgrind -s \
+			--tool=memcheck \
+			--leak-check=full \
+			--track-origins=yes \
+			--show-leak-kinds=all \
 			--log-file=$(VALGRIND_LOG) \
-			--gen-suppressions=no \
 			./$(NAME) $(ARGS)
 
 valgrind_supp	:	all
 		valgrind -s \
 			--tool=memcheck \
-			--track-fds=yes \
 			--leak-check=full \
 			--track-origins=yes \
 			--show-leak-kinds=all \
-			--trace-children=no \
 			--log-file=$(VALGRIND_LOG) \
 			--gen-suppressions=all \
 			./$(NAME) $(ARGS)
