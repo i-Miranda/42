@@ -5,55 +5,44 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/08/23 12:44:04 by ivmirand          #+#    #+#              #
-#    Updated: 2025/09/22 22:43:21 by ivmirand         ###   ########.fr        #
+#    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
+#    Updated: 2025/09/22 22:54:14 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SHELL		:= /bin/bash
+NAME		:=	megaphone
 
-NAME		:=	philo
-
-DIR_OBJS	:=	objs
-DIR_SRCS	:=	src
+DIR_SRC		:=	src
 DIR_INC		:=	inc
+DIR_OBJS	:=	objs
 
-SRC_FILES	:=	bon_apetit.c \
-			check_args.c \
-			forks.c \
-			main.c \
-			philosophers.c \
-			print.c \
-			table.c \
-			table_update.c \
-			timers.c
+SOURCES		:= megaphone.cpp
 
-SRCS		:=	$(addprefix $(DIR_SRCS)/, $(SRC_FILES))
-OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SRC_FILES:.c=.o))
+SRCS		:= 	$(addprefix $(DIR_SRC)/, $(SOURCES))
+OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SOURCES:.cpp=.o))
 
-CC			:=	cc
-INCLUDE		:=	-I $(DIR_INC)
-MKDIR		:=	mkdir -p
-RM			:=	rm -rf 
+CXX			:=	c++
+INC			:=	-I$(DIR_INC)
 
-all			:	$(NAME)
 
-$(NAME)		:	$(DIR_OBJS) $(OBJS)
-				$(CC) $(CCFLAGS) $(DBFLAGS) $(OBJS) -o $(NAME)
+all	:	$(NAME)
 
-$(DIR_OBJS)	:	
-				$(MKDIR) $(DIR_OBJS)
-			
-$(DIR_OBJS)/%.o:	$(DIR_SRCS)/%.c
-				$(CC) $(CCFLAGS) $(DBFLAGS) $(FLAGS) $(INCLUDE) -c $< -o $@
+$(NAME)			:	$(DIR_OBJS)	$(OBJS)
+	$(CXX) $(CXXFLAGS) $(DBFLAGS) $(OBJS) -o $(NAME)
 
-clean		:
-				$(RM) $(DIR_OBJS)
-	
-fclean		:	clean valclean
-				$(RM) $(NAME)
+$(DIR_OBJS)		:
+	mkdir -p $(DIR_OBJS)
 
-re			:	fclean all
+$(DIR_OBJS)/%.o	:	$(DIR_SRC)/%.cpp
+	$(CXX) $(CXXFLAGS) $(DBFLAGS) $(INC) -c $< -o $@
+
+clean			:
+	rm -rf	$(DIR_OBJS)
+
+fclean			:	clean valclean
+	rm -rf	$(NAME)
+
+re				:	fclean all
 
 #############DEBUGGING  RULES#####################
 
@@ -72,10 +61,10 @@ endif
 NOFLAGS ?= 0
 
 ifeq ($(NOFLAGS), 1)
-	CCFLAGS :=
+	CPP_FLAGS :=
 	DBFLAGS :=
 else 
-	CCFLAGS := -Wall -Wextra -Werror
+	CXXFLAGS := -Wall -Werror -Wextra -std=c++98
 endif
 
 ##################################################
@@ -134,30 +123,10 @@ valclean	:
 			@rm -f $(TEMP)
 			@rm -f $(KEEP)
 
-helgrind	:	all 
-		valgrind -s \
-			--tool=helgrind \
-			./$(NAME) $(ARGS)
-
-helgrind_fast	:	all 
-		valgrind -s \
-			--tool=helgrind \
-			--history-level=approx \
-			./$(NAME) $(ARGS)
-
-helgrind_faster	:	all 
-		valgrind -s \
-			--tool=helgrind \
-			--history-level=none \
-			./$(NAME) $(ARGS)
-
-.PHONY	: all \
+.PHONY : all \
 	clean \
 	fclean \
 	re \
 	valgrind \
 	valgrind_supp \
-	valclean \
-	helgrind \
-	helgrind_fast \
-	helgrind_faster
+	valclean 
