@@ -6,9 +6,10 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:17:54 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/09/22 23:18:04 by ivmirand         ###   ########.fr       */
+/*   Updated: 2025/09/23 02:47:26 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <iostream>
 #include "Contact.hpp"
 
