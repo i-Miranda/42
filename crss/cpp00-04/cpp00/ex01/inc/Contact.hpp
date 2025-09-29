@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:18:10 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/09/29 11:28:06 by ivan             ###   ########.fr       */
+/*   Updated: 2025/09/29 13:26:01 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef enum e_contact_data {
 class Contact {
 	public:
 		void		Contact::Contact( void );
+		void		Contact::Contact(std::string first, std::string last,
+				std::string nick, std::string phone, std::string secret);
 		void		set_param(t_contact_data type, std::string str);
 		std::string	get_param(t_contact_data type);
 	

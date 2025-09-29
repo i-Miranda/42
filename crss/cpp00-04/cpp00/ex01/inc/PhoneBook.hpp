@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 23:17:26 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/09/29 11:23:31 by ivan             ###   ########.fr       */
+/*   Updated: 2025/09/29 13:37:25 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 #include <cstring>
 #include <string>
 
+#include "Contact.hpp"
+
+# define MAX_CONTACTS 8
+# define TRUNC 10
+
 class PhoneBook {
 	public:
 		PhoneBook::PhoneBook(void);
@@ -26,7 +31,6 @@ class PhoneBook {
 		void search(Contact::Contact contact);
 	
 	private:
-		Contact::Contact[8] contacts;
+		Contact::Contact[MAX_CONTACTS] _contacts;
 }
-
 #endif
