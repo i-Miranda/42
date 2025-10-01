@@ -6,19 +6,18 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
-#    Updated: 2025/10/01 22:03:38 by ivmirand         ###   ########.fr        #
+#    Updated: 2025/10/01 22:41:27 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:=	phonebook
+NAME		:=	account
 
 DIR_SRC		:=	src
 DIR_INC		:=	inc
 DIR_OBJS	:=	objs
 
-SOURCES		:= PhoneBook.cpp \
-				Contact.cpp \
-				main.cpp
+SOURCES		:= Account.cpp \
+				tests.cpp 
 
 SRCS		:= 	$(addprefix $(DIR_SRC)/, $(SOURCES))
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SOURCES:.cpp=.o))
