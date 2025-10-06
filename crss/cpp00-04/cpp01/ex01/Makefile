@@ -18,8 +18,7 @@ DIR_OBJS	:=	objs
 
 SOURCES		:=	main.cpp \
 				Zombie.cpp \
-				newZombie.cpp \
-				randomChump.cpp
+				zombieHorde.cpp 
 
 SRCS		:= 	$(addprefix $(DIR_SRC)/, $(SOURCES))
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SOURCES:.cpp=.o))

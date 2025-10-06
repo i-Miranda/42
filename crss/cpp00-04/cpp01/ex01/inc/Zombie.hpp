@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef __ZOMBIE_H__
+#define __ZOMBIE_H__
+
 #include <iostream>
 #include <string>
 
@@ -14,3 +19,5 @@ class Zombie {
 };
 
 Zombie* zombieHorde(int N, std::string name); 
+
+#endif
