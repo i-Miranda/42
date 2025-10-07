@@ -4,21 +4,22 @@
 #define __HUMANA_H__
 
 #include <string>
+#include <iostream>
 
 #include "Weapon.hpp"
 
 class HumanA {
 	private:
 		std::string	m_name;
-		Weapon m_weapon;
+		Weapon&		m_weapon;
 	public:
-		HumanA(std::string name, Weapon weapon);
+		HumanA(const std::string& name, Weapon& weapon);
 		~HumanA(void);
 
-		std::string HumanA::getName(void);
-		void		HumanA::setName(std::string name);
-		Weapon		HumanA::getWeapon(void);
-		void		HumanA::setWeapon(Weapon weapon);
-		void		HumanA::attack(void);
+		const std::string&	getName(void) const;
+		void				setName(std::string name);
+		Weapon&		getWeapon(void) const;
+		void				setWeapon(Weapon weapon);
+		void				attack(void) const;
 };
 #endif

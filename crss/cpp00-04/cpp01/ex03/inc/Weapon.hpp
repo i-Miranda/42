@@ -8,11 +8,12 @@
 class Weapon {
 	private:
 		std::string m_type;
+
 	public:
-		Weapon(void);
+		explicit Weapon(const std::string& type);
 		~Weapon(void);
 
-		std::string Weapon::getType(void);
-		void		Weapon::setType(std::string type);
+		const std::string& getType(void) const;
+		void		setType(const std::string& type);
 };
 #endif
