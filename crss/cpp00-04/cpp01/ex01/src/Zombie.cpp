@@ -1,5 +1,9 @@
 #include "Zombie.hpp"
 
+Zombie::Zombie() {
+	std::cout << "Unnamed zombie was created." << std::endl;
+}
+
 Zombie::Zombie(std::string name) {
 	set_name(name);	
 	std::cout << this->get_name() << " was created." << std::endl;
@@ -18,5 +22,5 @@ void	Zombie::announce(void) {
 }
 
 Zombie::~Zombie(void) {
-	std::cerr << this->get_name() << " was destroyed." << std::endl;
+	std::cout << this->get_name() << " was destroyed." << std::endl;
 }
