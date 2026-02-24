@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   IMateriaSource.cpp                                 :+:      :+:    :+:   */
+/*   MateriaSource.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 17:28:18 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/24 18:41:59 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/02/24 23:07:17 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ MateriaSource::MateriaSource(void) {
 }
 
 MateriaSource::MateriaSource(const MateriaSource& src) {
-	if (this != src) {
+	if (this != &src) {
 		for (int i = 0; i < 4; i++) {
-			if (this->m_known_materia[i] != NULL)
-				delete m_known_materia[i];
-			this->m_known_materia[i] = new AMateria(src.m_known_materia[i]);
+			if (src.m_known_materia[i] != NULL)
+				this->m_known_materia[i] = src.m_known_materia[i]->clone();
+			else
+				this->m_known_materia[i] = NULL;
 		}
 	}
 }
 
 MateriaSource::~MateriaSource(void) {
 	for (int i = 0; i < 4; i++) {
-		if (this->m_known_materia[i] != NULL)
-			delete m_known_materia[i];
+		delete m_known_materia[i];
 	}
 }
 
@@ -51,29 +51,27 @@ void MateriaSource::learnMateria(AMateria* m) {
 }
 
 AMateria* MateriaSource::createMateria(std::string const & type) {
-	AMateria* clone;
-	if (type == NULL || type.length() <= 0) {
+	if (type.empty()) {
 		std::cerr << "Invalid type." << std::endl;
-		return (0);
+		return (NULL);
 	}
 	for (int i = 0; i < 4; i++) {
-		if (this->m_known_materia[i].getType() == type) {
-			clone = this->m_known_materia[i].clone();
+		if (this->m_known_materia[i] != NULL
+				&& this->m_known_materia[i]->getType() == type) {
 			std::cout << "Materia learned." << std::endl;
-			return ;
+			return this->m_known_materia[i]->clone();
 		}
 	}
 	std::cout << "Materia of type " << type << " not known." << std::endl;
-	return (0);
+	return (NULL);
 }
 
 MateriaSource& MateriaSource::operator=(const MateriaSource& src) {
-	if (this != src) {
-		this->m_name = src.getName();
+	if (this != &src) {
 		for (int i = 0; i < 4; i++) {
 			if (this->m_known_materia[i] != NULL)
 				delete m_known_materia[i];
-			this->m_known_materia[i] = new AMateria(src.m_known_materia[i]);
+			this->m_known_materia[i] = src.m_known_materia[i]->clone();
 		}
 	}
 	return *this;

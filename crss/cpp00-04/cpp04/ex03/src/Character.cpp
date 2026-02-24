@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ICharacter.cpp                                     :+:      :+:    :+:   */
+/*   Character.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 17:00:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/24 18:39:50 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/02/24 23:03:00 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Character.hpp"
-#include "FloorManager.cpp"
+#include "AMateria.hpp"
+#include "FloorManager.hpp"
 
 Character::Character(std::string const _name) {
 	this->m_name = _name;
@@ -21,12 +22,12 @@ Character::Character(std::string const _name) {
 }
 
 Character::Character(const Character& src) {
-	if (this != src) {
+	if (this != &src) {
 		this->m_name = src.getName();
 		for (int i = 0; i < 4; i++) {
 			if (this->m_inventory[i] != NULL)
 				delete m_inventory[i];
-			this->m_inventory[i] = new AMateria(src.m_inventory[i]);
+			this->m_inventory[i] = src.m_inventory[i]->clone();
 		}
 	}
 }
@@ -73,17 +74,16 @@ void Character::use(int idx, ICharacter& target) {
 		return ;
 	}
 	this->m_inventory[idx]->use(target); 
-	this->m_inventory[idx] = NULL;
 }
 
 Character& Character::operator=(const Character& src) {
-	if (this != src) {
+	if (this != &src) {
 		this->m_name = src.getName();
 		for (int i = 0; i < 4; i++) {
 			if (this->m_inventory[i] != NULL)
 				delete m_inventory[i];
-			this->m_inventory[i] = new AMateria(src.m_inventory[i]);
+			this->m_inventory[i] = src.m_inventory[i]->clone();
 		}
 	}
 	return *this;
-)}
+}

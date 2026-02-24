@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 10:25:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/24 18:31:27 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/02/24 23:09:19 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <string>
 #include <iostream>
 
-#include "ICharacter.hpp"
+class ICharacter;
 
 class AMateria {
 	protected :
@@ -33,6 +33,6 @@ class AMateria {
 		std::string const & getType(void) const; //Returns the materia type
 
 		virtual AMateria* clone(void) const = 0;
-		virtual void	use(ICharacter& target);
+		virtual void	use(ICharacter& target) = 0;
 };
 #endif

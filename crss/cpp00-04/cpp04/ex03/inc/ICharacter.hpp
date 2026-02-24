@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 16:39:53 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/24 18:39:43 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/02/24 22:05:49 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <string>
 #include <iostream>
 
-#include "AMateria.hpp"
+class AMateria;
 
 class ICharacter {
 	public :

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 18:38:36 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/24 18:41:34 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/02/24 22:51:07 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,10 @@ class Character : public ICharacter {
 		~Character(void);
 		
 		Character& operator=(const Character& src);
+
+		 std::string const & getName() const;
+		 void equip(AMateria* m);
+		 void unequip(int idx);
+		 void use(int idx, ICharacter& target);
 };
 #endif

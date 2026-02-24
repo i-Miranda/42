@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
-#    Updated: 2026/02/24 18:34:34 by ivmirand         ###   ########.fr        #
+#    Updated: 2026/02/24 22:10:42 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ SOURCES		:=	main.cpp \
 				AMateria.cpp \
 				Ice.cpp \
 				Cure.cpp \
-				ICharacter.cpp \
+				Character.cpp \
 				FloorManager.cpp \
-				IMateriaSource.cpp
+				MateriaSource.cpp
 
 SRCS		:= 	$(addprefix $(DIR_SRC)/, $(SOURCES))
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SOURCES:.cpp=.o))

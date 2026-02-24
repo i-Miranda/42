@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 16:47:39 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/24 18:41:32 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/02/24 22:50:13 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,8 @@ class MateriaSource : public IMateriaSource {
 		~MateriaSource(void);
 
 		MateriaSource& operator=(const MateriaSource& src);
+
+		void learnMateria(AMateria* m);
+		AMateria* createMateria(std::string const & type);
 };
 #endif

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 17:46:35 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/24 18:07:08 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/02/24 23:05:24 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@
 
 #include "AMateria.hpp"
 
-static void UpdateFloor(AMateria* m);
+void UpdateFloor(AMateria* m);
 #endif
