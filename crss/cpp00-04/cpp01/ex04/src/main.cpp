@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 20:27:03 by ivmirand          #+#    #+#             */
-/*   Updated: 2025/11/04 20:53:10 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/02/13 12:57:33 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,18 @@ int main(int argc, char *argv[])
 	std::string filename;
 	std::string s1;
 	std::string s2;
+	File	*file;
 
 	if (argc != 4)
-		return (1);
+		return (std::cerr << "Wrong arg count: " << argc - 1 << ". Must be three args." << std::endl, 1);
 	filename = trim(argv[1]);
 	s1 = trim(argv[2]);
 	s2 = trim(argv[3]);
 
-	std::cout << filename << "\n" << s1 << "\n" << s2 << "\n";
+	std::cout << filename << ", " << s1 << ", " << s2 << "\n";
+	
+	file = new File(filename);
+	file->substitute(s1, s2);
+	delete file;
 	return (0);
 }

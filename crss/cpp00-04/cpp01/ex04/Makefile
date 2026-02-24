@@ -6,11 +6,11 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
-#    Updated: 2025/10/01 22:41:27 by ivmirand         ###   ########.fr        #
+#    Updated: 2026/02/13 12:57:59 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:=	violence
+NAME		:=	sed_is_for_losers
 
 DIR_SRC		:=	src
 DIR_INC		:=	inc
