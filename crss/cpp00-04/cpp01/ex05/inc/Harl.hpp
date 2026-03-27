@@ -26,6 +26,7 @@ class Harl {
 		void	m_info(void);
 		void	m_warning(void);
 		void	m_error(void);
+
 	public:
 		Harl(void);	
 		~Harl(void);

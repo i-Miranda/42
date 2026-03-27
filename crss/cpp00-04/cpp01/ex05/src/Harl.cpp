@@ -29,6 +29,11 @@ void	Harl::m_error(void) {
 }
 
 Harl::Harl(void) {
+	this->m_levels[0] = "DEBUG";
+	this->m_levels[1] = "INFO";
+	this->m_levels[2] = "WARNING";
+	this->m_levels[3] = "ERROR";
+
 	this->m_functions[0] = &Harl::m_debug;
 	this->m_functions[1] = &Harl::m_info;
 	this->m_functions[2] = &Harl::m_warning;

@@ -1,30 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   HumanA.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/26 16:57:14 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/03/26 20:48:34 by ivmirand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "HumanA.hpp"
 
-HumanA::HumanA(std::string name, Weapon weapon): m_name(name), m_weapon(weapon) {
-	this->setName(name);
-	this->setWeapon(weapon);
-}
+HumanA::HumanA(const std::string &name, Weapon &weapon)
+    : m_name(name), m_weapon(weapon) {}
 
-HumanA::~HumanA(void) {
-	this->getWeapon().~Weapon();
-}
+HumanA::~HumanA(void) {}
 
-std::string	HumanA::getName(void) {
-	return (this->m_name);
-}
-
-void	HumanA::setName(std::string name) {
-	this->m_name = name;
-}
-
-Weapon HumanA::getWeapon(void) {
-	return (this->m_weapon.getType());
-}
-
-void	HumanA::setWeapon(Weapon weapon) {
-	this->m_weapon = weapon;
-}
-
-void	HumanA::attack(void) {
-	std::cout << this->getName() << " attacks with their " << this->getWeapon().getType() << std::endl;
+void HumanA::attack(void) const {
+  std::cout << m_name << " attacks with their " << m_weapon.getType()
+            << std::endl;
 }

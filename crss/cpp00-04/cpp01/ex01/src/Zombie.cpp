@@ -13,7 +13,7 @@
 #include "Zombie.hpp"
 
 Zombie::Zombie() {
-	std::cout << "Unnamed zombie was created." << std::endl;
+	std::cout << "Generic Zombie Constructor called." << std::endl;
 }
 
 Zombie::Zombie(std::string name) {
