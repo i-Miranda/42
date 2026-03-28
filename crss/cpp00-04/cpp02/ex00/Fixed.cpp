@@ -6,30 +6,30 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:32 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/28 02:44:26 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/28 20:45:39 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
-Fixed::Fixed(void) { 
+Fixed::Fixed(void) : m_fixed_val(0) { 
 	std::cout << "Default constructor called" << std::endl;
-	m_fixed_val = 0;
 }
 
 Fixed::Fixed(const Fixed &src) {
 	std::cout << "Copy constructor called" << std::endl;
-	m_fixed_val = src.m_fixed_val;
-}
-
-Fixed &Fixed::operator=(const Fixed &src) {
-	std::cout << "Copy assignment operator called" << std::endl;
-	this->setRawBits(src.getRawBits());
-	return *this;
+	*this = src;
 }
 
 Fixed::~Fixed(void) {
 	std::cout << "Destructor called" << std::endl;
+}
+
+Fixed &Fixed::operator=(const Fixed &src) {
+	std::cout << "Copy assignment operator called" << std::endl;
+	if (this != &src)
+		m_fixed_val = src.getRawBits();
+	return *this;
 }
 
 int Fixed::getRawBits(void) const {

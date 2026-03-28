@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:33:22 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/28 01:45:18 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/28 15:06:48 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ class Point {
 
 		float 	get_x(void) const;
 		float 	get_y(void) const;
-		void	set_x(const float x);
-		void	set_y(const float y);
 };
 
 bool	bsp(Point const a, Point const b, Point const c, Point const point);

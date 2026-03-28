@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Fixed.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/14 04:38:56 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/14 19:27:44 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/02/14 04:35:23 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/03/28 20:46:34 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Fixed.hpp"
+#pragma once
 
-int	main(void) {
-	Fixed a;
-	Fixed const b(Fixed(5.05f) * Fixed(2));
+#ifndef __FIXED_H__
+#define __FIXED_H__
 
-	std::cout << a << std::endl;
-	std::cout << ++a << std::endl;
-	std::cout << a << std::endl;
-	std::cout << a++ << std::endl;
-	std::cout << a << std::endl;
-	
-	std::cout << b << std::endl;
-	
-	std::cout << Fixed::max(a, b) << std::endl;
-	return (0);
-}
+#include <iostream>
+
+class Fixed {
+	private:
+		int				 m_fixed_val;
+		static const int m_fractional_bits = 8;
+
+	public:
+		Fixed(void);
+		Fixed(const Fixed &src);
+		~Fixed(void);
+
+		Fixed& operator=(const Fixed &src);
+
+		int 	getRawBits(void) const;
+		void	setRawBits(int const raw);	
+};
+#endif

@@ -6,27 +6,22 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:33:02 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/28 01:46:04 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/28 20:36:06 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "Point.hpp"
 
-Point::Point(void) {
+Point::Point(void) : m_x(0.0f), m_y(0.0f) {
 	std::cerr << "Default constructor called." << std::endl;
-	this->set_x(0.0f);
-	this->set_y(0.0f);
 }
 
-Point::Point(const float x, const float y) {
+Point::Point(const float x, const float y) : m_x(x), m_y(y) {
 	std::cerr << "Float constructor called." << std::endl;
-	this->set_x(x);
-	this->set_y(y);
 }
 
-Point::Point(const Point &src) {
+Point::Point(const Point &src) : m_x(src.m_x), m_y(src.m_y) {
 	std::cerr << "Copy constructor called." << std::endl;
-	*this = src;
 }
 
 Point::~Point(void) {
@@ -34,27 +29,24 @@ Point::~Point(void) {
 }
 
 Point& Point::operator=(const Point &src) {
-	std::cerr << "Copy assignment constructor called." << std::endl;
-	this->set_x(src.get_x());
-	this->set_y(src.get_y());
+	std::cerr << "Copy assignment operator called." << std::endl;
+	(void)src;
 	return *this;
 }
 
 Point Point::operator-(const Point &point) const {
-	Point difference;
-	difference = Point(this->get_x() - point.get_x(), this->get_y() - point.get_y());
-	return difference;
+	return (Point((m_x - point.get_x()).toFloat(),
+				(m_y - point.get_y()).toFloat()));
 }
 
 Point Point::operator+(const Point &point) const {
-	Point sum;
-	sum = Point(this->get_x() + point.get_x(), this->get_y() + point.get_y());
-	return sum;
+	return (Point((m_x + point.get_x()).toFloat(),
+			(m_y + point.get_y()).toFloat()));
 }
 
 Fixed Point::operator*(const Point &point) const {
 	Fixed scalar;
-	scalar = Fixed(this->get_x() * point.get_x() + this->get_y() * point.get_y());
+	scalar = Fixed(m_x * point.get_x() + m_y * point.get_y());
 	return scalar;
 }
 
@@ -64,12 +56,4 @@ float	Point::get_x(void) const {
 
 float	Point::get_y(void) const {
 	return m_y.toFloat();
-}
-
-void	Point::set_x(const float x) {
-	m_x = Fixed(x);
-}
-
-void	Point::set_y(const float y) {
-	m_y = Fixed(y);
 }
