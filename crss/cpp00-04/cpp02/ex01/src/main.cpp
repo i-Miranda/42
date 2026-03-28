@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:56 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/14 14:27:32 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/28 01:02:26 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(void) {
 	std::cout << "a is " << a.toInt() << " as integer." << std::endl;
 	std::cout << "b is " << b.toInt() << " as integer." << std::endl;
 	std::cout << "c is " << c.toInt() << " as integer." << std::endl;
-	std::cout << "d is " << c.toInt() << " as integer." << std::endl;
+	std::cout << "d is " << d.toInt() << " as integer." << std::endl;
 	
 	return (0);
 }

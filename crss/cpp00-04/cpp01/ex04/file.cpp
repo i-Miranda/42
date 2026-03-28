@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 20:51:21 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/16 22:47:35 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/28 02:10:29 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,20 @@ File::~File(void) {
 void	File::substitute(std::string s1, std::string s2) {
 	size_t		pos;
 	std::string	current;	
+	std::string file_line;
 
 	if (s1.empty())
 		return ;
 	while (std::getline(this->m_filestream, current)) {
-		pos = current.find(s1);
-		while (pos != std::string::npos) {
-			current.erase(pos, s1.length());
-			current.insert(pos, s2);
-			pos = current.find(s1, pos + s2.length());
-		}
-		this->m_newstream << current << std::endl;
+		file_line += current;
+		if (!m_filestream.eof())
+			file_line += '\n';
 	}
+	pos = file_line.find(s1);
+	while (pos != std::string::npos) {
+		file_line.erase(pos, s1.length());
+		file_line.insert(pos, s2);
+		pos = file_line.find(s1, pos + s2.length());
+	}
+	this->m_newstream << file_line;
 }

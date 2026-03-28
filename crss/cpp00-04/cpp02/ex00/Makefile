@@ -6,11 +6,11 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
-#    Updated: 2026/02/14 04:35:01 by ivmirand         ###   ########.fr        #
+#    Updated: 2026/03/28 00:48:49 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:=	first_orthodox
+NAME		:=	ex00
 
 DIR_SRC		:=	src
 DIR_INC		:=	inc

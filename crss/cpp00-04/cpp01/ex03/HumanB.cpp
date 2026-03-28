@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   HumanB.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/24 15:25:06 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/27 20:22:31 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/03/26 16:57:19 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/03/28 03:01:39 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
+#include "HumanB.hpp"
 
-int	main(void) {
-	Zombie	zombie = Zombie("Stack_Zombie");		
-	Zombie	*new_zombie = newZombie("Heap_Zombie");	
+HumanB::HumanB(const std::string &name) : m_name(name) {}
 
-	randomChump("Random_Chump");
-	Zombie randomChump = randomChump("Random_Chump");
+HumanB::~HumanB(void) {}
 
-	zombie.announce();
-	new_zombie->announce();
-	
+void HumanB::setWeapon(Weapon &weapon) {
+	m_weapon = &weapon; 
+}
 
-	delete new_zombie;
-	delete randomChump;
-	return (0);
+void HumanB::attack(void) const {
+  std::cout << m_name << " attacks with " << m_weapon->getType()
+            << std::endl;
 }

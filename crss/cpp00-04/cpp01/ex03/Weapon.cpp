@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   HumanB.cpp                                         :+:      :+:    :+:   */
+/*   Weapon.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/26 16:57:19 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/26 20:37:48 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/03/26 16:57:30 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/03/27 22:19:48 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "HumanB.hpp"
+#include "Weapon.hpp"
 
-HumanB::HumanB(const std::string &name) : m_name(name) {}
+Weapon::Weapon(const std::string &type) : m_type(type) {}
 
-HumanB::~HumanB(void) {}
+Weapon::~Weapon(void) {}
 
-void HumanB::setWeapon(Weapon &weapon) { m_weapon = &weapon; }
+const std::string &Weapon::getType(void) const {
+	return (m_type); 
+}
 
-void HumanB::attack(void) const {
-  std::cout << m_name << " attacks with their " << m_weapon->getType()
-            << std::endl;
+void Weapon::setType(const std::string &type) {
+	m_type = type; 
 }

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:32 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/14 19:27:02 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/28 01:38:43 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int		Fixed::getRawBits(void) const {
 }
 
 void	Fixed::setRawBits(int const raw) {
-	this->m_fixed_val = raw;
+	m_fixed_val = raw;
 }
 
 float	Fixed::toFloat(void) const {

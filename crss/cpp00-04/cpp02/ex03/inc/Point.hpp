@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:33:22 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/17 16:58:46 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/28 01:45:18 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 class Point {
 	private:
-		float m_x;
-		float m_y;
+		const Fixed m_x;
+		const Fixed m_y;
 
 	public:
 		Point(void);

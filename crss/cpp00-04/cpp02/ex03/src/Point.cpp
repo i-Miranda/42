@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:33:02 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/17 17:01:45 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/28 01:46:04 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,17 @@ Fixed Point::operator*(const Point &point) const {
 }
 
 float	Point::get_x(void) const {
-	return this->m_x;
+	return m_x.toFloat();
 }
 
 float	Point::get_y(void) const {
-	return this->m_y;
+	return m_y.toFloat();
 }
 
 void	Point::set_x(const float x) {
-	this->m_x = x;
+	m_x = Fixed(x);
 }
 
 void	Point::set_y(const float y) {
-	this->m_y = y;
+	m_y = Fixed(y);
 }

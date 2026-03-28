@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 15:21:34 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/24 15:21:36 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/28 02:57:05 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	main(int argc, char *argv[]) {
 	int	n;
 
 	if (argc <= 1) {
-		std::cerr << "Args count must be 1 or 2. Usage: ./ex00 (int zombie count) (string zombie name)" << std::endl;
+		std::cerr << "ERROR: Args count must be 1 or 2." << std::endl <<
+			"Usage: ./ex01 (int zombie count) (string zombie name)" << std::endl;
 		return (1);
 	}
 

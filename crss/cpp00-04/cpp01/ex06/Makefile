@@ -6,24 +6,20 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
-#    Updated: 2026/03/26 19:01:12 by ivmirand         ###   ########.fr        #
+#    Updated: 2026/03/28 03:09:26 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:=	ex06
+NAME		:=	harlFilter
 
-DIR_SRC		:=	src
-DIR_INC		:=	inc
 DIR_OBJS	:=	objs
 
 SOURCES		:=	main.cpp \
 				Harl.cpp
 
-SRCS		:= 	$(addprefix $(DIR_SRC)/, $(SOURCES))
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SOURCES:.cpp=.o))
 
 CXX			:=	c++
-INC			:=	-I$(DIR_INC)
 
 
 all	:	$(NAME)
@@ -34,8 +30,8 @@ $(NAME)			:	$(DIR_OBJS)	$(OBJS)
 $(DIR_OBJS)		:
 	mkdir -p $(DIR_OBJS)
 
-$(DIR_OBJS)/%.o	:	$(DIR_SRC)/%.cpp
-	$(CXX) $(CXXFLAGS) $(DBFLAGS) $(INC) -c $< -o $@
+$(DIR_OBJS)/%.o	:	%.cpp
+	$(CXX) $(CXXFLAGS) $(DBFLAGS) -c $< -o $@
 
 clean			:
 	rm -rf	$(DIR_OBJS)
