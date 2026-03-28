@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
-#    Updated: 2026/03/28 12:20:20 by ivmirand         ###   ########.fr        #
+#    Updated: 2026/03/28 22:05:58 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,9 +88,6 @@ valgrind_log	:	all
 
 valclean	:	
 			rm -f $(VALGRIND_LOG)
-			rm -f $(SUPPRESSIONS)
-			@rm -f $(TEMP)
-			@rm -f $(KEEP)
 
 .PHONY : all \
 	clean \
