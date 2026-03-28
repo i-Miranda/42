@@ -6,35 +6,35 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:32 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/28 11:49:08 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/28 23:05:53 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
 Fixed::Fixed(void) : m_fixed_val(0) {
-	std::cerr << "Default constructor called." << std::endl;
+	//std::cerr << "Default constructor called." << std::endl;
 }
 
 Fixed::Fixed(const int value) : m_fixed_val(value << m_fractional_bits) {
-	std::cerr << "Int constructor called." << std::endl;
+	//std::cerr << "Int constructor called." << std::endl;
 }
 
 Fixed::Fixed(const float value) : m_fixed_val(roundf(value * (1 << m_fractional_bits))) {
-	std::cerr << "Float constructor called." << std::endl;
+	//std::cerr << "Float constructor called." << std::endl;
 }
 
 Fixed::Fixed(const Fixed &src) {
-	std::cerr << "Copy constructor called." << std::endl;
+	//std::cerr << "Copy constructor called." << std::endl;
 	*this = src;
 }
 
 Fixed::~Fixed(void) {
-	std::cerr << "Destructor called." << std::endl;
+	//std::cerr << "Destructor called." << std::endl;
 }
 
 Fixed& Fixed::operator=(const Fixed &src) {
-	std::cerr << "Copy assignment operator called." << std::endl;
+	//std::cerr << "Copy assignment operator called." << std::endl;
 	if (this != &src)
 		m_fixed_val = src.getRawBits();
 	return *this;

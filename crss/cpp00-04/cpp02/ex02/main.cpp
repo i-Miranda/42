@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:56 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/28 11:49:11 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/28 23:20:34 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,13 @@ int	main(void) {
 		Fixed max_1(7.25f);
 		const Fixed min_2(1.125f);
 		const Fixed max_2(1.5f);
+		std::cout << "min_1 = " << min_1 << std::endl;
+		std::cout << "max_1 = " << max_1 << std::endl;
+		std::cout << "min_2 = " << min_2 << std::endl;
+		std::cout << "max_2 = " << max_2 << std::endl;
 		
+		std::cout << std::endl;
+
 		std::cout << "min(min_1, max_1) = " << Fixed::min(min_1, max_1) << std::endl;
 		std::cout << "max(min_1, max_1) = " << Fixed::max(min_1, max_1) << std::endl;
 
