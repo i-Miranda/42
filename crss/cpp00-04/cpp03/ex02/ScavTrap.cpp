@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 17:26:54 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/30 01:24:40 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/30 01:46:33 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ ScavTrap&	ScavTrap::operator=(const ScavTrap &src) {
 void		ScavTrap::attack(const std::string& target) {
 	if (m_hit_points > 0 && m_energy_points >= 1) {
 		m_energy_points--;
-		std::cout << m_name << " attacks with furious anger " << target << ", causing " << m_attack_damage << " points of damage!" << std::endl;
+		std::cout << m_name << " attacks " << target << " with furious anger, causing " << m_attack_damage << " points of damage!" << std::endl;
 		if (m_energy_points < 0)
 			m_energy_points = 0;
 	}
