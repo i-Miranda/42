@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 17:52:43 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/18 19:39:49 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/29 16:47:41 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ class FragTrap : virtual public ClapTrap {
 	public:
 		FragTrap(void);
 		FragTrap(const std::string name);
-		FragTrap(const std::string name, const int hit_points);
-		FragTrap(const std::string name, const int hit_points, const int energy_points); 
-		FragTrap(const std::string name, const int hit_points, const int energy_points, const int attack_damage); 
 		FragTrap(const FragTrap &src);
 		~FragTrap(void);
 

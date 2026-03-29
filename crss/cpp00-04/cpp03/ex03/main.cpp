@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:56 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/19 16:54:47 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/29 16:06:22 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,73 +14,65 @@
 
 int	main(void) {
 	ClapTrap a = ClapTrap("ClapTrap_A");	
-	std::cout << a.getName() << " has " << a.getHitPoints() << " hit points." << std::endl;
-	std::cout << a.getName() << " has " << a.getEnergyPoints() << " energy points." << std::endl;
-	std::cout << a.getName() << " has " << a.getAttackDamage() << " attack damage." << std::endl;
-
+	a.getStatus();
 	std::cout << std::endl;
+
 	ScavTrap b = ScavTrap("ScavTrap_B");
-	std::cout << b.getName() << " has " << b.getHitPoints() << " hit points." << std::endl;
-	std::cout << b.getName() << " has " << b.getEnergyPoints() << " energy points." << std::endl;
-	std::cout << b.getName() << " has " << b.getAttackDamage() << " attack damage." << std::endl;
-
+	b.getStatus();
 	std::cout << std::endl;
+
 	FragTrap c = FragTrap("FragTrap_C");
-	std::cout << c.getName() << " has " << c.getHitPoints() << " hit points." << std::endl;
-	std::cout << c.getName() << " has " << c.getEnergyPoints() << " energy points." << std::endl;
-	std::cout << c.getName() << " has " << c.getAttackDamage() << " attack damage." << std::endl;
-
+	c.getStatus();
 	std::cout << std::endl;
+
 	DiamondTrap d = DiamondTrap("DiamondTrap_D");
-	std::cout << d.getName() << " has " << d.getHitPoints() << " hit points." << std::endl;
-	std::cout << d.getName() << " has " << d.getEnergyPoints() << " energy points." << std::endl;
-	std::cout << d.getName() << " has " << d.getAttackDamage() << " attack damage." << std::endl;
-
+	d.getStatus();
 	std::cout << std::endl;
+
 	a.attack("Target");
-	std::cout << a.getName() << " has " << a.getHitPoints() << " hit points." << std::endl;
+	a.getStatus();
 	a.takeDamage(1);
-	std::cout << a.getName() << " has " << a.getHitPoints() << " hit points." << std::endl;
+	a.getStatus();
 	a.beRepaired(1);
-	std::cout << a.getName() << " has " << a.getHitPoints() << " hit points." << std::endl;
-	
+	a.getStatus();
 	std::cout << std::endl;
+
 	b.attack("Target");
-	std::cout << b.getName() << " has " << b.getHitPoints() << " hit points." << std::endl;
+	b.getStatus();
 	b.takeDamage(1);
-	std::cout << b.getName() << " has " << b.getHitPoints() << " hit points." << std::endl;
+	b.getStatus();
 	b.beRepaired(1);
-	std::cout << b.getName() << " has " << b.getHitPoints() << " hit points." << std::endl;
-	
+	b.getStatus();
 	std::cout << std::endl;
+
 	c.attack("Target");
-	std::cout << c.getName() << " has " << c.getHitPoints() << " hit points." << std::endl;
+	c.getStatus();
 	c.takeDamage(1);
-	std::cout << c.getName() << " has " << c.getHitPoints() << " hit points." << std::endl;
+	c.getStatus();
 	c.beRepaired(1);
-	std::cout << c.getName() << " has " << c.getHitPoints() << " hit points." << std::endl;
-	
+	c.getStatus();
 	std::cout << std::endl;
+
 	d.attack("Target");
-	std::cout << d.getName() << " has " << d.getHitPoints() << " hit points." << std::endl;
+	d.getStatus();
 	d.takeDamage(1);
-	std::cout << d.getName() << " has " << d.getHitPoints() << " hit points." << std::endl;
+	d.getStatus();
 	d.beRepaired(1);
-	std::cout << d.getName() << " has " << d.getHitPoints() << " hit points." << std::endl;
-
+	d.getStatus();
 	std::cout << std::endl;
+
 	b.guardGate();
-
 	std::cout << std::endl;
+
 	d.guardGate();
-
 	std::cout << std::endl;
+
 	c.highFiveGuys();
-
 	std::cout << std::endl;
+
 	d.highFiveGuys();
-
 	std::cout << std::endl;
+
 	std::cout << "Traps Heap Test" << std::endl;
 	ClapTrap *clap_test = new ClapTrap("ClapTrap_Heap");
 	ScavTrap *scav_test = new ScavTrap("ScavTrap_Heap");
