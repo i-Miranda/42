@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:56 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/29 16:06:22 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/29 20:09:19 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,13 @@ int	main(void) {
 	d.guardGate();
 	std::cout << std::endl;
 
-	c.highFiveGuys();
+	c.highFivesGuys();
 	std::cout << std::endl;
 
-	d.highFiveGuys();
+	d.highFivesGuys();
+	std::cout << std::endl;
+
+	d.whoAmI();
 	std::cout << std::endl;
 
 	std::cout << "Traps Heap Test" << std::endl;

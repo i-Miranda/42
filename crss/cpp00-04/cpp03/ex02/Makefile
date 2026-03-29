@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
-#    Updated: 2026/03/29 03:44:05 by ivmirand         ###   ########.fr        #
+#    Updated: 2026/03/29 15:36:21 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ $(NAME)			:	$(DIR_OBJS)	$(OBJS)
 $(DIR_OBJS)		:
 	mkdir -p $(DIR_OBJS)
 
-$(DIR_OBJS)/%.o	:	$(DIR_SRC)/%.cpp
+$(DIR_OBJS)/%.o	:	%.cpp
 	$(CXX) $(CXXFLAGS) $(DBFLAGS) $(INC) -c $< -o $@
 
 clean			:

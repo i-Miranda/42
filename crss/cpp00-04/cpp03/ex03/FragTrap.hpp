@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 17:52:43 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/29 16:47:41 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/29 22:41:45 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ class FragTrap : virtual public ClapTrap {
 
 		FragTrap&	operator=(const FragTrap &src);
 		
-		void	highFiveGuys(void);
+		void	highFivesGuys(void);
 };
 #endif

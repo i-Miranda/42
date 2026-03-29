@@ -6,115 +6,89 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 18:07:49 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/18 17:33:12 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/29 23:13:17 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap(void) {
-	std::cerr << "ClapTrap Default constructor called." << std::endl;
-	this->setName("Generic ClapTrap");
-	this->setHitPoints(10);
-	this->setEnergyPoints(10);
-	this->setAttackDamage(0);
+ClapTrap::ClapTrap(void) :	m_name("Generic ClapTrap"),
+							m_hit_points(10),
+							m_energy_points(10),
+							m_attack_damage(0) {
+	std::cout << m_name << "'s ClapTrap Default constructor called." << std::endl;
 }
 
-ClapTrap::ClapTrap(const std::string name) {
-	std::cerr << "ClapTrap Name constructor called." << std::endl;
-	this->setName(name);
-	this->setHitPoints(10);
-	this->setEnergyPoints(10);
-	this->setAttackDamage(0);
+ClapTrap::ClapTrap(const std::string name) : m_name(name),
+								m_hit_points(10),
+								m_energy_points(10),
+								m_attack_damage(0) {
+	std::cout << m_name << "'s ClapTrap Name constructor called." << std::endl;
 }
 
-ClapTrap::ClapTrap(const std::string name, const int hit_points) {
-	std::cerr << "ClapTrap Hit points constructor called." << std::endl;
-	this->setName(name);
-	this->setHitPoints(hit_points);
-	this->setEnergyPoints(10);
-	this->setAttackDamage(0);
-}
-
-ClapTrap::ClapTrap(const std::string name, const int hit_points, const int energy_points) {
-	std::cerr << "ClapTrap Energy points constructor called." << std::endl;
-	this->setName(name);
-	this->setHitPoints(hit_points);
-	this->setEnergyPoints(energy_points);
-	this->setAttackDamage(0);
-}
-
-ClapTrap::ClapTrap(const std::string name, const int hit_points, const int energy_points, const int attack_damage) {
-	std::cerr << "ClapTrap Attack damage constructor called." << std::endl;
-	this->setName(name);
-	this->setHitPoints(hit_points);
-	this->setEnergyPoints(energy_points);
-	this->setAttackDamage(attack_damage);
-}
-
-ClapTrap::ClapTrap(const ClapTrap &src) {
-	std::cerr << "ClapTrap Copy constructor called." << std::endl;
-	this->setName(src.getName());
-	this->setHitPoints(src.getHitPoints());
-	this->setEnergyPoints(src.getEnergyPoints());
-	this->setAttackDamage(src.getAttackDamage());
+ClapTrap::ClapTrap(const ClapTrap &src) : m_name(src.m_name),
+								m_hit_points(src.m_hit_points),
+								m_energy_points(src.m_energy_points),
+								m_attack_damage(src.m_attack_damage) {
+	std::cout << m_name << "'s ClapTrap Copy constructor called." << std::endl;
 }
 
 ClapTrap::~ClapTrap(void) {
-	std::cerr << "ClapTrap Destructor called." << std::endl;
+	std::cout << m_name << "'s ClapTrap Destructor called." << std::endl;
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap &src) {
-	std::cerr << "ClapTrap Copy assignment constructor called." << std::endl;
-	this->setName(src.getName());
-	this->setHitPoints(src.getHitPoints());
-	this->setEnergyPoints(src.getEnergyPoints());
-	this->setAttackDamage(src.getAttackDamage());
+	std::cout << m_name << "'s ClapTrap Copy assignment operator called." << std::endl;
+	m_name = src.m_name;
+	m_hit_points = src.m_hit_points;
+	m_energy_points = src.m_energy_points;
+	m_attack_damage = src.m_attack_damage;
 	return *this;
 }
 
-void		ClapTrap::setName(const std::string& name) {
-	this->m_name = name;
-}
-
-std::string	ClapTrap::getName(void) const {
-	return this->m_name;
-}
-
-void		ClapTrap::setHitPoints(const int hit_points) {
-	this->m_hit_points = hit_points;
-}
-
-int			ClapTrap::getHitPoints(void) const {
-	return this->m_hit_points;
-}
-
-void		ClapTrap::setEnergyPoints(const int energy_points) {
-	this->m_energy_points = energy_points;
-}
-
-int			ClapTrap::getEnergyPoints(void) const {
-	return this->m_energy_points;
-}
-
-void		ClapTrap::setAttackDamage(const int attack_damage) {
-	this->m_attack_damage = attack_damage;
-}
-
-int			ClapTrap::getAttackDamage(void) const {
-	return this->m_attack_damage;
-}
-
 void		ClapTrap::attack(const std::string& target) {
-	std::cout << "ClapTrap " << this->getName() << " attacks " << target << ", causing " << this->getAttackDamage() << " points of damage!" << std::endl;
+	if (m_hit_points > 0 && m_energy_points >= 1) {
+		m_energy_points--;
+		std::cout << m_name << " attacks " << target << ", causing " << m_attack_damage << " points of damage!" << std::endl;
+		if (m_energy_points < 0)
+			m_energy_points = 0;
+	}
+	else if (m_hit_points > 0)
+		std::cout << m_name << " doesn't have enough energy points left." << std::endl;
+	else
+		std::cout << m_name << " is dead. " << std::endl;
 }
 
 void		ClapTrap::takeDamage(unsigned int	amount) {
-	this->setHitPoints(this->getHitPoints() - amount);
-	std::cout << "ClapTrap " << this->getName() << " takes " << amount << " points of damage!" << std::endl;
+	if (m_hit_points > 0) {
+		m_hit_points -= amount;
+		std::cout << m_name << " takes " << amount << " points of damage!" << std::endl;
+		if (m_hit_points < 0)
+			m_hit_points = 0;
+	}
 }
 
 void		ClapTrap::beRepaired(unsigned int	amount) {
-	this->setHitPoints(this->getHitPoints() + amount);
-	std::cout << "ClapTrap " << this->getName() << " repairs " << amount << " points of damage!" << std::endl;
+	if (m_hit_points > 0 && m_energy_points >= 1) {
+		m_hit_points += amount;
+		m_energy_points--;
+		std::cout << m_name << " repairs " << amount << " points of damage!" << std::endl;
+		if (m_energy_points < 0)
+			m_energy_points = 0;
+	}
+	else if (m_hit_points > 0)
+		std::cout << m_name << " doesn't have enough energy points left." << std::endl;
+	else
+		std::cout << m_name << "is dead. " << std::endl;
+}
+
+void		ClapTrap::getStatus(void) {
+	if (m_hit_points <= 0) {
+		std::cout << m_name << " is dead. " << std::endl;
+		std::cout << std::endl;
+		return ;
+	}
+	std::cout << m_name << " has " << m_hit_points << " hit points left." << std::endl;
+	std::cout << m_name << " has " << m_energy_points << " energy points left." << std::endl;
+	std::cout << std::endl;
 }

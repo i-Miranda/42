@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 17:52:43 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/29 17:31:20 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/29 22:34:56 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ class DiamondTrap : public FragTrap, public ScavTrap {
 		DiamondTrap&	operator=(const DiamondTrap &src);
 		
 		void		attack(const std::string& target);
-		void		takeDamage(unsigned int amount);
-		void		beRepaired(unsigned int	amount);
-		void		getStatus(void);
-
 		void	whoAmI(void);
 };
 #endif

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 17:26:54 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/29 15:26:49 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/29 21:43:48 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,30 @@ ScavTrap::ScavTrap(void) : ClapTrap() {
 	m_hit_points = 100;
 	m_energy_points = 50;
 	m_attack_damage = 20;
-	std::cerr << m_name << "'s ScavTrap Default constructor called." << std::endl;
+	std::cout << m_name << "'s ScavTrap Default constructor called." << std::endl;
 }
 
 ScavTrap::ScavTrap(const std::string name) : ClapTrap(name) {
 	m_hit_points = 100;
 	m_energy_points = 50;
 	m_attack_damage = 20;
-	std::cerr << m_name << "'s ScavTrap Name constructor called." << std::endl;
+	std::cout << m_name << "'s ScavTrap Name constructor called." << std::endl;
 }
 
 ScavTrap::ScavTrap(const ScavTrap &src) : ClapTrap(src) {
-	std::cerr << m_name << "'s ScavTrap Copy constructor called." << std::endl;
+	std::cout << m_name << "'s ScavTrap Copy constructor called." << std::endl;
 }
 
 ScavTrap::~ScavTrap(void) { 
-	std::cerr << m_name << "'s ScavTrap Destructor called." << std::endl;
+	std::cout << m_name << "'s ScavTrap Destructor called." << std::endl;
 }
 
 ScavTrap&	ScavTrap::operator=(const ScavTrap &src) {
-	std::cerr << m_name << "'s ScavTrap Copy assignment constructor called." << std::endl;
-	m_name = src.m_name;
-	m_hit_points = src.m_hit_points;
-	m_energy_points = src.m_energy_points;
-	m_attack_damage = src.m_attack_damage;
+	std::cout << m_name << "'s ScavTrap Copy assignment constructor called." << std::endl;
+	if (this != &src) {
+		ClapTrap::operator=(src);
+		m_name = src.m_name;
+	}
 	return *this;
 }
 

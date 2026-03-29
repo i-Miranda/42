@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:56 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/18 13:35:20 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/29 14:37:02 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int	main(void) {
 	ClapTrap a = ClapTrap("ClapTrap_A");	
 
 	a.attack("Target");
-	std::cout << a.getName() << " has " << a.getHitPoints() << " hit points." << std::endl;
+	a.getStatus();
 	a.takeDamage(1);
-	std::cout << a.getName() << " has " << a.getHitPoints() << " hit points." << std::endl;
+	a.getStatus();
 	a.beRepaired(1);
-	std::cout << a.getName() << " has " << a.getHitPoints() << " hit points." << std::endl;
+	a.getStatus();
 	
 	return (0);
 }
