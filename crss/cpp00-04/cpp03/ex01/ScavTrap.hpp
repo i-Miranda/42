@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 14:31:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/29 15:01:32 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/30 01:18:17 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ class ScavTrap : public ClapTrap {
 		~ScavTrap(void);
 
 		ScavTrap&	operator=(const ScavTrap &src);
-		
+				
+		void	attack(const std::string& target);
 		void	guardGate(void);
 };
 #endif

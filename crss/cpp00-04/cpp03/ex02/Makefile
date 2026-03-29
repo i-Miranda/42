@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
-#    Updated: 2026/03/29 15:36:21 by ivmirand         ###   ########.fr        #
+#    Updated: 2026/03/30 01:02:15 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ ifeq ($(NOFLAGS), 1)
 	CXXFLAGS :=
 	DBFLAGS :=
 else 
-	CXXFLAGS := -Wall -Werror -Wextra -std=c++98
+	CXXFLAGS := -Wall -Werror -Wextra -Wshadow -Wpedantic -std=c++98
 endif
 
 ##################################################
