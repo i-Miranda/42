@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:56 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/23 02:13:00 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/03/31 20:25:13 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	main(void) {
 
 	std::cout << "cat_1 idea[0]: " << cat_1.getBrain().getIdea(0) << std::endl;
 	std::cout << "cat_2 idea[0]: " << cat_2.getBrain().getIdea(0) << std::endl;
+	std::cout << "cat_1 idea[2]: " << cat_1.getBrain().getIdea(2) << std::endl;
+	std::cout << "cat_2 idea[2]: " << cat_2.getBrain().getIdea(2) << std::endl;
 	std::cout << std::endl;
 
 	std::cout << "--- Stack allocated Dogs and Cats Destructors test ---" << std::endl;
