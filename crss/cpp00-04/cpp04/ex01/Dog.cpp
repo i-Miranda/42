@@ -31,9 +31,10 @@ Dog::~Dog(void) {
 Dog& Dog::operator=(const Dog& src) {
 	std::cout << "Dog copy assignment operator called." << std::endl;
 	if (this != &src) {
+		Brain* newBrain = new Brain(src.getBrain());
 		Animal::operator=(src);
 		delete m_brain;
-		m_brain = new Brain(src.getBrain());
+		m_brain = newBrain;
 	}
 	return *this;
 }

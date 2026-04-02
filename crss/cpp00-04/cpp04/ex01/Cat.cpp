@@ -31,9 +31,10 @@ Cat::~Cat(void) {
 Cat& Cat::operator=(const Cat& src) {
 	std::cout << "Cat copy assignment operator called." << std::endl;
 	if (this != &src) {
-		type = src.getType();
+		Brain* newBrain = new Brain(src.getBrain());
+		Animal::operator=(src);
 		delete m_brain;
-		m_brain = new Brain(src.getBrain());
+		m_brain = newBrain;
 	}
 	return *this;
 }
