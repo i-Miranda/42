@@ -6,54 +6,10 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:56 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/04/02 14:58:22 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/04/02 16:29:47 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Character.hpp"
-#include "MateriaSource.hpp"
-#include "Ice.hpp"
-#include "Cure.hpp"
-#include <iostream>
-
-int	main(void) {
-	std::cout << "--------SUBJECT TEST--------" << std::endl;
-	IMateriaSource* src = new MateriaSource();
-	src->learnMateria(new Ice());
-	src->learnMateria(new Cure());
-
-	ICharacter* me = new Character("me");
-
-	AMateria* tmp;
-	tmp = src->createMateria("ice");
-	me->equip(tmp);
-	tmp = src->createMateria("cure");
-	me->equip(tmp);
-
-	ICharacter* bob = new Character("bob");
-
-	me->use(0, *bob);
-	me->use(1, *bob);
-	
-	std::cout << std::endl;
-	std::cout << "--------UNKNOWN MATERIA TEST--------" << std::endl;
-	tmp = src->createMateria("fire");
-	if (!tmp)
-		std::cout << "fire not created: OK" << std::endl;
-	else
-		delete tmp;
-	
-	std::cout << std::endl;
-	std::cout << "--------INVALID INDEX TEST--------" << std::endl;
-	me->use(-1, *bob);
-	me->use(4, *bob);
-
-	delete bob;
-	delete me;
-	delete src;
-
-	return (0);
-}
 #include "Character.hpp"
 #include "MateriaSource.hpp"
 #include "Ice.hpp"
@@ -83,64 +39,80 @@ int main() {
     tmp = src->createMateria("fire");
     if (!tmp)
         std::cout << "fire not created: OK\n";
-    else
+    else {
         delete tmp;
+	}
 
+	std::cout << std::endl;
     std::cout << "\n=== INVALID INDEX TEST ===\n";
     me->use(-1, *bob);
     me->use(4, *bob);
 
+	std::cout << std::endl;
     std::cout << "\n=== INVENTORY FULL TEST ===\n";
     me->equip(src->createMateria("ice"));
     me->equip(src->createMateria("cure"));
     me->equip(src->createMateria("ice")); // should be full here
 
+	std::cout << std::endl;
     std::cout << "\n=== UNEQUIP TEST ===\n";
     me->unequip(0);
     me->use(0, *bob); // should not work
     me->equip(src->createMateria("ice"));
     me->use(0, *bob);
 
+	std::cout << std::endl;
     std::cout << "\n=== CHARACTER DEEP COPY TEST ===\n";
     Character* alice = new Character("alice");
     alice->equip(src->createMateria("ice"));
     alice->equip(src->createMateria("cure"));
+	std::cout << std::endl;
 
     Character* copyAlice = new Character(*alice);
     std::cout << "Original uses:\n";
     alice->use(0, *bob);
     alice->use(1, *bob);
+	std::cout << std::endl;
 
     std::cout << "Copy uses:\n";
     copyAlice->use(0, *bob);
     copyAlice->use(1, *bob);
+	std::cout << std::endl;
 
     std::cout << "Unequip original slot 0\n";
     alice->unequip(0);
+	std::cout << std::endl;
 
     std::cout << "Original after unequip:\n";
     alice->use(0, *bob);      // should fail / do nothing
     std::cout << "Copy after original unequip:\n";
     copyAlice->use(0, *bob);  // must still work if deep copy is correct
+	std::cout << std::endl;
 
+	std::cout << std::endl;
     std::cout << "\n=== ASSIGNMENT OPERATOR TEST ===\n";
     Character basic("basic");
     basic = *copyAlice;
     basic.use(0, *bob);
     basic.use(1, *bob);
+	std::cout << std::endl;
 
     copyAlice->unequip(1);
     std::cout << "Assigned copy after source unequip:\n";
     basic.use(1, *bob); // must still work if operator= deep copies correctly
 
+
+	std::cout << std::endl;
     std::cout << "\n=== MATERIASOURCE DEEP COPY TEST ===\n";
     MateriaSource* ms1 = new MateriaSource();
     ms1->learnMateria(new Ice());
     ms1->learnMateria(new Cure());
+	std::cout << std::endl;
 
     MateriaSource* ms2 = new MateriaSource(*ms1);
     AMateria* a = ms2->createMateria("ice");
     AMateria* b = ms2->createMateria("cure");
+	std::cout << std::endl;
 
     if (a)
     {
@@ -155,6 +127,7 @@ int main() {
 
     delete ms1;
 
+	std::cout << std::endl;
     a = ms2->createMateria("ice");
     if (a)
     {
@@ -164,10 +137,15 @@ int main() {
 
     delete ms2;
 
+	std::cout << std::endl;
     delete copyAlice;
+	std::cout << std::endl;
     delete alice;
+	std::cout << std::endl;
     delete bob;
+	std::cout << std::endl;
     delete me;
+	std::cout << std::endl;
     delete src;
 
     return 0;
