@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:56 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/31 20:24:00 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/04/02 13:05:47 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ int	main(void) {
 	std::cout << std::endl;
 
 	const Animal* i = new Cat();
+	std::cout << std::endl;
+	
+	j->makeSound();
+	i->makeSound();
 	std::cout << std::endl;
 	
 	delete j; //should not create a leak
