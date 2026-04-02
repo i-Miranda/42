@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:25:24 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/31 18:02:31 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/04/02 13:10:12 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ Cat::~Cat(void) {
 Cat& Cat::operator=(const Cat& src) {
 	std::cout << "Cat copy assignment operator called." << std::endl;
 	if (this != &src) {
-		type = src.getType();
+		Brain* newBrain = new Brain(src.getBrain());
+		AAnimal::operator=(src);
 		delete m_brain;
-		m_brain = new Brain(src.getBrain());
+		m_brain = newBrain;
 	}
 	return *this;
 }

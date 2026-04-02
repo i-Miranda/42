@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:56 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/31 20:25:13 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/04/02 13:07:17 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(void) {
 	cat->makeSound();
 	std::cout << std::endl;
 	
-	delete dog;
+	delete dog; //should not create a leak
 	std::cout << std::endl;
 
 	delete cat;
@@ -50,17 +50,21 @@ int	main(void) {
 	
 	Cat cat_1;
 	cat_1.getBrain().setIdea("I want food", 0);
+	cat_1.getBrain().setIdea("I want food", 100);
 	std::cout << std::endl;
 
 	Cat cat_2;
 	cat_2 = cat_1; // operator=
 	cat_2.getBrain().setIdea("I want sleep", 0);
+	cat_2.getBrain().setIdea("I want food", 100);
 	std::cout << std::endl;
 
 	std::cout << "cat_1 idea[0]: " << cat_1.getBrain().getIdea(0) << std::endl;
 	std::cout << "cat_2 idea[0]: " << cat_2.getBrain().getIdea(0) << std::endl;
-	std::cout << "cat_1 idea[2]: " << cat_1.getBrain().getIdea(2) << std::endl;
-	std::cout << "cat_2 idea[2]: " << cat_2.getBrain().getIdea(2) << std::endl;
+	std::cout << "cat_1 idea[1]: " << cat_1.getBrain().getIdea(1) << std::endl;
+	std::cout << "cat_2 idea[1]: " << cat_2.getBrain().getIdea(1) << std::endl;
+	std::cout << "cat_1 idea[100]: " << cat_1.getBrain().getIdea(100) << std::endl;
+	std::cout << "cat_2 idea[100]: " << cat_2.getBrain().getIdea(100) << std::endl;
 	std::cout << std::endl;
 
 	std::cout << "--- Stack allocated Dogs and Cats Destructors test ---" << std::endl;

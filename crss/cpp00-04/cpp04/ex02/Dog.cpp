@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:25:24 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/31 17:52:14 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/04/02 13:09:37 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ Dog::~Dog(void) {
 Dog& Dog::operator=(const Dog& src) {
 	std::cout << "Dog copy assignment operator called." << std::endl;
 	if (this != &src) {
+		Brain* newBrain = new Brain(src.getBrain());
 		AAnimal::operator=(src);
 		delete m_brain;
-		m_brain = new Brain(src.getBrain());
+		m_brain = newBrain;
 	}
 	return *this;
 }
