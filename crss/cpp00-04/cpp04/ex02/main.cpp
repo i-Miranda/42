@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 04:38:56 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/04/02 13:07:17 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/04/02 14:30:59 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "Dog.hpp"
 
 int	main(void) {
+	// This can't be done. AAnimal is abstract.
+	// AAnimal *a = new AAnimal();
 	const AAnimal* dog = new Dog();
 	std::cout << std::endl;
 

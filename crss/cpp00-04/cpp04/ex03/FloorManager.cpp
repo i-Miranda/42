@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 17:46:35 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/31 12:40:20 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/04/02 14:37:18 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ void UpdateFloor(AMateria* m) {
 	}
 	std::cout << "Floor is full. Deleting first Materia in floor." << std::endl;
 	delete floor[0];
-	for (int i = 0; i < 100; ++i) {
+	for (int i = 1; i < 100; ++i) {
 		floor[i - 1] = floor[i];
-		floor[i] = NULL;
 	}
 	floor[99] = m;
 }

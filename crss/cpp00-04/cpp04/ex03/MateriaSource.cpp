@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 17:28:18 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/31 18:19:31 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/04/02 14:44:21 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ AMateria* MateriaSource::createMateria(std::string const & type) {
 	for (int i = 0; i < 4; i++) {
 		if (m_known_materia[i] != NULL
 				&& m_known_materia[i]->getType() == type) {
-			std::cout << "Materia learned." << std::endl;
+			std::cout << "Materia created." << std::endl;
 			return m_known_materia[i]->clone();
 		}
 	}
@@ -75,7 +75,10 @@ MateriaSource& MateriaSource::operator=(const MateriaSource& src) {
 		for (int i = 0; i < 4; i++) {
 			if (m_known_materia[i] != NULL)
 				delete m_known_materia[i];
-			m_known_materia[i] = src.m_known_materia[i]->clone();
+			if (src.m_known_materia[i] != NULL)
+				m_known_materia[i] = src.m_known_materia[i]->clone();
+			else
+				m_known_materia[i] = NULL;
 		}
 	}
 	return *this;
