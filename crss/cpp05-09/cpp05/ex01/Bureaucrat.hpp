@@ -19,8 +19,13 @@
 #include <iostream>
 #include <string>
 
-#define TOO_HIGH "Grade too high. Grade must be an integer between 1 and 150."
-#define TOO_LOW "Grade too low. Grade must be an integer between 1 and 150."
+#define BUREAUCRAT_TOO_HIGH                                                    \
+  "Grade too high. Grade must be an integer between 1 and 150."
+#define BUREAUCRAT_TOO_LOW                                                     \
+  "Grade too low. Grade must be an integer between 1 and 150."
+
+// Forward declaration of Form to avoid circular includes
+class Form;
 
 class Bureaucrat {
 private:
@@ -39,6 +44,7 @@ public:
 
   void incrementGrade(void);
   void decrementGrade(void);
+  void signForm(Form &form);
 
   class GradeTooHighException : public std::exception {
   public:

@@ -10,12 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:=	ex00
+NAME		:=	ex01
 
 DIR_OBJS	:=	objs
 
 SOURCES		:=	main.cpp \
-				Bureaucrat.cpp
+				Bureaucrat.cpp\
+				Form.cpp
 
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SOURCES:.cpp=.o))
 
@@ -30,8 +31,8 @@ $(NAME)			:	$(DIR_OBJS)	$(OBJS)
 $(DIR_OBJS)		:
 	mkdir -p $(DIR_OBJS)
 
-$(DIR_OBJS)/%.o	: %.cpp
-	$(CXX) $(CXXFLAGS) $(DBFLAGS) -c $< -o $@
+$(DIR_OBJS)/%.o	:	%.cpp
+	$(CXX) $(CXXFLAGS) $(DBFLAGS) $(INC) -c $< -o $@
 
 clean			:
 	rm -rf	$(DIR_OBJS)
