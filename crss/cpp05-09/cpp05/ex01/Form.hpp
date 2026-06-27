@@ -19,8 +19,8 @@
 #include <iostream>
 #include <string>
 
-#define FORM_TOO_HIGH "Grade too high. Grade must be lesser than "
-#define FORM_TOO_LOW "Grade too low. Grade must be greater than "
+#define FORM_TOO_HIGH "Bureaucrat Grade too high."
+#define FORM_TOO_LOW "Bureaucrat Grade too low."
 #define SIGNED "Form is signed."
 #define NOT_SIGNED "Form is NOT signed."
 
