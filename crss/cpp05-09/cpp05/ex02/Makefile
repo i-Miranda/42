@@ -10,13 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:=	ex01
+NAME		:=	ex02
 
 DIR_OBJS	:=	objs
 
 SOURCES		:=	main.cpp \
 				Bureaucrat.cpp\
-				Form.cpp
+				AForm.cpp
 
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SOURCES:.cpp=.o))
 
