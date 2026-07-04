@@ -21,19 +21,19 @@ int main(void) {
 
   try {
     Bureaucrat NegativeBureaucrat = Bureaucrat("Negative", -100);
-  } catch (std::exception &e) {
-    std::cout << "\tException caught: " << e.what() << std::endl;
+  } catch (Bureaucrat::GradeTooHighException &e) {
+    std::cout << "\tGradeTooHighException caught: " << e.what() << std::endl;
   }
 
   try {
     Bureaucrat ExceptionBureaucrat = Bureaucrat("Too Low", 151);
-  } catch (std::exception &e) {
-    std::cout << "\tException caught: " << e.what() << std::endl;
+  } catch (Bureaucrat::GradeTooLowException &e) {
+    std::cout << "\tGradeTooLowException caught: " << e.what() << std::endl;
   }
   try {
     Bureaucrat ExceptionBureaucrat = Bureaucrat("Too High", 0);
-  } catch (std::exception &e) {
-    std::cout << "\tException caught: " << e.what() << std::endl;
+  } catch (Bureaucrat::GradeTooHighException &e) {
+    std::cout << "\tGradeTooHighException caught: " << e.what() << std::endl;
   }
 
   std::cout << std::endl;
@@ -64,8 +64,8 @@ int main(void) {
                  "INCREASE by 1, causing GradeTooLowException.)"
               << std::endl;
     LowBureaucrat.decrementGrade();
-  } catch (std::exception &e) {
-    std::cout << "\tException caught: " << e.what() << std::endl;
+  } catch (Bureaucrat::GradeTooLowException &e) {
+    std::cout << "\tGradeTooLowException caught: " << e.what() << std::endl;
   }
   std::cout << "LowBureaucrat: " << LowBureaucrat << std::endl;
 
@@ -74,8 +74,8 @@ int main(void) {
                  "INCREASE by 1, causing GradeTooHighException.)"
               << std::endl;
     HighBureaucrat.incrementGrade();
-  } catch (std::exception &e) {
-    std::cout << "\tException caught: " << e.what() << std::endl;
+  } catch (Bureaucrat::GradeTooHighException &e) {
+    std::cout << "\tGradeTooHighException caught: " << e.what() << std::endl;
   }
   std::cout << "HighBureaucrat: " << HighBureaucrat << std::endl;
 

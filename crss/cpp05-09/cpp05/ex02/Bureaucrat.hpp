@@ -25,7 +25,7 @@
   "Grade too low. Grade must be an integer between 1 and 150."
 
 // Forward declaration of Form to avoid circular includes
-class Form;
+class AForm;
 
 class Bureaucrat {
 private:
@@ -44,7 +44,8 @@ public:
 
   void incrementGrade(void);
   void decrementGrade(void);
-  void signForm(Form &form);
+  void signForm(AForm &form);
+  void executeForm(AForm const &form);
 
   class GradeTooHighException : public std::exception {
   public:

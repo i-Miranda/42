@@ -16,7 +16,10 @@ DIR_OBJS	:=	objs
 
 SOURCES		:=	main.cpp \
 				Bureaucrat.cpp\
-				AForm.cpp
+				AForm.cpp \
+				ShrubberyCreationForm.cpp \
+				PresidentialPardonForm.cpp \
+				RobotomyRequestForm.cpp
 
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SOURCES:.cpp=.o))
 

@@ -11,54 +11,39 @@
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
 int main(void) {
   std::cout << "CREATING BUREAUCRATS" << std::endl;
-  Bureaucrat TestBureaucrat = Bureaucrat("Pedro", 11);
+  Bureaucrat TestBureaucrat = Bureaucrat("Pedro", 70);
   Bureaucrat CopyBureaucrat = Bureaucrat(TestBureaucrat);
   Bureaucrat LowBureaucrat = Bureaucrat("Low", 150);
   Bureaucrat HighBureaucrat = Bureaucrat("High", 1);
   try {
     Bureaucrat NegativeBureaucrat = Bureaucrat("Negative", -100);
-  } catch (std::exception &e) {
-    std::cout << "\tException caught: " << e.what() << std::endl;
+  } catch (Bureaucrat::GradeTooHighException &e) {
+    std::cout << "\tGradeTooHighException caught: " << e.what() << std::endl;
   }
 
   try {
     Bureaucrat ExceptionBureaucrat = Bureaucrat("Too Low", 151);
-  } catch (std::exception &e) {
-    std::cout << "\tException caught: " << e.what() << std::endl;
+  } catch (Bureaucrat::GradeTooLowException &e) {
+    std::cout << "\tGradeTooLowException caught: " << e.what() << std::endl;
   }
   try {
     Bureaucrat ExceptionBureaucrat = Bureaucrat("Too High", 0);
-  } catch (std::exception &e) {
-    std::cout << "\tException caught: " << e.what() << std::endl;
+  } catch (Bureaucrat::GradeTooHighException &e) {
+    std::cout << "\tGradeTooHighException caught: " << e.what() << std::endl;
   }
 
   std::cout << std::endl;
 
   std::cout << "CREATING FORMS" << std::endl;
-  Form TestForm = Form("Basic", 11, 11);
-  Form CopyForm = Form(TestForm);
-  Form LowForm = Form("Low", 150, 150);
-  Form HighForm = Form("High", 1, 1);
-  try {
-    Form NegativeForm = Form("Negative", -100, -100);
-  } catch (std::exception &e) {
-    std::cout << "\tException caught: " << e.what() << std::endl;
-  }
-
-  try {
-    Form ExceptionForm = Form("Too Low", 151, 151);
-  } catch (std::exception &e) {
-    std::cout << "\tException caught: " << e.what() << std::endl;
-  }
-  try {
-    Form ExceptionForm = Form("Too High", 0, 0);
-  } catch (std::exception &e) {
-    std::cout << "\tException caught: " << e.what() << std::endl;
-  }
+  ShrubberyCreationForm ShrubForm = ShrubberyCreationForm("Shrub");
+  PresidentialPardonForm PresForm = PresidentialPardonForm("Pres");
+  RobotomyRequestForm RoboForm = RobotomyRequestForm("Robo");
 
   std::cout << std::endl;
 
@@ -70,10 +55,9 @@ int main(void) {
 
   std::cout << std::endl;
 
-  std::cout << "TestForm: " << TestForm << std::endl;
-  std::cout << "CopyForm: " << CopyForm << std::endl;
-  std::cout << "LowForm: " << LowForm << std::endl;
-  std::cout << "HighForm: " << HighForm << std::endl;
+  std::cout << ShrubForm.getName() << ": " << ShrubForm << std::endl;
+  std::cout << PresForm.getName() << ": " << PresForm << std::endl;
+  std::cout << RoboForm.getName() << ": " << RoboForm << std::endl;
 
   std::cout << std::endl;
 
@@ -95,7 +79,7 @@ int main(void) {
                  "INCREASE by 1, causing GradeTooLowException.)"
               << std::endl;
     LowBureaucrat.decrementGrade();
-  } catch (std::exception &e) {
+  } catch (Bureaucrat::GradeTooLowException &e) {
     std::cout << "\tException caught: " << e.what() << std::endl;
   }
   std::cout << "LowBureaucrat: " << LowBureaucrat << std::endl;
@@ -105,8 +89,8 @@ int main(void) {
                  "INCREASE by 1, causing GradeTooHighException.)"
               << std::endl;
     HighBureaucrat.incrementGrade();
-  } catch (std::exception &e) {
-    std::cout << "\tException caught: " << e.what() << std::endl;
+  } catch (Bureaucrat::GradeTooHighException &e) {
+    std::cout << "\tGradeTooHighException caught: " << e.what() << std::endl;
   }
   std::cout << "HighBureaucrat: " << HighBureaucrat << std::endl;
 
@@ -114,20 +98,27 @@ int main(void) {
 
   std::cout << "SIGNING FORMS" << std::endl;
   std::cout << "TestBureaucrat: " << TestBureaucrat << std::endl;
-  TestBureaucrat.signForm(TestForm);
-  std::cout << "TestForm: " << TestForm << std::endl;
+  TestBureaucrat.signForm(ShrubForm);
+  std::cout << ShrubForm.getName() << ": " << ShrubForm << std::endl;
   std::cout << std::endl;
-  std::cout << "CopyBureaucrat: " << CopyBureaucrat << std::endl;
-  CopyBureaucrat.signForm(CopyForm);
-  std::cout << "CopyForm: " << CopyForm << std::endl;
+  TestBureaucrat.signForm(PresForm);
+  std::cout << PresForm.getName() << ": " << PresForm << std::endl;
   std::cout << std::endl;
-  std::cout << "HighBureaucrat: " << HighBureaucrat << std::endl;
-  HighBureaucrat.signForm(LowForm);
-  std::cout << "LowForm: " << LowForm << std::endl;
+  TestBureaucrat.signForm(RoboForm);
+  std::cout << RoboForm.getName() << ": " << RoboForm << std::endl;
   std::cout << std::endl;
-  std::cout << "LowBureaucrat: " << LowBureaucrat << std::endl;
-  LowBureaucrat.signForm(HighForm);
-  std::cout << "HighForm: " << HighForm << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "EXECUTING FORMS" << std::endl;
+  std::cout << "TestBureaucrat: " << TestBureaucrat << std::endl;
+  TestBureaucrat.executeForm(ShrubForm);
+  std::cout << ShrubForm.getName() << ": " << ShrubForm << std::endl;
+  std::cout << std::endl;
+  TestBureaucrat.executeForm(PresForm);
+  std::cout << PresForm.getName() << ": " << PresForm << std::endl;
+  std::cout << std::endl;
+  TestBureaucrat.executeForm(RoboForm);
+  std::cout << RoboForm.getName() << ": " << RoboForm << std::endl;
   std::cout << std::endl;
 
   std::cout << "DESTROYING BUREAUCRATS & FORMS" << std::endl;
