@@ -9,10 +9,9 @@
 /*   Updated: 2026/02/26 17:04:26 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "Bureaucrat.hpp"
-#include "PresidentialPardonForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "ShrubberyCreationForm.hpp"
+#include "Intern.hpp"
 #include <cstdlib>
 #include <ctime>
 
@@ -54,26 +53,31 @@ int main(void) {
   try {
     Bureaucrat NegativeBureaucrat = Bureaucrat("Negative", -100);
   } catch (Bureaucrat::GradeTooHighException const &e) {
-    exceptionMessage(e, "Bureaucrat::GradeTooHighException");
+    std::cout << "\tGradeTooHighException caught: " << e.what() << std::endl;
   }
+
   try {
     Bureaucrat ExceptionBureaucrat = Bureaucrat("Too Low", 151);
   } catch (Bureaucrat::GradeTooLowException const &e) {
-    exceptionMessage(e, "Bureaucrat::GradeTooLowException");
+    std::cout << "\tGradeTooLowException caught: " << e.what() << std::endl;
   }
   try {
     Bureaucrat ExceptionBureaucrat = Bureaucrat("Too High", 0);
   } catch (Bureaucrat::GradeTooHighException const &e) {
-    exceptionMessage(e, "Bureaucrat::GradeTooHighException");
+    std::cout << "\tGradeTooHighException caught: " << e.what() << std::endl;
   }
 
   std::cout << std::endl;
 
-  std::cout << "CREATING FORMS" << std::endl;
+  std::cout << "CREATING INTERN" << std::endl;
+  Intern TestIntern;
 
-  ShrubberyCreationForm ShrubForm = ShrubberyCreationForm("Shrub");
-  PresidentialPardonForm PresForm = PresidentialPardonForm("Pres");
-  RobotomyRequestForm RoboForm = RobotomyRequestForm("Robo");
+  std::cout << std::endl;
+
+  std::cout << "CREATING FORMS" << std::endl;
+  AForm *ShrubForm = TestIntern.makeForm("shrubbery creation", "Shrub");
+  AForm *PresForm = TestIntern.makeForm("presidential pardon", "Pres");
+  AForm *RoboForm = TestIntern.makeForm("robotomy request", "Robo");
 
   std::cout << std::endl;
 
@@ -96,9 +100,9 @@ int main(void) {
 
   std::cout << std::endl;
 
-  std::cout << ShrubForm << std::endl;
-  std::cout << PresForm << std::endl;
-  std::cout << RoboForm << std::endl;
+  std::cout << *ShrubForm << std::endl;
+  std::cout << *PresForm << std::endl;
+  std::cout << *RoboForm << std::endl;
 
   std::cout << std::endl;
 
@@ -141,61 +145,64 @@ int main(void) {
   std::cout << "SIGNING FORMS" << std::endl;
   std::cout << "Signing ShrubberyCreationForm" << std::endl;
   std::cout << ShrubLowRankSignBureaucrat << std::endl;
-  ShrubLowRankSignBureaucrat.signForm(ShrubForm);
-  std::cout << ShrubForm << std::endl;
+  ShrubLowRankSignBureaucrat.signForm(*ShrubForm);
+  std::cout << *ShrubForm << std::endl;
   std::cout << std::endl;
   std::cout << ShrubLowRankExecBureaucrat << std::endl;
-  ShrubLowRankExecBureaucrat.signForm(ShrubForm);
-  std::cout << ShrubForm << std::endl;
+  ShrubLowRankExecBureaucrat.signForm(*ShrubForm);
+  std::cout << *ShrubForm << std::endl;
   std::cout << std::endl;
   std::cout << "Signing PresidentialPardonForm" << std::endl;
   std::cout << PresLowRankSignBureaucrat << std::endl;
-  PresLowRankSignBureaucrat.signForm(PresForm);
-  std::cout << PresForm << std::endl;
+  PresLowRankSignBureaucrat.signForm(*PresForm);
+  std::cout << *PresForm << std::endl;
   std::cout << std::endl;
   std::cout << PresLowRankExecBureaucrat << std::endl;
-  PresLowRankExecBureaucrat.signForm(PresForm);
-  std::cout << PresForm << std::endl;
+  PresLowRankExecBureaucrat.signForm(*PresForm);
+  std::cout << *PresForm << std::endl;
   std::cout << std::endl;
   std::cout << "Signing RobotomyRequestForm" << std::endl;
   std::cout << RoboLowRankSignBureaucrat << std::endl;
-  RoboLowRankSignBureaucrat.signForm(RoboForm);
-  std::cout << RoboForm << std::endl;
+  RoboLowRankSignBureaucrat.signForm(*RoboForm);
+  std::cout << *RoboForm << std::endl;
   std::cout << std::endl;
   std::cout << RoboLowRankExecBureaucrat << std::endl;
-  RoboLowRankExecBureaucrat.signForm(RoboForm);
-  std::cout << RoboForm << std::endl;
+  RoboLowRankExecBureaucrat.signForm(*RoboForm);
+  std::cout << *RoboForm << std::endl;
   std::cout << std::endl;
 
   std::cout << "EXECUTING FORMS" << std::endl;
   std::cout << "Executing ShrubberyCreationForm" << std::endl;
   std::cout << ShrubLowRankExecBureaucrat << std::endl;
-  ShrubLowRankExecBureaucrat.executeForm(ShrubForm);
-  std::cout << ShrubForm << std::endl;
+  ShrubLowRankExecBureaucrat.executeForm(*ShrubForm);
+  std::cout << *ShrubForm << std::endl;
   std::cout << std::endl;
   std::cout << ShrubHighRankExecBureaucrat << std::endl;
-  ShrubHighRankExecBureaucrat.executeForm(ShrubForm);
-  std::cout << ShrubForm << std::endl;
+  ShrubHighRankExecBureaucrat.executeForm(*ShrubForm);
+  std::cout << *ShrubForm << std::endl;
   std::cout << std::endl;
   std::cout << "Executing PresidentialPardonForm" << std::endl;
   std::cout << PresLowRankExecBureaucrat << std::endl;
-  PresLowRankExecBureaucrat.executeForm(PresForm);
-  std::cout << PresForm << std::endl;
+  PresLowRankExecBureaucrat.executeForm(*PresForm);
+  std::cout << *PresForm << std::endl;
   std::cout << std::endl;
   std::cout << PresHighRankExecBureaucrat << std::endl;
-  PresHighRankExecBureaucrat.executeForm(PresForm);
-  std::cout << PresForm << std::endl;
+  PresHighRankExecBureaucrat.executeForm(*PresForm);
+  std::cout << *PresForm << std::endl;
   std::cout << std::endl;
   std::cout << "Signing RobotomyRequestForm" << std::endl;
   std::cout << RoboLowRankExecBureaucrat << std::endl;
-  RoboLowRankSignBureaucrat.signForm(RoboForm);
-  std::cout << RoboForm << std::endl;
+  RoboLowRankSignBureaucrat.signForm(*RoboForm);
+  std::cout << *RoboForm << std::endl;
   std::cout << std::endl;
   std::cout << RoboHighRankExecBureaucrat << std::endl;
-  RoboHighRankExecBureaucrat.signForm(RoboForm);
-  std::cout << RoboForm << std::endl;
+  RoboHighRankExecBureaucrat.signForm(*RoboForm);
+  std::cout << *RoboForm << std::endl;
   std::cout << std::endl;
 
   std::cout << "DESTROYING BUREAUCRATS & FORMS" << std::endl;
+  delete ShrubForm;
+  delete PresForm;
+  delete RoboForm;
   return (0);
 }

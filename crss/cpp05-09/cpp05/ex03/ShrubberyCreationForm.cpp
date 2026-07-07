@@ -43,25 +43,24 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const {
   std::string target;
 
   AForm::execute(executor);
-
   target = getName() + "_shrubbery";
   file.open(target.c_str(), std::ios_base::out);
-  file << "         ºº                       " << std::endl
-       << "     º ººªº                       " << std::endl
-       << "      oºº\\ º        xxx          " << std::endl
-       << "        ªºªoºº  ª ªªªªoºº         " << std::endl
-       << "  ºo   º ºaºª ºº Oºº ºº  v        " << std::endl
-       << " ºº º ªººoº// º oª   a  ___,      " << std::endl
-       << " ªx\\ ºoºªoºªº a º/ºx//V_/ªººº    " << std::endl
-       << "  a ºaX ºXº/ /º ºXoªººº__oo/ O    " << std::endl
-       << "   ºoºªoºªºxY ºXxº___//O  oºoªª   " << std::endl
-       << "     \\ººXºX_º ___/X Vo º         " << std::endl
-       << "      ªYXºXXV_/                   " << std::endl
-       << "        /X,/Y                     " << std::endl
-       << "       /XX'                       " << std::endl
-       << "      KXX'                        " << std::endl
-       << "     |XXXXXn                      " << std::endl
-       << "    /nXXXAXXuvn                   " << std::endl
-       << ",ww/vWwwAwwvwvWu\\Wwvw,vvvwuvWww,." << std::endl;
+  file << "         ºº                       \n"
+       << "     º ººªº                       \n"
+       << "      oºº\\ º        xxx          \n"
+       << "        ªºªoºº  ª ªªªªoºº         \n"
+       << "  ºo   º ºaºª ºº Oºº ºº  v        \n"
+       << " ºº º ªººoº// º oª   a  ___,      \n"
+       << " ªx\\ ºoºªoºªº a º/ºx//V_/ªººº    \n"
+       << "  a ºaX ºXº/ /º ºXoªººº__oo/ O    \n"
+       << "   ºoºªoºªºxY ºXxº___//O  oºoªª   \n"
+       << "     \\ººXºX_º ___/X Vo º         \n"
+       << "      ªYXºXXV_/                   \n"
+       << "        /X,/Y                     \n"
+       << "       /XX'                       \n"
+       << "      KXX'                        \n"
+       << "     |XXXXXn                      \n"
+       << "    /nXXXAXXuvn                   \n"
+       << ",ww/vWwwAwwvwvWu\\Wwvw,vvvwuvWww,.\n";
   file.close();
 }

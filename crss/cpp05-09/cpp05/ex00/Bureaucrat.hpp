@@ -28,7 +28,7 @@ private:
   int m_grade;
 
 public:
-  Bureaucrat(std::string const _name, int _grade);
+  Bureaucrat(std::string const &_name, int _grade);
   Bureaucrat(const Bureaucrat &src);
   ~Bureaucrat(void);
 
@@ -51,6 +51,6 @@ public:
   };
 };
 
-std::ostream &operator<<(std::ostream &out, const Bureaucrat &bureacrat);
+std::ostream &operator<<(std::ostream &out, const Bureaucrat &bureaucrat);
 
 #endif

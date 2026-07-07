@@ -35,7 +35,7 @@ private:
   bool m_signed;
 
 public:
-  Form(std::string const _name, int _s_grade, int _e_grade);
+  Form(std::string const &_name, int _s_grade, int _e_grade);
   Form(const Form &src);
   ~Form(void);
 

@@ -10,12 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:=	ex02
+NAME		:=	ex03
 
 DIR_OBJS	:=	objs
 
 SOURCES		:=	main.cpp \
 				Bureaucrat.cpp\
+				Intern.cpp\
 				AForm.cpp \
 				ShrubberyCreationForm.cpp \
 				PresidentialPardonForm.cpp \
@@ -42,7 +43,7 @@ clean			:
 
 fclean			:	clean valclean
 	rm -rf	$(NAME)
-	rm -rf Shrub_shrubbery
+	rm -rf	Shrub_shrubbery
 
 re				:	fclean all
 

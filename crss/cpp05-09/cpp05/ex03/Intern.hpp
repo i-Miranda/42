@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RobotomyRequestForm.hpp                            :+:      :+:    :+:   */
+/*   Intern.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/26 16:55:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/06/30 17:07:14 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/07/04 13:40:30 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/07/04 13:40:31 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#ifndef ROBOTOMYREQUESTFORM_HPP
-#define ROBOTOMYREQUESTFORM_HPP
-
 #include "AForm.hpp"
 #include <string>
 
-class RobotomyRequestForm : public AForm {
+class Intern {
+private:
+  Intern(const Intern &src);
+
+  Intern &operator=(const Intern &src);
+
 public:
-  RobotomyRequestForm(std::string const &_target);
-  RobotomyRequestForm(const RobotomyRequestForm &src);
-  virtual ~RobotomyRequestForm(void);
+  Intern(void);
+  ~Intern(void);
 
-  RobotomyRequestForm &operator=(const RobotomyRequestForm &src);
-
-  void execute(Bureaucrat const &executor) const;
+  AForm *makeForm(std::string const &form_type, std::string const &form_target);
 };
-
-#endif

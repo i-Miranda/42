@@ -12,7 +12,7 @@
 
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat(std::string const _name, int _grade)
+Bureaucrat::Bureaucrat(std::string const &_name, int _grade)
     : m_name(_name), m_grade(_grade) {
   std::cout << "Default Bureaucrat Constructor called." << std::endl;
   if (_grade < 1)

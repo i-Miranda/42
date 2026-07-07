@@ -13,14 +13,14 @@
 #include "Form.hpp"
 #include "Bureaucrat.hpp"
 
-Form::Form(std::string const _name, int _s_grade, int _e_grade)
+Form::Form(std::string const &_name, int _s_grade, int _e_grade)
     : m_name(_name), m_sign_grade(_s_grade), m_exec_grade(_e_grade),
       m_signed(false) {
   std::cout << "Default Form Constructor called." << std::endl;
   if (_s_grade < 1 || _e_grade < 1)
-    throw Bureaucrat::GradeTooHighException();
+    throw Form::GradeTooHighException();
   if (_s_grade > 150 || _e_grade > 150)
-    throw Bureaucrat::GradeTooLowException();
+    throw Form::GradeTooLowException();
 }
 
 Form::Form(const Form &src)
@@ -58,14 +58,12 @@ const char *Form::GradeTooLowException::what() const throw() {
 }
 
 std::ostream &operator<<(std::ostream &out, const Form &form) {
+  out << form.getName() << ",\n\tgrade required to sign " << form.getSignGrade()
+      << "\n\tgrade required to execute " << form.getExecGrade() << "\n\t";
   if (form.isSigned()) {
-    out << form.getName() << ",\n\tgrade required to sign "
-        << form.getSignGrade() << "\n\tgrade required to execute "
-        << form.getExecGrade() << "\n\t" << SIGNED;
+    out << SIGNED;
   } else {
-    out << form.getName() << ",\n\tgrade required to sign "
-        << form.getSignGrade() << "\n\tgrade required to execute "
-        << form.getExecGrade() << "\n\t" << NOT_SIGNED;
+    out << NOT_SIGNED;
   }
   return out;
 }
