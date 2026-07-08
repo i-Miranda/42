@@ -17,7 +17,8 @@ DIR_OBJS	:=	objs
 SOURCES		:=	main.cpp \
 				ScalarConverter.cpp \
 				Conversions.cpp \
-				PseudoLiteral.cpp 
+				PseudoLiteral.cpp \
+				Print.cpp
 
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SOURCES:.cpp=.o))
 
