@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AMateria.hpp                                       :+:      :+:    :+:   */
+/*   Print.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/23 10:25:08 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/30 20:53:55 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/07/08 10:09:32 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/07/08 10:09:35 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#ifndef __AMATERIA_H__
-#define __AMATERIA_H__
-
+#include "Conversions.hpp"
 #include <string>
 
-class ICharacter;
+static void printChar(t_conversions *conversions);
+static void printInt(t_conversions *conversions);
+static void printFloat(t_conversions *conversions);
+static void printDouble(t_conversions *conversions);
 
-class AMateria {
-protected:
-  std::string type;
+void printImpossible(void);
 
-public:
-  AMateria(std::string const &materia_type);
-  AMateria(const AMateria &src);
-  virtual ~AMateria(void);
+void printPseudoLiteral(std::string const &pseudo_literal);
 
-  AMateria &operator=(const AMateria &src);
-
-  std::string const &getType(void) const; // Returns the materia type
-
-  virtual AMateria *clone(void) const = 0;
-  virtual void use(ICharacter &target) = 0;
-};
-#endif
+void printConversions(t_conversions const &conversions);
