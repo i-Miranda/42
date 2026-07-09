@@ -12,8 +12,13 @@
 
 #pragma once
 
+#ifndef PSEUDOLITERAL_HPP
+#define PSEUDOLITERAL_HPP
+
 #include <string>
 
 bool isFloatPseudoLiteral(std::string const &pseudo_literal);
 
 bool isPseudoLiteral(std::string const &literal);
+
+#endif

@@ -12,9 +12,14 @@
 
 #pragma once
 
+#ifndef PRINT_HPP
+#define PRINT_HPP
+
 #include <string>
 
 class ScalarConverter {
 public:
   static void convert(std::string &literal);
 };
+
+#endif

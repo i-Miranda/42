@@ -60,3 +60,10 @@ void printPseudoLiteral(std::string const &pseudo_literal) {
   std::cout << "float: " << double_literal << "f" << std::endl;
   std::cout << "double: " << double_literal << std::endl;
 }
+
+void printConversions(t_conversions const &conversions) {
+  std::cout << "char: " << conversions.char_type << std::endl;
+  std::cout << "int: " << conversions.int_type << std::endl;
+  std::cout << "float: " << conversions.float_type << "f" << std::endl;
+  std::cout << "double: " << conversions.double_type << std::endl;
+}

@@ -12,6 +12,9 @@
 
 #pragma once
 
+#ifndef INTERN_HPP
+#define INTERN_HPP
+
 #include "AForm.hpp"
 #include <string>
 
@@ -27,3 +30,5 @@ public:
 
   AForm *makeForm(std::string const &form_type, std::string const &form_target);
 };
+
+#endif

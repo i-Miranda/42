@@ -12,9 +12,14 @@
 
 #pragma once
 
+#ifndef CONVERSION_HPP
+#define CONVERSION_HPP
+
 typedef struct s_conversions {
   char char_type;
   int int_type;
   float float_type;
   double double_type;
 } t_conversions;
+
+#endif

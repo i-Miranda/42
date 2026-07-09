@@ -12,7 +12,7 @@
 
 #include "PseudoLiteral.hpp"
 
-static bool isFloatPseudoLiteral(std::string const &pseudo_literal) {
+bool isFloatPseudoLiteral(std::string const &pseudo_literal) {
   return (pseudo_literal == "nanf" || pseudo_literal == "+inff" ||
           pseudo_literal == "-inff");
 }

@@ -12,6 +12,9 @@
 
 #pragma once
 
+#ifndef PRINT_HPP
+#define PRINT_HPP
+
 #include "Conversions.hpp"
 #include <string>
 
@@ -25,3 +28,5 @@ void printImpossible(void);
 void printPseudoLiteral(std::string const &pseudo_literal);
 
 void printConversions(t_conversions const &conversions);
+
+#endif
