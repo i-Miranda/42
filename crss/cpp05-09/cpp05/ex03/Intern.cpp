@@ -34,16 +34,17 @@ Intern::~Intern(void) { std::cout << "Intern Destructor called." << std::endl; }
 
 AForm *Intern::makeForm(std::string const &form_type,
                         std::string const &form_target) {
-  AForm *form;
-  std::string form_to_lower = str_to_lower(form_type);
+  static const std::string names[3] = {"shrubbery creation", "robotomy request",
+                                       "presidential pardon"};
+  static const FormCreator creators[3] = {
+      &Intern::makeShrubbery, &Intern::makeRobotomy, &Intern::makePresidential};
 
-  if (form_to_lower == "shrubbery creation")
-    form = new ShrubberyCreationForm(form_target);
-  else if (form_to_lower == "presidential pardon")
-    form = new PresidentialPardonForm(form_target);
-  else if (form_to_lower == "robotomy request")
-    form = new RobotomyRequestForm(form_target);
-  else
-    form = NULL;
-  return form;
+  std::string form = str_to_lower(form_type);
+
+  for (int i = 0; i < 3; ++i) {
+    if (form == names[i])
+      return (this->*creators[i])(form_target);
+  }
+
+  return NULL;
 }

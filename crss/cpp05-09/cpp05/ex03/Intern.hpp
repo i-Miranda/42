@@ -24,6 +24,12 @@ private:
 
   Intern &operator=(const Intern &src);
 
+  typedef AForm *(Intern::*FormCreator)(const std::string &);
+
+  AForm *makeShrubbery(const std::string &target);
+  AForm *makeRobotomy(const std::string &target);
+  AForm *makePresidential(const std::string &target);
+
 public:
   Intern(void);
   ~Intern(void);
