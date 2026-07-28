@@ -39,7 +39,7 @@ public:
 
   Bureaucrat &operator=(const Bureaucrat &src);
 
-  std::string const getName(void) const;
+  std::string const &getName(void) const;
   int getGrade(void) const;
 
   void incrementGrade(void);

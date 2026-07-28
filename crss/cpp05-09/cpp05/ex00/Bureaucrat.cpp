@@ -23,9 +23,7 @@ Bureaucrat::Bureaucrat(std::string const &_name, int _grade)
 
 Bureaucrat::Bureaucrat(const Bureaucrat &src) : m_name(src.getName()) {
   std::cout << "Copy Bureaucrat Constructor called." << std::endl;
-  if (this != &src) {
-    this->m_grade = src.getGrade();
-  }
+  *this = src;
 }
 
 Bureaucrat::~Bureaucrat(void) {
@@ -40,7 +38,7 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &src) {
   return *this;
 }
 
-std::string const Bureaucrat::getName(void) const { return m_name; }
+std::string const &Bureaucrat::getName(void) const { return m_name; }
 
 int Bureaucrat::getGrade(void) const { return m_grade; }
 

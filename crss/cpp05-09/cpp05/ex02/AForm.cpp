@@ -25,8 +25,9 @@ AForm::AForm(std::string const &_name, int _s_grade, int _e_grade)
 
 AForm::AForm(const AForm &src)
     : m_name(src.getName()), m_sign_grade(src.getSignGrade()),
-      m_exec_grade(src.getExecGrade()), m_signed(src.isSigned()) {
+      m_exec_grade(src.getExecGrade()) {
   std::cout << "Copy Form Constructor called." << std::endl;
+  *this = src;
 }
 
 AForm::~AForm(void) { std::cout << "Form Destructor called." << std::endl; }
@@ -39,11 +40,11 @@ AForm &AForm::operator=(const AForm &src) {
   return *this;
 }
 
-std::string const AForm::getName(void) const { return m_name; }
+std::string const &AForm::getName(void) const { return m_name; }
 
-int AForm::getSignGrade(void) const { return m_sign_grade; }
+int const AForm::getSignGrade(void) const { return m_sign_grade; }
 
-int AForm::getExecGrade(void) const { return m_exec_grade; }
+int const AForm::getExecGrade(void) const { return m_exec_grade; }
 
 bool AForm::isSigned(void) const { return m_signed; }
 

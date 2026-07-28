@@ -25,9 +25,11 @@ Form::Form(std::string const &_name, int _s_grade, int _e_grade)
 
 Form::Form(const Form &src)
     : m_name(src.getName()), m_sign_grade(src.getSignGrade()),
-      m_exec_grade(src.getExecGrade()), m_signed(src.isSigned()) {
+      m_exec_grade(src.getExecGrade()) {
   std::cout << "Copy Form Constructor called." << std::endl;
+  *this = src;
 }
+
 Form::~Form(void) { std::cout << "Form Destructor called." << std::endl; }
 
 Form &Form::operator=(const Form &src) {
@@ -38,9 +40,9 @@ Form &Form::operator=(const Form &src) {
   return *this;
 }
 
-std::string const Form::getName(void) const { return m_name; }
-int Form::getSignGrade(void) const { return m_sign_grade; }
-int Form::getExecGrade(void) const { return m_exec_grade; }
+std::string const &Form::getName(void) const { return m_name; }
+int const Form::getSignGrade(void) const { return m_sign_grade; }
+int const Form::getExecGrade(void) const { return m_exec_grade; }
 bool Form::isSigned(void) const { return m_signed; }
 
 void Form::beSigned(Bureaucrat &bureaucrat) {

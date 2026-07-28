@@ -41,9 +41,9 @@ public:
 
   Form &operator=(const Form &src);
 
-  std::string const getName(void) const;
-  int getSignGrade(void) const;
-  int getExecGrade(void) const;
+  std::string const &getName(void) const;
+  int const getSignGrade(void) const;
+  int const getExecGrade(void) const;
   bool isSigned(void) const;
 
   void beSigned(Bureaucrat &bureaucrat);
