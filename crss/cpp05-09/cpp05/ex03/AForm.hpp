@@ -41,7 +41,7 @@ public:
 
   AForm &operator=(const AForm &src);
 
-  std::string const getName(void) const;
+  std::string const &getName(void) const;
   int getSignGrade(void) const;
   int getExecGrade(void) const;
   bool isSigned(void) const;
