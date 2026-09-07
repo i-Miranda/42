@@ -11,14 +11,14 @@
 /* ************************************************************************** */
 
 #include "Print.hpp"
-#include "PseudoLiteral.hpp"
+#include "CheckLiteral.hpp"
+#include <iomanip>
 #include <iostream>
 
 void printChar(t_conversions *conversions) {
   if (conversions == NULL)
     std::cout << "char: impossible" << std::endl;
-  else if (std::isprint(static_cast<unsigned char>(conversions->char_type)) ==
-           0)
+  else if (!std::isprint(static_cast<unsigned char>(conversions->char_type)))
     std::cout << "char: Non displayable" << std::endl;
   else
     std::cout << "char: '" << conversions->char_type << "'" << std::endl;
@@ -35,14 +35,16 @@ void printFloat(t_conversions *conversions) {
   if (conversions == NULL)
     std::cout << "float: impossible" << std::endl;
   else
-    std::cout << "float: " << conversions->float_type << std::endl;
+    std::cout << std::fixed << std::setprecision(1)
+              << "float: " << conversions->float_type << "f" << std::endl;
 }
 
 void printDouble(t_conversions *conversions) {
   if (conversions == NULL)
     std::cout << "double: impossible" << std::endl;
   else
-    std::cout << "double: " << conversions->double_type << std::endl;
+    std::cout << std::fixed << std::setprecision(1)
+              << "double: " << conversions->double_type << std::endl;
 }
 
 void printImpossible(void) {
@@ -65,8 +67,9 @@ void printPseudoLiteral(std::string const &pseudo_literal) {
 }
 
 void printConversions(t_conversions const &conversions) {
-  std::cout << "char: " << conversions.char_type << std::endl;
-  std::cout << "int: " << conversions.int_type << std::endl;
-  std::cout << "float: " << conversions.float_type << "f" << std::endl;
-  std::cout << "double: " << conversions.double_type << std::endl;
+  t_conversions ptr = static_cast<t_conversions>(conversions);
+  printChar(&ptr);
+  printInt(&ptr);
+  printFloat(&ptr);
+  printDouble(&ptr);
 }

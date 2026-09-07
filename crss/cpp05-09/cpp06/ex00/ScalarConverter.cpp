@@ -11,29 +11,35 @@
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+#include "CheckLiteral.hpp"
 #include "Conversions.hpp"
 #include "Print.hpp"
-#include "PseudoLiteral.hpp"
 #include <iostream>
 #include <sstream>
 
 void ScalarConverter::convert(std::string &literal) {
   t_conversions conversions;
+
   if (isPseudoLiteral(literal)) {
     printPseudoLiteral(literal);
     return;
-  } else {
-    std::stringstream ss(literal);
-    ss >> conversions.double_type;
-    if (ss.fail()) {
-      printImpossible();
-      return;
-    }
-
-    conversions.char_type = static_cast<char>(conversions.double_type);
-    conversions.int_type = static_cast<int>(conversions.double_type);
-    conversions.float_type = static_cast<float>(conversions.double_type);
-
-    printConversions(conversions);
   }
+
+  std::string numeric_literal = literal;
+
+  if (isLastCharF(numeric_literal)) {
+    numeric_literal.erase(numeric_literal.length() - 1);
+  }
+  std::stringstream ss(numeric_literal);
+  ss >> conversions.double_type;
+  if (ss.fail() || !ss.eof()) {
+    printImpossible();
+    return;
+  }
+
+  conversions.char_type = static_cast<char>(conversions.double_type);
+  conversions.int_type = static_cast<int>(conversions.double_type);
+  conversions.float_type = static_cast<float>(conversions.double_type);
+
+  printConversions(conversions);
 }

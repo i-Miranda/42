@@ -10,14 +10,12 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:=	convert
+NAME		:=	serialize
 
 DIR_OBJS	:=	objs
 
 SOURCES		:=	main.cpp \
-				ScalarConverter.cpp \
-				CheckLiteral.cpp \
-				Print.cpp
+				Serializer.cpp
 
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SOURCES:.cpp=.o))
 

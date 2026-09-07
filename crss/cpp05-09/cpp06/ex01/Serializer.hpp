@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PseudoLiteral.hpp                                  :+:      :+:    :+:   */
+/*   Serializer.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/07 22:57:20 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/07/07 22:57:22 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/09/07 11:53:56 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/09/07 11:53:58 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#ifndef PSEUDOLITERAL_HPP
-#define PSEUDOLITERAL_HPP
+#ifndef SERIALIZER_HPP
+#define SERIALIZER_HPP
 
-#include <string>
+#include "Data.hpp"
+#include <stdint.h>
 
-bool isFloatPseudoLiteral(std::string const &pseudo_literal);
+class Serializer {
+private:
+  Serializer();
+  Serializer(Serializer const &src);
+  Serializer &operator=(Serializer const &src);
+  ~Serializer();
 
-bool isPseudoLiteral(std::string const &literal);
+public:
+  static uintptr_t serialize(Data *ptr);
+  static Data *deserialize(uintptr_t raw);
+};
 
 #endif

@@ -6,18 +6,16 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
-#    Updated: 2026/02/26 16:51:59 by ivmirand         ###   ########.fr        #
+#    Updated: 2026/09/07 13:45:29 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:=	convert
+NAME		:=	identify
 
 DIR_OBJS	:=	objs
 
 SOURCES		:=	main.cpp \
-				ScalarConverter.cpp \
-				CheckLiteral.cpp \
-				Print.cpp
+				Base.cpp
 
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SOURCES:.cpp=.o))
 

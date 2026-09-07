@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PseudoLiteral.hpp"
+#include "CheckLiteral.hpp"
 
 bool isFloatPseudoLiteral(std::string const &pseudo_literal) {
   return (pseudo_literal == "nanf" || pseudo_literal == "+inff" ||
@@ -18,6 +18,10 @@ bool isFloatPseudoLiteral(std::string const &pseudo_literal) {
 }
 
 bool isPseudoLiteral(std::string const &literal) {
-  return (literal == "nan" || literal == "nanf" || literal == "+inff" ||
-          literal == "-inff" || literal == "+inf" || literal == "-inf");
+  return (isFloatPseudoLiteral(literal) || literal == "nan" ||
+          literal == "+inf" || literal == "-inf");
+}
+
+bool isLastCharF(std::string const &literal) {
+  return (!literal.empty() && literal[literal.length() - 1] == 'f');
 }
