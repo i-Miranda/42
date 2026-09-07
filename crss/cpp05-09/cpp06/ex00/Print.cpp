@@ -14,28 +14,31 @@
 #include "PseudoLiteral.hpp"
 #include <iostream>
 
-static void printChar(t_conversions *conversions) {
+void printChar(t_conversions *conversions) {
   if (conversions == NULL)
     std::cout << "char: impossible" << std::endl;
+  else if (std::isprint(static_cast<unsigned char>(conversions->char_type)) ==
+           0)
+    std::cout << "char: Non displayable" << std::endl;
   else
-    std::cout << "char: " << conversions->char_type << std::endl;
+    std::cout << "char: '" << conversions->char_type << "'" << std::endl;
 }
 
-static void printInt(t_conversions *conversions) {
+void printInt(t_conversions *conversions) {
   if (conversions == NULL)
     std::cout << "int: impossible" << std::endl;
   else
     std::cout << "int: " << conversions->int_type << std::endl;
 }
 
-static void printFloat(t_conversions *conversions) {
+void printFloat(t_conversions *conversions) {
   if (conversions == NULL)
     std::cout << "float: impossible" << std::endl;
   else
     std::cout << "float: " << conversions->float_type << std::endl;
 }
 
-static void printDouble(t_conversions *conversions) {
+void printDouble(t_conversions *conversions) {
   if (conversions == NULL)
     std::cout << "double: impossible" << std::endl;
   else

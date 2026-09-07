@@ -12,8 +12,8 @@
 
 #pragma once
 
-#ifndef PRINT_HPP
-#define PRINT_HPP
+#ifndef SCALARCONVERTER_HPP
+#define SCALARCONVERTER_HPP
 
 #include <string>
 

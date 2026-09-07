@@ -16,7 +16,6 @@ DIR_OBJS	:=	objs
 
 SOURCES		:=	main.cpp \
 				ScalarConverter.cpp \
-				Conversions.cpp \
 				PseudoLiteral.cpp \
 				Print.cpp
 
