@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Empty.hpp                                          :+:      :+:    :+:   */
+/*   iter.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/07 13:45:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/07 13:45:56 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/09/10 13:49:16 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/09/10 13:49:17 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#ifndef EMPTY_HPP
-#define EMPTY_HPP
+#ifndef ITER_HPP
+#define ITER_HPP
 
-#include "Base.hpp"
+#include <cstddef>
 
-class A : public Base {};
-
-class B : public Base {};
-
-class C : public Base {};
+template <typename T_array, typename T_func>
+void iter(T_array *addr, const size_t length, T_func func) {
+  for (int i = 0; i < length; i++) {
+    func(addr[i]);
+  }
+}
 
 #endif

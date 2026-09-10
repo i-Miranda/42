@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Empty.hpp                                          :+:      :+:    :+:   */
+/*   whatever.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/07 13:45:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/07 13:45:56 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/09/10 12:24:08 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/09/10 12:42:05 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#pragma once 
 
-#ifndef EMPTY_HPP
-#define EMPTY_HPP
+#ifndef WHATEVER_HPP
+#define WHATEVER_HPP
 
-#include "Base.hpp"
+template<typename T>
+void swap(T& x, T& y) {
+	T tmp = x;
+	x = y;
+	y = tmp;
+}
 
-class A : public Base {};
+template<typename T>
+T min(const T& x, const T& y) {
+	return (x <= y) ? x : y;
+};
 
-class B : public Base {};
-
-class C : public Base {};
+template<typename T>
+T max(const T& x, const T& y) {
+	return (x <= y) ? y : x;
+};
 
 #endif

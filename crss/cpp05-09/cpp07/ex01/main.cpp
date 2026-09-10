@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Empty.hpp                                          :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/07 13:45:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/07 13:45:56 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/09/10 13:49:09 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/09/10 13:49:42 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include "iter.hpp"
+#include <string>
 
-#ifndef EMPTY_HPP
-#define EMPTY_HPP
-
-#include "Base.hpp"
-
-class A : public Base {};
-
-class B : public Base {};
-
-class C : public Base {};
-
-#endif
+int main(void) { std::string str_array[] = {"This", "is", "a test", "."}; }
