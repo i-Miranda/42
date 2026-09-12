@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   MutantStack.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/10 13:49:09 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/10 13:49:42 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/09/12 20:20:21 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/09/12 21:13:09 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iter.hpp"
-#include <string>
+#pragma once
 
-int main(void) {
-  std::string str_array[] = {"This", "is", "a test", "."};
-  int int_array[] = {1, 2, 3, 4};
+#ifndef MUTANTSTACK_HPP
+#define MUTANTSTACK_HPP
 
-  ::iter(str_array, 4, ::print<std::string>);
-  ::iter(int_array, 4, ::print<int>);
-}
+#include <stack>
+
+template <typename T> class MutantStack : public std::stack<T> {
+public:
+  MutantStack();
+  MutantStack(const MutantStack<T> &src);
+  ~MutantStack();
+
+  MutantStack<T> &operator=(const MutantStack<T> &src);
+};
+
+#include "MutantStack.tpp"
+
+#endif

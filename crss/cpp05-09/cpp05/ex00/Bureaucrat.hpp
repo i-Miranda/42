@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/01 19:28:16 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 00:47:08 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 
 #define TOO_HIGH "Grade too high. Grade must be an integer between 1 and 150."
 #define TOO_LOW "Grade too low. Grade must be an integer between 1 and 150."
+#define INCREMENT "Incrementing "
+#define DECREMENT "Decrementing "
+#define INCREASE " (Grade number should INCREASE by 1"
+#define DECREASE " (Grade number should DECREASE by 1"
 
 class Bureaucrat {
 private:

@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   easyfind.tpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/10 13:49:09 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/10 13:49:42 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/09/12 16:34:18 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/09/13 00:03:59 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iter.hpp"
-#include <string>
+#pragma once
 
-int main(void) {
-  std::string str_array[] = {"This", "is", "a test", "."};
-  int int_array[] = {1, 2, 3, 4};
+#ifndef EASYFIND_TPP
+#define EASYFIND_TPP
 
-  ::iter(str_array, 4, ::print<std::string>);
-  ::iter(int_array, 4, ::print<int>);
+#include "easyfind.hpp"
+
+#include <algorithm>
+
+template <typename T>
+typename T::iterator easyfind(T &container, int to_be_found) {
+  typename T::iterator it =
+      std::find(container.begin(), container.end(), to_be_found);
+  if (*it == to_be_found)
+    return it;
+  throw TNotFoundException();
 }
+
+#endif

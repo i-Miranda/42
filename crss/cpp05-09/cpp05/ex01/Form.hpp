@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/06/27 15:50:43 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 01:05:29 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ public:
   Form &operator=(const Form &src);
 
   std::string const &getName(void) const;
-  int const getSignGrade(void) const;
-  int const getExecGrade(void) const;
+  int getSignGrade(void) const;
+  int getExecGrade(void) const;
   bool isSigned(void) const;
 
   void beSigned(Bureaucrat &bureaucrat);

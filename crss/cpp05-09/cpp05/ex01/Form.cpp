@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 16:17:48 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/06/27 16:17:50 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 01:05:56 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ Form &Form::operator=(const Form &src) {
 }
 
 std::string const &Form::getName(void) const { return m_name; }
-int const Form::getSignGrade(void) const { return m_sign_grade; }
-int const Form::getExecGrade(void) const { return m_exec_grade; }
+int Form::getSignGrade(void) const { return m_sign_grade; }
+int Form::getExecGrade(void) const { return m_exec_grade; }
 bool Form::isSigned(void) const { return m_signed; }
 
 void Form::beSigned(Bureaucrat &bureaucrat) {

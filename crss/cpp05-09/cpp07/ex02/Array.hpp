@@ -1,22 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Array.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/10 13:49:09 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/10 13:49:42 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/09/11 10:35:38 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/09/12 21:13:17 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iter.hpp"
-#include <string>
+#pragma once
 
-int main(void) {
-  std::string str_array[] = {"This", "is", "a test", "."};
-  int int_array[] = {1, 2, 3, 4};
+#ifndef ARRAY_HPP
+#define ARRAY_HPP
 
-  ::iter(str_array, 4, ::print<std::string>);
-  ::iter(int_array, 4, ::print<int>);
-}
+template <typename T> class Array {
+private:
+  unsigned int m_count;
+  T *m_elements;
+
+public:
+  Array();
+  Array(unsigned int const n);
+  Array(const Array<T> &src);
+  ~Array();
+
+  Array<T> &operator=(const Array<T> &src);
+  T &operator[](unsigned int const pos);
+
+  unsigned int size() const;
+};
+
+#include "Array.tpp"
+
+#endif

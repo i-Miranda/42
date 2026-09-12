@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
-#    Updated: 2026/09/13 00:26:19 by ivmirand         ###   ########.fr        #
+#    Updated: 2026/09/07 13:45:29 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,7 @@ NAME		:=	ex00
 
 DIR_OBJS	:=	objs
 
-SOURCES		:=	main.cpp \
-				Bureaucrat.cpp
+SOURCES		:=	main.cpp 
 
 OBJS		:=	$(addprefix $(DIR_OBJS)/, $(SOURCES:.cpp=.o))
 
@@ -61,7 +60,7 @@ ifeq ($(NOFLAGS), 1)
 	CXXFLAGS :=
 	DBFLAGS :=
 else 
-	CXXFLAGS := -Wall -Werror -Wextra -std=c++98 -pedantic
+	CXXFLAGS := -Wall -Werror -Wextra -std=c++98
 endif
 
 ##################################################

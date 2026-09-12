@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   easyfind.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/10 13:49:09 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/10 13:49:42 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/09/12 16:34:15 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/09/12 16:34:19 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iter.hpp"
-#include <string>
+#pragma once
 
-int main(void) {
-  std::string str_array[] = {"This", "is", "a test", "."};
-  int int_array[] = {1, 2, 3, 4};
+#ifndef EASYFIND_HPP
+#define EASYFIND_HPP
 
-  ::iter(str_array, 4, ::print<std::string>);
-  ::iter(int_array, 4, ::print<int>);
-}
+#include <exception>
+
+class TNotFoundException : public std::exception {
+public:
+  virtual const char *what() const throw() { return "Value not found."; }
+};
+
+template <typename T>
+typename T::iterator easyfind(T &container, int to_be_found);
+
+#include "easyfind.tpp"
+
+#endif

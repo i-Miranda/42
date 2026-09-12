@@ -5,18 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/10 13:49:09 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/10 13:49:42 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/09/12 18:10:20 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/09/12 19:00:45 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iter.hpp"
-#include <string>
+#include "Span.hpp"
+
+#include <iostream>
 
 int main(void) {
-  std::string str_array[] = {"This", "is", "a test", "."};
-  int int_array[] = {1, 2, 3, 4};
+  Span sp = Span(5);
 
-  ::iter(str_array, 4, ::print<std::string>);
-  ::iter(int_array, 4, ::print<int>);
+  sp.addNumber(6);
+  sp.addNumber(3);
+  sp.addNumber(17);
+  sp.addNumber(9);
+  sp.addNumber(11);
+
+  std::cout << sp.shortestSpan() << std::endl;
+  std::cout << sp.longestSpan() << std::endl;
+
+  return 0;
 }

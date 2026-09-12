@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:53:40 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/02/26 17:04:26 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 01:07:56 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ int main(void) {
   Bureaucrat LowRankBureaucrat = Bureaucrat("LowRankBureaucrat", 150);
   Bureaucrat HighRankBureaucrat = Bureaucrat("HighRankBureaucrat", 1);
 
+  std::cout << std::endl;
+
+  std::cout << "TESTING BUREAUCRAT EXCEPTIONS DURING CREATION" << std::endl;
   try {
     Bureaucrat NegativeBureaucrat = Bureaucrat("Negative", -100);
   } catch (Bureaucrat::GradeTooHighException const &e) {
@@ -50,6 +53,9 @@ int main(void) {
   Form LowReqForm = Form("LowReqForm", 150, 150);
   Form HighReqForm = Form("HighReqForm", 1, 1);
 
+  std::cout << std::endl;
+
+  std::cout << "TESTING FORM EXCEPTIONS DURING CREATION" << std::endl;
   try {
     Form NegativeForm = Form("Negative", -100, -100);
   } catch (Form::GradeTooHighException const &e) {
@@ -86,21 +92,20 @@ int main(void) {
 
   std::cout << "INCREMENT/DECREMENT TESTS" << std::endl;
 
-  std::cout << "Incrementing " << TestBureaucrat
-            << " (Grade number should DECREASE by 1.)" << std::endl;
+  std::cout << INCREMENT << TestBureaucrat << DECREASE << ".)" << std::endl;
   TestBureaucrat.incrementGrade();
   std::cout << TestBureaucrat << std::endl;
 
-  std::cout << "Decrementing " << TestBureaucrat
-            << " (Grade number should INCREASE by 1.)" << std::endl;
+  std::cout << DECREMENT << TestBureaucrat << INCREASE << ".)" << std::endl;
   TestBureaucrat.decrementGrade();
   std::cout << TestBureaucrat << std::endl;
 
+  std::cout << std::endl;
+
+  std::cout << "INCREMENT/DECREMENT EXCEPTION TESTS" << std::endl;
   try {
-    std::cout
-        << "Decrementing " << LowRankBureaucrat
-        << " (Grade number should DECREASE by 1, causing GradeTooLowException.)"
-        << std::endl;
+    std::cout << DECREMENT << LowRankBureaucrat << INCREASE
+              << ", causing GradeTooLowException.)" << std::endl;
     LowRankBureaucrat.decrementGrade();
   } catch (Bureaucrat::GradeTooLowException const &e) {
     exceptionMessage(e, "Bureaucrat::GradeTooLowException");
@@ -108,10 +113,8 @@ int main(void) {
   std::cout << LowRankBureaucrat << std::endl;
 
   try {
-    std::cout << "Incrementing " << HighRankBureaucrat
-              << " (Grade number should INCREASE by 1, causing "
-                 "GradeTooHighException.)"
-              << std::endl;
+    std::cout << INCREMENT << HighRankBureaucrat << DECREASE
+              << ", causing GradeTooHighException.)" << std::endl;
     HighRankBureaucrat.incrementGrade();
   } catch (Bureaucrat::GradeTooHighException const &e) {
     exceptionMessage(e, "Bureaucrat::GradeTooHighException");

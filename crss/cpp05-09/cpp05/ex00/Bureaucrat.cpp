@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:01 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/01 19:59:55 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 00:39:16 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ Bureaucrat::~Bureaucrat(void) {
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &src) {
   std::cout << "Copy assignment operator called." << std::endl;
   if (this != &src) {
-    this->m_grade = src.getGrade();
+    m_grade = src.getGrade();
   }
   return *this;
 }
