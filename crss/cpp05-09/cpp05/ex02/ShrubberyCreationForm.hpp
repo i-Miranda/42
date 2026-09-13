@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/06/30 17:19:01 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 18:40:05 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,18 @@
 #include "AForm.hpp"
 #include <string>
 
+#define S_NAME "ShrubberyCreationForm"
+
 class ShrubberyCreationForm : public AForm {
+private:
+  std::string m_target;
+
 public:
   ShrubberyCreationForm(std::string const &_target);
-  ShrubberyCreationForm(const ShrubberyCreationForm &src);
+  ShrubberyCreationForm(ShrubberyCreationForm const &src);
   virtual ~ShrubberyCreationForm(void);
 
-  ShrubberyCreationForm &operator=(const ShrubberyCreationForm &src);
+  ShrubberyCreationForm &operator=(ShrubberyCreationForm const &src);
 
   void execute(Bureaucrat const &executor) const;
 };

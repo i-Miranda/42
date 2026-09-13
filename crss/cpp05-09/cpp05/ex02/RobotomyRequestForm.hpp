@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/06/30 17:07:14 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 18:39:38 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,18 @@
 #include "AForm.hpp"
 #include <string>
 
+#define R_NAME "RobotomyRequestForm"
+
 class RobotomyRequestForm : public AForm {
+private:
+  std::string m_target;
+
 public:
   RobotomyRequestForm(std::string const &_target);
-  RobotomyRequestForm(const RobotomyRequestForm &src);
+  RobotomyRequestForm(RobotomyRequestForm const &src);
   virtual ~RobotomyRequestForm(void);
 
-  RobotomyRequestForm &operator=(const RobotomyRequestForm &src);
+  RobotomyRequestForm &operator=(RobotomyRequestForm const &src);
 
   void execute(Bureaucrat const &executor) const;
 };

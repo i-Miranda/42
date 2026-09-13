@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 16:17:48 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/06/27 16:17:50 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 20:33:28 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,25 @@
 #include <fstream>
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string const &_target)
-    : AForm(_target, 145, 137) {
-  std::cout << "Default ShrubberyCreationForm Constructor called." << std::endl;
+    : AForm(S_NAME, 145, 137), m_target(_target) {
+  std::cout << "Default " << S_NAME << " Constructor called." << std::endl;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &src)
-    : AForm(src) {
-  std::cout << "Copy ShrubberyCreationForm Constructor called." << std::endl;
+ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const &src)
+    : AForm(src), m_target(src.m_target) {
+  std::cout << "Copy " << S_NAME << " Constructor called." << std::endl;
 }
 
 ShrubberyCreationForm::~ShrubberyCreationForm(void) {
-  std::cout << "ShrubberyCreationForm Destructor called." << std::endl;
+  std::cout << S_NAME << " Destructor called." << std::endl;
 }
 
 ShrubberyCreationForm &
-ShrubberyCreationForm::operator=(const ShrubberyCreationForm &src) {
-  std::cout << "ShrubberyCreationForm Copy assignment operator called."
-            << std::endl;
+ShrubberyCreationForm::operator=(ShrubberyCreationForm const &src) {
+  std::cout << S_NAME << " Copy assignment operator called." << std::endl;
   if (this != &src) {
     AForm::operator=(src);
+    m_target = src.m_target;
   }
   return *this;
 }
@@ -43,7 +43,7 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const {
   std::string target;
 
   AForm::execute(executor);
-  target = getName() + "_shrubbery";
+  target = m_target + "_shrubbery";
   file.open(target.c_str(), std::ios_base::out);
   file << "         ºº                       \n"
        << "     º ººªº                       \n"

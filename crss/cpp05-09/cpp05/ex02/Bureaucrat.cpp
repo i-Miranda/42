@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:01 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/01 19:59:55 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 14:51:46 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void Bureaucrat::signForm(AForm &form) {
   }
 }
 
-void Bureaucrat::executeForm(AForm const &form) {
+void Bureaucrat::executeForm(AForm const &form) const {
   try {
     form.execute(*this);
     std::cout << getName() << " executed " << form.getName() << std::endl;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.cpp                                           :+:      :+:    :+:   */
+/*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 16:17:48 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/06/27 16:17:50 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 18:01:07 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ AForm::AForm(std::string const &_name, int _s_grade, int _e_grade)
     throw Bureaucrat::GradeTooLowException();
 }
 
-AForm::AForm(const AForm &src)
+AForm::AForm(AForm const &src)
     : m_name(src.getName()), m_sign_grade(src.getSignGrade()),
       m_exec_grade(src.getExecGrade()) {
   std::cout << "Copy Form Constructor called." << std::endl;
@@ -32,7 +32,7 @@ AForm::AForm(const AForm &src)
 
 AForm::~AForm(void) { std::cout << "Form Destructor called." << std::endl; }
 
-AForm &AForm::operator=(const AForm &src) {
+AForm &AForm::operator=(AForm const &src) {
   std::cout << "Copy assignment operator called." << std::endl;
   if (this != &src) {
     m_signed = src.isSigned();
@@ -61,15 +61,15 @@ void AForm::execute(Bureaucrat const &executor) const {
     throw AForm::GradeTooLowException();
 }
 
-const char *AForm::GradeTooHighException::what() const throw() {
+char const *AForm::GradeTooHighException::what() const throw() {
   return FORM_TOO_HIGH;
 }
 
-const char *AForm::GradeTooLowException::what() const throw() {
+char const *AForm::GradeTooLowException::what() const throw() {
   return FORM_TOO_LOW;
 }
 
-const char *AForm::NotSignedException::what() const throw() {
+char const *AForm::NotSignedException::what() const throw() {
   return NOT_SIGNED;
 }
 

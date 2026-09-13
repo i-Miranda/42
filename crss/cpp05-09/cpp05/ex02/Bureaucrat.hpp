@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 13:41:30 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 14:52:02 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ public:
   void incrementGrade(void);
   void decrementGrade(void);
   void signForm(AForm &form);
-  void executeForm(AForm const &form);
+  void executeForm(AForm const &form) const;
 
   class GradeTooHighException : public std::exception {
   public:

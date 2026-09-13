@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/04 13:40:24 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/07/04 13:40:25 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 20:38:20 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,18 @@ static std::string str_to_lower(std::string const &str) {
         static_cast<char>(std::tolower(static_cast<unsigned char>(str[i]))));
   }
   return (new_str);
+}
+
+AForm *Intern::makeShrubbery(std::string const &target) {
+  return new ShrubberyCreationForm(target);
+}
+
+AForm *Intern::makeRobotomy(std::string const &target) {
+  return new RobotomyRequestForm(target);
+}
+
+AForm *Intern::makePresidential(std::string const &target) {
+  return new PresidentialPardonForm(target);
 }
 
 Intern::Intern(void) {

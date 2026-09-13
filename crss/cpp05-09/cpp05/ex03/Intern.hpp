@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/04 13:40:30 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/07/04 13:40:31 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 18:22:01 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
 
 class Intern {
 private:
-  Intern(const Intern &src);
+  Intern(Intern const &src);
 
-  Intern &operator=(const Intern &src);
+  Intern &operator=(Intern const &src);
 
-  typedef AForm *(Intern::*FormCreator)(const std::string &);
+  typedef AForm *(Intern::*FormCreator)(std::string const &);
 
-  AForm *makeShrubbery(const std::string &target);
-  AForm *makeRobotomy(const std::string &target);
-  AForm *makePresidential(const std::string &target);
+  AForm *makeShrubbery(std::string const &target);
+  AForm *makeRobotomy(std::string const &target);
+  AForm *makePresidential(std::string const &target);
 
 public:
   Intern(void);
