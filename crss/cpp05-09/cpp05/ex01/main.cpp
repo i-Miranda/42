@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:53:40 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 01:07:56 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 13:59:23 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void exceptionMessage(std::exception const &e,
 
 int main(void) {
   std::cout << "CREATING BUREAUCRATS" << std::endl;
-
   Bureaucrat TestBureaucrat = Bureaucrat("Pedro", 11);
   Bureaucrat CopyBureaucrat = Bureaucrat(TestBureaucrat);
   Bureaucrat LowRankBureaucrat = Bureaucrat("LowRankBureaucrat", 150);
@@ -75,7 +74,6 @@ int main(void) {
   std::cout << std::endl;
 
   std::cout << "OPERATOR << OVERLOAD" << std::endl;
-
   std::cout << TestBureaucrat << std::endl;
   std::cout << CopyBureaucrat << std::endl;
   std::cout << LowRankBureaucrat << std::endl;
@@ -91,7 +89,6 @@ int main(void) {
   std::cout << std::endl;
 
   std::cout << "INCREMENT/DECREMENT TESTS" << std::endl;
-
   std::cout << INCREMENT << TestBureaucrat << DECREASE << ".)" << std::endl;
   TestBureaucrat.incrementGrade();
   std::cout << TestBureaucrat << std::endl;
@@ -124,7 +121,6 @@ int main(void) {
   std::cout << std::endl;
 
   std::cout << "SIGNING FORMS" << std::endl;
-
   std::cout << TestBureaucrat << std::endl;
   TestBureaucrat.signForm(TestForm);
   std::cout << TestForm << std::endl;

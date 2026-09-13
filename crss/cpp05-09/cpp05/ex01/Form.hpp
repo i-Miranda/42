@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 01:05:29 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/13 13:34:20 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,35 +30,35 @@ class Bureaucrat;
 class Form {
 private:
   std::string const m_name;
-  const int m_sign_grade;
-  const int m_exec_grade;
+  int const m_sign_grade;
+  int const m_exec_grade;
   bool m_signed;
 
 public:
   Form(std::string const &_name, int _s_grade, int _e_grade);
-  Form(const Form &src);
+  Form(Form const &src);
   ~Form(void);
 
-  Form &operator=(const Form &src);
+  Form &operator=(Form const &src);
 
   std::string const &getName(void) const;
   int getSignGrade(void) const;
   int getExecGrade(void) const;
   bool isSigned(void) const;
 
-  void beSigned(Bureaucrat &bureaucrat);
+  void beSigned(Bureaucrat const &bureaucrat);
 
   class GradeTooHighException : public std::exception {
   public:
-    virtual const char *what() const throw();
+    virtual char const *what() const throw();
   };
 
   class GradeTooLowException : public std::exception {
   public:
-    virtual const char *what() const throw();
+    virtual char const *what() const throw();
   };
 };
 
-std::ostream &operator<<(std::ostream &out, const Form &form);
+std::ostream &operator<<(std::ostream &out, Form const &form);
 
 #endif
