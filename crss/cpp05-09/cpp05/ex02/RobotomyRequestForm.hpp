@@ -6,19 +6,15 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 18:39:38 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 15:32:38 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#pragma once
 
 #ifndef ROBOTOMYREQUESTFORM_HPP
 #define ROBOTOMYREQUESTFORM_HPP
 
 #include "AForm.hpp"
 #include <string>
-
-#define R_NAME "RobotomyRequestForm"
 
 class RobotomyRequestForm : public AForm {
 private:

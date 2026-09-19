@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:01 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 12:43:41 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 16:21:30 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,15 @@ void Bureaucrat::decrementGrade() {
 }
 
 char const *Bureaucrat::GradeTooHighException::what() const throw() {
-  return TOO_HIGH;
+  return "Grade too high. Grade must be an integer between 1 and 150.";
 }
 
 char const *Bureaucrat::GradeTooLowException::what() const throw() {
-  return TOO_LOW;
+  return "Grade too low. Grade must be an integer between 1 and 150.";
 }
 
 std::ostream &operator<<(std::ostream &out, Bureaucrat const &bureaucrat) {
-  out << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade();
+  out << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade()
+      << ".";
   return out;
 }

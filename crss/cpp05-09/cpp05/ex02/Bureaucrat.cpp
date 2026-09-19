@@ -6,12 +6,13 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:01 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 14:51:46 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 16:48:58 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
 Bureaucrat::Bureaucrat(std::string const &_name, int _grade)
     : m_name(_name), m_grade(_grade) {
@@ -75,18 +76,22 @@ void Bureaucrat::executeForm(AForm const &form) const {
   } catch (AForm::GradeTooLowException const &e) {
     std::cout << getName() << " couldn't execute " << form.getName()
               << " because " << e.what() << std::endl;
+  } catch (ShrubberyCreationForm::CreationException const &e) {
+    std::cout << getName() << " couldn't execute " << form.getName()
+              << " because " << e.what() << std::endl;
   }
 }
 
 const char *Bureaucrat::GradeTooHighException::what() const throw() {
-  return BUREAUCRAT_TOO_HIGH;
+  return "Grade too high. Grade must be an integer between 1 and 150.";
 }
 
 const char *Bureaucrat::GradeTooLowException::what() const throw() {
-  return BUREAUCRAT_TOO_LOW;
+  return "Grade too low. Grade must be an integer between 1 and 150.";
 }
 
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &bureaucrat) {
-  out << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade();
+  out << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade()
+      << ".";
   return out;
 }

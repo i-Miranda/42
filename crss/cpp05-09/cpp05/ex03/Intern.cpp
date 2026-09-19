@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/04 13:40:24 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 20:38:20 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 16:59:37 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,17 @@ Intern::Intern(void) {
   std::cout << "Default Intern Constructor called." << std::endl;
 }
 
+Intern::Intern(Intern const &src) {
+  std::cout << "Copy Intern Constructor called." << std::endl;
+  *this = src;
+}
+
+Intern &Intern::operator=(Intern const &src) {
+  std::cout << "Copy assignment operator called." << std::endl;
+  (void)src;
+  return *this;
+}
+
 Intern::~Intern(void) { std::cout << "Intern Destructor called." << std::endl; }
 
 AForm *Intern::makeForm(std::string const &form_type,
@@ -54,9 +65,14 @@ AForm *Intern::makeForm(std::string const &form_type,
   std::string form = str_to_lower(form_type);
 
   for (int i = 0; i < 3; ++i) {
-    if (form == names[i])
-      return (this->*creators[i])(form_target);
+    if (form == names[i]) {
+      AForm *created = (this->*creators[i])(form_target);
+      std::cout << "Intern creates " << form_type << std::endl;
+      return created;
+    }
   }
+  std::cout << "Intern couldn't create " << form_type
+            << ". The form type is unknown." << std::endl;
 
   return NULL;
 }

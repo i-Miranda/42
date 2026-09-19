@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 16:17:48 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 18:01:07 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 16:44:05 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ AForm::AForm(std::string const &_name, int _s_grade, int _e_grade)
       m_signed(false) {
   std::cout << "Default Form Constructor called." << std::endl;
   if (_s_grade < 1 || _e_grade < 1)
-    throw Bureaucrat::GradeTooHighException();
+    throw AForm::GradeTooHighException();
   if (_s_grade > 150 || _e_grade > 150)
-    throw Bureaucrat::GradeTooLowException();
+    throw AForm::GradeTooLowException();
 }
 
 AForm::AForm(AForm const &src)
-    : m_name(src.getName()), m_sign_grade(src.getSignGrade()),
-      m_exec_grade(src.getExecGrade()) {
+    : m_name(src.m_name), m_sign_grade(src.m_sign_grade),
+      m_exec_grade(src.m_exec_grade), m_signed(src.m_signed) {
   std::cout << "Copy Form Constructor called." << std::endl;
   *this = src;
 }
@@ -62,24 +62,24 @@ void AForm::execute(Bureaucrat const &executor) const {
 }
 
 char const *AForm::GradeTooHighException::what() const throw() {
-  return FORM_TOO_HIGH;
+  return "Grade too high. Grade must be an integer between 1 and 150.";
 }
 
 char const *AForm::GradeTooLowException::what() const throw() {
-  return FORM_TOO_LOW;
+  return "Grade too low. Grade must be an integer between 1 and 150.";
 }
 
 char const *AForm::NotSignedException::what() const throw() {
-  return NOT_SIGNED;
+  return "Form is NOT signed.";
 }
 
 std::ostream &operator<<(std::ostream &out, const AForm &form) {
   out << form.getName() << ",\n\tgrade required to sign " << form.getSignGrade()
       << "\n\tgrade required to execute " << form.getExecGrade() << "\n\t";
   if (form.isSigned()) {
-    out << SIGNED;
+    out << "Form is signed.";
   } else {
-    out << NOT_SIGNED;
+    out << "Form is NOT signed.";
   }
   return out;
 }

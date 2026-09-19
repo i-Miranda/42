@@ -6,12 +6,13 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:01 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/03/01 19:59:55 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 16:48:15 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
 Bureaucrat::Bureaucrat(std::string const &_name, int _grade)
     : m_name(_name), m_grade(_grade) {
@@ -22,7 +23,7 @@ Bureaucrat::Bureaucrat(std::string const &_name, int _grade)
     throw Bureaucrat::GradeTooLowException();
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat &src) : m_name(src.getName()) {
+Bureaucrat::Bureaucrat(Bureaucrat const &src) : m_name(src.getName()) {
   std::cout << "Copy Bureaucrat Constructor called." << std::endl;
   *this = src;
 }
@@ -31,7 +32,7 @@ Bureaucrat::~Bureaucrat(void) {
   std::cout << "Bureaucrat Destructor called." << std::endl;
 }
 
-Bureaucrat &Bureaucrat::operator=(const Bureaucrat &src) {
+Bureaucrat &Bureaucrat::operator=(Bureaucrat const &src) {
   std::cout << "Copy assignment operator called." << std::endl;
   if (this != &src) {
     this->m_grade = src.getGrade();
@@ -65,7 +66,7 @@ void Bureaucrat::signForm(AForm &form) {
   }
 }
 
-void Bureaucrat::executeForm(AForm const &form) {
+void Bureaucrat::executeForm(AForm const &form) const {
   try {
     form.execute(*this);
     std::cout << getName() << " executed " << form.getName() << std::endl;
@@ -75,18 +76,22 @@ void Bureaucrat::executeForm(AForm const &form) {
   } catch (AForm::GradeTooLowException const &e) {
     std::cout << getName() << " couldn't execute " << form.getName()
               << " because " << e.what() << std::endl;
+  } catch (ShrubberyCreationForm::CreationException const &e) {
+    std::cout << getName() << " couldn't execute " << form.getName()
+              << " because " << e.what() << std::endl;
   }
 }
 
 const char *Bureaucrat::GradeTooHighException::what() const throw() {
-  return BUREAUCRAT_TOO_HIGH;
+  return "Grade too high. Grade must be an integer between 1 and 150.";
 }
 
 const char *Bureaucrat::GradeTooLowException::what() const throw() {
-  return BUREAUCRAT_TOO_LOW;
+  return "Grade too low. Grade must be an integer between 1 and 150.";
 }
 
-std::ostream &operator<<(std::ostream &out, const Bureaucrat &bureaucrat) {
-  out << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade();
+std::ostream &operator<<(std::ostream &out, Bureaucrat const &bureaucrat) {
+  out << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade()
+      << ".";
   return out;
 }

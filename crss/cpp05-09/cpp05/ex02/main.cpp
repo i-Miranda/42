@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:53:40 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 20:57:05 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 14:12:14 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "Bureaucrat.hpp"
@@ -20,6 +20,11 @@ static void exceptionMessage(std::exception const &e,
                              std::string const &e_name) {
   std::cout << "\t" << e_name << " caught : " << e.what() << std::endl;
 }
+
+static std::string const INCREMENT = "Incrementing ";
+static std::string const DECREMENT = "Decrementing ";
+static std::string const INCREASE = " (Grade number should INCREASE by 1";
+static std::string const DECREASE = " (Grade number should DECREASE by 1";
 
 int main(void) {
   // Generating random seed from current time
@@ -70,30 +75,6 @@ int main(void) {
   ShrubberyCreationForm ShrubForm = ShrubberyCreationForm("Shrub");
   PresidentialPardonForm PresForm = PresidentialPardonForm("Pres");
   RobotomyRequestForm RoboForm = RobotomyRequestForm("Robo");
-
-  std::cout << std::endl;
-
-  std::cout << "TESTING FORM EXCEPTIONS DURING CREATION" << std::endl;
-  try {
-    AForm SignTooLow = AForm("SignTooLow", 151, 1);
-  } catch (Bureaucrat::GradeTooLowException const &e) {
-    exceptionMessage(e, "Bureaucrat::GradeTooHighException");
-  }
-  try {
-    AForm ExecTooLow = AForm("ExecTooLow", 1, 151);
-  } catch (Bureaucrat::GradeTooLowException const &e) {
-    exceptionMessage(e, "Bureaucrat::GradeTooLowException");
-  }
-  try {
-    AForm SignTooHigh = AForm("SignTooHigh", 0, 1);
-  } catch (Bureaucrat::GradeTooHighException const &e) {
-    exceptionMessage(e, "Bureaucrat::GradeTooHighException");
-  }
-  try {
-    AForm ExecTooHigh = AForm("ExecTooHigh", 1, 0);
-  } catch (Bureaucrat::GradeTooHighException const &e) {
-    exceptionMessage(e, "Bureaucrat::GradeTooHighException");
-  }
 
   std::cout << std::endl;
 
@@ -203,11 +184,11 @@ int main(void) {
   std::cout << std::endl;
   std::cout << "Signing RobotomyRequestForm" << std::endl;
   std::cout << RoboLowRankExecBureaucrat << std::endl;
-  RoboLowRankSignBureaucrat.signForm(RoboForm);
+  RoboLowRankSignBureaucrat.executeForm(RoboForm);
   std::cout << RoboForm << std::endl;
   std::cout << std::endl;
   std::cout << RoboHighRankExecBureaucrat << std::endl;
-  RoboHighRankExecBureaucrat.signForm(RoboForm);
+  RoboHighRankExecBureaucrat.executeForm(RoboForm);
   std::cout << RoboForm << std::endl;
   std::cout << std::endl;
 

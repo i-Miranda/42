@@ -6,11 +6,9 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 17:55:02 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 16:28:58 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#pragma once
 
 #ifndef AFORM_HPP
 #define AFORM_HPP
@@ -18,11 +16,6 @@
 #include <exception>
 #include <iostream>
 #include <string>
-
-#define FORM_TOO_HIGH "Bureaucrat Grade too high."
-#define FORM_TOO_LOW "Bureaucrat Grade too low."
-#define SIGNED "Form is signed."
-#define NOT_SIGNED "Form is NOT signed."
 
 // Forward declaration of Bureaucrat to avoid circular includes
 class Bureaucrat;
@@ -47,7 +40,7 @@ public:
   bool isSigned(void) const;
 
   void beSigned(Bureaucrat const &bureaucrat);
-  virtual void execute(Bureaucrat const &executor) const;
+  virtual void execute(Bureaucrat const &executor) const = 0;
 
   class GradeTooHighException : public std::exception {
   public:

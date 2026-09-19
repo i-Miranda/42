@@ -6,19 +6,15 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 20:32:54 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 15:32:29 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#pragma once
 
 #ifndef SHRUBBERYCREATIONFORM_HPP
 #define SHRUBBERYCREATIONFORM_HPP
 
 #include "AForm.hpp"
 #include <string>
-
-#define S_NAME "ShrubberyCreationForm"
 
 class ShrubberyCreationForm : public AForm {
 private:
@@ -32,6 +28,11 @@ public:
   ShrubberyCreationForm &operator=(ShrubberyCreationForm const &src);
 
   void execute(Bureaucrat const &executor) const;
+
+  class CreationException : public std::exception {
+  public:
+    virtual char const *what() const throw();
+  };
 };
 
 #endif

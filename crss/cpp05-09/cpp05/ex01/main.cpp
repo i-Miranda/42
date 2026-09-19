@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:53:40 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 13:59:23 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 14:10:10 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ static void exceptionMessage(std::exception const &e,
                              std::string const &e_name) {
   std::cout << "\t" << e_name << " caught : " << e.what() << std::endl;
 }
+
+static std::string const INCREMENT = "Incrementing ";
+static std::string const DECREMENT = "Decrementing ";
+static std::string const INCREASE = " (Grade number should INCREASE by 1";
+static std::string const DECREASE = " (Grade number should DECREASE by 1";
 
 int main(void) {
   std::cout << "CREATING BUREAUCRATS" << std::endl;

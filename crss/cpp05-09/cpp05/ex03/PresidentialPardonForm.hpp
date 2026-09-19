@@ -6,19 +6,15 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:55:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 20:33:38 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 15:33:45 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#pragma once
 
 #ifndef PRESIDENTIALPARDONFORM_HPP
 #define PRESIDENTIALPARDONFORM_HPP
 
 #include "AForm.hpp"
 #include <string>
-
-#define P_NAME "PresidentialPardonForm"
 
 class PresidentialPardonForm : public AForm {
 private:

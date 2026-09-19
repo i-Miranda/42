@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 16:17:48 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 18:41:15 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 15:25:11 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 #include "Bureaucrat.hpp"
 
 PresidentialPardonForm::PresidentialPardonForm(std::string const &_target)
-    : AForm(P_NAME, 25, 5), m_target(_target) {
-  std::cout << "Default " << P_NAME << " Constructor called." << std::endl;
+    : AForm("PresidentialPardonForm", 25, 5), m_target(_target) {
+  std::cout << "Default PresidentialPardonForm Constructor called."
+            << std::endl;
 }
 
 PresidentialPardonForm::PresidentialPardonForm(
     PresidentialPardonForm const &src)
     : AForm(src), m_target(src.m_target) {
-  std::cout << "Copy " << P_NAME << " Constructor called." << std::endl;
+  std::cout << "Copy PresidentialPardonForm Constructor called." << std::endl;
 }
 
 PresidentialPardonForm::~PresidentialPardonForm(void) {
-  std::cout << P_NAME << " Destructor called." << std::endl;
+  std::cout << "PresidentialPardonForm Destructor called." << std::endl;
 }
 
 PresidentialPardonForm &

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/27 16:17:48 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 13:34:27 by ivmirand         ###   ########.fr       */
+/*   UpdaRRRRLG026/09/13 13:34:27 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,20 @@ void Form::beSigned(Bureaucrat const &bureaucrat) {
 }
 
 char const *Form::GradeTooHighException::what() const throw() {
-  return FORM_TOO_HIGH;
+  return "Grade too high. Grade must be an integer between 1 and 150.";
 }
 
 char const *Form::GradeTooLowException::what() const throw() {
-  return FORM_TOO_LOW;
+  return "Grade too low. Grade must be an integer between 1 and 150.";
 }
 
 std::ostream &operator<<(std::ostream &out, Form const &form) {
   out << form.getName() << ",\n\tgrade required to sign " << form.getSignGrade()
       << "\n\tgrade required to execute " << form.getExecGrade() << "\n\t";
   if (form.isSigned()) {
-    out << SIGNED;
+    out << "Form is signed.";
   } else {
-    out << NOT_SIGNED;
+    out << "Form is NOT signed.";
   }
   return out;
 }

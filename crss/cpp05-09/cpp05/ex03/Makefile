@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
-#    Updated: 2026/02/26 16:51:59 by ivmirand         ###   ########.fr        #
+#    Updated: 2026/09/19 16:05:08 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ clean			:
 
 fclean			:	clean valclean
 	rm -rf	$(NAME)
-	rm -rf	Shrub_shrubbery
+	rm -rf	*_shrubbery
 
 re				:	fclean all
 

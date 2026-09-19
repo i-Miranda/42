@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:53:40 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/13 21:00:28 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/19 16:36:06 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ static void exceptionMessage(std::exception const &e,
                              std::string const &e_name) {
   std::cout << "\t" << e_name << " caught : " << e.what() << std::endl;
 }
+
+static std::string const INCREMENT = "Incrementing ";
+static std::string const DECREMENT = "Decrementing ";
+static std::string const INCREASE = " (Grade number should INCREASE by 1";
+static std::string const DECREASE = " (Grade number should DECREASE by 1";
 
 int main(void) {
   // Generating random seed from current time
@@ -74,6 +79,15 @@ int main(void) {
   AForm *ShrubForm = TestIntern.makeForm("shrubbery creation", "Shrub");
   AForm *PresForm = TestIntern.makeForm("presidential pardon", "Pres");
   AForm *RoboForm = TestIntern.makeForm("robotomy request", "Robo");
+
+  std::cout << std::endl;
+
+  std::cout << "TESTING UNKNOWN FORMS" << std::endl;
+
+  AForm *unknownForm = TestIntern.makeForm("doesn't exist", "target");
+  if (unknownForm != NULL) {
+    delete unknownForm;
+  }
 
   std::cout << std::endl;
 
@@ -183,11 +197,11 @@ int main(void) {
   std::cout << std::endl;
   std::cout << "Signing RobotomyRequestForm" << std::endl;
   std::cout << RoboLowRankExecBureaucrat << std::endl;
-  RoboLowRankSignBureaucrat.signForm(*RoboForm);
+  RoboLowRankSignBureaucrat.executeForm(*RoboForm);
   std::cout << *RoboForm << std::endl;
   std::cout << std::endl;
   std::cout << RoboHighRankExecBureaucrat << std::endl;
-  RoboHighRankExecBureaucrat.signForm(*RoboForm);
+  RoboHighRankExecBureaucrat.executeForm(*RoboForm);
   std::cout << *RoboForm << std::endl;
   std::cout << std::endl;
 
