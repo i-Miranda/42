@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Base.hpp                                           :+:      :+:    :+:   */
+/*   C.hpp                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/07 13:45:52 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/21 17:51:54 by ivmirand         ###   ########.fr       */
+/*   Created: 2026/09/07 13:45:55 by ivmirand          #+#    #+#             */
+/*   Updated: 2026/09/21 17:51:20 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BASE_HPP
-#define BASE_HPP
+#ifndef EMPTY_HPP
+#define EMPTY_HPP
 
-class Base {
-public:
-  virtual ~Base();
-};
+#include "Base.hpp"
 
-Base *generate(void);
-
-void identify(Base *p);
-
-void identify(Base &p);
+class C : public Base {};
 
 #endif

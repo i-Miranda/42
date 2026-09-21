@@ -6,7 +6,7 @@
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
-#    Updated: 2026/02/26 16:51:59 by ivmirand         ###   ########.fr        #
+#    Updated: 2026/09/21 17:54:48 by ivmirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ $(DIR_OBJS)		:
 
 $(DIR_OBJS)/%.o	: %.cpp
 	$(CXX) $(CXXFLAGS) $(DBFLAGS) -c $< -o $@
+
+-include $(OBJS:.o=.d)
 
 clean			:
 	rm -rf	$(DIR_OBJS)
@@ -61,7 +63,7 @@ ifeq ($(NOFLAGS), 1)
 	CXXFLAGS :=
 	DBFLAGS :=
 else 
-	CXXFLAGS := -Wall -Werror -Wextra -std=c++98
+	CXXFLAGS := -Wall -Werror -Wextra -Wshadow -std=c++98 -pedantic -MMD -MP 
 endif
 
 ##################################################

@@ -1,16 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Empty.hpp                                          :+:      :+:    :+:   */
+/*   A.hpp                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 13:45:55 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/07 13:45:56 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/21 17:50:58 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#pragma once
 
 #ifndef EMPTY_HPP
 #define EMPTY_HPP
@@ -18,9 +16,5 @@
 #include "Base.hpp"
 
 class A : public Base {};
-
-class B : public Base {};
-
-class C : public Base {};
 
 #endif
