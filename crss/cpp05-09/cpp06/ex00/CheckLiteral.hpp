@@ -13,18 +13,16 @@
 #ifndef CHECKLITERAL_HPP
 #define CHECKLITERAL_HPP
 
-#include "Conversions.hpp"
 #include <string>
 
 bool isFloatPseudoLiteral(std::string const &literal);
 
 bool isPseudoLiteral(std::string const &literal);
 
-bool isNumericLiteral(t_conversions &c);
+bool isDecimalLiteral(std::string const &literal);
 
-bool isCharLiteral(t_conversions &c);
+bool isCharLiteral(std::string const &literal);
 
-bool isIntLiteral(t_conversions &c);
+bool hasFloatSuffix(std::string const &literal);
 
-bool isLastCharF(t_conversions &c);
 #endif

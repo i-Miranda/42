@@ -21,38 +21,64 @@ bool isPseudoLiteral(std::string const &literal) {
           literal == "+inf" || literal == "-inf");
 }
 
-bool isNumericLiteral(t_conversions &c) {
-  size_t i = 0;
-  if (c.literal[i] == '+' || c.literal[i] == '-') {
-    if (c.literal[i] == '-')
-      c.is_negative = true;
-    c.literal = c.literal.substr(1, c.literal.length() - 1);
-    i++;
-  }
-}
-
-bool isCharLiteral(t_conversions &c) {
-  if (c.literal.length() == 1 &&
-      !std::isdigit(static_cast<unsigned char>(c.literal[0])))
-    return true;
-  return c.literal.length() == 3 && c.literal[0] == '\'' &&
-         c.literal[2] == '\'';
-}
-
-bool isIntLiteral(t_conversions &c) {
-  if (c.literal.empty())
+bool isDecimalLiteral(std::string const &literal) {
+  if (literal.empty())
     return false;
 
   size_t i = 0;
-  if (i >= c.literal.length())
-    return false;
-  for (; i < c.literal.length(); i++) {
-    if (!std::isdigit(static_cast<unsigned char>(c.literal[i])))
+  bool has_digit = false;
+  bool has_dot = false;
+
+  if (literal[i] == '+' || literal[i] == '-') {
+    ++i;
+    if (i == literal.length())
       return false;
   }
-  return true;
+
+  while (i < literal.length()) {
+    if (std::isdigit(static_cast<unsigned char>(literal[i]))) {
+      has_digit = true;
+    } else if (literal[i] == '.') {
+      if (has_dot)
+        return false;
+      has_dot = true;
+    } else {
+      break;
+    }
+    ++i;
+  }
+
+  if (!has_digit)
+    return false;
+
+  if (i < literal.length() && (literal[i] == 'e' || literal[i] == 'E')) {
+    ++i;
+
+    if (i < literal.length() && (literal[i] == '+' || literal[i] == '-'))
+      ++i;
+
+    size_t exponent_start = i;
+
+    while (i < literal.length()) {
+      if (!std::isdigit(static_cast<unsigned char>(literal[i])))
+        return false;
+      ++i;
+    }
+
+    if (i == exponent_start)
+      return false;
+  }
+
+  return i == literal.length();
 }
 
-bool isLastCharF(t_conversions &c) {
-  return (!c.literal.empty() && c.literal[c.literal.length() - 1] == 'f');
+bool isCharLiteral(std::string const &literal) {
+  if (literal.length() == 1 &&
+      !std::isdigit(static_cast<unsigned char>(literal[0])))
+    return true;
+  return literal.length() == 3 && literal[0] == '\'' && literal[2] == '\'';
+}
+
+bool hasFloatSuffix(std::string const &literal) {
+  return (!literal.empty() && literal[literal.length() - 1] == 'f');
 }

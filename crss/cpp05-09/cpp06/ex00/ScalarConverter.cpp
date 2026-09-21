@@ -42,27 +42,37 @@ void ScalarConverter::convert(std::string const &literal) {
     printPseudoLiteral(literal);
     return;
   }
+
   t_conversions conversions;
-  conversions.literal = literal;
-  conversions.is_negative = false;
-  if (isCharLiteral(conversions)) {
-    if (conversions.literal.length() == 3)
-      conversions.literal = static_cast<unsigned char>(literal[1]);
-  } else if (!isIntLiteral(conversions)) {
-    if (isLastCharF(conversions)) {
-      conversions.literal.erase(conversions.literal.length() - 1);
+
+  if (isCharLiteral(literal)) {
+    if (literal.length() == 3)
+      conversions.double_type = static_cast<unsigned char>(literal[1]);
+    else
+      conversions.double_type = static_cast<unsigned char>(literal[0]);
+  } else {
+    std::string value = literal;
+    if (hasFloatSuffix(value)) {
+      value.erase(value.length() - 1);
+      if (value.empty()) {
+        printImpossible();
+      }
+    }
+    if (!isDecimalLiteral(value)) {
+      printImpossible();
+      return;
+    }
+    std::stringstream ss(value);
+    ss >> conversions.double_type;
+    if (ss.fail() || !ss.eof()) {
+      printImpossible();
+      return;
     }
   }
-  std::stringstream ss(conversions.literal);
-  ss >> conversions.double_type;
-  if (ss.fail() || !ss.eof()) {
-    printImpossible();
-    return;
-  }
 
-  conversions.char_type = static_cast<char>(conversions.double_type);
-  conversions.int_type = static_cast<int>(conversions.double_type);
   conversions.float_type = static_cast<float>(conversions.double_type);
+  conversions.int_type = static_cast<int>(conversions.double_type);
+  conversions.char_type = static_cast<char>(conversions.double_type);
 
   printConversions(conversions);
 }

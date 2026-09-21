@@ -16,10 +16,10 @@
 #include "Conversions.hpp"
 #include <string>
 
-void printChar(t_conversions *conversions);
-void printInt(t_conversions *conversions);
-void printFloat(t_conversions *conversions);
-void printDouble(t_conversions *conversions);
+void printChar(t_conversions const *conversions);
+void printInt(t_conversions const *conversions);
+void printFloat(t_conversions const *conversions);
+void printDouble(t_conversions const *conversions);
 
 void printImpossible(void);
 

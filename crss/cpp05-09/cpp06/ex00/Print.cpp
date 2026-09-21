@@ -15,7 +15,7 @@
 #include <iomanip>
 #include <iostream>
 
-void printChar(t_conversions *conversions) {
+void printChar(t_conversions const *conversions) {
   std::cout << "char: ";
   if (conversions == NULL)
     std::cout << "impossible" << std::endl;
@@ -25,7 +25,7 @@ void printChar(t_conversions *conversions) {
     std::cout << "'" << conversions->char_type << "'" << std::endl;
 }
 
-void printInt(t_conversions *conversions) {
+void printInt(t_conversions const *conversions) {
   std::cout << "int: ";
   if (conversions == NULL)
     std::cout << "impossible" << std::endl;
@@ -33,7 +33,7 @@ void printInt(t_conversions *conversions) {
     std::cout << conversions->int_type << std::endl;
 }
 
-void printFloat(t_conversions *conversions) {
+void printFloat(t_conversions const *conversions) {
   std::cout << "float: ";
   if (conversions == NULL)
     std::cout << "impossible" << std::endl;
@@ -42,8 +42,8 @@ void printFloat(t_conversions *conversions) {
               << "f" << std::endl;
 }
 
-void printDouble(t_conversions *conversions) {
-  std::cout << "double: " << std::endl;
+void printDouble(t_conversions const *conversions) {
+  std::cout << "double: ";
   if (conversions == NULL)
     std::cout << "impossible" << std::endl;
   else
@@ -71,9 +71,8 @@ void printPseudoLiteral(std::string const &pseudo_literal) {
 }
 
 void printConversions(t_conversions const &conversions) {
-  t_conversions ptr = static_cast<t_conversions>(conversions);
-  printChar(&ptr);
-  printInt(&ptr);
-  printFloat(&ptr);
-  printDouble(&ptr);
+  printChar(&conversions);
+  printInt(&conversions);
+  printFloat(&conversions);
+  printDouble(&conversions);
 }

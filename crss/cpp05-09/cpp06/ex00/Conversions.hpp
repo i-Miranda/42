@@ -13,15 +13,11 @@
 #ifndef CONVERSION_HPP
 #define CONVERSION_HPP
 
-#include <string>
-
 typedef struct s_conversions {
-  std::string literal;
   char char_type;
   int int_type;
   float float_type;
   double double_type;
-  bool is_negative;
 } t_conversions;
 
 #endif
