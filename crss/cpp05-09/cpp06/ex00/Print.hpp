@@ -6,11 +6,9 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 10:09:32 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/07/08 10:09:35 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/20 18:04:17 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#pragma once
 
 #ifndef PRINT_HPP
 #define PRINT_HPP

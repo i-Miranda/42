@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 10:09:33 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/07/08 10:09:35 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/20 17:32:11 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,39 @@
 #include <iostream>
 
 void printChar(t_conversions *conversions) {
+  std::cout << "char: ";
   if (conversions == NULL)
-    std::cout << "char: impossible" << std::endl;
+    std::cout << "impossible" << std::endl;
   else if (!std::isprint(static_cast<unsigned char>(conversions->char_type)))
-    std::cout << "char: Non displayable" << std::endl;
+    std::cout << "Non displayable" << std::endl;
   else
-    std::cout << "char: '" << conversions->char_type << "'" << std::endl;
+    std::cout << "'" << conversions->char_type << "'" << std::endl;
 }
 
 void printInt(t_conversions *conversions) {
+  std::cout << "int: ";
   if (conversions == NULL)
-    std::cout << "int: impossible" << std::endl;
+    std::cout << "impossible" << std::endl;
   else
-    std::cout << "int: " << conversions->int_type << std::endl;
+    std::cout << conversions->int_type << std::endl;
 }
 
 void printFloat(t_conversions *conversions) {
+  std::cout << "float: ";
   if (conversions == NULL)
-    std::cout << "float: impossible" << std::endl;
+    std::cout << "impossible" << std::endl;
   else
-    std::cout << std::fixed << std::setprecision(1)
-              << "float: " << conversions->float_type << "f" << std::endl;
+    std::cout << std::fixed << std::setprecision(1) << conversions->float_type
+              << "f" << std::endl;
 }
 
 void printDouble(t_conversions *conversions) {
+  std::cout << "double: " << std::endl;
   if (conversions == NULL)
-    std::cout << "double: impossible" << std::endl;
+    std::cout << "impossible" << std::endl;
   else
-    std::cout << std::fixed << std::setprecision(1)
-              << "double: " << conversions->double_type << std::endl;
+    std::cout << std::fixed << std::setprecision(1) << conversions->double_type
+              << std::endl;
 }
 
 void printImpossible(void) {

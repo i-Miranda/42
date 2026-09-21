@@ -6,20 +6,22 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 20:25:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/07/07 20:25:51 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/20 18:12:03 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#pragma once
 
 #ifndef CONVERSION_HPP
 #define CONVERSION_HPP
 
+#include <string>
+
 typedef struct s_conversions {
+  std::string literal;
   char char_type;
   int int_type;
   float float_type;
   double double_type;
+  bool is_negative;
 } t_conversions;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 20:25:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/07/07 20:31:04 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/20 18:37:16 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,43 @@
 #include <iostream>
 #include <sstream>
 
-void ScalarConverter::convert(std::string &literal) {
-  t_conversions conversions;
+ScalarConverter::ScalarConverter(void) {
+  std::cout << "Default ScalarConverter Constructor called." << std::endl;
+}
 
+ScalarConverter::ScalarConverter(ScalarConverter const &src) {
+  std::cout << "Copy ScalarConverter Constructor called." << std::endl;
+  *this = src;
+}
+
+ScalarConverter::~ScalarConverter(void) {
+  std::cout << "ScalarConverter Destructor called." << std::endl;
+}
+
+ScalarConverter &ScalarConverter::operator=(ScalarConverter const &src) {
+  std::cout << "Copy assignment operator called." << std::endl;
+  if (this != &src)
+    (void)src;
+  return *this;
+}
+
+void ScalarConverter::convert(std::string const &literal) {
   if (isPseudoLiteral(literal)) {
     printPseudoLiteral(literal);
     return;
   }
-
-  std::string numeric_literal = literal;
-
-  if (isLastCharF(numeric_literal)) {
-    numeric_literal.erase(numeric_literal.length() - 1);
+  t_conversions conversions;
+  conversions.literal = literal;
+  conversions.is_negative = false;
+  if (isCharLiteral(conversions)) {
+    if (conversions.literal.length() == 3)
+      conversions.literal = static_cast<unsigned char>(literal[1]);
+  } else if (!isIntLiteral(conversions)) {
+    if (isLastCharF(conversions)) {
+      conversions.literal.erase(conversions.literal.length() - 1);
+    }
   }
-  std::stringstream ss(numeric_literal);
+  std::stringstream ss(conversions.literal);
   ss >> conversions.double_type;
   if (ss.fail() || !ss.eof()) {
     printImpossible();
