@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/07 13:45:49 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/07 13:45:50 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/22 18:37:05 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,45 +34,45 @@ Base *generate(void) {
 
 void identify(Base *p) {
   if (p == NULL) {
-    std::cout << "Pointer is null." << std::endl;
+    std::cout << "NULL";
     return;
   }
   if (dynamic_cast<A *>(p)) {
-    std::cout << "Pointer is of type A." << std::endl;
+    std::cout << "A";
     return;
   }
   if (dynamic_cast<B *>(p)) {
-    std::cout << "Pointer is of type B." << std::endl;
+    std::cout << "B";
     return;
   }
   if (dynamic_cast<C *>(p)) {
-    std::cout << "Pointer is of type C." << std::endl;
+    std::cout << "C";
     return;
   }
-  std::cout << "Pointer is of type Base." << std::endl;
+  std::cout << "Base";
 }
 
 void identify(Base &p) {
   try {
     (void)dynamic_cast<A &>(p);
-    std::cout << "Reference is of type A." << std::endl;
+    std::cout << "A";
     return;
   } catch (...) {
   }
 
   try {
     (void)dynamic_cast<B &>(p);
-    std::cout << "Reference is of type B." << std::endl;
+    std::cout << "B";
     return;
   } catch (...) {
   }
 
   try {
     (void)dynamic_cast<C &>(p);
-    std::cout << "Reference is of type C." << std::endl;
+    std::cout << "C";
     return;
   } catch (...) {
   }
 
-  std::cout << "Reference is of type Base." << std::endl;
+  std::cout << "Base";
 }
