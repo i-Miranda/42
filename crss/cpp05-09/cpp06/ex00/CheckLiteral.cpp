@@ -6,11 +6,12 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 22:57:15 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/20 18:35:04 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/22 16:56:28 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "CheckLiteral.hpp"
+#include <cctype>
 
 bool isFloatPseudoLiteral(std::string const &literal) {
   return (literal == "nanf" || literal == "+inff" || literal == "-inff");
@@ -30,7 +31,7 @@ bool isDecimalLiteral(std::string const &literal) {
   bool has_dot = false;
 
   if (literal[i] == '+' || literal[i] == '-') {
-    ++i;
+    i++;
     if (i == literal.length())
       return false;
   }
@@ -45,24 +46,24 @@ bool isDecimalLiteral(std::string const &literal) {
     } else {
       break;
     }
-    ++i;
+    i++;
   }
 
   if (!has_digit)
     return false;
 
   if (i < literal.length() && (literal[i] == 'e' || literal[i] == 'E')) {
-    ++i;
+    i++;
 
     if (i < literal.length() && (literal[i] == '+' || literal[i] == '-'))
-      ++i;
+      i++;
 
     size_t exponent_start = i;
 
     while (i < literal.length()) {
       if (!std::isdigit(static_cast<unsigned char>(literal[i])))
         return false;
-      ++i;
+      i++;
     }
 
     if (i == exponent_start)
@@ -76,7 +77,7 @@ bool isCharLiteral(std::string const &literal) {
   if (literal.length() == 1 &&
       !std::isdigit(static_cast<unsigned char>(literal[0])))
     return true;
-  return literal.length() == 3 && literal[0] == '\'' && literal[2] == '\'';
+  return (literal.length() == 3 && literal[0] == '\'' && literal[2] == '\'');
 }
 
 bool hasFloatSuffix(std::string const &literal) {

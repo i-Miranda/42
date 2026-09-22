@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 20:25:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/20 18:37:16 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/22 16:58:57 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,18 @@
 #include "CheckLiteral.hpp"
 #include "Conversions.hpp"
 #include "Print.hpp"
-#include <iostream>
-#include <climits>
 #include <cfloat>
+#include <climits>
+#include <iostream>
 #include <sstream>
 
-ScalarConverter::ScalarConverter(void) {
-  std::cout << "Default ScalarConverter Constructor called." << std::endl;
-}
+ScalarConverter::ScalarConverter(void) {}
 
-ScalarConverter::ScalarConverter(ScalarConverter const &src) {
-  std::cout << "Copy ScalarConverter Constructor called." << std::endl;
-  *this = src;
-}
+ScalarConverter::ScalarConverter(ScalarConverter const &src) { *this = src; }
 
-ScalarConverter::~ScalarConverter(void) {
-  std::cout << "ScalarConverter Destructor called." << std::endl;
-}
+ScalarConverter::~ScalarConverter(void) {}
 
 ScalarConverter &ScalarConverter::operator=(ScalarConverter const &src) {
-  std::cout << "Copy assignment operator called." << std::endl;
   if (this != &src)
     (void)src;
   return *this;
@@ -74,24 +66,25 @@ void ScalarConverter::convert(std::string const &literal) {
   }
 
   conversions.float_type = 0;
+  conversions.int_type = 0;
+  conversions.char_type = 0;
 
-  bool float_overflow = (conversions.double_type > static_cast<double>(FLT_MAX) ||
-                         conversions.double_type < -static_cast<double>(FLT_MAX));
+  bool float_overflow =
+      (conversions.double_type > static_cast<double>(FLT_MAX) ||
+       conversions.double_type < -static_cast<double>(FLT_MAX));
   if (!float_overflow)
     conversions.float_type = static_cast<float>(conversions.double_type);
 
-  bool char_overflow = (conversions.double_type < 0 || conversions.double_type > 127);
-  if (!char_overflow)
-    conversions.char_type = static_cast<char>(conversions.double_type);
-  else
-    conversions.char_type = 0;
-
-  bool int_overflow = (conversions.double_type < static_cast<double>(INT_MIN) ||
-                       conversions.double_type > static_cast<double>(INT_MAX));
+  bool int_overflow =
+      (conversions.double_type < static_cast<double>(INT_MIN) ||
+       conversions.double_type > static_cast<double>(INT_MAX) + 1.0);
   if (!int_overflow)
     conversions.int_type = static_cast<int>(conversions.double_type);
-  else
-    conversions.int_type = 0;
+
+  bool char_overflow =
+      (conversions.double_type < 0.0 || conversions.double_type >= 128.0);
+  if (!char_overflow)
+    conversions.char_type = static_cast<char>(conversions.double_type);
 
   printChar(char_overflow ? NULL : &conversions);
   printInt(int_overflow ? NULL : &conversions);
