@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 20:25:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/22 16:58:57 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/22 17:44:58 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,14 @@ void ScalarConverter::convert(std::string const &literal) {
     conversions.float_type = static_cast<float>(conversions.double_type);
 
   bool int_overflow =
-      (conversions.double_type < static_cast<double>(INT_MIN) ||
-       conversions.double_type > static_cast<double>(INT_MAX) + 1.0);
+      (conversions.double_type <= static_cast<double>(INT_MIN) - 1.0 ||
+       conversions.double_type >= static_cast<double>(INT_MAX) + 1.0);
   if (!int_overflow)
     conversions.int_type = static_cast<int>(conversions.double_type);
 
   bool char_overflow =
-      (conversions.double_type < 0.0 || conversions.double_type >= 128.0);
+      (conversions.double_type < static_cast<double>(CHAR_MIN) - 1.0 ||
+       conversions.double_type >= static_cast<double>(CHAR_MAX) + 1.0);
   if (!char_overflow)
     conversions.char_type = static_cast<char>(conversions.double_type);
 
