@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 GREEN='\033[0;32m'
 RED='\033[0;31m'
+CYAN='\033[0;36m'
 RESET='\033[0m'
 
 PROGRAM="./convert"
@@ -37,6 +38,15 @@ run_expected_failure() {
     printf "${GREEN}PASS${RESET}: %s\n" "$name"
     PASS_COUNT=$((PASS_COUNT + 1))
   fi
+}
+
+# Shows actual output — useful for manual verification of overflow/impossible cases
+run_output() {
+  local name="$1"
+  local input="$2"
+  printf "${CYAN}OUT${RESET} [%s] => \"%s\":\n" "$name" "$input"
+  "$PROGRAM" "$input" 2>&1 | sed 's/^/    /'
+  echo
 }
 
 echo "Character literals"
@@ -131,6 +141,9 @@ run_test "invalid infinity" "infinity"
 run_test "invalid quoted character" "'aa'"
 run_test "empty quoted character" "''"
 run_test "too many quoted characters" "'abc'"
+run_test "bare f suffix (no digits)" "f"
+run_test "only plus sign" "+"
+run_test "only minus sign" "-"
 
 echo
 echo "Argument handling"
@@ -139,6 +152,23 @@ run_expected_failure "no argument"
 run_expected_failure "too many arguments" "42" "extra"
 
 echo
+echo "--- Output spot-checks (verify manually) ---"
+
+run_output "char boundary: 127 (max displayable)" "127"
+run_output "char boundary: 128 (char: impossible)" "128"
+run_output "char boundary: 0 (Non displayable)" "0"
+run_output "int max: 2147483647" "2147483647"
+run_output "int overflow: 3000000000 (int: impossible)" "3000000000"
+run_output "int underflow: -3000000000 (int: impossible)" "-3000000000"
+run_output "float overflow: 1e100 (float: impossible)" "1e100"
+run_output "float overflow: -1e100 (float: impossible)" "-1e100"
+run_output "float max: 3.4e38 (within float range)" "3.4e38"
+run_output "double overflow: 1e400 (all impossible)" "1e400"
+run_output "pseudo nan" "nan"
+run_output "pseudo +inff" "+inff"
+run_output "float 3.14f" "3.14f"
+run_output "char literal 'a'" "'a'"
+
 echo "================================"
 printf "Passed: %d\n" "$PASS_COUNT"
 printf "Failed: %d\n" "$FAIL_COUNT"
@@ -149,4 +179,3 @@ if [ "$FAIL_COUNT" -eq 0 ]; then
 else
   exit 1
 fi
-

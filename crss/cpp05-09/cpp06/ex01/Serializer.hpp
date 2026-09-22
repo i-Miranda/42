@@ -10,20 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
-
 #ifndef SERIALIZER_HPP
 #define SERIALIZER_HPP
 
 #include "Data.hpp"
-#include <stdint.h>
+#include <stdint.h> // since <cstdint> is C++11, use the C header
 
 class Serializer {
 private:
-  Serializer();
+  Serializer(void);
   Serializer(Serializer const &src);
   Serializer &operator=(Serializer const &src);
-  ~Serializer();
+  ~Serializer(void);
 
 public:
   static uintptr_t serialize(Data *ptr);

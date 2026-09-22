@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "Base.hpp"
-#include "Empty.hpp"
-#include <climits>
+#include "A.hpp"
+#include "B.hpp"
+#include "C.hpp"
 #include <cstdlib>
 #include <iostream>
 
@@ -53,21 +54,21 @@ void identify(Base *p) {
 
 void identify(Base &p) {
   try {
-    dynamic_cast<A &>(p);
+    (void)dynamic_cast<A &>(p);
     std::cout << "Reference is of type A." << std::endl;
     return;
   } catch (...) {
   }
 
   try {
-    dynamic_cast<B &>(p);
+    (void)dynamic_cast<B &>(p);
     std::cout << "Reference is of type B." << std::endl;
     return;
   } catch (...) {
   }
 
   try {
-    dynamic_cast<C &>(p);
+    (void)dynamic_cast<C &>(p);
     std::cout << "Reference is of type C." << std::endl;
     return;
   } catch (...) {

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EMPTY_HPP
-#define EMPTY_HPP
+#ifndef A_HPP
+#define A_HPP
 
 #include "Base.hpp"
 

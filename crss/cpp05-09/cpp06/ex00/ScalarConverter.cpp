@@ -15,6 +15,8 @@
 #include "Conversions.hpp"
 #include "Print.hpp"
 #include <iostream>
+#include <climits>
+#include <cfloat>
 #include <sstream>
 
 ScalarConverter::ScalarConverter(void) {
@@ -56,6 +58,7 @@ void ScalarConverter::convert(std::string const &literal) {
       value.erase(value.length() - 1);
       if (value.empty()) {
         printImpossible();
+        return;
       }
     }
     if (!isDecimalLiteral(value)) {
@@ -70,9 +73,28 @@ void ScalarConverter::convert(std::string const &literal) {
     }
   }
 
-  conversions.float_type = static_cast<float>(conversions.double_type);
-  conversions.int_type = static_cast<int>(conversions.double_type);
-  conversions.char_type = static_cast<char>(conversions.double_type);
+  conversions.float_type = 0;
 
-  printConversions(conversions);
+  bool float_overflow = (conversions.double_type > static_cast<double>(FLT_MAX) ||
+                         conversions.double_type < -static_cast<double>(FLT_MAX));
+  if (!float_overflow)
+    conversions.float_type = static_cast<float>(conversions.double_type);
+
+  bool char_overflow = (conversions.double_type < 0 || conversions.double_type > 127);
+  if (!char_overflow)
+    conversions.char_type = static_cast<char>(conversions.double_type);
+  else
+    conversions.char_type = 0;
+
+  bool int_overflow = (conversions.double_type < static_cast<double>(INT_MIN) ||
+                       conversions.double_type > static_cast<double>(INT_MAX));
+  if (!int_overflow)
+    conversions.int_type = static_cast<int>(conversions.double_type);
+  else
+    conversions.int_type = 0;
+
+  printChar(char_overflow ? NULL : &conversions);
+  printInt(int_overflow ? NULL : &conversions);
+  printFloat(float_overflow ? NULL : &conversions);
+  printDouble(&conversions);
 }
