@@ -6,23 +6,64 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 10:09:33 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/20 17:32:11 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/22 18:30:30 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Print.hpp"
 #include "CheckLiteral.hpp"
+
 #include <iomanip>
 #include <iostream>
+#include <sstream>
+#include <string>
 
-void printChar(t_conversions const *conversions) {
-  std::cout << "char: ";
+static std::string formatFloat(float value) {
+  std::ostringstream stream;
+
+  stream << std::setprecision(7) << value;
+
+  std::string result = stream.str();
+
+  if (result.find('.') == std::string::npos &&
+      result.find('e') == std::string::npos &&
+      result.find('E') == std::string::npos) {
+    result += ".0";
+  }
+
+  return result;
+}
+
+static std::string formatDouble(double value) {
+  std::ostringstream stream;
+
+  stream << std::setprecision(15) << value;
+
+  std::string result = stream.str();
+
+  if (result.find('.') == std::string::npos &&
+      result.find('e') == std::string::npos &&
+      result.find('E') == std::string::npos) {
+    result += ".0";
+  }
+
+  return result;
+}
+
+void printFloat(t_conversions const *conversions) {
+  std::cout << "float: ";
   if (conversions == NULL)
-    std::cout << "impossible" << std::endl;
-  else if (!std::isprint(static_cast<unsigned char>(conversions->char_type)))
-    std::cout << "Non displayable" << std::endl;
+    std::cout << "impossible " << std::endl;
   else
-    std::cout << "'" << conversions->char_type << "'" << std::endl;
+    std::cout << formatFloat(conversions->float_type) << "f" << std::endl;
+}
+
+void printDouble(t_conversions const *conversions) {
+  std::cout << "double: ";
+  if (conversions == NULL)
+    std::cout << "impossible " << std::endl;
+  else
+    std::cout << formatDouble(conversions->double_type) << std::endl;
 }
 
 void printInt(t_conversions const *conversions) {
@@ -33,22 +74,14 @@ void printInt(t_conversions const *conversions) {
     std::cout << conversions->int_type << std::endl;
 }
 
-void printFloat(t_conversions const *conversions) {
-  std::cout << "float: ";
+void printChar(t_conversions const *conversions) {
+  std::cout << "char: ";
   if (conversions == NULL)
     std::cout << "impossible" << std::endl;
+  else if (!std::isprint(static_cast<unsigned char>(conversions->char_type)))
+    std::cout << "Non displayable" << std::endl;
   else
-    std::cout << std::fixed << std::setprecision(1) << conversions->float_type
-              << "f" << std::endl;
-}
-
-void printDouble(t_conversions const *conversions) {
-  std::cout << "double: ";
-  if (conversions == NULL)
-    std::cout << "impossible" << std::endl;
-  else
-    std::cout << std::fixed << std::setprecision(1) << conversions->double_type
-              << std::endl;
+    std::cout << "'" << conversions->char_type << "'" << std::endl;
 }
 
 void printImpossible(void) {
@@ -68,11 +101,4 @@ void printPseudoLiteral(std::string const &pseudo_literal) {
   printInt(NULL);
   std::cout << "float: " << double_literal << "f" << std::endl;
   std::cout << "double: " << double_literal << std::endl;
-}
-
-void printConversions(t_conversions const &conversions) {
-  printChar(&conversions);
-  printInt(&conversions);
-  printFloat(&conversions);
-  printDouble(&conversions);
 }

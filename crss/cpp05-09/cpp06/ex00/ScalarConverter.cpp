@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 20:25:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/22 17:44:58 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/22 18:09:48 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,57 @@
 #include "CheckLiteral.hpp"
 #include "Conversions.hpp"
 #include "Print.hpp"
+
 #include <cfloat>
 #include <climits>
-#include <iostream>
+#include <cstddef>
 #include <sstream>
+#include <string>
+
+static bool parseChar(std::string const &literal, char &result) {
+  if (literal.length() == 3)
+    result = literal[1];
+  else
+    result = literal[0];
+
+  return true;
+}
+
+static bool parseLong(std::string const &text, long &result) {
+  std::stringstream stream(text);
+
+  stream >> result;
+  return !stream.fail() && stream.eof();
+}
+
+static bool parseFloat(std::string const &text, float &result) {
+  std::stringstream stream(text);
+
+  stream >> result;
+  return !stream.fail() && stream.eof();
+}
+
+static bool parseDouble(std::string const &text, double &result) {
+  std::stringstream stream(text);
+
+  stream >> result;
+  return !stream.fail() && stream.eof();
+}
+
+static bool isFloatOutOfRange(double value) {
+  return value > static_cast<double>(FLT_MAX) ||
+         value < -static_cast<double>(FLT_MAX);
+}
+
+static bool isIntOutOfRange(double value) {
+  return value <= static_cast<double>(INT_MIN) - 1.0 ||
+         value >= static_cast<double>(INT_MAX) + 1.0;
+}
+
+static bool isCharOutOfRange(double value) {
+  return value <= static_cast<double>(CHAR_MIN) - 1.0 ||
+         value >= static_cast<double>(CHAR_MAX) + 1.0;
+}
 
 ScalarConverter::ScalarConverter(void) {}
 
@@ -28,6 +75,7 @@ ScalarConverter::~ScalarConverter(void) {}
 ScalarConverter &ScalarConverter::operator=(ScalarConverter const &src) {
   if (this != &src)
     (void)src;
+
   return *this;
 }
 
@@ -39,53 +87,81 @@ void ScalarConverter::convert(std::string const &literal) {
 
   t_conversions conversions;
 
+  conversions.char_type = 0;
+  conversions.int_type = 0;
+  conversions.float_type = 0;
+  conversions.double_type = 0;
+
+  double source_as_double = 0.0;
+  float source_as_float = 0.0f;
+  bool source_is_float = false;
+
   if (isCharLiteral(literal)) {
-    if (literal.length() == 3)
-      conversions.double_type = static_cast<unsigned char>(literal[1]);
-    else
-      conversions.double_type = static_cast<unsigned char>(literal[0]);
-  } else {
+    char source;
+
+    if (!parseChar(literal, source)) {
+      printImpossible();
+      return;
+    }
+
+    source_as_double = static_cast<double>(source);
+    source_as_float = static_cast<float>(source);
+  } else if (isFloatLiteral(literal)) {
     std::string value = literal;
-    if (hasFloatSuffix(value)) {
-      value.erase(value.length() - 1);
-      if (value.empty()) {
-        printImpossible();
-        return;
-      }
-    }
-    if (!isDecimalLiteral(value)) {
+    float source;
+
+    value.erase(value.length() - 1);
+
+    if (!parseFloat(value, source)) {
       printImpossible();
       return;
     }
-    std::stringstream ss(value);
-    ss >> conversions.double_type;
-    if (ss.fail() || !ss.eof()) {
+
+    source_is_float = true;
+    source_as_float = source;
+    source_as_double = static_cast<double>(source);
+  } else if (isIntegerLiteral(literal)) {
+    long source;
+
+    if (!parseLong(literal, source)) {
       printImpossible();
       return;
     }
+
+    source_as_float = static_cast<float>(source);
+    source_as_double = static_cast<double>(source);
+  } else if (isDoubleLiteral(literal)) {
+    double source;
+
+    if (!parseDouble(literal, source)) {
+      printImpossible();
+      return;
+    }
+
+    source_as_double = source;
+    source_as_float = static_cast<float>(source);
+  } else {
+    printImpossible();
+    return;
   }
 
-  conversions.float_type = 0;
-  conversions.int_type = 0;
-  conversions.char_type = 0;
+  conversions.double_type = source_as_double;
 
-  bool float_overflow =
-      (conversions.double_type > static_cast<double>(FLT_MAX) ||
-       conversions.double_type < -static_cast<double>(FLT_MAX));
+  const bool float_overflow =
+      !source_is_float && isFloatOutOfRange(source_as_double);
+
+  const bool int_overflow = isIntOutOfRange(source_as_double);
+
+  const bool char_overflow = isCharOutOfRange(source_as_double);
+
   if (!float_overflow)
-    conversions.float_type = static_cast<float>(conversions.double_type);
+    conversions.float_type = source_as_float;
 
-  bool int_overflow =
-      (conversions.double_type <= static_cast<double>(INT_MIN) - 1.0 ||
-       conversions.double_type >= static_cast<double>(INT_MAX) + 1.0);
   if (!int_overflow)
-    conversions.int_type = static_cast<int>(conversions.double_type);
+    conversions.int_type = static_cast<int>(source_as_double);
 
-  bool char_overflow =
-      (conversions.double_type < static_cast<double>(CHAR_MIN) - 1.0 ||
-       conversions.double_type >= static_cast<double>(CHAR_MAX) + 1.0);
   if (!char_overflow)
-    conversions.char_type = static_cast<char>(conversions.double_type);
+    conversions.char_type = static_cast<char>(source_as_double);
 
   printChar(char_overflow ? NULL : &conversions);
   printInt(int_overflow ? NULL : &conversions);
