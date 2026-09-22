@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 20:25:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/22 18:09:48 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/22 19:23:28 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,6 @@ static bool parseChar(std::string const &literal, char &result) {
 }
 
 static bool parseLong(std::string const &text, long &result) {
-  std::stringstream stream(text);
-
-  stream >> result;
-  return !stream.fail() && stream.eof();
-}
-
-static bool parseFloat(std::string const &text, float &result) {
   std::stringstream stream(text);
 
   stream >> result;
@@ -93,33 +86,15 @@ void ScalarConverter::convert(std::string const &literal) {
   conversions.double_type = 0;
 
   double source_as_double = 0.0;
-  float source_as_float = 0.0f;
-  bool source_is_float = false;
 
   if (isCharLiteral(literal)) {
     char source;
-
     if (!parseChar(literal, source)) {
       printImpossible();
       return;
     }
-
     source_as_double = static_cast<double>(source);
-    source_as_float = static_cast<float>(source);
-  } else if (isFloatLiteral(literal)) {
-    std::string value = literal;
-    float source;
 
-    value.erase(value.length() - 1);
-
-    if (!parseFloat(value, source)) {
-      printImpossible();
-      return;
-    }
-
-    source_is_float = true;
-    source_as_float = source;
-    source_as_double = static_cast<double>(source);
   } else if (isIntegerLiteral(literal)) {
     long source;
 
@@ -128,7 +103,16 @@ void ScalarConverter::convert(std::string const &literal) {
       return;
     }
 
-    source_as_float = static_cast<float>(source);
+    source_as_double = static_cast<double>(source);
+  } else if (isFloatLiteral(literal)) {
+    std::string value = literal.substr(0, literal.length() - 1);
+    double source;
+
+    if (!parseDouble(value, source)) {
+      printImpossible();
+      return;
+    }
+
     source_as_double = static_cast<double>(source);
   } else if (isDoubleLiteral(literal)) {
     double source;
@@ -139,7 +123,6 @@ void ScalarConverter::convert(std::string const &literal) {
     }
 
     source_as_double = source;
-    source_as_float = static_cast<float>(source);
   } else {
     printImpossible();
     return;
@@ -147,18 +130,15 @@ void ScalarConverter::convert(std::string const &literal) {
 
   conversions.double_type = source_as_double;
 
-  const bool float_overflow =
-      !source_is_float && isFloatOutOfRange(source_as_double);
-
   const bool int_overflow = isIntOutOfRange(source_as_double);
-
+  const bool float_overflow = isFloatOutOfRange(source_as_double);
   const bool char_overflow = isCharOutOfRange(source_as_double);
-
-  if (!float_overflow)
-    conversions.float_type = source_as_float;
 
   if (!int_overflow)
     conversions.int_type = static_cast<int>(source_as_double);
+
+  if (!float_overflow)
+    conversions.float_type = static_cast<float>(source_as_double);
 
   if (!char_overflow)
     conversions.char_type = static_cast<char>(source_as_double);

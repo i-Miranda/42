@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 10:09:33 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/22 18:30:30 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/22 19:32:00 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static std::string formatDouble(double value) {
 void printFloat(t_conversions const *conversions) {
   std::cout << "float: ";
   if (conversions == NULL)
-    std::cout << "impossible " << std::endl;
+    std::cout << "impossible" << std::endl;
   else
     std::cout << formatFloat(conversions->float_type) << "f" << std::endl;
 }
@@ -61,7 +61,7 @@ void printFloat(t_conversions const *conversions) {
 void printDouble(t_conversions const *conversions) {
   std::cout << "double: ";
   if (conversions == NULL)
-    std::cout << "impossible " << std::endl;
+    std::cout << "impossible" << std::endl;
   else
     std::cout << formatDouble(conversions->double_type) << std::endl;
 }
