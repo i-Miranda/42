@@ -2,7 +2,6 @@
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
 #    By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/22 22:10:05 by ivmirand          #+#    #+#              #
@@ -32,6 +31,8 @@ $(DIR_OBJS)		:
 $(DIR_OBJS)/%.o	: %.cpp
 	$(CXX) $(CXXFLAGS) $(DBFLAGS) -c $< -o $@
 
+-include $(OBJS:.o=.d)
+
 clean			:
 	rm -rf	$(DIR_OBJS)
 
@@ -60,7 +61,7 @@ ifeq ($(NOFLAGS), 1)
 	CXXFLAGS :=
 	DBFLAGS :=
 else 
-	CXXFLAGS := -Wall -Werror -Wextra -std=c++98
+	CXXFLAGS := -Wall -Werror -Wextra -Wshadow -std=c++98 -pedantic -MMD -MP 
 endif
 
 ##################################################
