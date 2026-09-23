@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 18:06:19 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/12 20:15:59 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/23 13:36:45 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ private:
 
 public:
   Span(unsigned int N);
-  Span(const Span &src);
+  Span(Span const &src);
   ~Span();
-  Span &operator=(const Span &src);
+  Span &operator=(Span const &src);
 
   void addNumber(int number);
 
@@ -44,12 +44,12 @@ public:
 
   class MaxCapacityException : public std::exception {
   public:
-    virtual const char *what() const throw();
+    virtual char const *what() const throw();
   };
 
   class MinElementsException : public std::exception {
   public:
-    virtual const char *what() const throw();
+    virtual char const *what() const throw();
   };
 };
 

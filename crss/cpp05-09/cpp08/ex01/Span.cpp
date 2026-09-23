@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 18:06:15 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/12 20:13:57 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/23 13:37:24 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Span::Span() : m_count(0), m_max(0), m_elements(NULL) {}
 
 Span::Span(unsigned int N) : m_count(0), m_max(N), m_elements(new int[N]()) {}
 
-Span::Span(const Span &src) {
+Span::Span(Span const &src) {
   if (this != &src)
     *this = src;
 }
@@ -100,10 +100,10 @@ int Span::longestSpan() const {
   return getSpan(first, last);
 }
 
-const char *Span::MaxCapacityException::what() const throw() {
+char const *Span::MaxCapacityException::what() const throw() {
   return "Span at max capacity.";
 }
 
-const char *Span::MinElementsException::what() const throw() {
+char const *Span::MinElementsException::what() const throw() {
   return "Span needs at least two elements to search.";
 }
