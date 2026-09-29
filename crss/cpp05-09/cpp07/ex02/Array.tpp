@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 10:35:43 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/29 17:15:00 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/29 21:27:51 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ template <typename T> Array<T>::Array() : m_count(0), m_elements(NULL) {}
 
 template <typename T>
 Array<T>::Array(unsigned int const n)
-    : m_count(n), m_elements(n > 0 ? new T[n] : NULL) {}
+    : m_count(n), m_elements(n > 0 ? new T[n]() : NULL) {}
 
 template <typename T>
 Array<T>::Array(Array<T> const &src) : m_count(0), m_elements(NULL) {
@@ -47,9 +47,14 @@ template <typename T> Array<T> &Array<T>::operator=(Array<T> const &src) {
   if (this != &src) {
     T *temp_elements = NULL;
     if (src.m_count > 0) {
-      temp_elements = new T[src.m_count];
-      for (unsigned int i = 0; i < src.m_count; i++) {
-        temp_elements[i] = src.m_elements[i];
+      try {
+        temp_elements = new T[src.m_count]();
+        for (unsigned int i = 0; i < src.m_count; i++) {
+          temp_elements[i] = src.m_elements[i];
+        }
+      } catch (...) {
+        delete[] temp_elements;
+        throw;
       }
     }
     delete[] m_elements;
@@ -62,11 +67,11 @@ template <typename T> Array<T> &Array<T>::operator=(Array<T> const &src) {
 template <typename T> unsigned int Array<T>::size() const { return m_count; }
 
 template <typename T>
-Array<T>::IndexOutOfBoundsException::IndexOutOfBoundsException(void) throw() {}
+Array<T>::IndexOutOfBoundsException::IndexOutOfBoundsException(void) {}
 
 template <typename T>
 Array<T>::IndexOutOfBoundsException::IndexOutOfBoundsException(
-    IndexOutOfBoundsException const &src) throw() {
+    IndexOutOfBoundsException const &src) {
   *this = src;
 }
 
@@ -76,7 +81,7 @@ Array<T>::IndexOutOfBoundsException::~IndexOutOfBoundsException(void) throw() {}
 template <typename T>
 typename Array<T>::IndexOutOfBoundsException &
 Array<T>::IndexOutOfBoundsException::operator=(
-    IndexOutOfBoundsException const &src) throw() {
+    IndexOutOfBoundsException const &src) {
   (void)src;
   return *this;
 }

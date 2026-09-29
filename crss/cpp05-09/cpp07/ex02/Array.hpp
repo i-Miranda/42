@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 10:35:38 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/29 17:00:28 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/29 21:27:40 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ public:
 
   class IndexOutOfBoundsException : public std::exception {
   public:
-    IndexOutOfBoundsException(void) throw();
-    IndexOutOfBoundsException(IndexOutOfBoundsException const &src) throw();
+    IndexOutOfBoundsException(void);
+    IndexOutOfBoundsException(IndexOutOfBoundsException const &src);
     ~IndexOutOfBoundsException(void) throw();
 
-    IndexOutOfBoundsException &
-    operator=(IndexOutOfBoundsException const &src) throw();
+    IndexOutOfBoundsException &operator=(IndexOutOfBoundsException const &src);
 
     virtual char const *what(void) const throw();
   };

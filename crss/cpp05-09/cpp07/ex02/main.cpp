@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 10:35:32 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/29 16:43:59 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/29 21:09:30 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int main(void) {
   try {
     std::cout
         << "Trying to access an invalid position in an array (array_int[5]): "
-        << array_empty[5] << std::endl;
+        << array_int[5] << std::endl;
   } catch (Array<int>::IndexOutOfBoundsException &e) {
     std::cout << "Exception caught: " << e.what() << std::endl;
   }
