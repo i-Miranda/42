@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 10:35:43 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/29 16:42:38 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/29 17:15:00 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,16 @@ template <typename T> T &Array<T>::operator[](unsigned int const pos) {
 
 template <typename T> Array<T> &Array<T>::operator=(Array<T> const &src) {
   if (this != &src) {
-    T *temp_elements(src.m_elements);
-    for (unsigned int i = 0; i < src.m_count; i++) {
-      temp_elements[i] = src.m_elements[i];
+    T *temp_elements = NULL;
+    if (src.m_count > 0) {
+      temp_elements = new T[src.m_count];
+      for (unsigned int i = 0; i < src.m_count; i++) {
+        temp_elements[i] = src.m_elements[i];
+      }
     }
+    delete[] m_elements;
     m_count = src.m_count;
     m_elements = temp_elements;
-    delete[] temp_elements;
-    temp_elements = NULL;
   }
   return *this;
 }
@@ -60,11 +62,11 @@ template <typename T> Array<T> &Array<T>::operator=(Array<T> const &src) {
 template <typename T> unsigned int Array<T>::size() const { return m_count; }
 
 template <typename T>
-Array<T>::IndexOutOfBoundsException::IndexOutOfBoundsException(void) {}
+Array<T>::IndexOutOfBoundsException::IndexOutOfBoundsException(void) throw() {}
 
 template <typename T>
 Array<T>::IndexOutOfBoundsException::IndexOutOfBoundsException(
-    IndexOutOfBoundsException const &src) {
+    IndexOutOfBoundsException const &src) throw() {
   *this = src;
 }
 
@@ -74,7 +76,7 @@ Array<T>::IndexOutOfBoundsException::~IndexOutOfBoundsException(void) throw() {}
 template <typename T>
 typename Array<T>::IndexOutOfBoundsException &
 Array<T>::IndexOutOfBoundsException::operator=(
-    IndexOutOfBoundsException const &src) {
+    IndexOutOfBoundsException const &src) throw() {
   (void)src;
   return *this;
 }
