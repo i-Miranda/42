@@ -13,21 +13,36 @@
 #ifndef ARRAY_HPP
 #define ARRAY_HPP
 
+#include <exception>
+
 template <typename T> class Array {
 private:
   unsigned int m_count;
   T *m_elements;
 
 public:
-  Array();
+  Array(void);
   Array(unsigned int const n);
   Array(Array<T> const &src);
-  ~Array();
+  ~Array(void);
 
   Array<T> &operator=(Array<T> const &src);
+
   T &operator[](unsigned int const pos);
+  T const &operator[](unsigned int const pos) const;
 
   unsigned int size() const;
+
+  class IndexOutOfBoundsException : public std::exception {
+	public:
+		IndexOutOfBoundsException(void);
+		IndexOutOfBoundsException(IndexOutOfBoundsException const &src);
+		~IndexOutOfBoundsException(void) throw();
+
+		IndexOutOfBoundsException &operator=(IndexOutOfBoundsException const &src);
+
+		virtual char const *what(void) const throw();
+  };
 };
 
 #include "Array.tpp"
