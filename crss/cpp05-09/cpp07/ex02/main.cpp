@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 10:35:32 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/29 22:48:08 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/29 23:15:12 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ int main(void) {
   try {
     std::cout << "Trying to access an empty array (array_empty[0]): "
               << array_empty[0] << std::endl;
-  } catch (Array<int>::IndexOutOfBoundsException &e) {
+  } catch (Array<int>::IndexOutOfBoundsException const &e) {
     std::cout << "Exception caught: " << e.what() << std::endl;
   }
   try {
     std::cout
         << "Trying to access an invalid position in an array (array_int[5]): "
         << array_int[5] << std::endl;
-  } catch (Array<int>::IndexOutOfBoundsException &e) {
+  } catch (Array<int>::IndexOutOfBoundsException const &e) {
     std::cout << "Exception caught: " << e.what() << std::endl;
   }
 
@@ -78,7 +78,23 @@ int main(void) {
 
   std::cout << std::endl;
 
-  std::cout << "--- 4. Complex type tests (std::string) ---" << std::endl;
+  std::cout << "--- 4. Assignment operator tests ---" << std::endl;
+
+  Array<int> array_assigned;
+
+  array_assigned = array_int;
+
+  std::cout << "array_assigned[0]: " << array_assigned[0] << std::endl;
+  std::cout << "array_int[0]: " << array_int[0] << std::endl;
+
+  array_assigned[0] = 50000;
+
+  std::cout << "array_assigned[0]: " << array_assigned[0] << std::endl;
+  std::cout << "array_int[0]: " << array_int[0] << std::endl;
+
+  std::cout << std::endl;
+
+  std::cout << "--- 5. Complex type tests (std::string) ---" << std::endl;
   Array<std::string> array_str(2);
 
   array_str[0] = "Hello";
