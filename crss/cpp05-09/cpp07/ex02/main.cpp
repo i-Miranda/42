@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 10:35:32 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/29 21:09:30 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/29 22:48:08 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int main(void) {
 
   std::cout << "array_copy size: " << array_copy.size() << std::endl;
   for (unsigned int i = 0; i < array_copy.size(); i++) {
-    std::cout << "array_int[" << i << "]: " << array_copy[i] << std::endl;
+    std::cout << "array_copy[" << i << "]: " << array_copy[i] << std::endl;
   }
   std::cout << std::endl;
 
@@ -67,7 +67,7 @@ int main(void) {
 
   std::cout << "array_copy size: " << array_copy.size() << std::endl;
   for (unsigned int i = 0; i < array_copy.size(); i++) {
-    std::cout << "array_int[" << i << "]: " << array_copy[i] << std::endl;
+    std::cout << "array_copy[" << i << "]: " << array_copy[i] << std::endl;
   }
   std::cout << std::endl;
 
@@ -81,8 +81,8 @@ int main(void) {
   std::cout << "--- 4. Complex type tests (std::string) ---" << std::endl;
   Array<std::string> array_str(2);
 
-  array_str[0] = static_cast<std::string>("Hello");
-  array_str[1] = static_cast<std::string>("World");
+  array_str[0] = "Hello";
+  array_str[1] = "World";
 
   std::cout << "Printing array_str[0] + array_str[1]: " << array_str[0] << " "
             << array_str[1] << std::endl;

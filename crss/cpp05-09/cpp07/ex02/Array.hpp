@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 10:35:38 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/29 21:27:40 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/29 22:49:11 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ public:
   T &operator[](unsigned int const pos);
   T const &operator[](unsigned int const pos) const;
 
-  unsigned int size() const;
+  unsigned int size(void) const;
 
   class IndexOutOfBoundsException : public std::exception {
   public:
