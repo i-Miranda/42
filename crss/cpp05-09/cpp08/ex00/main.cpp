@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 16:33:57 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/12 16:34:01 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/09/30 00:01:42 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int main(void) {
     try {
       std::deque<int>::iterator it = easyfind(int_deque, 42);
       std::cout << "Found: " << *it << std::endl;
-    } catch (TNotFoundException &e) {
+    } catch (std::runtime_error const &e) {
       std::cout << "Not found: 42 " << e.what() << std::endl;
     }
 
     try {
       std::deque<int>::iterator it = easyfind(int_deque, 3);
       std::cout << "Found: " << *it << std::endl;
-    } catch (TNotFoundException &e) {
+    } catch (std::runtime_error const &e) {
       std::cout << "Not found: 3 " << e.what() << std::endl;
     }
   }
@@ -53,14 +53,14 @@ int main(void) {
     try {
       std::list<int>::iterator it = easyfind(int_list, 42);
       std::cout << "Found: " << *it << std::endl;
-    } catch (TNotFoundException &e) {
+    } catch (std::runtime_error const &e) {
       std::cout << "Not found: 42 " << e.what() << std::endl;
     }
 
     try {
       std::list<int>::iterator it = easyfind(int_list, 34);
       std::cout << "Found: " << *it << std::endl;
-    } catch (TNotFoundException &e) {
+    } catch (std::runtime_error const &e) {
       std::cout << "Not found: 34 " << e.what() << std::endl;
     }
   }
@@ -77,14 +77,14 @@ int main(void) {
     try {
       std::vector<int>::iterator it = easyfind(int_vect, 42);
       std::cout << "Found: " << *it << std::endl;
-    } catch (TNotFoundException &e) {
+    } catch (std::runtime_error const &e) {
       std::cout << "Not found: 42 " << e.what() << std::endl;
     }
 
     try {
       std::vector<int>::iterator it = easyfind(int_vect, 43);
       std::cout << "Found: " << *it << std::endl;
-    } catch (TNotFoundException &e) {
+    } catch (std::runtime_error const &e) {
       std::cout << "Not found: 43 " << e.what() << std::endl;
     }
   }
