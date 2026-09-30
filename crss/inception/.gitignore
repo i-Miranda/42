@@ -1,0 +1,5 @@
+secrets/*.txt
+inception
+*.swp
+*.swo
+.DS_Store
