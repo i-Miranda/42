@@ -1,0 +1,16 @@
+[mysqld]
+
+# Listen on all network interfaces
+bind-address = 0.0.0.0
+
+# MariaDB's TCP port
+port = 3306
+
+# Directory containing the database files
+datadir = /var/lib/mysql
+
+# Unix socket used for local connections
+socket = /run/mysqld/mysqld.sock
+
+# File containing MariaDB's process ID
+pid-file = /run/mysqld/mysqld.pid
