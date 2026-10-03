@@ -6,11 +6,9 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 18:06:19 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/03 14:26:02 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/03 15:09:38 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#pragma once
 
 #ifndef SPAN_HPP
 #define SPAN_HPP
