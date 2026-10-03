@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 20:20:26 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/03 15:36:06 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/03 15:42:09 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ int main(void) {
     std::cout << *it << std::endl;
     ++it;
   }
+
+  const MutantStack<int> cmstack = mstack;
+
+  MutantStack<int>::const_iterator const_it = cmstack.begin();
+  MutantStack<int>::const_iterator const_ite = cmstack.end();
+
+  while (const_it != const_ite) {
+    std::cout << *const_it << std::endl;
+    ++const_it;
+  }
+
   std::stack<int> s(mstack);
   return 0;
 }
