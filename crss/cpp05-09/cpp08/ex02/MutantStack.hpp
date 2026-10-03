@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 20:20:21 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/03 15:09:14 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/03 15:19:22 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ public:
   typedef typename std::stack<T>::container_type::iterator iterator;
   typedef typename std::stack<T>::container_type::const_iterator const_iterator;
 
-  iterator &begin();
-  iterator &end();
+  iterator begin();
+  iterator end();
 
-  const_iterator &begin() const;
-  const_iterator &end() const;
+  const_iterator begin() const;
+  const_iterator end() const;
 };
 
 #include "MutantStack.tpp"
