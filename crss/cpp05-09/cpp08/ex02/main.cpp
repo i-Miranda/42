@@ -6,12 +6,13 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 20:20:26 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/03 19:13:45 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/03 22:02:12 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MutantStack.hpp"
 
+#include <iostream>
 #include <list>
 
 int main(void) {

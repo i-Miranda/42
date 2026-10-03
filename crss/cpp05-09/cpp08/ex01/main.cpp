@@ -6,12 +6,15 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 18:10:20 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/03 14:52:46 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/03 22:07:48 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 
 int main(void) {
@@ -68,7 +71,16 @@ int main(void) {
 
   try {
     Span ExceptionSpan(5);
+    ExceptionSpan.addNumber(1);
     ExceptionSpan.shortestSpan();
+  } catch (Span::MinElementsException const &e) {
+    std::cout << "Exception caught: " << e.what() << std::endl;
+  }
+
+  try {
+    Span ExceptionSpan(5);
+    ExceptionSpan.addNumber(1);
+    ExceptionSpan.longestSpan();
   } catch (Span::MinElementsException const &e) {
     std::cout << "Exception caught: " << e.what() << std::endl;
   }

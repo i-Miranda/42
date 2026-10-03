@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 18:06:19 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/03 15:09:38 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/03 22:05:38 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ private:
   std::vector<int> m_numbers;
 
 public:
-  Span();
+  Span(void);
   Span(unsigned int N);
   Span(Span const &src);
-  ~Span();
+  ~Span(void);
 
   Span &operator=(Span const &src);
 
@@ -38,10 +38,11 @@ public:
   template <typename InputIterator>
   void addRange(InputIterator first, InputIterator last);
 
-  int shortestSpan() const;
-  int longestSpan() const;
+  unsigned long shortestSpan() const;
+  unsigned long longestSpan() const;
 
-  std::size_t const &size() const;
+  std::size_t size() const;
+  std::size_t capacity() const;
 
   class MaxCapacityException : public std::exception {
   public:
