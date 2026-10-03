@@ -6,99 +6,76 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 18:06:15 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/09/23 13:37:24 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/03 14:22:52 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
-#include <cstddef>
-#include <iostream>
 
-Span::Span() : m_count(0), m_max(0), m_elements(NULL) {}
+Span::Span() : m_max_size(0), m_numbers() {}
 
-Span::Span(unsigned int N) : m_count(0), m_max(N), m_elements(new int[N]()) {}
-
-Span::Span(Span const &src) {
-  if (this != &src)
-    *this = src;
+Span::Span(unsigned int N)
+    : m_max_size(static_cast<std::size_t>(N)), m_numbers() {
+  m_numbers.reserve(m_max_size);
 }
-Span::~Span() { delete[] m_elements; }
 
-Span &Span::operator=(const Span &src) {
-  m_count = src.m_count;
-  m_max = src.m_max;
-  m_elements = new int[m_count]();
-  for (unsigned int i = 0; i < m_count; i++) {
-    m_elements[i] = src.m_elements[i];
+Span::Span(Span const &src) { *this = src; }
+
+Span::~Span() {}
+
+Span &Span::operator=(Span const &src) {
+  if (this != &src) {
+    m_max_size = src.m_max_size;
+    m_numbers = src.m_numbers;
   }
   return *this;
 }
 
-int *Span::findLowest() const {
-  if (m_count <= 1)
-    throw MinElementsException();
-  int *lowest = &m_elements[0];
-  for (unsigned int curr = 0; curr < m_count; ++curr) {
-    if (m_elements[curr] < *lowest)
-      lowest = &m_elements[curr];
-  }
-  return lowest;
+int const &Span::operator[](std::size_t n) const {
+  if (n >= m_numbers.size())
+    throw Span::IndexOutOfRangeException();
+  return m_numbers[n];
 }
 
-int *Span::findHighest() const {
-  if (m_count <= 1)
-    throw MinElementsException();
-  int *highest = &m_elements[0];
-  for (unsigned int curr = 0; curr < m_count; ++curr) {
-    if (m_elements[curr] > *highest)
-      highest = &m_elements[curr];
-  }
-  return highest;
-}
-
-int Span::getSpan(int &first, int &last) const {
-  if (first >= last)
-    return first - last;
-  return last - first;
+int &Span::operator[](std::size_t n) {
+  return const_cast<int &>(static_cast<Span const &>(*this)[n]);
 }
 
 void Span::addNumber(int number) {
-  if (m_count >= m_max)
-    throw MaxCapacityException();
-  m_elements[m_count] = number;
-  m_count++;
+  if (m_numbers.size() >= m_max_size)
+    throw Span::MaxCapacityException();
+  m_numbers.push_back(number);
 }
 
-template <typename InputIterator>
-void addRange(InputIterator first, InputIterator last) {}
-
 int Span::shortestSpan() const {
-  int shortestSpan = longestSpan();
-  for (unsigned int currentPos = 0; currentPos < m_count; currentPos++) {
-    int first_val = m_elements[currentPos];
-    for (unsigned int nextPos = currentPos + 1; nextPos < m_count; nextPos++) {
-      int next_val = m_elements[nextPos];
-      int currentSpan = getSpan(first_val, next_val);
-      if (currentSpan < shortestSpan)
-        shortestSpan = currentSpan;
-    }
+  if (m_numbers.size() < 2)
+    throw Span::MinElementsException();
+
+  std::vector<int> sorted(m_numbers);
+  std::sort(sorted.begin(), sorted.end());
+
+  int shortest = sorted[1] - sorted[0];
+
+  for (std::size_t i = 2; i < sorted.size(); i++) {
+    int distance = sorted[i] - sorted[i - 1];
+
+    if (distance < shortest)
+      shortest = distance;
   }
-  return shortestSpan;
+  return shortest;
 }
 
 int Span::longestSpan() const {
-  int first;
-  int last;
+  if (m_numbers.size() < 2)
+    throw Span::MinElementsException();
 
-  try {
-    first = *findHighest();
-    last = *findLowest();
-  } catch (Span::MinElementsException &e) {
-    std::cout << e.what() << std::endl;
-  }
+  int lowest = *std::min_element(m_numbers.begin(), m_numbers.end());
+  int highest = *std::max_element(m_numbers.begin(), m_numbers.end());
 
-  return getSpan(first, last);
+  return highest - lowest;
 }
+
+std::size_t const &Span::size() const { return m_max_size; }
 
 char const *Span::MaxCapacityException::what() const throw() {
   return "Span at max capacity.";
@@ -106,4 +83,8 @@ char const *Span::MaxCapacityException::what() const throw() {
 
 char const *Span::MinElementsException::what() const throw() {
   return "Span needs at least two elements to search.";
+}
+
+char const *Span::IndexOutOfRangeException::what() const throw() {
+  return "The requested index out of the Span's current range.";
 }
