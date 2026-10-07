@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 12:59:35 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/06 13:16:44 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/07 11:14:33 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,19 @@ class RPN {
 private:
   std::stack<int> m_stack;
 
+  void clear_stack(void);
+  bool is_single_digit(char c) const;
+  bool is_operator(char c) const;
+  int perform_operation(int a, char oper, int b);
+
 public:
   RPN(void);
-  RPN(std::string const &input);
   RPN(RPN const &src);
   ~RPN(void);
 
   RPN &operator=(RPN const &src);
+
+  int calculate(std::string const &input);
 };
 
 #endif
