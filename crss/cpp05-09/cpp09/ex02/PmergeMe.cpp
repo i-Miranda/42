@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/07 13:21:46 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/07 13:45:51 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,13 @@ PmergeMe &PmergeMe::operator=(PmergeMe const &src) {
   return *this;
 }
 
-void PmergeMe::parseArgs(int argc, char *argv[]) {}
-
-void PmergeMe::sort(void) {}
+void PmergeMe::sort(int argc, char *argv[]) {}
 
 void PmergeMe::printResults(void) {
-
   std::cout << "Before: \t" << input << std::endl;
   std::cout << "After: \t" << output << std::endl;
   std::cout << "Time to process a range of \t" << pmerge.getDeque().count()
-            << " elements with std::deque : " << pmerge.getDequeTime()
-            << std::endl;
+            << " elements with std::deque : " << end_deque << std::endl;
   std::cout << "Time to process a range of \t" << pmerge.getVector().count()
-            << " elements with std::vector : " << pmerge.getVectorTime()
-            << std::endl;
+            << " elements with std::vector : " << end_vector << std::endl;
 }
