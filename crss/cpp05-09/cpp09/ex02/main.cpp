@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/07 13:22:21 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/08 12:39:08 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int main(int argc, char *argv[]) {
   std::string output;
 
   try {
-    pmerge.parseArgs(argc, argv);
+    pmerge.parseAndPrintArgs(argc, argv);
 
-    pmerge.sort();
+    pmerge.sort(argc, argv);
     pmerge.printResults();
 
   } catch (std::exception const &e) {

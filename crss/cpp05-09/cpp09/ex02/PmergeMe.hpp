@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:45 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/08 10:38:26 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/08 13:09:04 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 class PmergeMe {
 private:
+  std::vector<int> m_input;
+
   std::deque<int> m_deque;
   std::vector<int> m_vector;
 
