@@ -6,14 +6,13 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/09 13:40:11 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/09 17:09:18 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
 #include <algorithm>
-#include <cctype>
 #include <climits>
 #include <iomanip>
 #include <iostream>
@@ -203,7 +202,7 @@ std::string PmergeMe::calculateAndFormatUs(std::clock_t start,
       static_cast<double>(end - start) * 1000000.0 / CLOCKS_PER_SEC;
 
   std::ostringstream out;
-  out << std::fixed << std::setprecision(5) << microseconds << " us";
+  out << std::fixed << std::setprecision(5) << microseconds;
 
   std::string result = out.str();
   while (!result.empty() && result[result.size() - 1] == '0')
@@ -211,7 +210,7 @@ std::string PmergeMe::calculateAndFormatUs(std::clock_t start,
   if (!result.empty() && result[result.size() - 1] == '.')
     result.erase(result.size() - 1);
 
-  return result;
+  return result + " us";
 }
 
 void PmergeMe::printResults(int argc, char *argv[]) {
