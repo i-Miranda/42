@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:45 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/08 13:09:04 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/09 11:51:53 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 
 class PmergeMe {
 private:
-  std::vector<int> m_input;
-
   std::deque<int> m_deque;
   std::vector<int> m_vector;
 
@@ -31,8 +29,14 @@ private:
   std::clock_t m_end_vector;
 
   bool is_numeric(std::string const &str);
+  template <typename T> void parseArgs(int argc, char *argv[], T &out);
+
+  template <typename T> void fordJohnson(T &values);
   void sort_deque(int argc, char *argv[]);
   void sort_vector(int argc, char *argv[]);
+
+  double calculateMs(std::clock_t start, std::clock_t end);
+  void printResults(int argc, char *argv[]);
 
 public:
   PmergeMe(void);
@@ -41,9 +45,7 @@ public:
 
   PmergeMe &operator=(PmergeMe const &src);
 
-  void parseAndPrintArgs(int argc, char *argv[]);
   void sort(int argc, char *argv[]);
-  void printResults(void);
 };
 
 #endif
