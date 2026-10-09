@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:45 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/09 11:51:53 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/09 13:19:24 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,36 @@ private:
 
   bool is_numeric(std::string const &str);
   template <typename T> void parseArgs(int argc, char *argv[], T &out);
+
+  template <typename T>
+  void collectPairs(
+      T const &values,
+      std::vector<std::pair<typename T::value_type, typename T::value_type> >
+          &pairs,
+      T &winners, bool &hasStray, typename T::value_type &stray);
+
+  template <typename T>
+  void sortPairsByWinner(
+      std::vector<std::pair<typename T::value_type,
+                            typename T::value_type> > const &pairs,
+      T &winners,
+      std::vector<std::pair<typename T::value_type, typename T::value_type> >
+          &sortedPairs);
+
+  template <typename T>
+  void buildMainChain(
+      std::vector<std::pair<typename T::value_type,
+                            typename T::value_type> > const &sortedPairs,
+      T &chain);
+
+  std::vector<std::size_t> makeInsertionOrder(std::size_t pairCount,
+                                              bool hasStray);
+  template <typename T>
+  void insertPendingValues(
+      T &chain,
+      std::vector<std::pair<typename T::value_type,
+                            typename T::value_type> > const &sortedPairs,
+      bool hasStray, int stray, std::vector<std::size_t> const &insertionOrder);
 
   template <typename T> void fordJohnson(T &values);
   void sort_deque(int argc, char *argv[]);

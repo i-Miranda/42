@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/09 12:25:56 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/09 13:19:43 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,13 @@ bool PmergeMe::is_numeric(std::string const &str) {
          str.find_first_not_of("0123456789") == std::string::npos;
 }
 
-template <typename T> void PmergeMe::fordJohnson(T &values) {
-  std::size_t const n = values.size();
-  if (n < 2)
-    return;
-  std::vector<std::pair<typename T::value_type, typename T::value_type> > pairs;
-  T winners;
-
-  typename T::value_type stray = typename T::value_type();
-
+template <typename T>
+void PmergeMe::collectPairs(
+    T const &values,
+    std::vector<std::pair<typename T::value_type, typename T::value_type> >
+        &pairs,
+    T &winners, bool &hasStray, typename T::value_type &stray) {
+  hasStray = false;
   typename T::const_iterator it = values.begin();
   while (it != values.end()) {
     typename T::value_type first = *it++;
@@ -71,13 +69,20 @@ template <typename T> void PmergeMe::fordJohnson(T &values) {
         first, second));
     winners.push_back(second);
   }
+}
 
+template <typename T>
+void PmergeMe::sortPairsByWinner(
+    std::vector<std::pair<typename T::value_type,
+                          typename T::value_type> > const &pairs,
+    T &winners,
+    std::vector<std::pair<typename T::value_type, typename T::value_type> >
+        &sortedPairs) {
+  // Recursively sort the larger value from each pair
   fordJohnson(winners);
 
-  std::vector<std::pair<typename T::value_type, typename T::value_type> >
-      sortedPairs;
+  // Restore each winner's original pair, preserving the pair relationship.
   std::vector<bool> used(pairs.size(), false);
-
   for (std::size_t i = 0; i < winners.size(); i++) {
     std::size_t j = 0;
     while (j < pairs.size() && (used[j] || pairs[j].second != winners[i]))
@@ -87,15 +92,22 @@ template <typename T> void PmergeMe::fordJohnson(T &values) {
     used[j] = true;
     sortedPairs.push_back(pairs[j]);
   }
+}
 
-  T chain;
+template <typename T>
+void PmergeMe::buildMainChain(
+    std::vector<std::pair<typename T::value_type,
+                          typename T::value_type> > const &sortedPairs,
+    T &chain) {
   chain.push_back(sortedPairs[0].first);
   for (std::size_t i = 0; i < sortedPairs.size(); i++)
     chain.push_back(sortedPairs[i].second);
+}
 
-  std::size_t const maxIndex = sortedPairs.size() + (n % 2);
-
-  std::vector<std::size_t> insertionOrder;
+std::vector<std::size_t> PmergeMe::makeInsertionOrder(std::size_t pairCount,
+                                                      bool hasStray) {
+  std::size_t const maxIndex = pairCount + (hasStray ? 1 : 0);
+  std::vector<std::size_t> order;
   std::size_t previous = 1;
   std::size_t current = 3;
 
@@ -103,13 +115,21 @@ template <typename T> void PmergeMe::fordJohnson(T &values) {
     std::size_t const top = (current < maxIndex) ? current : maxIndex;
 
     for (std::size_t index = top; index > previous; --index)
-      insertionOrder.push_back(index);
+      order.push_back(index);
 
     std::size_t const next = current + 2 * previous;
     previous = current;
     current = next;
   }
+  return order;
+}
 
+template <typename T>
+void PmergeMe::insertPendingValues(
+    T &chain,
+    std::vector<std::pair<typename T::value_type,
+                          typename T::value_type> > const &sortedPairs,
+    bool hasStray, int stray, std::vector<std::size_t> const &insertionOrder) {
   for (std::size_t i = 0; i < insertionOrder.size(); i++) {
     std::size_t const index = insertionOrder[i];
     typename T::value_type pending;
@@ -120,6 +140,8 @@ template <typename T> void PmergeMe::fordJohnson(T &values) {
       searchEnd = std::lower_bound(chain.begin(), chain.end(),
                                    sortedPairs[index - 1].second);
     } else {
+      if (!hasStray)
+        throw std::runtime_error("Error");
       pending = stray;
       searchEnd = chain.end();
     }
@@ -127,6 +149,30 @@ template <typename T> void PmergeMe::fordJohnson(T &values) {
         std::lower_bound(chain.begin(), searchEnd, pending);
     chain.insert(position, pending);
   }
+}
+
+template <typename T> void PmergeMe::fordJohnson(T &values) {
+  if (values.size() < 2)
+    return;
+
+  std::vector<std::pair<typename T::value_type, typename T::value_type> > pairs;
+  T winners;
+  bool hasStray = false;
+  typename T::value_type stray = typename T::value_type();
+
+  collectPairs(values, pairs, winners, hasStray, stray);
+
+  std::vector<std::pair<typename T::value_type, typename T::value_type> >
+      sortedPairs;
+  sortPairsByWinner(pairs, winners, sortedPairs);
+
+  T chain;
+  buildMainChain(sortedPairs, chain);
+
+  std::vector<std::size_t> insertionOrder =
+      makeInsertionOrder(sortedPairs.size(), hasStray);
+
+  insertPendingValues(chain, sortedPairs, hasStray, stray, insertionOrder);
 
   values.swap(chain);
 }
