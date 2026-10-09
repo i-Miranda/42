@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/09 13:19:43 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/09 13:40:11 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <algorithm>
 #include <cctype>
 #include <climits>
+#include <iomanip>
 #include <iostream>
 #include <sstream>
 
@@ -60,6 +61,7 @@ void PmergeMe::collectPairs(
     typename T::value_type first = *it++;
     if (it == values.end()) {
       stray = first;
+      hasStray = true;
       break;
     }
     typename T::value_type second = *it++;
@@ -99,6 +101,7 @@ void PmergeMe::buildMainChain(
     std::vector<std::pair<typename T::value_type,
                           typename T::value_type> > const &sortedPairs,
     T &chain) {
+  // The first smaller value starts the chain. All winners follow it.
   chain.push_back(sortedPairs[0].first);
   for (std::size_t i = 0; i < sortedPairs.size(); i++)
     chain.push_back(sortedPairs[i].second);
@@ -111,6 +114,7 @@ std::vector<std::size_t> PmergeMe::makeInsertionOrder(std::size_t pairCount,
   std::size_t previous = 1;
   std::size_t current = 3;
 
+  // Generate Jacobsthal-based groups, inserting each group in reverse.
   while (previous < maxIndex) {
     std::size_t const top = (current < maxIndex) ? current : maxIndex;
 
@@ -136,10 +140,12 @@ void PmergeMe::insertPendingValues(
     typename T::iterator searchEnd;
 
     if (index <= sortedPairs.size()) {
+      // Search only before this pending value's paired winner.
       pending = sortedPairs[index - 1].first;
       searchEnd = std::lower_bound(chain.begin(), chain.end(),
                                    sortedPairs[index - 1].second);
     } else {
+      // The unpaired value has no winner to limit its search range.
       if (!hasStray)
         throw std::runtime_error("Error");
       pending = stray;
@@ -191,8 +197,21 @@ void PmergeMe::sort_vector(int argc, char *argv[]) {
   m_end_vector = std::clock();
 }
 
-double PmergeMe::calculateMs(std::clock_t start, std::clock_t end) {
-  return static_cast<double>(end - start) * 1000.0 / CLOCKS_PER_SEC;
+std::string PmergeMe::calculateAndFormatUs(std::clock_t start,
+                                           std::clock_t end) {
+  double const microseconds =
+      static_cast<double>(end - start) * 1000000.0 / CLOCKS_PER_SEC;
+
+  std::ostringstream out;
+  out << std::fixed << std::setprecision(5) << microseconds << " us";
+
+  std::string result = out.str();
+  while (!result.empty() && result[result.size() - 1] == '0')
+    result.erase(result.size() - 1);
+  if (!result.empty() && result[result.size() - 1] == '.')
+    result.erase(result.size() - 1);
+
+  return result;
 }
 
 void PmergeMe::printResults(int argc, char *argv[]) {
@@ -207,12 +226,13 @@ void PmergeMe::printResults(int argc, char *argv[]) {
   for (size_t i = 0; i < m_vector.size(); i++)
     std::cout << m_vector[i] << (i + 1 == m_vector.size() ? "" : " ");
   std::cout << std::endl;
+  std::cout << std::fixed << std::setprecision(5);
   std::cout << "Time to process a range of " << m_deque.size()
             << " elements with std::deque : "
-            << calculateMs(m_start_deque, m_end_deque) << std::endl;
+            << calculateAndFormatUs(m_start_deque, m_end_deque) << std::endl;
   std::cout << "Time to process a range of " << m_vector.size()
             << " elements with std::vector : "
-            << calculateMs(m_start_vector, m_end_vector) << std::endl;
+            << calculateAndFormatUs(m_start_vector, m_end_vector) << std::endl;
 }
 
 PmergeMe::PmergeMe(void) {}

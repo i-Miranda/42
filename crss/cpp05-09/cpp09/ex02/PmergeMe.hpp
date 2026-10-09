@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:45 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/09 13:19:24 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/09 13:39:34 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ private:
   void sort_deque(int argc, char *argv[]);
   void sort_vector(int argc, char *argv[]);
 
-  double calculateMs(std::clock_t start, std::clock_t end);
+  std::string calculateAndFormatUs(std::clock_t start, std::clock_t end);
   void printResults(int argc, char *argv[]);
 
 public:
