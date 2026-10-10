@@ -6,13 +6,14 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/10 16:07:18 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/10 16:50:03 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
 #include <algorithm>
+#include <cerrno>
 #include <climits>
 #include <cstdlib>
 #include <iomanip>
@@ -33,8 +34,9 @@ template <typename T> void PmergeMe::parseArgs(int argc, char *argv[], T &out) {
       if (!is_numeric(token))
         throw std::runtime_error("Error");
 
+      errno = 0;
       long value = std::strtol(token.c_str(), NULL, 10);
-      if (value < 0 || value > INT_MAX)
+      if (errno == ERANGE || value <= 0 || value > INT_MAX)
         throw std::runtime_error("Error");
 
       out.push_back(static_cast<int>(value));
