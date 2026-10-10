@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/05 09:53:37 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/10 17:06:22 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/10 17:33:51 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,10 @@ float BitcoinExchange::string_to_float(std::string const &str) {
   char *end;
   char const *start = str.c_str();
   errno = 0;
-  float value = std::strtof(start, &end);
+  double value = std::strtod(start, &end);
 
-  if (start == end || errno == ERANGE)
+  if (start == end || errno == ERANGE || value != value || value > FLT_MAX ||
+      value < -FLT_MAX)
     throw std::runtime_error("Error: invalid number => " + str);
 
   while (*end && std::isspace(static_cast<unsigned char>(*end)))
@@ -67,7 +68,7 @@ float BitcoinExchange::string_to_float(std::string const &str) {
 
   if (*end != '\0')
     throw std::runtime_error("Error: invalid number => " + str);
-  return value;
+  return static_cast<float>(value);
 }
 
 void BitcoinExchange::init_database(std::string const &db_path) {
