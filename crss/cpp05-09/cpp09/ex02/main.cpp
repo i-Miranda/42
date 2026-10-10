@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:41 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/09 10:11:56 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/10 13:52:02 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ int main(int argc, char *argv[]) {
     return 1;
   }
   PmergeMe pmerge;
-  std::string input;
-  std::string output;
 
   try {
     pmerge.sort(argc, argv);
   } catch (std::exception const &e) {
     std::cerr << "Error" << std::endl;
+    return 1;
   }
 
   return 0;

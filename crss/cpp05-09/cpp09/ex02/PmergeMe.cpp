@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/09 17:09:18 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/10 14:19:02 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,13 @@ void PmergeMe::collectPairs(
     T &winners, bool &hasStray, typename T::value_type &stray) {
   hasStray = false;
   typename T::const_iterator it = values.begin();
+
+  // Pair neighboring values. Put the smaller value first and the larger second.
+  // The larger values are stored in winners which will be recursively sorted.
   while (it != values.end()) {
     typename T::value_type first = *it++;
     if (it == values.end()) {
+      // odd sized input has a value that is left without a partner.
       stray = first;
       hasStray = true;
       break;
@@ -79,13 +83,19 @@ void PmergeMe::sortPairsByWinner(
     T &winners,
     std::vector<std::pair<typename T::value_type, typename T::value_type> >
         &sortedPairs) {
-  // Recursively sort the larger value from each pair
+  // Recursively sort the larger value from each pair (the winners)
+  // By sorting the winners, the original pairs can be sorted again because of
+  // the winners being sorted.
   fordJohnson(winners);
 
   // Restore each winner's original pair, preserving the pair relationship.
+  // the used vector ensures that duplicate winner values are matched to
+  // separate original pairs.
   std::vector<bool> used(pairs.size(), false);
   for (std::size_t i = 0; i < winners.size(); i++) {
     std::size_t j = 0;
+
+    // Find the original pair for the sorted winner.
     while (j < pairs.size() && (used[j] || pairs[j].second != winners[i]))
       j++;
     if (j == pairs.size())
@@ -101,15 +111,26 @@ void PmergeMe::buildMainChain(
                           typename T::value_type> > const &sortedPairs,
     T &chain) {
   // The first smaller value starts the chain. All winners follow it.
+  // Start with b1, the smaller value from the first pair.
+  // Its paired winner is a1, so b1 is already known to belong before a1.
   chain.push_back(sortedPairs[0].first);
+
+  // Add all sorted winners: a1, a2, a3, etc.
+  // now the chain would be: b1, a1, a2, a3, etc.
   for (std::size_t i = 0; i < sortedPairs.size(); i++)
     chain.push_back(sortedPairs[i].second);
 }
 
 std::vector<std::size_t> PmergeMe::makeInsertionOrder(std::size_t pairCount,
                                                       bool hasStray) {
+  // b1 is already placed at the start of the main chain.
+  // the remaining pending values are b2 ... bN, included the stray if it
+  // exists.
   std::size_t const maxIndex = pairCount + (hasStray ? 1 : 0);
   std::vector<std::size_t> order;
+
+  // Jacobsthal group boundaries: 1, 3, 5 ,11, 21, ...
+  // Jacobsthal math: J_0 = 0; J_1 = 1; J_n = J_n-1 + 2J_n-2
   std::size_t previous = 1;
   std::size_t current = 3;
 
@@ -117,6 +138,8 @@ std::vector<std::size_t> PmergeMe::makeInsertionOrder(std::size_t pairCount,
   while (previous < maxIndex) {
     std::size_t const top = (current < maxIndex) ? current : maxIndex;
 
+    // Insert each group in descending index order:
+    // b3, b2; then b5, b4; then b11, b10 etc...
     for (std::size_t index = top; index > previous; --index)
       order.push_back(index);
 
@@ -150,6 +173,8 @@ void PmergeMe::insertPendingValues(
       pending = stray;
       searchEnd = chain.end();
     }
+
+    // Find the sorted insertion position within the permitted range.
     typename T::iterator position =
         std::lower_bound(chain.begin(), searchEnd, pending);
     chain.insert(position, pending);
