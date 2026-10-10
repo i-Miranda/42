@@ -6,20 +6,19 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 12:59:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/07 11:16:04 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/10 11:50:49 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPN.hpp"
 
+#include <cctype>
 #include <stdexcept>
 
 void RPN::clear_stack(void) {
   while (!m_stack.empty())
     m_stack.pop();
 }
-
-bool RPN::is_single_digit(char c) const { return (c >= '0' && c <= '9'); }
 
 bool RPN::is_operator(char c) const {
   return (c == '+' || c == '-' || c == '*' || c == '/');
@@ -59,10 +58,10 @@ int RPN::calculate(std::string const &input) {
   for (size_t i = 0; i < input.length(); i++) {
     char c = input[i];
 
-    if (c == ' ')
+    if (std::isspace(static_cast<unsigned char>(c)))
       continue;
 
-    if (is_single_digit(c)) {
+    if (std::isdigit(static_cast<unsigned char>(c))) {
       m_stack.push(c - '0');
     } else if (is_operator(c)) {
       if (m_stack.size() < 2)
