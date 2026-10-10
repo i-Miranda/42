@@ -6,7 +6,7 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 12:32:50 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/10 14:19:02 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/10 16:07:18 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 #include <algorithm>
 #include <climits>
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 
 template <typename T> void PmergeMe::parseArgs(int argc, char *argv[], T &out) {
   out.clear();
@@ -190,15 +192,19 @@ template <typename T> void PmergeMe::fordJohnson(T &values) {
   bool hasStray = false;
   typename T::value_type stray = typename T::value_type();
 
+  // Pairs the values, sorts the winners
   collectPairs(values, pairs, winners, hasStray, stray);
 
   std::vector<std::pair<typename T::value_type, typename T::value_type> >
       sortedPairs;
+  // Restores the pairs in the sorted winner order
   sortPairsByWinner(pairs, winners, sortedPairs);
 
+  // Build the initial chain starting with b1 and all sorted winners
   T chain;
   buildMainChain(sortedPairs, chain);
 
+  // Insert the remaining smaller values in Jacobsthal order
   std::vector<std::size_t> insertionOrder =
       makeInsertionOrder(sortedPairs.size(), hasStray);
 
@@ -250,7 +256,6 @@ void PmergeMe::printResults(int argc, char *argv[]) {
   for (size_t i = 0; i < m_vector.size(); i++)
     std::cout << m_vector[i] << (i + 1 == m_vector.size() ? "" : " ");
   std::cout << std::endl;
-  std::cout << std::fixed << std::setprecision(5);
   std::cout << "Time to process a range of " << m_deque.size()
             << " elements with std::deque : "
             << calculateAndFormatUs(m_start_deque, m_end_deque) << std::endl;
