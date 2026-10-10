@@ -6,13 +6,14 @@
 /*   By: ivmirand <ivmirand@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 12:59:31 by ivmirand          #+#    #+#             */
-/*   Updated: 2026/10/10 11:50:49 by ivmirand         ###   ########.fr       */
+/*   Updated: 2026/10/10 12:13:05 by ivmirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPN.hpp"
 
 #include <cctype>
+#include <climits>
 #include <stdexcept>
 
 void RPN::clear_stack(void) {
@@ -25,20 +26,29 @@ bool RPN::is_operator(char c) const {
 }
 
 int RPN::perform_operation(int a, char oper, int b) {
+  long result;
   switch (oper) {
   case '+':
-    return (a + b);
+    result = static_cast<long>(a) + b;
+    break;
   case '-':
-    return (a - b);
+    result = static_cast<long>(a) - b;
+    break;
   case '*':
-    return (a * b);
+    result = static_cast<long>(a) * b;
+    break;
   case '/':
-    if (b == 0)
+    if (b == 0 || (a == INT_MIN && b == -1))
       throw std::runtime_error("Error");
-    return (a / b);
+    result = a / b;
+    break;
   default:
     throw std::runtime_error("Error");
   }
+
+  if (result < INT_MIN || result > INT_MAX)
+    throw std::runtime_error("Error");
+  return static_cast<int>(result);
 }
 
 RPN::RPN(void) {}
