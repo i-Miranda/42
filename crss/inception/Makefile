@@ -8,7 +8,7 @@ REMOTE_DATA := /home/ivmirand/data
 SSH_VM := ssh -p $(SSH_PORT) $(SSH_USER)@$(SSH_HOST)
 RSYNC_SSH := ssh -p $(SSH_PORT)
 
-.PHONY: all clean fclean db
+.PHONY: all clean fclean db secrets
 
 # ... tus otras reglas como all, clean, re ...
 all: secrets
