@@ -2,3 +2,5 @@ inception
 *.swp
 *.swo
 .DS_Store
+
+/secrets/

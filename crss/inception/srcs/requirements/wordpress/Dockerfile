@@ -22,6 +22,9 @@ COPY	conf/www.conf	/etc/php/8.2/fpm/pool.d/www.conf
 
 RUN		mkdir -p /run/php
 
+COPY tools/entrypoint.sh /usr/local/bin/wordpress-entrypoint
+RUN chmod +x /usr/local/bin/wordpress-entrypoint
+
 # Documents PHP-FPM's default listening port
 	# EXPOSE does NOT publish the port to the host.
 	# Publishing must be done with:
@@ -29,4 +32,4 @@ RUN		mkdir -p /run/php
 EXPOSE	9000
 
 # Run PHP-FPM in the foreground
-CMD		["php-fpm8.2", "-F"]
+CMD		["/usr/local/bin/wordpress-entrypoint"]
