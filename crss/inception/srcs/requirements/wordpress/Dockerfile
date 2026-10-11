@@ -18,7 +18,7 @@ RUN		apt-get update && \
 		rm -rf /var/lib/apt/lists/*
 
 # Replace the default PHP-FPM configuration
-COPY	copy/www.conf	/etc/php/8.2/fpm/pool.d/www.conf
+COPY	conf/www.conf	/etc/php/8.2/fpm/pool.d/www.conf
 
 RUN		mkdir -p /run/php
 
