@@ -20,6 +20,10 @@ COPY	conf/mariadb.cnf /etc/mysql/mariadb.conf.d/99-inception.cnf
 RUN		mkdir -p /run/mysqld && \
 		chown -R mysql:mysql /run/mysqld /var/lib/mysql
 
+# Copy your custom entrypoint script into the container
+COPY tools/entrypoint.sh /usr/local/bin/mariadb-entrypoint
+RUN chmod +x /usr/local/bin/mariadb-entrypoint
+
 # Documents MariaDB's default listening port
 	# EXPOSE does NOT publish the port to the host.
 	# Publishing must be done with:
@@ -29,4 +33,4 @@ EXPOSE	3306
 # Run MariaDB with user mysql and keeps the logs attached to the container's
 	# STDOUT & STDERR. This makes them visible with:
 		# docker logs <container-name>
-CMD		["mariadbd", "--user=mysql", "--console"]
+CMD		["/usr/local/bin/mariadb-entrypoint"]

@@ -17,6 +17,11 @@ RUN		apt-get update && \
 		ca-certificates && \
 		rm -rf /var/lib/apt/lists/*
 
+RUN curl -fSL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    -o /usr/local/bin/wp \
+    && chmod +x /usr/local/bin/wp \
+    && wp --info
+
 # Replace the default PHP-FPM configuration
 COPY	conf/www.conf	/etc/php/8.2/fpm/pool.d/www.conf
 
