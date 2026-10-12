@@ -43,6 +43,10 @@ tunnel:
 		-L $(LOCAL_PORT):$(LOCAL_HOST):$(REMOTE_PORT) \
 		$(SSH_USER)@$(HOST_ONLY_IP)
 
+tunnel-stop:
+	-ssh -S $(TUNNEL_SOCKET) -O exit -p $(SSH_PORT) $(SSH_USER)@$(HOST_ONLY_IP)
+	rm -f $(TUNNEL_SOCKET)
+
 db:
 	@echo "Connecting to MariaDB inside the Inception VM..."
 	@$(SSH_VM) -t "docker exec -it mariadb mariadb -u root -p"

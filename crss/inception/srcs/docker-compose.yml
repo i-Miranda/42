@@ -14,7 +14,11 @@ services:
       - db_root_password
 
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - type: volume
+        source: mariadb_data
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
 
     networks:
       - inception
