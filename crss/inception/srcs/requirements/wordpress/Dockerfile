@@ -36,5 +36,7 @@ RUN chmod +x /usr/local/bin/wordpress-entrypoint
 		# docker run -p 9000:9000 <container-name>
 EXPOSE	9000
 
+STOPSIGNAL SIGTERM
+
 # Run PHP-FPM in the foreground
 CMD		["/usr/local/bin/wordpress-entrypoint"]

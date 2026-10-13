@@ -30,6 +30,8 @@ RUN chmod +x /usr/local/bin/mariadb-entrypoint
 		# docker run -p 3306:3306 <container-name>
 EXPOSE	3306
 
+STOPSIGNAL SIGTERM
+
 # Run MariaDB with user mysql and keeps the logs attached to the container's
 	# STDOUT & STDERR. This makes them visible with:
 		# docker logs <container-name>

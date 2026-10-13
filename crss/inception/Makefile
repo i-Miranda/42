@@ -12,16 +12,9 @@ RSYNC_SSH := ssh -p $(SSH_PORT)
 
 TUNNEL_SOCKET := /tmp/tunnel_socket
 
-.PHONY: all clean fclean re ssh db tunnel secrets deepclean
+.PHONY: all clean fclean re bonus upload build ssh db tunnel secrets deepclean
 
-all: secrets
-	@echo "Uploading Inception repo to the virtual machine..."
-	$(SSH_VM) 'mkdir -p $(REMOTE_DIR) $(REMOTE_DATA)/wordpress $(REMOTE_DATA)/mariadb'
-	rsync -az --delete -e '$(RSYNC_SSH)' ./ $(SSH_USER)@$(LOCAL_HOST):$(REMOTE_DIR)/
-	@echo "Building and starting Inception..."
-	$(SSH_VM) 'cd $(REMOTE_DIR) && docker compose -f srcs/docker-compose.yml up -d --build'
-	@echo "Connecting the Inception virtual machine..."
-	$(SSH_VM)
+all: upload build ssh
 
 clean:
 	$(SSH_VM) 'cd $(REMOTE_DIR) && docker compose -f srcs/docker-compose.yml down'
@@ -32,7 +25,19 @@ fclean:
 
 re: fclean all
 
+bonus: all
+
+upload: secrets
+	@echo "Uploading Inception repo to the virtual machine..."
+	$(SSH_VM) 'mkdir -p $(REMOTE_DIR) $(REMOTE_DATA)/wordpress $(REMOTE_DATA)/mariadb'
+	rsync -az --delete -e '$(RSYNC_SSH)' ./ $(SSH_USER)@$(LOCAL_HOST):$(REMOTE_DIR)/
+
+build:
+	@echo "Building and starting Inception..."
+	$(SSH_VM) 'cd $(REMOTE_DIR) && docker compose -f srcs/docker-compose.yml up -d --build'
+
 ssh:
+	@echo "Connecting the Inception virtual machine..."
 	$(SSH_VM)
 
 tunnel:

@@ -36,5 +36,9 @@ RUN		mkdir -p /etc/nginx/ssl && \
 # Replace the default Nginx configuration
 COPY	conf/nginx.conf /etc/nginx/nginx.conf
 
+EXPOSE 	443
+
+STOPSIGNAL SIGTERM
+
 # Run Nginx in the foreground
 CMD		["nginx", "-g", "daemon off;"]
