@@ -12,29 +12,39 @@ RSYNC_SSH := ssh -p $(SSH_PORT)
 
 TUNNEL_SOCKET := /tmp/tunnel_socket
 
-.PHONY: all clean fclean re bonus upload build ssh db tunnel secrets deepclean
+COMPOSE := docker compose -f srcs/docker-compose.yml
+BONUS := --profile bonus
 
-all: upload build ssh
+.PHONY: all clean fclean re bonus bonus-stop upload build ssh tunnel tunnel-stop db secrets deepclean
+
+all: build
+	$(MAKE) ssh
 
 clean:
-	$(SSH_VM) 'cd $(REMOTE_DIR) && docker compose -f srcs/docker-compose.yml down'
+	$(SSH_VM) 'cd $(REMOTE_DIR) && $(COMPOSE) $(BONUS) down'
 
 fclean:
-	$(SSH_VM) 'cd $(REMOTE_DIR) && docker compose -f srcs/docker-compose.yml down -v'
+	$(SSH_VM) 'cd $(REMOTE_DIR) && $(COMPOSE) $(BONUS) down -v'
 	$(SSH_VM) -t 'sudo rm -rf $(REMOTE_DIR) $(REMOTE_DATA)'
 
-re: fclean all
+re: fclean
+	$(MAKE) all
 
-bonus: all
+bonus: upload
+	$(SSH_VM) 'cd $(REMOTE_DIR) && $(COMPOSE) $(BONUS) up -d --build'
+	$(MAKE) ssh
+
+bonus-stop:
+	$(SSH_VM) 'cd $(REMOTE_DIR) && $(COMPOSE) $(BONUS) stop redis ftp'
 
 upload: secrets
 	@echo "Uploading Inception repo to the virtual machine..."
 	$(SSH_VM) 'mkdir -p $(REMOTE_DIR) $(REMOTE_DATA)/wordpress $(REMOTE_DATA)/mariadb'
 	rsync -az --delete -e '$(RSYNC_SSH)' ./ $(SSH_USER)@$(LOCAL_HOST):$(REMOTE_DIR)/
 
-build:
+build: upload
 	@echo "Building and starting Inception..."
-	$(SSH_VM) 'cd $(REMOTE_DIR) && docker compose -f srcs/docker-compose.yml up -d --build'
+	$(SSH_VM) 'cd $(REMOTE_DIR) && $(COMPOSE) up -d --build'
 
 ssh:
 	@echo "Connecting the Inception virtual machine..."
@@ -59,7 +69,7 @@ db:
 secrets:
 	@mkdir -p secrets
 	@chmod 700 secrets
-	@for f in db_password.txt db_root_password.txt wp_admin_password.txt wp_user_password.txt; do \
+	@for f in db_password.txt db_root_password.txt wp_admin_password.txt wp_user_password.txt ftp_password; do \
 		if [ ! -s "secrets/$$f" ]; then \
 			umask 077; \
 			openssl rand -hex 32 > "secrets/$$f"; \

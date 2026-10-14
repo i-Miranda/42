@@ -59,6 +59,40 @@ wp config set WP_HOME "$WP_URL" \
 wp config set WP_SITEURL "$WP_URL" \
     --type=constant --allow-root --path="$WP_PATH"
 
+cat > "$WP_PATH/redis-fallback.php" <<'PHP'
+<?php
+
+$redis_host = 'redis'; // Must match the Compose service name
+$redis_port = 6379;
+
+if ( ! defined( 'WP_REDIS_HOST' ) ) {
+    define( 'WP_REDIS_HOST', $redis_host );
+}
+if ( ! defined( 'WP_REDIS_PORT' ) ) {
+    define( 'WP_REDIS_PORT', $redis_port );
+}
+
+$redis_up = false;
+$socket = @fsockopen( $redis_host, $redis_port, $errno, $errstr, 0.25 );
+
+if ( $socket !== false ) {
+    stream_set_timeout( $socket, 1 );
+    fwrite( $socket, "*1\r\n" . '$4' . "\r\nPING\r\n" );
+    $reply = fgets( $socket );
+    $redis_up = $reply !== false && strpos( $reply, '+PONG' ) === 0;
+    fclose( $socket );
+}
+
+if ( ! defined( 'WP_REDIS_DISABLED' ) ) {
+    define( 'WP_REDIS_DISABLED', ! $redis_up );
+}
+PHP
+
+if ! grep -Fq 'redis-fallback.php' "$WP_PATH/wp-config.php"; then
+    sed -i "/require_once ABSPATH . 'wp-settings.php';/i require_once __DIR__ . '/redis-fallback.php';" \
+        "$WP_PATH/wp-config.php"
+fi
+
 # Wait up to 60 seconds for MariaDB to accept connections.
 attempt=0
 until wp db check --allow-root --path="$WP_PATH" >/dev/null 2>&1; do
